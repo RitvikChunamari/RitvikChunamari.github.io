@@ -32,23 +32,12 @@ const Footer: React.FC<FooterProps> = ({ personal }) => {
   return (
     <footer id="contact" className="text-cinema-white px-6 md:px-12 pt-20 md:pt-24 pb-12 relative z-30 -mt-2">
       
-      <div className="border-t border-white/20 pt-8 mb-12 md:mb-16 flex flex-col md:flex-row justify-between items-start gap-6">
-         <div>
-            <span className="font-mono text-[10px] uppercase text-cinema-gray tracking-widest block mb-2">(Contact)</span>
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 text-xs sm:text-sm text-neutral-400 font-mono">
-               <a href={`mailto:${personal.email}`} className="hover:text-white transition-colors">
-                  {personal.email}
-               </a>
-               <span className="hidden sm:inline text-white/20">/</span>
-               <a 
-                 href={personal.linkedin.startsWith('http') ? personal.linkedin : `https://${personal.linkedin}`} 
-                 target="_blank" 
-                 rel="noreferrer" 
-                 className="hover:text-white transition-colors break-all"
-               >
-                  {personal.linkedin}
-               </a>
-            </div>
+      <div className="border-t border-white/20 pt-8 mb-12 md:mb-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+         <div className="flex items-center gap-3">
+            <span className="w-2 h-2 rounded-full bg-[#FF3B30] animate-pulse"></span>
+            <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-cinema-white/70">
+              Folio 2026 // Available for Opportunities
+            </span>
          </div>
          <p className="text-sm md:text-base max-w-xs md:text-right text-cinema-gray">
            Based in Arvada, CO.<br/>
@@ -68,15 +57,15 @@ const Footer: React.FC<FooterProps> = ({ personal }) => {
         </a>
       </div>
 
-      {/* Footer Info Grid */}
+      {/* Footer Info Grid - The Single Official Contact Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-white/10 pt-8 items-start">
         
         <div className="md:col-span-2">
-           <span className="block font-mono text-[10px] uppercase text-cinema-gray mb-3 tracking-widest">Contact</span>
-           <div className="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-8">
+           <span className="block font-mono text-[10px] uppercase text-cinema-gray mb-3 tracking-widest">● Contact</span>
+           <div className="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-10">
              <div>
                <span className="block font-mono text-[9px] uppercase text-neutral-500 tracking-wider mb-1">Email</span>
-               <a href={`mailto:${personal.email}`} className="text-sm hover:text-white text-neutral-300 transition-colors">
+               <a href={`mailto:${personal.email}`} className="text-sm sm:text-base hover:text-white text-neutral-300 transition-colors font-mono">
                  {personal.email}
                </a>
              </div>
@@ -86,7 +75,7 @@ const Footer: React.FC<FooterProps> = ({ personal }) => {
                  href={personal.linkedin.startsWith('http') ? personal.linkedin : `https://${personal.linkedin}`} 
                  target="_blank" 
                  rel="noreferrer" 
-                 className="text-xs sm:text-sm hover:text-white text-neutral-300 transition-colors break-all"
+                 className="text-xs sm:text-sm sm:text-base hover:text-white text-neutral-300 transition-colors font-mono break-all"
                >
                  {personal.linkedin}
                </a>
@@ -97,9 +86,10 @@ const Footer: React.FC<FooterProps> = ({ personal }) => {
         <div className="md:text-right">
            <button 
              onClick={scrollToTop}
-             className="text-[10px] font-mono uppercase text-cinema-gray hover:text-white transition-colors tracking-widest cursor-pointer"
+             className="text-[10px] font-mono uppercase text-cinema-gray hover:text-white transition-colors tracking-widest cursor-pointer group inline-flex items-center gap-2"
            >
-             Back to Top ↑
+             <span>Back to Top</span>
+             <span className="group-hover:-translate-y-0.5 transition-transform">↑</span>
            </button>
         </div>
 

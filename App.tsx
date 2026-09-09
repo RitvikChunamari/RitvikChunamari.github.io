@@ -318,26 +318,58 @@ const App: React.FC = () => {
     };
   }, [currentView]);
 
+  const scrollToSection = (targetId: string) => {
+    if (targetId === 'home') {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+      return;
+    }
+
+    // Support both 'profile' and 'about' interchangeably
+    const element = 
+      document.getElementById(targetId) ||
+      (targetId === 'profile' ? document.getElementById('about') : null) ||
+      (targetId === 'about' ? document.getElementById('profile') : null);
+
+    if (element) {
+      // Calculate true offset within the scrollRef container
+      let top = 0;
+      let curr: HTMLElement | null = element;
+      while (curr && curr !== scrollRef.current && curr !== document.body) {
+        top += curr.offsetTop;
+        curr = curr.offsetParent as HTMLElement;
+      }
+
+      // If offsetTop loop returned 0, fallback to clientRect
+      if (top === 0) {
+        top = element.getBoundingClientRect().top + scrollY.current;
+      }
+
+      // For contact or bottom sections, scroll to maxScroll
+      const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      const finalTop = targetId === 'contact' ? maxScroll : Math.min(top, maxScroll);
+
+      window.scrollTo({
+        top: finalTop,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   const handleNavigate = (sectionId: string) => {
+    const targetId = sectionId.toLowerCase();
+
     if (currentView === 'project') {
        handleBackToHome();
        setTimeout(() => {
-          const element = document.getElementById(sectionId);
-          if (element) {
-              element.scrollIntoView();
-          }
-       }, 100);
+          scrollToSection(targetId);
+       }, 850);
        return;
     }
 
-     const element = document.getElementById(sectionId);
-     if (element) {
-        const top = element.getBoundingClientRect().top + scrollY.current;
-        window.scrollTo({
-           top: top,
-           behavior: 'smooth'
-        });
-     }
+    scrollToSection(targetId);
   };
 
   const handleProjectClick = (project: Project) => {
@@ -474,7 +506,7 @@ const App: React.FC = () => {
              ref={scrollRef} 
              className="fixed top-0 left-0 w-full z-10 origin-center will-change-transform"
           >
-            <Hero isLoaded={showContent} />
+            <Hero isLoaded={showContent} onNavigate={handleNavigate} />
             <ProjectList 
               projects={resumeData.projects} 
               onProjectClick={handleProjectClick} 

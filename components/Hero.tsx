@@ -4,6 +4,7 @@ import MagneticWrapper from './MagneticWrapper';
 
 interface HeroProps {
   isLoaded?: boolean;
+  onNavigate?: (sectionId: string) => void;
 }
 
 interface DynamicCharProps {
@@ -63,7 +64,7 @@ const DynamicChar: React.FC<DynamicCharProps> = ({ char, mousePos, className = '
   );
 };
 
-const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
+const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
   const [offset, setOffset] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [rawMousePos, setRawMousePos] = useState({ clientX: -2000, clientY: -2000 });
@@ -207,9 +208,14 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
   };
 
   const scrollToWork = () => {
+    if (onNavigate) {
+      onNavigate('work');
+      return;
+    }
     const workSection = document.getElementById('work');
     if (workSection) {
-      workSection.scrollIntoView({ behavior: 'smooth' });
+      const top = workSection.offsetTop || (workSection.getBoundingClientRect().top + window.scrollY);
+      window.scrollTo({ top, behavior: 'smooth' });
     }
   };
 

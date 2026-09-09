@@ -69,7 +69,7 @@ const About: React.FC<AboutProps> = ({ data }) => {
 
   return (
     <section 
-      id="about" 
+      id="profile" 
       ref={sectionRef}
       className="bg-white text-black relative z-20 rounded-t-[3rem] -mt-12 border-t border-black/10 shadow-[0_-10px_40px_rgba(0,0,0,0.15)] transition-all duration-1000 ease-out opacity-0 translate-y-24 will-change-transform"
     >
@@ -106,11 +106,6 @@ const About: React.FC<AboutProps> = ({ data }) => {
                 <h3 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-black">
                   {renderRevealHeading("Experience", 200)}
                 </h3>
-                <span className="font-mono text-[10px] uppercase border border-black rounded-full px-3 py-1 overflow-hidden font-semibold">
-                   <span className={`inline-block transform transition-transform duration-1000 ease-expo ${isVisible ? 'translate-y-0' : 'translate-y-full'}`} style={{ transitionDelay: '600ms' }}>
-                      2024 — Present
-                   </span>
-                </span>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-12">
