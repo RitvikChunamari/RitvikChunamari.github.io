@@ -153,7 +153,7 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
       ref={heroRef}
       id="home"
       onMouseMove={handleMouseMove}
-      className="min-h-screen w-full relative flex flex-col justify-between pt-24 pb-8 md:pt-32 md:pb-12 px-6 sm:px-10 md:px-16 text-[#ededed] select-none"
+      className="min-h-screen w-full relative flex flex-col justify-between pt-24 pb-8 md:pt-32 md:pb-12 px-4 sm:px-8 md:px-16 text-[#ededed] select-none"
       style={{
         opacity: scrollFade,
         transform: `translate3d(0, ${scrollParallax}px, 0)`,
@@ -214,7 +214,7 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
       >
         {/* Monumental Display Name with Dual-Layer Differential Parallax */}
         <h1 
-          className="text-[clamp(4.2rem,13.5vw,16.5rem)] font-bold uppercase tracking-[-0.04em] leading-[0.84] text-cinema-white select-none -ml-1 md:-ml-2 flex flex-col"
+          className="text-[clamp(2.2rem,11.5vw,16.5rem)] md:text-[clamp(4.2rem,13.5vw,16.5rem)] font-bold uppercase tracking-[-0.04em] leading-[0.84] text-cinema-white select-none -ml-0.5 md:-ml-2 flex flex-col w-full"
           style={{
             textShadow: isHovered 
               ? '2px 0 rgba(255, 59, 48, 0.4), -2px 0 rgba(0, 229, 255, 0.3)' 
@@ -224,24 +224,24 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
         >
           {/* Line 1: Ritvik with subtle magnetic shift */}
           <div 
-            className="block overflow-hidden will-change-transform transition-transform duration-300 ease-out"
+            className="block overflow-hidden will-change-transform transition-transform duration-300 ease-out w-full"
             style={{
               transform: `translate3d(${mousePos.x * 12}px, ${mousePos.y * 8}px, 0)`,
             }}
           >
-            <span className="inline-block hero-title-line">
+            <span className="inline-block hero-title-line whitespace-nowrap">
               {renderDynamicText("Ritvik")}
             </span>
           </div>
 
           {/* Line 2: Chunamari with deeper magnetic shift */}
           <div 
-            className="block overflow-hidden will-change-transform transition-transform duration-300 ease-out"
+            className="block overflow-hidden will-change-transform transition-transform duration-300 ease-out w-full"
             style={{
               transform: `translate3d(${mousePos.x * 22}px, ${mousePos.y * 14}px, 0)`,
             }}
           >
-            <span className="inline-block hero-title-line">
+            <span className="inline-block hero-title-line whitespace-nowrap">
               {renderDynamicText("Chunamari")}
             </span>
           </div>
