@@ -359,6 +359,13 @@ const GlobalFluidCanvas: React.FC<GlobalFluidCanvasProps> = ({
     animate();
 
     // 7. Cleanup
+    const handleWindowScroll = () => {
+      const docHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      mouseRef.current.scrollProgress = window.scrollY / docHeight;
+    };
+    window.addEventListener('scroll', handleWindowScroll, { passive: true });
+    handleWindowScroll();
+
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener('mousemove', handleMouseMove);
@@ -367,6 +374,7 @@ const GlobalFluidCanvas: React.FC<GlobalFluidCanvasProps> = ({
       window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('click', handleClick);
+      window.removeEventListener('scroll', handleWindowScroll);
 
       geometry.dispose();
       material.dispose();
@@ -386,4 +394,4 @@ const GlobalFluidCanvas: React.FC<GlobalFluidCanvasProps> = ({
   );
 };
 
-export default GlobalFluidCanvas;
+export default React.memo(GlobalFluidCanvas);

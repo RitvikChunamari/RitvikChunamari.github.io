@@ -5,15 +5,13 @@ import gsap from 'gsap';
 interface ProjectListProps {
   projects: Project[];
   onProjectClick: (project: Project) => void;
-  scrollProgress?: number;
 }
 
-const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick, scrollProgress = 0 }) => {
+const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) => {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
   const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
   const containerRefs = useRef<(HTMLDivElement | null)[]>([]);
   const imageRefs = useRef<(HTMLImageElement | null)[]>([]);
-  const requestRef = useRef<number>();
 
   useEffect(() => {
     // Smooth Staggered Reveal Observer
@@ -89,8 +87,9 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick, scr
       if (row) observer.observe(row);
     });
 
-    // Parallax Loop for smooth continuous image drift
-    const animate = () => {
+    // Throttled Parallax on Scroll (Zero idle CPU / RAF thrashing)
+    let ticking = false;
+    const updateParallax = () => {
       const windowHeight = window.innerHeight;
 
       rowRefs.current.forEach((row, index) => {
@@ -100,19 +99,27 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick, scr
 
         if (img && rect.top < windowHeight && rect.bottom > 0) {
           const parallaxProgress = 1 - (rect.bottom / (windowHeight + rect.height));
-          const yOffset = (parallaxProgress - 0.5) * 14; 
-          img.style.transform = `translate3d(0, ${yOffset}%, 0)`;
+          const yOffset = (parallaxProgress - 0.5) * 12; 
+          img.style.transform = `translate3d(0, ${yOffset.toFixed(2)}%, 0)`;
         }
       });
 
-      requestRef.current = requestAnimationFrame(animate);
+      ticking = false;
     };
 
-    requestRef.current = requestAnimationFrame(animate);
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    requestAnimationFrame(updateParallax);
 
     return () => {
       observer.disconnect();
-      if (requestRef.current) cancelAnimationFrame(requestRef.current);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [projects]);
 
@@ -126,11 +133,11 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick, scr
   };
 
   return (
-    <section id="work" className="relative py-24 md:py-32 min-h-screen z-20 snap-y snap-proximity scroll-pt-24 md:scroll-pt-32">
+    <section id="work" className="relative py-24 md:py-32 min-h-screen z-20">
       <div className="container mx-auto px-6 md:px-12 relative z-10">
         
         {/* Section Header Synchronized with Hero Swiss Telemetry */}
-        <div className="grid grid-cols-1 md:grid-cols-12 mb-16 md:mb-24 border-b border-white/10 pb-6 items-end snap-start scroll-mt-24">
+        <div className="grid grid-cols-1 md:grid-cols-12 mb-16 md:mb-24 border-b border-white/10 pb-6 items-end">
            <div className="md:col-span-4 flex items-center gap-3">
              <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
              <h2 className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-white/80 font-medium">
@@ -148,14 +155,14 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick, scr
         </div>
 
         {/* Project Cards Stream */}
-        <div className="flex flex-col gap-28 md:gap-36 snap-y snap-proximity">
+        <div className="flex flex-col gap-28 md:gap-36">
           {projects.map((project, index) => (
             <div 
               key={index}
               data-index={index}
               ref={(el) => { if (el) rowRefs.current[index] = el; }}
               style={{ opacity: 0, transform: 'translate3d(0, 35px, 0)' }}
-              className="group relative cursor-pointer snap-center snap-always scroll-my-12 md:scroll-my-20 will-change-transform"
+              className="group relative cursor-pointer will-change-transform"
               onMouseEnter={() => setHoveredProject(index)}
               onMouseLeave={() => setHoveredProject(null)}
               onClick={() => onProjectClick(project)}
@@ -264,4 +271,4 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick, scr
   );
 };
 
-export default ProjectList;
+export default React.memo(ProjectList);

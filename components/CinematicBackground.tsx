@@ -379,4 +379,4 @@ const CinematicBackground: React.FC = () => {
   );
 };
 
-export default CinematicBackground;
+export default React.memo(CinematicBackground);

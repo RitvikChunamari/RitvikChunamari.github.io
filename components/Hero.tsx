@@ -13,7 +13,7 @@ interface DynamicCharProps {
   className?: string;
 }
 
-const DynamicChar: React.FC<DynamicCharProps> = ({ char, mousePos, className = '' }) => {
+const DynamicChar: React.FC<DynamicCharProps> = React.memo(({ char, mousePos, className = '' }) => {
   const charRef = useRef<HTMLSpanElement>(null);
   const [elevation, setElevation] = useState({ y: 0, scale: 1, glow: 0 });
 
@@ -62,10 +62,9 @@ const DynamicChar: React.FC<DynamicCharProps> = ({ char, mousePos, className = '
       {char}
     </span>
   );
-};
+});
 
 const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
-  const [offset, setOffset] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [rawMousePos, setRawMousePos] = useState({ clientX: -2000, clientY: -2000 });
   const [isHovered, setIsHovered] = useState(false);
@@ -113,11 +112,16 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      requestAnimationFrame(() => {
-        setOffset(window.pageYOffset);
-      });
+      if (!heroRef.current) return;
+      const y = window.scrollY || window.pageYOffset;
+      const scrollFade = Math.max(0, 1 - y * 0.0012);
+      const scrollParallax = -y * 0.22;
+      heroRef.current.style.opacity = `${scrollFade}`;
+      heroRef.current.style.transform = `translate3d(0, ${scrollParallax.toFixed(2)}px, 0)`;
+      heroRef.current.style.pointerEvents = scrollFade < 0.05 ? 'none' : 'auto';
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -230,9 +234,6 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
     ));
   };
 
-  const scrollFade = Math.max(0, 1 - offset * 0.0012);
-  const scrollParallax = -offset * 0.22;
-
   return (
     <section
       ref={heroRef}
@@ -243,12 +244,7 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       onTouchCancel={resetInteractiveState}
-      className="min-h-screen w-full relative flex flex-col justify-between pt-24 pb-8 md:pt-32 md:pb-12 px-6 md:px-16 text-[#ededed] select-none"
-      style={{
-        opacity: scrollFade,
-        transform: `translate3d(0, ${scrollParallax}px, 0)`,
-        pointerEvents: scrollFade < 0.05 ? 'none' : 'auto',
-      }}
+      className="min-h-screen w-full relative flex flex-col justify-between pt-24 pb-8 md:pt-32 md:pb-12 px-6 md:px-16 text-[#ededed] select-none will-change-[transform,opacity]"
     >
 
       {/* ─────────────────────────────────────────────────────────────
@@ -397,4 +393,4 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
   );
 };
 
-export default Hero;
+export default React.memo(Hero);

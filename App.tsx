@@ -74,7 +74,6 @@ class ErrorBoundary extends React.Component<any, any> {
 const App: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [showContent, setShowContent] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isEdithMode, setIsEdithMode] = useState(true);
   
@@ -87,11 +86,17 @@ const App: React.FC = () => {
   const cursorRef = useRef<HTMLDivElement>(null);
   const cursorTextRef = useRef<HTMLSpanElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const progressCircleRef = useRef<SVGCircleElement>(null);
+  const progressTextRef = useRef<HTMLSpanElement>(null);
 
   // Virtual Scroll State
   const scrollY = useRef(0);
   const targetScrollY = useRef(0);
   const scrollVelocityRef = useRef(0);
+
+  // SVG Circle Calculations for Progress Indicator
+  const radius = 20;
+  const circumference = 2 * Math.PI * radius;
 
   // Physics State
   const mouse = useRef({ x: -2000, y: -2000, prevX: -2000, prevY: -2000 });
@@ -113,9 +118,14 @@ const App: React.FC = () => {
     window.scrollTo(0, 0);
     scrollY.current = 0;
     targetScrollY.current = 0;
-    setScrollProgress(0);
     if (scrollRef.current) {
       scrollRef.current.style.transform = 'translate3d(0, 0px, 0)';
+    }
+    if (progressCircleRef.current) {
+      progressCircleRef.current.style.strokeDashoffset = `${circumference}`;
+    }
+    if (progressTextRef.current) {
+      progressTextRef.current.textContent = '0%';
     }
     setIsLoaded(true);
     setShowContent(true);
@@ -218,20 +228,18 @@ const App: React.FC = () => {
     const handleScroll = () => {
       if (currentView === 'home') {
         targetScrollY.current = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = targetScrollY.current / docHeight;
-        setScrollProgress(progress);
       }
     };
 
     // Resize Observer for Body Height
     const resizeObserver = new ResizeObserver((entries) => {
       if (currentView === 'home') {
-        window.requestAnimationFrame(() => {
-          for (let entry of entries) {
-            document.body.style.height = `${entry.contentRect.height}px`;
+        for (let entry of entries) {
+          const height = Math.round(entry.contentRect.height);
+          if (document.body.style.height !== `${height}px`) {
+            document.body.style.height = `${height}px`;
           }
-        });
+        }
       }
     });
     if (scrollRef.current) resizeObserver.observe(scrollRef.current);
@@ -248,7 +256,7 @@ const App: React.FC = () => {
       }
     };
 
-    // Main Animation Loop (60fps)
+    // Main Animation Loop (60-120fps)
     const animate = () => {
       // 1. Instant Precision Dot (Zero Lag)
       if (cursorDotRef.current) {
@@ -272,17 +280,37 @@ const App: React.FC = () => {
         cursorRef.current.style.transform = `translate3d(${cursor.current.x}px, ${cursor.current.y}px, 0) translate(-50%, -50%) rotate(${angle}deg) scale(${stretch}, ${squash})`;
       }
 
-      // 3. Virtual Scroll (Lerp) - Only active in Home view
+      // 3. Virtual Scroll (Liquid Smooth Glide) - Only active in Home view
       if (currentView === 'home') {
         const diff = targetScrollY.current - scrollY.current;
-        scrollY.current += diff * 0.05; // Slightly heavier inertia
+        const isTouch = isTouchOrMobile();
+        
+        if (isTouch) {
+          // Instant 1:1 sync on mobile / touch devices for native responsiveness
+          scrollY.current = targetScrollY.current;
+        } else {
+          // Liquid smooth damping on desktop wheel / trackpad
+          if (Math.abs(diff) < 0.08) {
+            scrollY.current = targetScrollY.current;
+          } else {
+            scrollY.current += diff * 0.095;
+          }
+        }
         scrollVelocityRef.current = diff;
         
+        const roundedY = Math.round(scrollY.current * 100) / 100;
         if (scrollRef.current) {
-          const tiltX = Math.max(-6, Math.min(6, diff * 0.05));
-          scrollRef.current.style.transform = `translate3d(0, -${scrollY.current}px, 0) rotateX(${tiltX}deg)`;
-          scrollRef.current.style.perspective = '1200px';
-          scrollRef.current.style.transformStyle = 'preserve-3d';
+          scrollRef.current.style.transform = `translate3d(0, -${roundedY}px, 0)`;
+        }
+
+        // Direct DOM update for circular scroll progress indicator (Zero React re-render overhead)
+        const docHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        const progress = Math.min(1, Math.max(0, scrollY.current / docHeight));
+        if (progressCircleRef.current) {
+          progressCircleRef.current.style.strokeDashoffset = `${circumference - progress * circumference}`;
+        }
+        if (progressTextRef.current) {
+          progressTextRef.current.textContent = `${Math.round(progress * 100)}%`;
         }
       }
 
@@ -412,11 +440,6 @@ const App: React.FC = () => {
      }, 800);
   };
 
-  // SVG Circle Calculations
-  const radius = 20;
-  const circumference = 2 * Math.PI * radius;
-  const dashoffset = circumference - scrollProgress * circumference;
-
   return (
     <>
       {/* Minimal Studio Ident Preloader */}
@@ -442,7 +465,7 @@ const App: React.FC = () => {
       <div className="fixed inset-0 pointer-events-none z-[8600] opacity-[0.04] mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }}></div>
 
       {/* Persistent Global 3D WebGL Fluid Atmosphere (Across Hero, Works & Portfolio) */}
-      <GlobalFluidCanvas scrollProgress={scrollProgress} />
+      <GlobalFluidCanvas />
 
       {/* Continuous Swiss Architectural Grid Columns */}
       <div className="fixed inset-0 pointer-events-none z-[8] overflow-hidden" aria-hidden="true">
@@ -472,7 +495,7 @@ const App: React.FC = () => {
           <span ref={cursorTextRef} className="text-white text-[9px] font-mono font-bold uppercase tracking-widest opacity-0 transition-opacity duration-150"></span>
         </div>
 
-        {/* Circular Scroll Progress Indicator */}
+        {/* Circular Scroll Progress Indicator (Zero React Re-renders) */}
         {currentView === 'home' && (
           <div className="fixed bottom-8 right-8 z-[50] mix-blend-difference hidden md:block">
             <svg width="50" height="50" className="transform -rotate-90">
@@ -483,17 +506,18 @@ const App: React.FC = () => {
                 strokeWidth="2" 
               />
               <circle 
+                ref={progressCircleRef}
                 cx="25" cy="25" r={radius} 
                 fill="transparent" 
                 stroke="white" 
                 strokeWidth="2" 
                 strokeDasharray={circumference} 
-                strokeDashoffset={dashoffset}
-                className="transition-all duration-100 ease-linear"
+                strokeDashoffset={circumference}
+                className="transition-all duration-75 ease-linear"
               />
             </svg>
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-[8px] font-mono text-white">{Math.round(scrollProgress * 100)}%</span>
+              <span ref={progressTextRef} className="text-[8px] font-mono text-white">0%</span>
             </div>
           </div>
         )}
@@ -505,12 +529,12 @@ const App: React.FC = () => {
           <div 
              ref={scrollRef} 
              className="fixed top-0 left-0 w-full z-10 origin-center will-change-transform"
+             style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
           >
             <Hero isLoaded={showContent} onNavigate={handleNavigate} />
             <ProjectList 
               projects={resumeData.projects} 
               onProjectClick={handleProjectClick} 
-              scrollProgress={scrollProgress} 
             />
             <About data={resumeData} />
             <Footer personal={resumeData.personal} />

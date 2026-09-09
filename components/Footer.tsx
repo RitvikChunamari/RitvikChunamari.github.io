@@ -99,4 +99,4 @@ const Footer: React.FC<FooterProps> = ({ personal }) => {
   );
 };
 
-export default Footer;
+export default React.memo(Footer);
