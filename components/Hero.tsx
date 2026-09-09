@@ -68,8 +68,10 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [rawMousePos, setRawMousePos] = useState({ clientX: -2000, clientY: -2000 });
   const [isHovered, setIsHovered] = useState(false);
+  const [mobileFontSize, setMobileFontSize] = useState<string | null>(null);
   const heroRef = useRef<HTMLElement>(null);
   const titleContainerRef = useRef<HTMLDivElement>(null);
+  const chunamariSpanRef = useRef<HTMLSpanElement>(null);
 
   useLayoutEffect(() => {
     if (!isLoaded) return;
@@ -118,6 +120,31 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Dynamically calculate the maximum font size on mobile so Chunamari fills 98% of the margin
+  useEffect(() => {
+    const adjustFontSize = () => {
+      if (window.innerWidth >= 768) {
+        setMobileFontSize(null);
+        return;
+      }
+      if (!chunamariSpanRef.current || !titleContainerRef.current) return;
+
+      const containerWidth = titleContainerRef.current.clientWidth;
+      const textWidth = chunamariSpanRef.current.offsetWidth;
+      const currentSize = parseFloat(window.getComputedStyle(chunamariSpanRef.current).fontSize);
+
+      if (textWidth > 0 && containerWidth > 0 && currentSize > 0) {
+        // Target: fill 98% of the allotted margin (edge to edge with 1% micro-cushion)
+        const idealSize = (containerWidth * 0.98) / (textWidth / currentSize);
+        setMobileFontSize(`${idealSize.toFixed(2)}px`);
+      }
+    };
+
+    adjustFontSize();
+    window.addEventListener('resize', adjustFontSize);
+    return () => window.removeEventListener('resize', adjustFontSize);
+  }, [isLoaded]);
+
   const handleMouseMove = (e: React.MouseEvent) => {
     const { clientX, clientY } = e;
     const { innerWidth, innerHeight } = window;
@@ -153,7 +180,7 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
       ref={heroRef}
       id="home"
       onMouseMove={handleMouseMove}
-      className="min-h-screen w-full relative flex flex-col justify-between pt-24 pb-8 md:pt-32 md:pb-12 px-4 sm:px-8 md:px-16 text-[#ededed] select-none"
+      className="min-h-screen w-full relative flex flex-col justify-between pt-24 pb-8 md:pt-32 md:pb-12 px-6 md:px-16 text-[#ededed] select-none"
       style={{
         opacity: scrollFade,
         transform: `translate3d(0, ${scrollParallax}px, 0)`,
@@ -214,8 +241,9 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
       >
         {/* Monumental Display Name with Dual-Layer Differential Parallax */}
         <h1 
-          className="text-[clamp(2.2rem,11.5vw,16.5rem)] md:text-[clamp(4.2rem,13.5vw,16.5rem)] font-bold uppercase tracking-[-0.04em] leading-[0.84] text-cinema-white select-none -ml-0.5 md:-ml-2 flex flex-col w-full"
+          className="text-[clamp(3.1rem,calc((100vw-48px)/5.62),16.5rem)] md:text-[clamp(4.5rem,13.5vw,16.5rem)] font-bold uppercase tracking-[-0.04em] leading-[0.84] text-cinema-white select-none -ml-0.5 md:-ml-2 flex flex-col w-full"
           style={{
+            fontSize: mobileFontSize || undefined,
             textShadow: isHovered 
               ? '2px 0 rgba(255, 59, 48, 0.4), -2px 0 rgba(0, 229, 255, 0.3)' 
               : 'none',
@@ -241,7 +269,7 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
               transform: `translate3d(${mousePos.x * 22}px, ${mousePos.y * 14}px, 0)`,
             }}
           >
-            <span className="inline-block hero-title-line whitespace-nowrap">
+            <span ref={chunamariSpanRef} className="inline-block hero-title-line whitespace-nowrap">
               {renderDynamicText("Chunamari")}
             </span>
           </div>
