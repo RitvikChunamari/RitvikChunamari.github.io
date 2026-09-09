@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#181c28"/>
+      <stop offset="100%" stop-color="#050507"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background Tile -->
+  <rect width="512" height="512" rx="108" fill="url(#bgGlow)"/>
+  <rect x="14" y="14" width="484" height="484" rx="94" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="5"/>
+  
+  <!-- Technical Corner Registration Crosshairs -->
+  <path d="M 42 76 L 42 42 L 76 42" stroke="rgba(255,255,255,0.6)" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M 470 76 L 470 42 L 436 42" stroke="rgba(255,255,255,0.6)" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M 42 436 L 42 470 L 76 470" stroke="rgba(255,255,255,0.6)" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M 470 436 L 470 470 L 436 470" stroke="rgba(255,255,255,0.6)" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+  <!-- Large, Bold & Prominent RC Monogram -->
+  <text 
+    x="256" 
+    y="360" 
+    font-family="-apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', 'Plus Jakarta Sans', sans-serif" 
+    font-size="320" 
+    font-weight="900" 
+    letter-spacing="-0.07em"
+    fill="#ffffff" 
+    text-anchor="middle"
+  >RC</text>
+
+  <!-- Cyan Accent Node -->
+  <circle cx="430" cy="115" r="14" fill="#00E5FF"/>
+  <circle cx="430" cy="115" r="28" fill="none" stroke="#00E5FF" stroke-width="3.5" opacity="0.45"/>
+</svg>

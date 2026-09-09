@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,700;0,900;1,900&amp;display=swap');
+      .usps-heading {
+        font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+        font-weight: 900;
+        font-style: italic;
+        fill: #ffffff;
+        font-size: 130px;
+        letter-spacing: -3px;
+      }
+      .usps-sub {
+        font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+        font-weight: 700;
+        fill: #3B82F6;
+        font-size: 28px;
+        letter-spacing: 12px;
+      }
+    </style>
+    <linearGradient id="usps-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="50%" stop-color="#020617" />
+      <stop offset="100%" stop-color="#090D16" />
+    </linearGradient>
+    <linearGradient id="red-stripe" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#EF4444" />
+      <stop offset="100%" stop-color="#DC2626" />
+    </linearGradient>
+    <linearGradient id="blue-stripe" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="url(#usps-grad)" />
+  
+  <!-- Subtle Grid Backdrop -->
+  <g opacity="0.05">
+    <path d="M 0,100 L 1200,100 M 0,200 L 1200,200 M 0,300 L 1200,300 M 0,400 L 1200,400 M 0,500 L 1200,500" stroke="#FFFFFF" stroke-width="1"/>
+    <path d="M 200,0 L 200,600 M 400,0 L 400,600 M 600,0 L 600,600 M 800,0 L 800,600 M 1000,0 L 1000,600" stroke="#FFFFFF" stroke-width="1"/>
+  </g>
+
+  <!-- Dynamic Aerodynamic Speed Lines -->
+  <g transform="translate(180, 180) rotate(-12)" opacity="0.15">
+    <rect x="-100" y="0" width="1400" height="8" fill="#3B82F6"/>
+    <rect x="-50" y="24" width="1400" height="12" fill="#EF4444"/>
+    <rect x="-150" y="48" width="1400" height="6" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Center Logo Group -->
+  <g transform="translate(180, 240)">
+    
+    <!-- Stylized Modern Eagle Head Vector -->
+    <g transform="translate(0, -60) scale(1.1)">
+      <!-- Eagle Head Outline & Beak Silhouette -->
+      <path d="M 0 100 L 90 20 C 130 -10, 180 -10, 210 20 L 240 50 L 290 50 L 230 110 L 170 110 C 140 110, 120 120, 100 140 L 0 100 Z" fill="url(#blue-stripe)" />
+      <!-- Sharp Aerodynamic Red Wing / Speed Accent -->
+      <path d="M 110 50 L 270 50 L 320 0 L 220 0 C 170 0, 130 20, 110 50 Z" fill="url(#red-stripe)" />
+      <!-- White Eagle Eye / Beak Notch -->
+      <polygon points="210,35 240,35 225,50" fill="#FFFFFF" />
+    </g>
+
+    <!-- USPS Bold Monogram + Text -->
+    <g transform="translate(360, 20)">
+      <text x="0" y="50" class="usps-heading">USPS</text>
+      <!-- Speed Accent underline -->
+      <rect x="5" y="75" width="340" height="8" fill="url(#blue-stripe)" rx="4"/>
+      <rect x="230" y="75" width="115" height="8" fill="url(#red-stripe)" rx="4"/>
+      <text x="8" y="125" class="usps-sub">REDESIGN SYSTEM</text>
+    </g>
+  </g>
+
+  <!-- Outer Frame Trim -->
+  <rect x="24" y="24" width="1152" height="552" fill="none" stroke="#FFFFFF" stroke-opacity="0.08" stroke-width="1" rx="8"/>
+</svg>

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#141926" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#050507" stop-opacity="1"/>
+    </radialGradient>
+    <pattern id="dotGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="1.2" fill="rgba(255,255,255,0.18)"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#050507"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <rect width="1200" height="630" fill="url(#dotGrid)" opacity="0.8"/>
+
+  <!-- Outer Architectural Border -->
+  <rect x="40" y="40" width="1120" height="550" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+
+  <!-- Corner Registration Marks -->
+  <path d="M 60 90 L 60 60 L 90 60" stroke="#00E5FF" stroke-width="2.5" fill="none"/>
+  <path d="M 1140 90 L 1140 60 L 1110 60" stroke="#00E5FF" stroke-width="2.5" fill="none"/>
+  <path d="M 60 540 L 60 570 L 90 570" stroke="#00E5FF" stroke-width="2.5" fill="none"/>
+  <path d="M 1140 540 L 1140 570 L 1110 570" stroke="#00E5FF" stroke-width="2.5" fill="none"/>
+
+  <!-- Top Metadata -->
+  <text x="80" y="95" font-family="'Courier New', monospace" font-size="14" letter-spacing="0.25em" fill="rgba(255,255,255,0.5)" font-weight="bold">PORTFOLIO // SYSTEM.RC.01</text>
+  <text x="1120" y="95" font-family="'Courier New', monospace" font-size="14" letter-spacing="0.25em" fill="rgba(255,255,255,0.5)" font-weight="bold" text-anchor="end">ARVADA, CO // 2026</text>
+
+  <!-- Center Monogram Box -->
+  <g transform="translate(600, 255)">
+    <rect x="-140" y="-140" width="280" height="280" rx="36" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.3)" stroke-width="2.5"/>
+    <rect x="-124" y="-124" width="248" height="248" rx="28" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+    <text x="0" y="68" font-family="-apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', 'Plus Jakarta Sans', sans-serif" font-size="195" font-weight="900" letter-spacing="-0.07em" fill="#ffffff" text-anchor="middle">RC</text>
+    <circle cx="108" cy="-108" r="8" fill="#00E5FF"/>
+    <circle cx="108" cy="-108" r="18" fill="none" stroke="#00E5FF" stroke-width="2" opacity="0.6"/>
+  </g>
+
+  <!-- Name & Title -->
+  <text x="600" y="455" font-family="-apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', sans-serif" font-size="38" font-weight="800" letter-spacing="0.08em" fill="#ffffff" text-anchor="middle">RITVIK CHUNAMARI</text>
+  <text x="600" y="495" font-family="'Courier New', monospace" font-size="16" letter-spacing="0.3em" fill="rgba(255,255,255,0.65)" text-anchor="middle">UX DESIGNER &amp; CREATIVE TECHNOLOGIST</text>
+
+  <!-- Bottom Accent Divider -->
+  <line x1="450" y1="535" x2="750" y2="535" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  <circle cx="600" cy="535" r="3.5" fill="#00E5FF"/>
+</svg>
