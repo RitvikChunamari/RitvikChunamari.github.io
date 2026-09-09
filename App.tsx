@@ -1,0 +1,419 @@
+
+import React, { useEffect, useState, useRef } from 'react';
+import Header from './components/Header';
+import Hero from './components/Hero';
+import ProjectList from './components/ProjectList';
+import About from './components/About';
+import Footer from './components/Footer';
+import ProjectDetail from './components/ProjectDetail';
+import CinematicBackground from './components/CinematicBackground';
+import GlobalFluidCanvas from './components/GlobalFluidCanvas';
+import MinimalLoader from './components/MinimalLoader';
+import { resumeData } from './data';
+import { Project } from './types';
+
+interface ErrorBoundaryProps {
+  children: React.ReactNode;
+  onReset?: () => void;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
+
+class ErrorBoundary extends React.Component<any, any> {
+  public state: any = { hasError: false, error: null };
+
+  constructor(props: any) {
+    super(props);
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: any) {
+    console.error("ErrorBoundary caught:", error, errorInfo);
+  }
+
+  render() {
+    const { hasError, error } = (this as any).state || {};
+    const { children, onReset } = (this as any).props || {};
+
+    if (hasError) {
+      return (
+        <div className="min-h-screen bg-cinema-black text-white flex flex-col items-center justify-center p-6 sm:p-12 relative z-50">
+          <div className="max-w-md w-full bg-neutral-900 border border-white/20 p-8 rounded-lg text-center space-y-5 shadow-2xl">
+            <div className="w-12 h-12 mx-auto rounded-full bg-red-500/20 text-red-400 flex items-center justify-center font-mono font-bold text-lg border border-red-500/40">
+              !
+            </div>
+            <h2 className="text-xl font-bold uppercase tracking-tight text-white">Something went wrong</h2>
+            <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed font-mono">
+              {error?.message || "An unexpected error occurred while loading this view."}
+            </p>
+            <div className="flex items-center justify-center gap-3 pt-2">
+              <button 
+                onClick={() => {
+                  (this as any).setState({ hasError: false, error: null });
+                  if (onReset) onReset();
+                }} 
+                className="px-5 py-2.5 bg-white text-black font-mono text-xs uppercase font-bold rounded-full hover:bg-neutral-200 transition-colors"
+              >
+                Return to Index
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return children;
+  }
+}
+
+const App: React.FC = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [showContent, setShowContent] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isEdithMode, setIsEdithMode] = useState(true);
+  
+  // Navigation State
+  const [currentView, setCurrentView] = useState<'home' | 'project'>('home');
+  const [activeProject, setActiveProject] = useState<Project | null>(null);
+  
+  // Animation Refs
+  const requestRef = useRef<number>();
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const cursorTextRef = useRef<HTMLSpanElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Virtual Scroll State
+  const scrollY = useRef(0);
+  const targetScrollY = useRef(0);
+  const scrollVelocityRef = useRef(0);
+
+  // Physics State
+  const mouse = useRef({ x: 0, y: 0, prevX: 0, prevY: 0 });
+  const cursor = useRef({ x: 0, y: 0 });
+  const cursorDotRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+    scrollY.current = 0;
+    targetScrollY.current = 0;
+  }, []);
+
+  const handleLoaderComplete = () => {
+    window.scrollTo(0, 0);
+    scrollY.current = 0;
+    targetScrollY.current = 0;
+    setScrollProgress(0);
+    if (scrollRef.current) {
+      scrollRef.current.style.transform = 'translate3d(0, 0px, 0)';
+    }
+    setIsLoaded(true);
+    setShowContent(true);
+  };
+  
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouse.current = { x: e.clientX, y: e.clientY };
+    };
+
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      
+      const cursorTextAttr = target.closest('[data-cursor-text]')?.getAttribute('data-cursor-text');
+      
+      if (cursorRef.current && cursorTextRef.current) {
+        if (cursorTextAttr) {
+          // Focused targeting ring with custom label
+          cursorRef.current.className = "fixed top-0 left-0 pointer-events-none z-[10000] rounded-full will-change-transform hidden md:flex items-center justify-center backdrop-blur-[2px] transition-[width,height,background-color,border-color] duration-200 ease-out w-[68px] h-[68px] border border-white bg-black/60";
+          cursorTextRef.current.textContent = cursorTextAttr;
+          cursorTextRef.current.style.opacity = '1';
+        } else if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('a') || target.closest('button')) {
+          // Hover link / button state: crisp targeting reticle
+          cursorRef.current.className = "fixed top-0 left-0 pointer-events-none z-[10000] rounded-full will-change-transform hidden md:flex items-center justify-center backdrop-blur-[1px] transition-[width,height,background-color,border-color] duration-200 ease-out w-[52px] h-[52px] border border-white/90 bg-white/10";
+          cursorTextRef.current.style.opacity = '0';
+        } else {
+          // Default Sleek Ring
+          cursorRef.current.className = "fixed top-0 left-0 pointer-events-none z-[10000] rounded-full will-change-transform hidden md:flex items-center justify-center backdrop-blur-[1px] transition-[width,height,background-color,border-color] duration-200 ease-out w-[44px] h-[44px] border border-white/40 bg-white/[0.03]";
+          cursorTextRef.current.style.opacity = '0';
+        }
+      }
+    };
+
+    // Virtual Scroll Setup
+    const handleScroll = () => {
+      if (currentView === 'home') {
+        targetScrollY.current = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = targetScrollY.current / docHeight;
+        setScrollProgress(progress);
+      }
+    };
+
+    // Resize Observer for Body Height
+    const resizeObserver = new ResizeObserver((entries) => {
+      if (currentView === 'home') {
+        window.requestAnimationFrame(() => {
+          for (let entry of entries) {
+            document.body.style.height = `${entry.contentRect.height}px`;
+          }
+        });
+      }
+    });
+    if (scrollRef.current) resizeObserver.observe(scrollRef.current);
+
+
+    const handleMouseDown = () => {
+      if (cursorRef.current) cursorRef.current.classList.add('scale-75');
+    };
+
+    const handleMouseUp = () => {
+      if (cursorRef.current) cursorRef.current.classList.remove('scale-75');
+    };
+
+    // Main Animation Loop (60fps)
+    const animate = () => {
+      // 1. Instant Precision Dot (Zero Lag)
+      if (cursorDotRef.current) {
+        cursorDotRef.current.style.transform = `translate3d(${mouse.current.x}px, ${mouse.current.y}px, 0) translate(-50%, -50%)`;
+      }
+
+      // 2. Fluid Elastic Cursor Ring with Velocity Squash & Stretch
+      const dx = mouse.current.x - cursor.current.x;
+      const dy = mouse.current.y - cursor.current.y;
+      
+      cursor.current.x += dx * 0.16;
+      cursor.current.y += dy * 0.16;
+
+      const speed = Math.hypot(dx, dy);
+      const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+      const stretch = Math.min(1.4, 1 + speed * 0.0028);
+      const squash = Math.max(0.72, 1 - speed * 0.0018);
+
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate3d(${cursor.current.x}px, ${cursor.current.y}px, 0) translate(-50%, -50%) rotate(${angle}deg) scale(${stretch}, ${squash})`;
+      }
+
+      // 3. Virtual Scroll (Lerp) - Only active in Home view
+      if (currentView === 'home') {
+        const diff = targetScrollY.current - scrollY.current;
+        scrollY.current += diff * 0.05; // Slightly heavier inertia
+        scrollVelocityRef.current = diff;
+        
+        if (scrollRef.current) {
+          const tiltX = Math.max(-6, Math.min(6, diff * 0.05));
+          scrollRef.current.style.transform = `translate3d(0, -${scrollY.current}px, 0) rotateX(${tiltX}deg)`;
+          scrollRef.current.style.perspective = '1200px';
+          scrollRef.current.style.transformStyle = 'preserve-3d';
+        }
+      }
+
+      requestRef.current = requestAnimationFrame(animate);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('mouseover', handleMouseOver);
+    window.addEventListener('scroll', handleScroll);
+    requestRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('mouseover', handleMouseOver);
+      window.removeEventListener('scroll', handleScroll);
+      if (requestRef.current) cancelAnimationFrame(requestRef.current);
+      resizeObserver.disconnect();
+    };
+  }, [currentView]);
+
+  const handleNavigate = (sectionId: string) => {
+    if (currentView === 'project') {
+       handleBackToHome();
+       setTimeout(() => {
+          const element = document.getElementById(sectionId);
+          if (element) {
+              element.scrollIntoView();
+          }
+       }, 100);
+       return;
+    }
+
+     const element = document.getElementById(sectionId);
+     if (element) {
+        const top = element.getBoundingClientRect().top + scrollY.current;
+        window.scrollTo({
+           top: top,
+           behavior: 'smooth'
+        });
+     }
+  };
+
+  const handleProjectClick = (project: Project) => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setActiveProject(project);
+      setCurrentView('project');
+      window.scrollTo(0, 0);
+      document.body.style.height = 'auto'; // Reset virtual scroll height
+      
+      // Reset Virtual Scroll Props
+      scrollY.current = 0;
+      targetScrollY.current = 0;
+      if (scrollRef.current) {
+         scrollRef.current.style.transform = `translate3d(0, 0, 0)`;
+      }
+      setTimeout(() => setIsTransitioning(false), 100);
+    }, 800);
+  };
+
+  const handleBackToHome = () => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentView('home');
+      setActiveProject(null);
+      window.scrollTo(0, 0);
+      setTimeout(() => setIsTransitioning(false), 100);
+    }, 800);
+  };
+  
+  const handleNextProject = () => {
+     if (!activeProject) return;
+     setIsTransitioning(true);
+     setTimeout(() => {
+       const currentIndex = resumeData.projects.findIndex(p => p.title === activeProject.title);
+       const nextIndex = (currentIndex + 1) % resumeData.projects.length;
+       setActiveProject(resumeData.projects[nextIndex]);
+       window.scrollTo(0, 0);
+       setTimeout(() => setIsTransitioning(false), 100);
+     }, 800);
+  };
+
+  // SVG Circle Calculations
+  const radius = 20;
+  const circumference = 2 * Math.PI * radius;
+  const dashoffset = circumference - scrollProgress * circumference;
+
+  return (
+    <>
+      {/* Minimal Studio Ident Preloader */}
+      {!isLoaded && <MinimalLoader onComplete={handleLoaderComplete} />}
+      
+      {/* Global Corner Registration Marks */}
+      <div className="fixed inset-0 pointer-events-none z-[8000] mix-blend-difference p-6 md:p-12 opacity-50">
+         <div className="absolute top-6 left-6 w-2 h-2 border-t border-l border-white"></div>
+         <div className="absolute top-6 right-6 w-2 h-2 border-t border-r border-white"></div>
+         <div className="absolute bottom-6 left-6 w-2 h-2 border-b border-l border-white"></div>
+         <div className="absolute bottom-6 right-6 w-2 h-2 border-b border-r border-white"></div>
+      </div>
+
+      {/* Page Transition Overlay */}
+      <div 
+        className={`fixed inset-0 bg-black z-[9000] pointer-events-none transition-transform duration-700 ease-expo ${
+          isTransitioning ? 'translate-y-0' : 'translate-y-full'
+        }`}
+        style={{ transformOrigin: 'bottom' }}
+      ></div>
+
+      {/* Film Grain */}
+      <div className="fixed inset-0 pointer-events-none z-[8600] opacity-[0.04] mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }}></div>
+
+      {/* Persistent Global 3D WebGL Fluid Atmosphere (Across Hero, Works & Portfolio) */}
+      <GlobalFluidCanvas scrollProgress={scrollProgress} />
+
+      {/* Continuous Swiss Architectural Grid Columns */}
+      <div className="fixed inset-0 pointer-events-none z-[8] overflow-hidden" aria-hidden="true">
+        <div className="absolute top-0 bottom-0 left-6 md:left-16 w-px bg-white/[0.04]" />
+        <div className="absolute top-0 bottom-0 right-6 md:right-16 w-px bg-white/[0.04]" />
+      </div>
+
+      {/* Google Antigravity Interactive Dots Background (Global across whole website) */}
+      <CinematicBackground />
+
+      <div className={`min-h-screen text-cinema-white antialiased transition-opacity duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${showContent ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        
+        {/* Precision Micro Dot (Zero Latency) */}
+        <div 
+          ref={cursorDotRef}
+          className="fixed top-0 left-0 pointer-events-none z-[10001] w-1.5 h-1.5 rounded-full bg-white hidden md:block will-change-transform shadow-[0_0_8px_rgba(255,255,255,0.9)]"
+        />
+
+        {/* Fluid Elastic Follower Ring with Velocity Stretch */}
+        <div 
+          ref={cursorRef}
+          className="fixed top-0 left-0 pointer-events-none z-[10000] rounded-full will-change-transform hidden md:flex items-center justify-center backdrop-blur-[1px] transition-[width,height,background-color,border-color] duration-200 ease-out w-[44px] h-[44px] border border-white/40 bg-white/[0.03]"
+          style={{
+             boxShadow: '0 0 25px rgba(255,255,255,0.08)'
+          }}
+        >
+          <span ref={cursorTextRef} className="text-white text-[9px] font-mono font-bold uppercase tracking-widest opacity-0 transition-opacity duration-150"></span>
+        </div>
+
+        {/* Circular Scroll Progress Indicator */}
+        {currentView === 'home' && (
+          <div className="fixed bottom-8 right-8 z-[50] mix-blend-difference hidden md:block">
+            <svg width="50" height="50" className="transform -rotate-90">
+              <circle 
+                cx="25" cy="25" r={radius} 
+                fill="transparent" 
+                stroke="rgba(255,255,255,0.1)" 
+                strokeWidth="2" 
+              />
+              <circle 
+                cx="25" cy="25" r={radius} 
+                fill="transparent" 
+                stroke="white" 
+                strokeWidth="2" 
+                strokeDasharray={circumference} 
+                strokeDashoffset={dashoffset}
+                className="transition-all duration-100 ease-linear"
+              />
+            </svg>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-[8px] font-mono text-white">{Math.round(scrollProgress * 100)}%</span>
+            </div>
+          </div>
+        )}
+
+        {currentView === 'home' && <Header onNavigate={handleNavigate} />}
+        
+        {/* VIEW ROUTER */}
+        {currentView === 'home' ? (
+          <div 
+             ref={scrollRef} 
+             className="fixed top-0 left-0 w-full z-10 origin-center will-change-transform"
+          >
+            <Hero isLoaded={showContent} />
+            <ProjectList 
+              projects={resumeData.projects} 
+              onProjectClick={handleProjectClick} 
+              scrollProgress={scrollProgress} 
+            />
+            <About data={resumeData} />
+            <Footer personal={resumeData.personal} />
+          </div>
+        ) : (
+           <ErrorBoundary onReset={handleBackToHome}>
+             <ProjectDetail 
+                project={activeProject!} 
+                onBack={handleBackToHome} 
+                onNext={handleNextProject}
+             />
+           </ErrorBoundary>
+        )}
+        
+      </div>
+    </>
+  );
+};
+
+export default App;

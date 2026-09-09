@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth snap-y snap-proximity scroll-pt-20">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ritvik Chunamari | Creative Designer and Vibe Coder</title>
+    <meta name="description" content="Portfolio of Ritvik Chunamari — Creative Designer and Vibe Coder." />
+    <meta name="theme-color" content="#050507" />
+
+    <!-- RC Favicon & Apple Touch Icon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- Open Graph / Social Media Preview Card -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Ritvik Chunamari | Creative Designer and Vibe Coder" />
+    <meta property="og:description" content="Portfolio of Ritvik Chunamari — Creative Designer and Vibe Coder." />
+    <meta property="og:image" content="/og-thumbnail.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Ritvik Chunamari | Creative Designer and Vibe Coder" />
+    <meta name="twitter:description" content="Portfolio of Ritvik Chunamari — Creative Designer and Vibe Coder." />
+    <meta name="twitter:image" content="/og-thumbnail.svg" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+              mono: ['Courier Prime', 'monospace'],
+            },
+            colors: {
+              'cinema-black': '#000000',
+              'cinema-white': '#ededed',
+              'cinema-gray': '#888888',
+            },
+            cursor: {
+              'none': 'none',
+            },
+            transitionTimingFunction: {
+              'expo': 'cubic-bezier(0.19, 1, 0.22, 1)',
+              'slow': 'cubic-bezier(0.4, 0, 0.2, 1)',
+            },
+            animation: {
+              'blur-in': 'blurIn 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards',
+              'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              'scale-y': 'scaleY 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards',
+              'scale-x': 'scaleX 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards',
+              'marquee': 'marquee 30s linear infinite',
+            },
+            keyframes: {
+              blurIn: {
+                '0%': { filter: 'blur(10px)', opacity: '0', transform: 'translateY(10px)' },
+                '100%': { filter: 'blur(0)', opacity: '1', transform: 'translateY(0)' },
+              },
+              fadeInUp: {
+                '0%': { transform: 'translateY(20px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+              scaleY: {
+                '0%': { transform: 'scaleY(0)' },
+                '100%': { transform: 'scaleY(1)' },
+              },
+              scaleX: {
+                '0%': { transform: 'scaleX(0)' },
+                '100%': { transform: 'scaleX(1)' },
+              },
+              marquee: {
+                '0%': { transform: 'translateX(0)' },
+                '100%': { transform: 'translateX(-50%)' },
+              }
+            }
+          },
+        },
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@400;700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;800&family=Montserrat:wght@100;200;300;400;500;700;900&family=Oswald:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Space+Grotesk:wght@400;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      @font-face {
+        font-family: 'Samarkan';
+        src: url('https://fonts.cdnfonts.com/s/14777/SAMARN__.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      body {
+        background-color: #050505;
+        color: #ededed;
+        font-family: 'Inter', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        cursor: none;
+        margin: 0;
+      }
+      
+      ::selection {
+        background-color: rgba(255, 255, 255, 0.9);
+        color: #000000;
+        text-shadow: none;
+      }
+
+      /* Heavy Film Grain for Lusion look */
+      .noise-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9990;
+        opacity: 0.07; 
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        animation: noise 0.2s steps(4) infinite;
+      }
+
+      @keyframes noise {
+        0% { transform: translate(0,0); }
+        10% { transform: translate(-5px,-5px); }
+        20% { transform: translate(-10px,5px); }
+        30% { transform: translate(5px,-10px); }
+        40% { transform: translate(-5px,15px); }
+        50% { transform: translate(-10px,5px); }
+        60% { transform: translate(15px,0); }
+        70% { transform: translate(0,10px); }
+        80% { transform: translate(-15px,0); }
+        90% { transform: translate(10px,5px); }
+        100% { transform: translate(5px,0); }
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #000;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 2px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+
+      .stroke-text {
+        -webkit-text-stroke: 1px black;
+        color: transparent;
+      }
+      
+      /* Lusion-style Chromatic Text Split */
+      .chromatic-text {
+        text-shadow: 2px 0 rgba(255,0,0,0.5), -2px 0 rgba(0,255,255,0.5);
+      }
+      
+      .origin-top { transform-origin: top; }
+      .origin-left { transform-origin: left; }
+      
+      h1, h2, h3, a, p {
+        text-rendering: optimizeLegibility;
+      }
+
+      /* Liquid Filter for distortions */
+      .liquid-transition {
+        filter: url(#liquid);
+      }
+
+      /* vanlent.dev Blueprint Grid & Corner Brackets */
+      :root {
+        --grid-border: rgba(255, 255, 255, 0.07);
+        --corner-length: 16px;
+      }
+      .font-montserrat {
+        font-family: 'Montserrat', sans-serif;
+      }
+      .font-ibm {
+        font-family: 'IBM Plex Mono', monospace;
+      }
+      .s-border-tl {
+        box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.3), inset 1px 0 0 0 rgba(255, 255, 255, 0.3);
+      }
+      .s-border-tr {
+        box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.3), inset -1px 0 0 0 rgba(255, 255, 255, 0.3);
+      }
+      .s-border-bl {
+        box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 0.3), inset 1px 0 0 0 rgba(255, 255, 255, 0.3);
+      }
+      .s-border-br {
+        box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 0.3), inset -1px 0 0 0 rgba(255, 255, 255, 0.3);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react-dom": "https://aistudiocdn.com/react-dom@^19.2.0",
+    "gsap": "https://esm.sh/gsap",
+    "gsap/ScrollTrigger": "https://esm.sh/gsap/ScrollTrigger",
+    "gsap/": "https://aistudiocdn.com/gsap@^3.13.0/"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <div class="noise-overlay"></div>
+    <!-- Liquid Distortion Filter -->
+    <svg style="visibility: hidden; position: absolute;" width="0" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <defs>
+            <filter id="liquid">
+                <feTurbulence type="fractalNoise" baseFrequency="0.01 0.01" numOctaves="1" result="warp" />
+                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" scale="30" in="SourceGraphic" in2="warp" />
+            </filter>
+        </defs>
+    </svg>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
