@@ -145,6 +145,19 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
     return () => window.removeEventListener('resize', adjustFontSize);
   }, [isLoaded]);
 
+  const touchFadeRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const resetInteractiveState = () => {
+    setMousePos({ x: 0, y: 0 });
+    setRawMousePos({ clientX: -2000, clientY: -2000 });
+  };
+
+  useEffect(() => {
+    return () => {
+      if (touchFadeRef.current) clearTimeout(touchFadeRef.current);
+    };
+  }, []);
+
   const handleMouseMove = (e: React.MouseEvent) => {
     const { clientX, clientY } = e;
     const { innerWidth, innerHeight } = window;
@@ -152,6 +165,45 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
     const y = (clientY / innerHeight - 0.5) * 2;
     setMousePos({ x, y });
     setRawMousePos({ clientX, clientY });
+  };
+
+  const handleMouseLeave = () => {
+    resetInteractiveState();
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length > 0) {
+      const t = e.touches[0];
+      const { clientX, clientY } = t;
+      const { innerWidth, innerHeight } = window;
+      const x = (clientX / innerWidth - 0.5) * 2;
+      const y = (clientY / innerHeight - 0.5) * 2;
+      setMousePos({ x, y });
+      setRawMousePos({ clientX, clientY });
+
+      if (touchFadeRef.current) clearTimeout(touchFadeRef.current);
+      touchFadeRef.current = setTimeout(resetInteractiveState, 600);
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (e.touches.length > 0) {
+      const t = e.touches[0];
+      const { clientX, clientY } = t;
+      const { innerWidth, innerHeight } = window;
+      const x = (clientX / innerWidth - 0.5) * 2;
+      const y = (clientY / innerHeight - 0.5) * 2;
+      setMousePos({ x, y });
+      setRawMousePos({ clientX, clientY });
+
+      if (touchFadeRef.current) clearTimeout(touchFadeRef.current);
+      touchFadeRef.current = setTimeout(resetInteractiveState, 450);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (touchFadeRef.current) clearTimeout(touchFadeRef.current);
+    touchFadeRef.current = setTimeout(resetInteractiveState, 150);
   };
 
   const scrollToWork = () => {
@@ -180,6 +232,11 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true }) => {
       ref={heroRef}
       id="home"
       onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={resetInteractiveState}
       className="min-h-screen w-full relative flex flex-col justify-between pt-24 pb-8 md:pt-32 md:pb-12 px-6 md:px-16 text-[#ededed] select-none"
       style={{
         opacity: scrollFade,

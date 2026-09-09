@@ -96,7 +96,9 @@ const CinematicBackground: React.FC = () => {
       vy: 0,
       radius: 110,      // Compact, refined repulsion field radius
       maxForce: 7.0,    // Delicate displacement strength
-      isActive: false
+      isActive: false,
+      fieldStrength: 0.0,
+      targetStrength: 0.0
     };
 
     let animationFrameId: number;
@@ -108,6 +110,17 @@ const CinematicBackground: React.FC = () => {
 
       time += 0.018;
       ctx.clearRect(0, 0, width, height);
+
+      // Smoothly interpolate field strength for organic soft fade in and out
+      mouse.fieldStrength += (mouse.targetStrength - mouse.fieldStrength) * 0.065;
+      if (mouse.fieldStrength < 0.003) {
+        mouse.fieldStrength = 0;
+        if (mouse.targetStrength === 0) {
+          mouse.isActive = false;
+        }
+      } else {
+        mouse.isActive = true;
+      }
 
       // Compute cursor velocity wake
       mouse.vx = (mouse.x - mouse.prevX) * 0.32;
@@ -145,8 +158,8 @@ const CinematicBackground: React.FC = () => {
         const targetHomeX = d.originX + waveX;
         const targetHomeY = d.originY + waveY;
 
-        // Interaction with Cursor Antigravity Force Field
-        if (mouse.isActive) {
+        // Interaction with Cursor Antigravity Force Field (Soft Fading)
+        if (mouse.isActive && mouse.fieldStrength > 0.001) {
           const dx = d.x - mouse.x;
           const dy = d.y - mouse.y;
           const distSq = dx * dx + dy * dy;
@@ -154,16 +167,18 @@ const CinematicBackground: React.FC = () => {
           if (distSq < mouse.radius * mouse.radius && distSq > 0.01) {
             const dist = Math.sqrt(distSq);
             const normDist = 1 - dist / mouse.radius;
-            const force = normDist * normDist * mouse.maxForce;
+            const force = normDist * normDist * mouse.maxForce * mouse.fieldStrength;
 
             const angle = Math.atan2(dy, dx);
-            d.vx += Math.cos(angle) * force * 0.85 + mouse.vx * 0.14;
-            d.vy += Math.sin(angle) * force * 0.85 + mouse.vy * 0.14;
+            d.vx += Math.cos(angle) * force * 0.85 + mouse.vx * 0.14 * mouse.fieldStrength;
+            d.vy += Math.sin(angle) * force * 0.85 + mouse.vy * 0.14 * mouse.fieldStrength;
 
-            // Illuminate & Scale active dots to Pure White
+            // Illuminate & Scale active dots to Pure White modulated by soft fieldStrength
             d.highlighted = true;
-            d.currentAlpha += (0.92 - d.currentAlpha) * 0.22;
-            d.currentRadius += (d.baseRadius * 1.8 - d.currentRadius) * 0.22;
+            const targetAlpha = d.baseAlpha + (0.92 - d.baseAlpha) * mouse.fieldStrength;
+            d.currentAlpha += (targetAlpha - d.currentAlpha) * 0.22;
+            const targetRadius = d.baseRadius + (d.baseRadius * 1.8 - d.baseRadius) * mouse.fieldStrength;
+            d.currentRadius += (targetRadius - d.currentRadius) * 0.22;
             activeDots.push(d);
           } else {
             d.highlighted = false;
@@ -224,7 +239,7 @@ const CinematicBackground: React.FC = () => {
 
           if (ldistSq < lineThreshold * lineThreshold) {
             const ldist = Math.sqrt(ldistSq);
-            const lineAlpha = (1 - ldist / lineThreshold) * 0.28;
+            const lineAlpha = (1 - ldist / lineThreshold) * 0.28 * mouse.fieldStrength;
 
             ctx.beginPath();
             ctx.moveTo(d1.x, d1.y);
@@ -241,19 +256,70 @@ const CinematicBackground: React.FC = () => {
 
     render();
 
-    // Event Listeners
+    // Event Listeners with Mobile/Tablet Touch Support and Soft Fade
+    let fadeTimer: ReturnType<typeof setTimeout> | null = null;
+
+    const isTouchOrMobile = () => 
+      typeof window !== 'undefined' && 
+      (window.innerWidth <= 1024 || 'ontouchstart' in window || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0));
+
+    const triggerSoftFade = (delay = 450) => {
+      if (fadeTimer) clearTimeout(fadeTimer);
+      fadeTimer = setTimeout(() => {
+        mouse.targetStrength = 0;
+      }, delay);
+    };
+
     const handleMouseMove = (e: MouseEvent) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
+      mouse.targetStrength = 1.0;
       mouse.isActive = true;
+
+      // On mobile & tablet screen, once moved, initiate a soft fade
+      if (isTouchOrMobile()) {
+        triggerSoftFade(500);
+      }
     };
 
     const handleMouseLeave = () => {
-      mouse.isActive = false;
-      mouse.x = -2000;
-      mouse.y = -2000;
-      mouse.prevX = -2000;
-      mouse.prevY = -2000;
+      mouse.targetStrength = 0;
+      triggerSoftFade(0);
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        const t = e.touches[0];
+        mouse.x = t.clientX;
+        mouse.y = t.clientY;
+        mouse.prevX = t.clientX;
+        mouse.prevY = t.clientY;
+        mouse.targetStrength = 1.0;
+        mouse.isActive = true;
+        // Fade once touched
+        triggerSoftFade(650);
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        const t = e.touches[0];
+        mouse.x = t.clientX;
+        mouse.y = t.clientY;
+        mouse.targetStrength = 1.0;
+        mouse.isActive = true;
+        // Fade once moved
+        triggerSoftFade(450);
+      }
+    };
+
+    const handleTouchEnd = () => {
+      // Soft fade immediately as touch ends
+      triggerSoftFade(150);
+    };
+
+    const handleTouchCancel = () => {
+      triggerSoftFade(0);
     };
 
     const handleMouseDown = (e: MouseEvent) => {
@@ -283,13 +349,22 @@ const CinematicBackground: React.FC = () => {
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     window.addEventListener('mouseleave', handleMouseLeave, { passive: true });
     window.addEventListener('mousedown', handleMouseDown, { passive: true });
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+    window.addEventListener('touchcancel', handleTouchCancel, { passive: true });
     window.addEventListener('resize', handleResize, { passive: true });
     document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
+      if (fadeTimer) clearTimeout(fadeTimer);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+      window.removeEventListener('touchcancel', handleTouchCancel);
       window.removeEventListener('resize', handleResize);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       cancelAnimationFrame(animationFrameId);

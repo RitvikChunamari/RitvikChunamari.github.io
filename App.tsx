@@ -94,9 +94,11 @@ const App: React.FC = () => {
   const scrollVelocityRef = useRef(0);
 
   // Physics State
-  const mouse = useRef({ x: 0, y: 0, prevX: 0, prevY: 0 });
-  const cursor = useRef({ x: 0, y: 0 });
+  const mouse = useRef({ x: -2000, y: -2000, prevX: -2000, prevY: -2000 });
+  const cursor = useRef({ x: -2000, y: -2000 });
   const cursorDotRef = useRef<HTMLDivElement>(null);
+  const cursorFadeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isMouseDown = useRef(false);
 
   useEffect(() => {
     if ('scrollRestoration' in history) {
@@ -120,8 +122,73 @@ const App: React.FC = () => {
   };
   
   useEffect(() => {
+    const isTouchOrMobile = () => 
+      typeof window !== 'undefined' && 
+      (window.innerWidth <= 1024 || 'ontouchstart' in window || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0));
+
+    const showCursor = (opacity = '1') => {
+      if (cursorRef.current) cursorRef.current.style.opacity = opacity;
+      if (cursorDotRef.current) cursorDotRef.current.style.opacity = opacity;
+    };
+
+    const softFadeCursor = () => {
+      if (cursorRef.current) cursorRef.current.style.opacity = '0';
+      if (cursorDotRef.current) cursorDotRef.current.style.opacity = '0';
+    };
+
+    const scheduleCursorFade = (delay = 500) => {
+      if (cursorFadeTimer.current) clearTimeout(cursorFadeTimer.current);
+      cursorFadeTimer.current = setTimeout(() => {
+        softFadeCursor();
+      }, delay);
+    };
+
     const handleMouseMove = (e: MouseEvent) => {
+      if (cursor.current.x < -1000) {
+        cursor.current.x = e.clientX;
+        cursor.current.y = e.clientY;
+      }
       mouse.current = { x: e.clientX, y: e.clientY };
+      showCursor('1');
+
+      if (isTouchOrMobile()) {
+        // On mobile & tablet screen, fade once it is moved
+        scheduleCursorFade(600);
+      }
+    };
+
+    const handleMouseLeave = () => {
+      softFadeCursor();
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        const t = e.touches[0];
+        cursor.current.x = t.clientX;
+        cursor.current.y = t.clientY;
+        mouse.current = { x: t.clientX, y: t.clientY };
+        showCursor('0.85');
+        scheduleCursorFade(650);
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        const t = e.touches[0];
+        mouse.current = { x: t.clientX, y: t.clientY };
+        showCursor('0.85');
+        // Once moved or dragged, initiate soft fade
+        scheduleCursorFade(450);
+      }
+    };
+
+    const handleTouchEnd = () => {
+      // Soft fade as soon as touch ends
+      scheduleCursorFade(150);
+    };
+
+    const handleTouchCancel = () => {
+      softFadeCursor();
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -132,16 +199,16 @@ const App: React.FC = () => {
       if (cursorRef.current && cursorTextRef.current) {
         if (cursorTextAttr) {
           // Focused targeting ring with custom label
-          cursorRef.current.className = "fixed top-0 left-0 pointer-events-none z-[10000] rounded-full will-change-transform hidden md:flex items-center justify-center backdrop-blur-[2px] transition-[width,height,background-color,border-color] duration-200 ease-out w-[68px] h-[68px] border border-white bg-black/60";
+          cursorRef.current.className = "fixed top-0 left-0 pointer-events-none z-[10000] rounded-full will-change-transform flex items-center justify-center backdrop-blur-[2px] transition-[width,height,background-color,border-color,opacity] duration-500 ease-out w-[68px] h-[68px] border border-white bg-black/60";
           cursorTextRef.current.textContent = cursorTextAttr;
           cursorTextRef.current.style.opacity = '1';
         } else if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('a') || target.closest('button')) {
           // Hover link / button state: crisp targeting reticle
-          cursorRef.current.className = "fixed top-0 left-0 pointer-events-none z-[10000] rounded-full will-change-transform hidden md:flex items-center justify-center backdrop-blur-[1px] transition-[width,height,background-color,border-color] duration-200 ease-out w-[52px] h-[52px] border border-white/90 bg-white/10";
+          cursorRef.current.className = "fixed top-0 left-0 pointer-events-none z-[10000] rounded-full will-change-transform flex items-center justify-center backdrop-blur-[1px] transition-[width,height,background-color,border-color,opacity] duration-500 ease-out w-[52px] h-[52px] border border-white/90 bg-white/10";
           cursorTextRef.current.style.opacity = '0';
         } else {
           // Default Sleek Ring
-          cursorRef.current.className = "fixed top-0 left-0 pointer-events-none z-[10000] rounded-full will-change-transform hidden md:flex items-center justify-center backdrop-blur-[1px] transition-[width,height,background-color,border-color] duration-200 ease-out w-[44px] h-[44px] border border-white/40 bg-white/[0.03]";
+          cursorRef.current.className = "fixed top-0 left-0 pointer-events-none z-[10000] rounded-full will-change-transform flex items-center justify-center backdrop-blur-[1px] transition-[width,height,background-color,border-color,opacity] duration-500 ease-out w-[44px] h-[44px] border border-white/40 bg-white/[0.03]";
           cursorTextRef.current.style.opacity = '0';
         }
       }
@@ -169,13 +236,16 @@ const App: React.FC = () => {
     });
     if (scrollRef.current) resizeObserver.observe(scrollRef.current);
 
-
     const handleMouseDown = () => {
-      if (cursorRef.current) cursorRef.current.classList.add('scale-75');
+      isMouseDown.current = true;
+      showCursor('1');
     };
 
     const handleMouseUp = () => {
-      if (cursorRef.current) cursorRef.current.classList.remove('scale-75');
+      isMouseDown.current = false;
+      if (isTouchOrMobile()) {
+        scheduleCursorFade(300);
+      }
     };
 
     // Main Animation Loop (60fps)
@@ -189,13 +259,14 @@ const App: React.FC = () => {
       const dx = mouse.current.x - cursor.current.x;
       const dy = mouse.current.y - cursor.current.y;
       
-      cursor.current.x += dx * 0.16;
-      cursor.current.y += dy * 0.16;
+      cursor.current.x += dx * 0.18;
+      cursor.current.y += dy * 0.18;
 
       const speed = Math.hypot(dx, dy);
       const angle = Math.atan2(dy, dx) * (180 / Math.PI);
-      const stretch = Math.min(1.4, 1 + speed * 0.0028);
-      const squash = Math.max(0.72, 1 - speed * 0.0018);
+      const clickFactor = isMouseDown.current ? 0.78 : 1.0;
+      const stretch = Math.min(1.4, 1 + speed * 0.0028) * clickFactor;
+      const squash = Math.max(0.72, 1 - speed * 0.0018) * clickFactor;
 
       if (cursorRef.current) {
         cursorRef.current.style.transform = `translate3d(${cursor.current.x}px, ${cursor.current.y}px, 0) translate(-50%, -50%) rotate(${angle}deg) scale(${stretch}, ${squash})`;
@@ -219,18 +290,29 @@ const App: React.FC = () => {
     };
 
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseleave', handleMouseLeave);
     window.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+    window.addEventListener('touchcancel', handleTouchCancel, { passive: true });
     window.addEventListener('mouseover', handleMouseOver);
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     requestRef.current = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+      window.removeEventListener('touchcancel', handleTouchCancel);
       window.removeEventListener('mouseover', handleMouseOver);
       window.removeEventListener('scroll', handleScroll);
+      if (cursorFadeTimer.current) clearTimeout(cursorFadeTimer.current);
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
       resizeObserver.disconnect();
     };
@@ -341,16 +423,16 @@ const App: React.FC = () => {
 
       <div className={`min-h-screen text-cinema-white antialiased transition-opacity duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${showContent ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         
-        {/* Precision Micro Dot (Zero Latency) */}
+        {/* Precision Micro Dot (Zero Latency) with Soft Fade */}
         <div 
           ref={cursorDotRef}
-          className="fixed top-0 left-0 pointer-events-none z-[10001] w-1.5 h-1.5 rounded-full bg-white hidden md:block will-change-transform shadow-[0_0_8px_rgba(255,255,255,0.9)]"
+          className="fixed top-0 left-0 pointer-events-none z-[10001] w-1.5 h-1.5 rounded-full bg-white will-change-transform shadow-[0_0_8px_rgba(255,255,255,0.9)] opacity-0 transition-opacity duration-500 ease-out"
         />
 
-        {/* Fluid Elastic Follower Ring with Velocity Stretch */}
+        {/* Fluid Elastic Follower Ring with Velocity Stretch and Soft Fade */}
         <div 
           ref={cursorRef}
-          className="fixed top-0 left-0 pointer-events-none z-[10000] rounded-full will-change-transform hidden md:flex items-center justify-center backdrop-blur-[1px] transition-[width,height,background-color,border-color] duration-200 ease-out w-[44px] h-[44px] border border-white/40 bg-white/[0.03]"
+          className="fixed top-0 left-0 pointer-events-none z-[10000] rounded-full will-change-transform flex items-center justify-center backdrop-blur-[1px] transition-[width,height,background-color,border-color,opacity] duration-500 ease-out w-[44px] h-[44px] border border-white/40 bg-white/[0.03] opacity-0"
           style={{
              boxShadow: '0 0 25px rgba(255,255,255,0.08)'
           }}

@@ -266,7 +266,34 @@ const GlobalFluidCanvas: React.FC<GlobalFluidCanvasProps> = ({
       mouseRef.current.clickImpulse = 1.0;
     };
 
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        const t = e.touches[0];
+        ndcMouse.x = (t.clientX / window.innerWidth) * 2 - 1;
+        ndcMouse.y = -(t.clientY / window.innerHeight) * 2 + 1;
+
+        raycaster.setFromCamera(ndcMouse, camera);
+        const intersects = raycaster.intersectObject(planeMesh);
+
+        if (intersects.length > 0 && intersects[0].uv) {
+          const uv = intersects[0].uv;
+          mouseRef.current.targetPlaneX = (uv.x - 0.5) * 18;
+          mouseRef.current.targetPlaneY = (uv.y - 0.5) * 13;
+        } else {
+          mouseRef.current.targetPlaneX = ndcMouse.x * 7.0;
+          mouseRef.current.targetPlaneY = ndcMouse.y * 5.0;
+        }
+      }
+    };
+
+    const handleTouchEnd = () => {
+      mouseRef.current.speed *= 0.3;
+    };
+
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('touchstart', handleTouchMove, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
     window.addEventListener('click', handleClick);
 
     // 5. Resize Handling
@@ -335,6 +362,9 @@ const GlobalFluidCanvas: React.FC<GlobalFluidCanvasProps> = ({
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchstart', handleTouchMove);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('click', handleClick);
 
