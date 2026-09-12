@@ -106,6 +106,17 @@ const About: React.FC<AboutProps> = ({ data }) => {
                 <h3 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-black">
                   {renderRevealHeading("Experience", 200)}
                 </h3>
+                <a 
+                  href="./Ritvik_Chunamari_Resume.pdf" 
+                  download="Ritvik_Chunamari_Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 px-4 py-2 border border-black rounded-full font-mono text-[10px] md:text-xs uppercase tracking-wider text-black hover:bg-black hover:text-white transition-all duration-300"
+                  data-cursor-text="RESUME"
+                >
+                  <span>Resume PDF</span>
+                  <span className="transform group-hover:translate-y-0.5 transition-transform">↓</span>
+                </a>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-12">

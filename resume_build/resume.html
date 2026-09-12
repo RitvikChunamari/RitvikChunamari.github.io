@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ritvik Chunamari - Resume</title>
+  <style>
+    @page {
+      size: letter;
+      margin: 0.38in 0.46in 0.38in 0.46in;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: #111827;
+      background: #ffffff;
+      font-size: 8.75pt;
+      line-height: 1.32;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      width: 100%;
+      position: relative;
+    }
+
+    .page-break {
+      page-break-after: always;
+      break-after: page;
+      height: 0;
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .header h1 {
+      font-size: 19pt;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: #000000;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .contact-line {
+      font-size: 8.35pt;
+      color: #4b5563;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .contact-line a {
+      color: #111827;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .contact-line a:hover {
+      text-decoration: underline;
+    }
+
+    .contact-separator {
+      color: #9ca3af;
+      font-weight: 300;
+    }
+
+    /* Section Headings */
+    .section-title {
+      font-size: 9.35pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #000000;
+      border-bottom: 1.15px solid #111827;
+      padding-bottom: 1px;
+      margin-top: 7px;
+      margin-bottom: 4px;
+    }
+
+    .summary-text {
+      font-size: 8.55pt;
+      color: #374151;
+      text-align: justify;
+      line-height: 1.34;
+      margin-bottom: 2px;
+    }
+
+    /* Experience / Project Entry */
+    .entry {
+      margin-bottom: 5.5px;
+    }
+
+    .entry:last-child {
+      margin-bottom: 1px;
+    }
+
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.5px;
+    }
+
+    .entry-title-box {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .role-title {
+      font-weight: 700;
+      font-size: 8.95pt;
+      color: #000000;
+    }
+
+    .company-name {
+      font-weight: 600;
+      font-size: 8.75pt;
+      font-style: italic;
+      color: #1f2937;
+    }
+
+    .meta-location {
+      font-size: 8.1pt;
+      color: #4b5563;
+    }
+
+    .date-location {
+      font-size: 8.1pt;
+      font-weight: 600;
+      color: #374151;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .project-tools {
+      font-size: 7.95pt;
+      color: #4b5563;
+      margin-bottom: 1px;
+    }
+
+    .project-tools strong {
+      color: #111827;
+      font-weight: 600;
+    }
+
+    /* Bullet lists */
+    ul.bullet-list {
+      list-style-type: none;
+      padding-left: 0;
+      margin-top: 0.5px;
+    }
+
+    ul.bullet-list li {
+      position: relative;
+      padding-left: 11px;
+      font-size: 8.45pt;
+      color: #374151;
+      line-height: 1.3;
+      margin-bottom: 1.2px;
+    }
+
+    ul.bullet-list li::before {
+      content: "•";
+      position: absolute;
+      left: 1px;
+      top: -0.5px;
+      color: #111827;
+      font-size: 8.5pt;
+    }
+
+    /* Skills Grid */
+    .skills-block {
+      font-size: 8.35pt;
+      color: #374151;
+      line-height: 1.32;
+      margin-bottom: 3px;
+    }
+
+    .skills-block strong {
+      color: #000000;
+      font-weight: 700;
+    }
+
+    /* Certifications & Publications */
+    .cert-line {
+      font-size: 8.35pt;
+      color: #374151;
+      margin-bottom: 1.5px;
+      line-height: 1.3;
+    }
+
+    .cert-line strong {
+      color: #111827;
+      font-weight: 600;
+    }
+
+    .link-accent {
+      color: #000000;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 1.5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== PAGE 1 ==================== -->
+  <div class="page">
+    
+    <!-- Header -->
+    <header class="header">
+      <h1>Ritvik Chunamari</h1>
+      <div class="contact-line">
+        <span>Boulder, CO</span>
+        <span class="contact-separator">|</span>
+        <span>+1 (303) 875-7635</span>
+        <span class="contact-separator">|</span>
+        <a href="mailto:ritvikchunamari@gmail.com">ritvikchunamari@gmail.com</a>
+        <span class="contact-separator">|</span>
+        <a href="https://linkedin.com/in/ritvikchunamari" target="_blank">linkedin.com/in/ritvikchunamari</a>
+        <span class="contact-separator">|</span>
+        <a href="https://ritvikchunamari.github.io" target="_blank" class="link-accent">ritvikchunamari.github.io</a>
+      </div>
+    </header>
+
+    <!-- Professional Summary -->
+    <section>
+      <h2 class="section-title">Professional Summary</h2>
+      <p class="summary-text">
+        User Experience Designer and Computer Science Engineer specializing in accessible, human-centered digital products, design systems, and data-driven interfaces. Proven track record conducting mixed-methods user research, architecting complex workflows, and accelerating design-to-engineering handoff across enterprise and mobile platforms. Guided by firsthand perspective navigating life with Cerebral Palsy, championing WCAG compliance, cognitive clarity, and inclusive experiences that elevate human potential.
+      </p>
+    </section>
+
+    <!-- Professional Experience -->
+    <section>
+      <h2 class="section-title">Professional Experience</h2>
+
+      <!-- Impact Events -->
+      <div class="entry">
+        <div class="entry-header">
+          <div class="entry-title-box">
+            <span class="role-title">UI Design Intern</span>
+            <span class="company-name">— Impact Events</span>
+            <span class="meta-location">(United States / Remote)</span>
+          </div>
+          <span class="date-location">June 2026 – August 2026</span>
+        </div>
+        <ul class="bullet-list">
+          <li>Spearheaded the responsive mobile redesign of the core event-management platform, converting multi-step desktop workflows into intuitive mobile screens and cutting user task completion drop-off by 18%.</li>
+          <li>Architected and standardized an Atomic Design System in Figma with 45+ reusable UI components, responsive layout tokens, and developer-ready specs, reducing front-end handoff revision cycles by 15%.</li>
+          <li>Conducted accessibility audits against WCAG 2.1 AA benchmarks and moderated usability evaluations across legacy mobile flows, resolving critical tap-target and contrast bottlenecks to boost mobile task efficiency by 22%.</li>
+        </ul>
+      </div>
+
+      <!-- In-House Anonymous -->
+      <div class="entry">
+        <div class="entry-header">
+          <div class="entry-title-box">
+            <span class="role-title">Associate UX Designer</span>
+            <span class="company-name">— In-House Anonymous</span>
+            <span class="meta-location">(Brooklyn, NY / Remote)</span>
+          </div>
+          <span class="date-location">December 2024 – May 2025</span>
+        </div>
+        <ul class="bullet-list">
+          <li>Engineered end-to-end interface architectures and interactive prototypes for an enterprise security platform, driving a 15% increase in active user engagement and reducing average task completion time by 10%.</li>
+          <li>Facilitated structured usability testing sessions with 25+ diverse participants, translating qualitative insights into data-driven interface iterations that improved user satisfaction scores by 15%.</li>
+          <li>Refined core navigation hierarchy and information taxonomy across web dashboards, eliminating user friction points, decreasing user error rates by 12%, and accelerating daily operational workflow efficiency by 40%.</li>
+        </ul>
+      </div>
+
+      <!-- i2u.ai -->
+      <div class="entry">
+        <div class="entry-header">
+          <div class="entry-title-box">
+            <span class="role-title">Freelance Product Designer</span>
+            <span class="company-name">— i2u.ai</span>
+            <span class="meta-location">(Bengaluru, India / Remote)</span>
+          </div>
+          <span class="date-location">September 2024 – January 2025</span>
+        </div>
+        <ul class="bullet-list">
+          <li>Directed end-to-end UX architecture and visual brand identity for an emerging AI data intelligence platform, driving a 30% increase in early user adoption and recurring feature utilization.</li>
+          <li>Executed mixed-methods user research and iterative A/B testing across five distinct interface variations, cutting time-to-first-conversion by 25% and significantly streamlining customer onboarding journeys.</li>
+          <li>Constructed wireframes, high-fidelity clickable mockups, and responsive component libraries in Figma, fostering cross-functional alignment and accelerating sprint delivery times.</li>
+        </ul>
+      </div>
+
+      <!-- Pravinya Infotech -->
+      <div class="entry">
+        <div class="entry-header">
+          <div class="entry-title-box">
+            <span class="role-title">UX Design Intern</span>
+            <span class="company-name">— Pravinya Infotech Pvt. Ltd.</span>
+            <span class="meta-location">(Hubli, India / Hybrid)</span>
+          </div>
+          <span class="date-location">January 2024 – June 2024</span>
+        </div>
+        <ul class="bullet-list">
+          <li>Crafted intuitive user journeys for a security agency customer portal and operations command dashboard, producing a 20% lift in customer engagement and a 15% improvement in conversion metrics.</li>
+          <li>Conducted formal usability evaluations with 12+ enterprise stakeholders and field dispatchers, implementing design refinements that increased usability satisfaction ratings by 25%.</li>
+          <li>Authored design system specifications, user operational flowcharts, and low-fidelity prototypes, standardizing reusable UI assets across multiple platform modules.</li>
+        </ul>
+      </div>
+
+    </section>
+
+  </div>
+
+  <!-- Hard Page Break -->
+  <div class="page-break"></div>
+
+  <!-- ==================== PAGE 2 ==================== -->
+  <div class="page">
+
+    <!-- Featured Projects -->
+    <section>
+      <h2 class="section-title">Featured Projects</h2>
+
+      <!-- Nexus AI -->
+      <div class="entry">
+        <div class="entry-header">
+          <div class="entry-title-box">
+            <span class="role-title">Nexus AI — Machine Learning Data Management Platform</span>
+            <span class="meta-location">| Lead Product Designer</span>
+          </div>
+          <span class="date-location"><a href="https://ritvikchunamari.github.io" class="link-accent">Live Project ↗</a></span>
+        </div>
+        <div class="project-tools"><strong>Tools & Technologies:</strong> Figma, React, TypeScript, Python, OpenAI API, Atomic Design System</div>
+        <ul class="bullet-list">
+          <li>Architected the complete UX/UI and node-based visual dataflow editor in Figma, empowering non-technical stakeholders to intuitively configure, clean, and deploy machine learning data pipelines.</li>
+          <li>Implemented a minimalist Swiss design system with clear typographical hierarchies and real-time status indicators, reducing cognitive load and cutting pipeline configuration error rates by 35%.</li>
+          <li>Conducted user feedback validation sessions with 15+ data engineers, improving core feature discoverability by 28% and streamlining pipeline orchestration handoffs.</li>
+        </ul>
+      </div>
+
+      <!-- Security Agency UX Platform -->
+      <div class="entry">
+        <div class="entry-header">
+          <div class="entry-title-box">
+            <span class="role-title">Security Agency UX Platform — SOC Operations & Client Portal</span>
+            <span class="meta-location">| Lead UX Researcher & Designer</span>
+          </div>
+          <span class="date-location"><a href="https://ritvikchunamari.github.io" class="link-accent">Live Project ↗</a></span>
+        </div>
+        <div class="project-tools"><strong>Tools & Technologies:</strong> Figma, Information Architecture, Usability Testing, Persona Modeling, Lightbox Prototyping</div>
+        <ul class="bullet-list">
+          <li>Engineered an enterprise Security Operations Center (SOC) dashboard (14 high-fidelity uncropped screens) and client acquisition intake portal, decreasing navigation complexity by 35%.</li>
+          <li>Optimized real-time guard dispatch matrices, patrol checkpoints, and incident escalation telemetry, slashing operational response time from 20 minutes to 3.2 minutes (-45%).</li>
+          <li>Synthesized target field research across 3 user personas (operations managers, facility heads, retail owners), achieving an 88 System Usability Scale (SUS) score rated "Excellent".</li>
+        </ul>
+      </div>
+
+      <!-- Mumbai Olympics 2028 -->
+      <div class="entry">
+        <div class="entry-header">
+          <div class="entry-title-box">
+            <span class="role-title">Mumbai Olympics 2028 — Brand Identity & Generative Design Studio</span>
+            <span class="meta-location">| Brand & Interactive Designer</span>
+          </div>
+          <span class="date-location"><a href="https://ritvikchunamari.github.io" class="link-accent">Live Studio ↗</a></span>
+        </div>
+        <div class="project-tools"><strong>Tools & Technologies:</strong> React, TypeScript, Tailwind CSS, Web Audio API, SVG/Canvas Rendering, Broadcast Motion</div>
+        <ul class="bullet-list">
+          <li>Created an Olympic visual identity blending custom Devanagari typographic glyphs with landmark contours (Gateway of India, Bandra-Worli Sea Link, Global Vipassana Pagoda).</li>
+          <li>Engineered an interactive web-based logo generation studio featuring 11 identity layouts, dynamic color/gradient engines, procedural motion modes, and vector SVG/PNG export pipelines.</li>
+          <li>Produced a 4K 60fps broadcast motion sting and sonic identity revealing dynamic transitions across digital and broadcast applications.</li>
+        </ul>
+      </div>
+
+      <!-- Automatic Pill Dispenser 3D -->
+      <div class="entry">
+        <div class="entry-header">
+          <div class="entry-title-box">
+            <span class="role-title">Smart Assistive Pill Dispenser 3D — IoT Health Hardware</span>
+            <span class="meta-location">| Product & Industrial Designer</span>
+          </div>
+          <span class="date-location"><a href="https://ritvikchunamari.github.io" class="link-accent">Live Project ↗</a></span>
+        </div>
+        <div class="project-tools"><strong>Tools & Technologies:</strong> Autodesk Inventor, Arduino, Physical Prototyping, C++, Subsystem Clustering</div>
+        <ul class="bullet-list">
+          <li>Modeled and prototyped an interactive 3D assistive medicine-dispensing robot in Autodesk Inventor, improving physical interaction ergonomic efficiency by 25% and reducing user learning curve by 30%.</li>
+          <li>Collaborated with a cross-functional four-person engineering team, clustering electromechanical subsystems and sensor arrays to ensure 99.8% dispensing accuracy for elderly patients.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section>
+      <h2 class="section-title">Education</h2>
+      <div class="entry">
+        <div class="entry-header">
+          <div class="entry-title-box">
+            <span class="role-title">Master of Science (M.S.) in Creative Technology and Design</span>
+            <span class="company-name">— University of Colorado Boulder</span>
+          </div>
+          <span class="date-location">August 2025 – May 2027</span>
+        </div>
+        <div class="entry-header" style="margin-bottom: 1px;">
+          <span class="meta-location">Track: Creative Industries | Location: Boulder, Colorado, United States</span>
+          <span class="date-location" style="color: #000000;">GPA: 3.9 / 4.0</span>
+        </div>
+        <ul class="bullet-list">
+          <li><strong>Relevant Coursework:</strong> Design Methods, Business in Creativity, User Experience Design, User Experience Research, Visual Identity & Branding, Human-Computer Interaction (HCI).</li>
+          <li><strong>Focus Areas:</strong> UX/UI architecture, user-centered design methodologies, creative technology, and accessibility engineering.</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <div class="entry-title-box">
+            <span class="role-title">Bachelor of Engineering (B.E.) in Computer Science and Engineering</span>
+            <span class="company-name">— KLE Technological University</span>
+          </div>
+          <span class="date-location">August 2020 – June 2024</span>
+        </div>
+        <div class="entry-header" style="margin-bottom: 1px;">
+          <span class="meta-location">Location: Hubli, Karnataka, India</span>
+          <span class="date-location">Undergraduate Degree</span>
+        </div>
+        <ul class="bullet-list">
+          <li><strong>Relevant Coursework:</strong> Software Engineering, Agile Methodologies, Machine Learning, Web Technologies, Data Structures & Algorithms.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Technical Skills -->
+    <section>
+      <h2 class="section-title">Technical Skills</h2>
+      <div class="skills-block">
+        <strong>Design & Prototyping:</strong> Figma, FigJam, Adobe Photoshop, Adobe Illustrator, Adobe XD, Autodesk Inventor, Atomic Design Systems, Wireframing, Rapid Prototyping, Design Tokens, Micro-interactions.
+      </div>
+      <div class="skills-block">
+        <strong>UX & Research Methods:</strong> Usability Testing, User Interviews, Persona Development, User Journey Mapping, Information Architecture (IA), A/B Testing, Heuristic Evaluation, System Usability Scale (SUS).
+      </div>
+      <div class="skills-block">
+        <strong>Frontend & Web Technologies:</strong> HTML5, CSS3, JavaScript (ES6+), TypeScript, React, Vite, Tailwind CSS, Three.js/WebGL, Web Audio API, Python, Git, GitHub, WCAG 2.1 AA Accessibility Standards.
+      </div>
+    </section>
+
+    <!-- Certifications & Publications Combined -->
+    <section>
+      <h2 class="section-title">Certifications & Research Publications</h2>
+      <div class="cert-line">
+        <strong>Certifications:</strong> Google Career Certificates (Foundations of UX Design; Empathize, Define & Ideate; Wireframes & Prototypes) • Accenture Digital Skills: User Experience • IIT Madras: Cyber Security & Privacy.
+      </div>
+      <div class="cert-line">
+        <strong>Research Publications:</strong> <em>Intra-Oral Periapical Dental Classification using Convolutional Neural Network</em> (IEEE Xplore) • <em>3D Avatar Reconstruction Using Multi-Level Pixel Aligned Implicit Function</em> (Springer).
+      </div>
+    </section>
+
+    <!-- Personal Insights & Inclusive Design -->
+    <section>
+      <h2 class="section-title">Personal Insights & Inclusive Design Advocacy</h2>
+      <p class="summary-text" style="margin-bottom: 0;">
+        Thriving professional in design and technology living with Cerebral Palsy. Applying firsthand lived experience to champion radical accessibility, eliminate cognitive and physical friction, and engineer digital experiences that empower people of all abilities.
+      </p>
+    </section>
+
+  </div>
+
+</body>
+</html>
