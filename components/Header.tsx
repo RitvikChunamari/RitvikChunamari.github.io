@@ -4,29 +4,58 @@ interface HeaderProps {
   onNavigate: (sectionId: string) => void;
 }
 
-const MagneticNavItem: React.FC<{ children: React.ReactNode; onClick: () => void; className?: string; cursorText?: string }> = ({ children, onClick, className, cursorText }) => {
-  const btnRef = useRef<HTMLButtonElement>(null);
+const MagneticNavItem: React.FC<{ 
+  children: React.ReactNode; 
+  onClick?: () => void; 
+  className?: string; 
+  cursorText?: string;
+  href?: string;
+  download?: string;
+  target?: string;
+  rel?: string;
+}> = ({ children, onClick, className, cursorText, href, download, target, rel }) => {
+  const elemRef = useRef<any>(null);
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!btnRef.current) return;
-    const { left, top, width, height } = btnRef.current.getBoundingClientRect();
+    if (!elemRef.current) return;
+    const { left, top, width, height } = elemRef.current.getBoundingClientRect();
     
     // Calculate distance from center
     const x = (e.clientX - (left + width / 2)) * 0.3; // 0.3 = magnetic strength
     const y = (e.clientY - (top + height / 2)) * 0.3;
     
     // Apply transform directly for performance
-    btnRef.current.style.transform = `translate(${x}px, ${y}px)`;
+    elemRef.current.style.transform = `translate(${x}px, ${y}px)`;
   };
 
   const handleMouseLeave = () => {
-    if (!btnRef.current) return;
-    btnRef.current.style.transform = '';
+    if (!elemRef.current) return;
+    elemRef.current.style.transform = '';
   };
+
+  if (href) {
+    return (
+      <a 
+        ref={elemRef}
+        href={href}
+        download={download}
+        target={target}
+        rel={rel}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className={`relative will-change-transform ${className}`}
+        data-cursor-text={cursorText || "OPEN"}
+      >
+        <span className="block pointer-events-none">
+          {children}
+        </span>
+      </a>
+    );
+  }
 
   return (
     <button 
-      ref={btnRef}
+      ref={elemRef}
       onClick={onClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -60,7 +89,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
       <div className="bg-black/5 backdrop-blur-sm border-b border-white/10 w-full px-6 md:px-12 py-4 flex items-center justify-between">
         
         {/* Logo - Sharp & Technical - Now Magnetic */}
-        <div className="w-1/4">
+        <div className="w-auto md:w-1/4">
           <MagneticNavItem 
             onClick={() => onNavigate('home')}
             className="cursor-pointer font-bold text-sm tracking-tight uppercase"
@@ -77,7 +106,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
         </div>
 
         {/* Navigation - Right Aligned Grid */}
-        <nav className="w-auto md:w-1/4 flex justify-end space-x-8">
+        <nav className="w-auto md:w-auto flex items-center justify-end space-x-5 sm:space-x-7 md:space-x-8">
           {['Work', 'Profile', 'Contact'].map((item) => (
             <MagneticNavItem 
               key={item}
@@ -86,6 +115,19 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
               {item}
             </MagneticNavItem>
           ))}
+
+          {/* Action Button: RESUME */}
+          <MagneticNavItem
+            href="./Ritvik_Chunamari_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            download="Ritvik_Chunamari_Resume.pdf"
+            cursorText="RESUME"
+            className="border border-white/50 hover:border-white px-3 py-1 rounded-full text-[10px] md:text-xs font-mono font-bold tracking-widest text-white hover:bg-white hover:text-black transition-all duration-200 inline-flex items-center gap-1.5 shadow-sm active:scale-95"
+          >
+            <span>RESUME</span>
+            <span className="text-[9px] opacity-75">↓</span>
+          </MagneticNavItem>
         </nav>
 
       </div>
