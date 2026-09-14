@@ -5,7 +5,7 @@
 <title>Ritvik Chunamari — Portfolio Studio Presentation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
   @page {
     size: 16in 9in;
@@ -23,11 +23,11 @@
     margin: 0;
     padding: 0;
     background-color: #06070a;
-    color: #e5e7eb;
+    color: #f1f5f9;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
-    font-size: 19px;
+    font-size: 20px;
     line-height: 1.5;
   }
 
@@ -38,26 +38,26 @@
     break-after: page;
     position: relative;
     overflow: hidden;
-    padding: 0.7in 0.95in;
-    background: radial-gradient(circle at 85% 15%, rgba(30, 41, 59, 0.45) 0%, rgba(6, 7, 10, 1) 75%), #06070a;
+    padding: 0.8in 1.1in;
+    background: radial-gradient(circle at 80% 20%, rgba(30, 41, 59, 0.4) 0%, rgba(6, 7, 10, 1) 75%), #06070a;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
 
-  /* Ambient fine grid */
+  /* Subtle ambient grid */
   .slide::before {
     content: "";
     position: absolute;
     inset: 0;
     background-image: 
-      linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-    background-size: 0.55in 0.55in;
+      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 0.8in 0.8in;
     pointer-events: none;
   }
 
-  /* Top Bar */
+  /* Header */
   .slide-header {
     display: flex;
     justify-content: space-between;
@@ -69,19 +69,18 @@
   .tag-group {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.8rem;
   }
 
   .pill {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.35rem 0.85rem;
+    padding: 0.4rem 1rem;
     border-radius: 9999px;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.8rem;
     font-weight: 600;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.12);
@@ -100,33 +99,27 @@
     color: #c084fc;
   }
 
-  .pill-emerald {
-    background: rgba(52, 211, 153, 0.1);
-    border-color: rgba(52, 211, 153, 0.35);
-    color: #34d399;
-  }
-
-  .pill-amber {
-    background: rgba(251, 191, 36, 0.1);
-    border-color: rgba(251, 191, 36, 0.35);
-    color: #fbbf24;
-  }
-
   .pill-rose {
     background: rgba(244, 63, 94, 0.1);
     border-color: rgba(244, 63, 94, 0.35);
     color: #fb7185;
   }
 
+  .pill-emerald {
+    background: rgba(52, 211, 153, 0.1);
+    border-color: rgba(52, 211, 153, 0.35);
+    color: #34d399;
+  }
+
   .slide-counter {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: #64748b;
     font-weight: 600;
     letter-spacing: 0.1em;
   }
 
-  /* Slide Body */
+  /* Body */
   .slide-body {
     position: relative;
     z-index: 10;
@@ -134,29 +127,29 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0.25in 0;
+    padding: 0.3in 0;
   }
 
   .slide-title {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 2.85rem;
-    font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: -0.035em;
+    font-size: 3.4rem;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
     color: #ffffff;
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.5rem;
   }
 
   .slide-subtitle {
-    font-size: 1.22rem;
+    font-size: 1.35rem;
     color: #94a3b8;
-    max-width: 1100px;
+    max-width: 950px;
     font-weight: 400;
-    margin-bottom: 1.5rem;
-    line-height: 1.45;
+    margin-bottom: 2rem;
+    line-height: 1.4;
   }
 
-  /* Footers */
+  /* Footer */
   .slide-footer {
     position: relative;
     z-index: 10;
@@ -176,193 +169,166 @@
     font-weight: 600;
   }
 
-  /* Grid Layouts */
-  .grid-2 {
+  /* Simple Layouts */
+  .cols-3 {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 1.8rem;
   }
 
-  .grid-3 {
+  .cols-4 {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
   }
 
-  .grid-4 {
+  .cols-2 {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.25rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.2rem;
   }
 
-  /* Cards */
-  .card {
-    background: rgba(15, 19, 28, 0.75);
-    border: 1px solid rgba(255, 255, 255, 0.09);
-    border-radius: 12px;
-    padding: 1.5rem;
+  /* Clean Minimal Cards */
+  .simple-card {
+    background: rgba(15, 19, 28, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    position: relative;
   }
 
-  .card-glow-cyan {
-    border-color: rgba(56, 189, 248, 0.28);
-    background: linear-gradient(150deg, rgba(56, 189, 248, 0.06), rgba(15, 19, 28, 0.85));
-  }
-
-  .card-glow-purple {
-    border-color: rgba(192, 132, 252, 0.28);
-    background: linear-gradient(150deg, rgba(192, 132, 252, 0.06), rgba(15, 19, 28, 0.85));
-  }
-
-  .card-glow-amber {
-    border-color: rgba(251, 191, 36, 0.28);
-    background: linear-gradient(150deg, rgba(251, 191, 36, 0.06), rgba(15, 19, 28, 0.85));
-  }
-
-  .card-glow-emerald {
-    border-color: rgba(52, 211, 153, 0.28);
-    background: linear-gradient(150deg, rgba(52, 211, 153, 0.06), rgba(15, 19, 28, 0.85));
-  }
-
-  .card-glow-rose {
-    border-color: rgba(244, 63, 94, 0.28);
-    background: linear-gradient(150deg, rgba(244, 63, 94, 0.06), rgba(15, 19, 28, 0.85));
-  }
-
-  .card-index {
+  .card-num {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.78rem;
+    font-size: 1rem;
     font-weight: 700;
-    color: #64748b;
-    margin-bottom: 0.6rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    color: #38bdf8;
+    margin-bottom: 1rem;
   }
 
-  .card-title {
+  .card-heading {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.32rem;
+    font-size: 1.65rem;
     font-weight: 700;
     color: #ffffff;
-    margin-bottom: 0.55rem;
+    margin-bottom: 0.75rem;
     line-height: 1.25;
   }
 
-  .card-desc {
-    font-size: 0.98rem;
+  .card-text {
+    font-size: 1.12rem;
     color: #94a3b8;
     line-height: 1.55;
   }
 
-  .card-meta {
-    margin-top: 1rem;
-    padding-top: 0.75rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.8rem;
-    color: #38bdf8;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-
-  /* Comparison (Failed vs Fixed) */
-  .diff-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.2rem;
-    margin-bottom: 0.8rem;
-  }
-
-  .diff-box {
-    padding: 1.15rem 1.35rem;
-    border-radius: 10px;
+  /* Failure & Fix Cards */
+  .fail-card {
+    background: rgba(239, 68, 68, 0.04);
+    border: 1px solid rgba(239, 68, 68, 0.22);
+    border-radius: 14px;
+    padding: 1.8rem 2rem;
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
+    gap: 0.5rem;
   }
 
-  .diff-failed {
-    background: rgba(239, 68, 68, 0.05);
-    border: 1px solid rgba(239, 68, 68, 0.25);
-  }
-
-  .diff-fixed {
-    background: rgba(52, 211, 153, 0.05);
-    border: 1px solid rgba(52, 211, 153, 0.25);
-  }
-
-  .diff-badge {
+  .fail-tag {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.72rem;
+    font-size: 0.8rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    color: #f87171;
     text-transform: uppercase;
+    letter-spacing: 0.08em;
   }
 
-  .diff-badge-red { color: #f87171; }
-  .diff-badge-green { color: #34d399; }
+  .fix-card {
+    background: rgba(52, 211, 153, 0.04);
+    border: 1px solid rgba(52, 211, 153, 0.22);
+    border-radius: 14px;
+    padding: 1.8rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 
-  .diff-title {
-    font-size: 1.05rem;
+  .fix-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #34d399;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .item-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.45rem;
     font-weight: 700;
     color: #ffffff;
   }
 
-  .diff-text {
-    font-size: 0.9rem;
+  .item-desc {
+    font-size: 1.08rem;
     color: #94a3b8;
-    line-height: 1.45;
+    line-height: 1.5;
   }
 
-  /* Hero Slide */
-  .hero-slide {
-    background: radial-gradient(circle at 75% 25%, rgba(56, 189, 248, 0.12) 0%, rgba(168, 85, 247, 0.08) 35%, rgba(6, 7, 10, 1) 75%), #06070a;
-  }
-
-  .hero-title-huge {
+  /* Big Quote / Big Idea */
+  .big-statement {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 4.8rem;
+    font-size: 2.85rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #ffffff;
+    max-width: 1200px;
+    margin-bottom: 1.5rem;
+  }
+
+  .highlight-cyan { color: #38bdf8; }
+  .highlight-purple { color: #c084fc; }
+  .highlight-emerald { color: #34d399; }
+
+  /* Hero */
+  .hero-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 5.5rem;
     font-weight: 800;
-    line-height: 1.05;
+    line-height: 1.02;
     letter-spacing: -0.04em;
     color: #ffffff;
-    margin-bottom: 1.1rem;
+    margin-bottom: 1.2rem;
   }
 
-  .hero-title-huge span {
+  .hero-name span {
     background: linear-gradient(135deg, #38bdf8 0%, #c084fc 60%, #34d399 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
-  .hero-lead {
-    font-size: 1.45rem;
-    color: #cbd5e1;
-    max-width: 1050px;
-    line-height: 1.5;
+  .hero-subtitle {
+    font-size: 1.75rem;
+    color: #94a3b8;
     font-weight: 400;
+    max-width: 900px;
+    line-height: 1.4;
   }
 
-  .author-strip {
+  .hero-meta {
     display: flex;
-    align-items: center;
     gap: 3.5rem;
-    margin-top: 2rem;
-    padding-top: 1.6rem;
+    margin-top: 2.5rem;
+    padding-top: 1.8rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  .author-col {
+  .meta-item {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.3rem;
   }
 
-  .author-k {
+  .meta-k {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.8rem;
     color: #64748b;
@@ -370,78 +336,45 @@
     letter-spacing: 0.08em;
   }
 
-  .author-v {
-    font-size: 1.15rem;
+  .meta-v {
+    font-size: 1.25rem;
     font-weight: 600;
-    color: #f1f5f9;
+    color: #ffffff;
   }
 
-  /* Discussion Cards */
-  .question-box {
-    background: rgba(15, 20, 32, 0.85);
-    border: 1px solid rgba(56, 189, 248, 0.35);
-    border-radius: 12px;
-    padding: 1.6rem;
-    position: relative;
-    overflow: hidden;
+  /* Question Cards */
+  .q-card {
+    background: rgba(15, 20, 32, 0.8);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 14px;
+    padding: 2.2rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-  }
-
-  .question-box::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
-    background: #38bdf8;
+    min-height: 280px;
   }
 
   .q-badge {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.78rem;
+    font-size: 0.85rem;
     font-weight: 700;
     color: #38bdf8;
+    margin-bottom: 0.8rem;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 0.5rem;
   }
 
-  .q-heading {
+  .q-text {
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.35rem;
+    font-size: 1.55rem;
     font-weight: 700;
     color: #ffffff;
     line-height: 1.3;
-    margin-bottom: 0.6rem;
   }
 
-  .q-sub {
+  .q-tip {
+    margin-top: 1.2rem;
     font-size: 0.95rem;
     color: #94a3b8;
-    line-height: 1.5;
-  }
-
-  .q-prompt {
-    margin-top: 1rem;
-    padding: 0.6rem 0.85rem;
-    background: rgba(56, 189, 248, 0.08);
-    border-radius: 6px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.82rem;
-    color: #7dd3fc;
-  }
-
-  .code-token {
-    display: inline-block;
-    padding: 0.15rem 0.45rem;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 4px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.85rem;
-    color: #38bdf8;
   }
 </style>
 </head>
@@ -449,62 +382,47 @@
 <section class="slide">
   <div class="slide-header">
     <div class="tag-group">
-      <span class="pill pill-cyan">06 • Studio Critique</span>
-      <span class="pill pill-purple">Open for Discussion</span>
+      <span class="pill pill-cyan">Critique</span>
+      <span class="pill pill-purple">Your Turn</span>
     </div>
-    <div class="slide-counter">SLIDE 07 / 07</div>
+    <div class="slide-counter">07 / 07</div>
   </div>
 
   <div class="slide-body">
-    <h2 class="slide-title">Studio Share: Where I Want the Room's Help</h2>
+    <h2 class="slide-title">Where I Want Your Help</h2>
     <p class="slide-subtitle">
-      Live artifact available at <strong style="color: #38bdf8;">ritvikchunamari.github.io</strong>. As you test the site on your laptops and phones, I’d love feedback on these three specific areas:
+      Try it live on your laptop or phone: <span style="color: #38bdf8; font-weight: 700;">ritvikchunamari.github.io</span>
     </p>
 
-    <div class="grid-3">
-      <div class="question-box">
+    <div class="cols-3">
+      <div class="q-card">
         <div>
-          <div class="q-badge">Question 01 • Interaction Pacing</div>
-          <div class="q-heading">Tactile Delight vs. Content Focus</div>
-          <div class="q-sub">
-            Does the interactive antigravity cursor feel like a rewarding, playful detail, or does it risk competing with readability and case study navigation?
-          </div>
+          <div class="q-badge">Question 01</div>
+          <div class="q-text">Does the cursor feel playful or distracting?</div>
         </div>
-        <div class="q-prompt">
-          👉 Looking for: Is the physics tension balanced or overly noisy?
-        </div>
+        <div class="q-tip">Looking for: Is the physics effect fun, or does it get in the way of reading?</div>
       </div>
 
-      <div class="question-box">
+      <div class="q-card">
         <div>
-          <div class="q-badge">Question 02 • Cross-Platform Feel</div>
-          <div class="q-heading">Desktop Kinetics vs. Mobile Typography</div>
-          <div class="q-sub">
-            On desktop, the site's brand is driven by mouse interaction; on mobile, it transitions into pure bold typography. Does the site's identity still feel cohesive across both devices?
-          </div>
+          <div class="q-badge">Question 02</div>
+          <div class="q-text">Does mobile feel as premium as desktop?</div>
         </div>
-        <div class="q-prompt">
-          👉 Looking for: Does mobile retain the same high-craft personality?
-        </div>
+        <div class="q-tip">Looking for: Does the typography hold the same personality without the cursor?</div>
       </div>
 
-      <div class="question-box">
+      <div class="q-card">
         <div>
-          <div class="q-badge">Question 03 • Case Study Scannability</div>
-          <div class="q-heading">Visual Proof vs. Research Narrative</div>
-          <div class="q-sub">
-            For recruiters and senior design leaders reviewing portfolios in under 60 seconds, is the balance between upfront metrics and deep architectural breakdown hitting the mark?
-          </div>
+          <div class="q-badge">Question 03</div>
+          <div class="q-text">Are the case studies quick to scan?</div>
         </div>
-        <div class="q-prompt">
-          👉 Looking for: What draws your eye first in the project sections?
-        </div>
+        <div class="q-tip">Looking for: Do the key metrics and takeaways pop out in under 30 seconds?</div>
       </div>
     </div>
   </div>
 
   <div class="slide-footer">
-    <span>THANK YOU! • LIVE SITE: RITVIKCHUNAMARI.GITHUB.IO • RESUME PDF AVAILABLE</span>
+    <span>THANK YOU! • LIVE SITE: RITVIKCHUNAMARI.GITHUB.IO</span>
     <span class="footer-url">ritvikchunamari.github.io</span>
   </div>
 </section></body>
