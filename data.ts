@@ -92,7 +92,48 @@ export const resumeData: ResumeData = {
         technologies: ["Python", "TensorFlow", "Keras", "Pandas", "Deep Learning"],
         overview: "An advanced deep learning model that analyzes 12 dimensions of data—including Nasdaq and US Dollar Index (DXY) correlations—to predict future cryptocurrency prices and protect against bear markets.",
         challenge: "Standard technical analysis bots rely solely on lagging indicators and ignore global macro-economic health, leading to inaccurate predictions during market crashes.",
-        solution: "Built a 12-dimensional Neural Network with a Backtester. During a simulated 300-day bear market where 'Buy & Hold' lost -7.83%, the AI strategy generated a positive profit of +0.97%."
+        solution: "Built a 12-dimensional Neural Network with a Backtester. During a simulated 300-day bear market where 'Buy & Hold' lost -7.83%, the AI strategy generated a positive profit of +0.97%.",
+        problemOverview: [
+          {
+            title: "Lagging Indicator Dependency",
+            description: "Traditional crypto trading bots rely on lagging technical indicators (like Moving Averages and RSI) which react to past price movements rather than predicting future trends, causing severe drawdowns during sudden market crashes."
+          },
+          {
+            title: "Macro-Economic Blind Spots",
+            description: "Standard models train in a vacuum, ignoring the massive correlation between global equities (Nasdaq) and fiat currency strength (US Dollar Index), leading to high false-positive buy signals."
+          },
+          {
+            title: "The 'Black-Box' Trust Issue",
+            description: "Advanced Deep Learning models often output predictions with zero transparency, making it impossible for institutional investors to trust the AI with real capital during high-volatility events."
+          }
+        ],
+        detailedSolution: [
+          {
+            title: "Hybrid 1D CNN + GRU Architecture",
+            description: "Engineered a dual-layer neural network. The 1D Convolutional Neural Network (CNN) extracts spatial feature relationships (e.g., how MACD interacts with Bollinger Bands), while the Gated Recurrent Unit (GRU) processes the chronological sequence to identify long-term time-series dependencies."
+          },
+          {
+            title: "Macro-Economic Feature Engineering",
+            description: "Expanded the dataset to 12 dimensions by hooking into the Yahoo Finance API to pull live Nasdaq (^IXIC) and US Dollar Index (DXY) data, forward-filling weekend gaps to perfectly align with 24/7 crypto markets."
+          },
+          {
+            title: "TensorFlow Integrated Gradients",
+            description: "Implemented a native mathematical explainability engine. By calculating the exact derivative of the model's activations, the system proves exactly which features drove the prediction, eliminating the black-box effect."
+          },
+          {
+            title: "Algorithmic Backtesting Simulator",
+            description: "Built an institutional-style simulator that feeds the AI a virtual $10,000, forcing it to trade on unseen test data and deducting a strict 0.1% exchange fee per transaction. The AI actively avoided bear market crashes, netting a +0.97% profit vs a -7.83% loss for 'Buy & Hold'."
+          }
+        ],
+        competitorAnalysis: [
+          {
+            persona: "Algorithmic Investor / Retail Trader",
+            keyNeeds: "Accurate predictive modeling, Macro-economic awareness, and Model Explainability (No black boxes).",
+            competitors: ["Standard RSI/MACD Trading Bots", "Basic LSTM Auto-Traders", "Proprietary Paid Signals"],
+            strengths: ["Easy deployment", "Fast execution times", "Simple APIs"],
+            weaknesses: ["Ignores Nasdaq/DXY global market correlations", "Massive capital loss during sudden liquidity crashes", "Zero transparency on why a trade was executed"]
+          }
+        ]
       }
     },
     {
