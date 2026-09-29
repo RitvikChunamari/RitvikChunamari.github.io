@@ -6,6 +6,7 @@ import MagneticWrapper from './MagneticWrapper';
 import FigmaViewerWindow from './FigmaViewerWindow';
 import SecurityUXSection from './SecurityUXSection';
 import MumbaiLogoGenerator from './MumbaiLogoGenerator';
+import CryptoSimulator from './CryptoSimulator';
 
 gsap.registerPlugin(ScrollTrigger);
 
