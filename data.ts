@@ -79,97 +79,125 @@ export const resumeData: ResumeData = {
   ],
   projects: [
     {
-      title: "Institutional-Grade Crypto AI Predictor",
-      category: "AI & Quantitative Finance",
-      description: [
-        "Developed an advanced algorithmic trading pipeline using a Hybrid 1D CNN + GRU Neural Network to predict cryptocurrency prices.",
-        "Integrated a native TensorFlow Integrated Gradients engine for AI explainability and a rigorous backtesting simulator."
-      ],
-      link: "https://github.com/RitvikChunamari/Crypto-AI-Predictor",
-      caseStudy: {
-        year: "2026",
-        role: "AI / Data Engineer",
-        
-        technologies: ["Python", "TensorFlow", "Keras", "Pandas", "NumPy", "Matplotlib", "yfinance (Yahoo Finance API)", "Binance REST API"],
-        uxImpactMetrics: [
-          { label: "Net Profit", value: "+0.97%", detail: "Generated positive returns during a 300-day bear market backtest." },
-          { label: "Baseline Loss", value: "-7.83%", detail: "The standard Buy & Hold loss avoided by the AI." },
-          { label: "Features", value: "12 Dimensions", detail: "Incorporates complex macro-economic indicators." }
+        title: "Institutional-Grade Crypto AI Predictor",
+        category: "AI & Quantitative Finance",
+        description: [
+          "Developed an advanced algorithmic trading pipeline using a Hybrid 1D CNN + GRU Neural Network to predict cryptocurrency prices.",
+          "Integrated a native TensorFlow Integrated Gradients engine for AI explainability and a rigorous backtesting simulator."
         ],
-        systemObjectives: [
-          {
-            system: "Multi-Timeframe Data Ingestion Engine",
-            description: "A robust data pipeline that fetches raw financial data and engineers it into a clean 3D tensor format for the neural network, preventing lookahead bias.",
-            objectives: [
-              { title: "Yahoo Finance API (yfinance)", content: "Pulls 5 years of daily data or 730 days of hourly data for macro-economic features (Nasdaq, DXY) and forward-fills weekend gaps to align with crypto." },
-              { title: "Binance Public REST API", content: "Fetches up to 50,000 minute-by-minute historical Klines (candlesticks) directly from Binance without requiring premium API keys, enabling High-Frequency Trading (HFT) scalping." },
-              { title: "Feature Engineering", content: "Computes 10 technical indicators dynamically including SMA_20, SMA_50, EMA_20, RSI, MACD, ATR, and Bollinger Bands using the 'ta' library." }
-            ]
-          },
-          {
-            system: "Hybrid Neural Network (TensorFlow/Keras)",
-            description: "The core predictive model that ingests a 3D sequence [samples, timesteps, features] to forecast the exact closing price of the next timeframe.",
-            objectives: [
-              { title: "1D Convolutional Neural Network (CNN)", content: "Uses 64 filters and a kernel size of 3 to perform spatial extraction across the 12 features, identifying local patterns between volume spikes and price drops." },
-              { title: "Gated Recurrent Unit (GRU)", content: "A 50-unit GRU layer captures the chronological sequence of the last 60 timeframes (e.g., the last 60 days or hours) to understand long-term momentum." },
-              { title: "Regularization", content: "Implements Dropout(0.3) to randomly zero out neurons during training, preventing the model from memorizing the training data (overfitting)." }
-            ]
-          },
-          {
-            system: "AI Explainability & Backtesting",
-            description: "The mathematical verification layers ensuring the AI is completely transparent and historically profitable.",
-            objectives: [
-              { title: "tf.GradientTape() Integrated Gradients", content: "Replaced standard SHAP models with a native TensorFlow GradientTape script. It calculates the gradients of the model's output with respect to its input features, providing a feature importance score (e.g., proving that DXY has a 12% impact)." },
-              { title: "Algorithmic Simulator", content: "Simulates a trading environment by isolating the last 20% of data (Test Set). It buys when the AI predicts the price will rise, sells when it predicts a drop, and penalizes the wallet with a 0.1% exchange fee per trade." }
-            ]
-          }
-        ]
-        overview: "An advanced deep learning model that analyzes 12 dimensions of data—including Nasdaq and US Dollar Index (DXY) correlations—to predict future cryptocurrency prices and protect against bear markets.",
-        challenge: "Standard technical analysis bots rely solely on lagging indicators and ignore global macro-economic health, leading to inaccurate predictions during market crashes.",
-        solution: "Built a 12-dimensional Neural Network with a Backtester. During a simulated 300-day bear market where 'Buy & Hold' lost -7.83%, the AI strategy generated a positive profit of +0.97%.",
-        problemOverview: [
-          {
-            title: "Lagging Indicator Dependency",
-            description: "Traditional crypto trading bots rely on lagging technical indicators (like Moving Averages and RSI) which react to past price movements rather than predicting future trends, causing severe drawdowns during sudden market crashes."
-          },
-          {
-            title: "Macro-Economic Blind Spots",
-            description: "Standard models train in a vacuum, ignoring the massive correlation between global equities (Nasdaq) and fiat currency strength (US Dollar Index), leading to high false-positive buy signals."
-          },
-          {
-            title: "The 'Black-Box' Trust Issue",
-            description: "Advanced Deep Learning models often output predictions with zero transparency, making it impossible for institutional investors to trust the AI with real capital during high-volatility events."
-          }
-        ],
-        detailedSolution: [
-          {
-            title: "Hybrid 1D CNN + GRU Architecture",
-            description: "Engineered a dual-layer neural network. The 1D Convolutional Neural Network (CNN) extracts spatial feature relationships (e.g., how MACD interacts with Bollinger Bands), while the Gated Recurrent Unit (GRU) processes the chronological sequence to identify long-term time-series dependencies."
-          },
-          {
-            title: "Macro-Economic Feature Engineering",
-            description: "Expanded the dataset to 12 dimensions by hooking into the Yahoo Finance API to pull live Nasdaq (^IXIC) and US Dollar Index (DXY) data, forward-filling weekend gaps to perfectly align with 24/7 crypto markets."
-          },
-          {
-            title: "TensorFlow Integrated Gradients",
-            description: "Implemented a native mathematical explainability engine. By calculating the exact derivative of the model's activations, the system proves exactly which features drove the prediction, eliminating the black-box effect."
-          },
-          {
-            title: "Algorithmic Backtesting Simulator",
-            description: "Built an institutional-style simulator that feeds the AI a virtual $10,000, forcing it to trade on unseen test data and deducting a strict 0.1% exchange fee per transaction. The AI actively avoided bear market crashes, netting a +0.97% profit vs a -7.83% loss for 'Buy & Hold'."
-          }
-        ],
-        competitorAnalysis: [
-          {
-            persona: "Algorithmic Investor / Retail Trader",
-            keyNeeds: "Accurate predictive modeling, Macro-economic awareness, and Model Explainability (No black boxes).",
-            competitors: ["Standard RSI/MACD Trading Bots", "Basic LSTM Auto-Traders", "Proprietary Paid Signals"],
-            strengths: ["Easy deployment", "Fast execution times", "Simple APIs"],
-            weaknesses: ["Ignores Nasdaq/DXY global market correlations", "Massive capital loss during sudden liquidity crashes", "Zero transparency on why a trade was executed"]
-          }
-        ]
-      }
-    },
+        link: "https://github.com/RitvikChunamari/Crypto-AI-Predictor",
+        caseStudy: {
+          year: "2026",
+          role: "AI / Data Engineer",
+          technologies: ["Python", "TensorFlow", "Keras", "Pandas", "NumPy", "Matplotlib", "yfinance (Yahoo Finance API)", "Binance REST API"],
+          overview: "An advanced deep learning model that analyzes 12 dimensions of data—including Nasdaq and US Dollar Index (DXY) correlations—to predict future cryptocurrency prices and protect against bear markets.",
+          challenge: "Standard technical analysis bots rely solely on lagging indicators and ignore global macro-economic health, leading to inaccurate predictions during market crashes. Furthermore, institutional investors reject 'black-box' deep learning models due to a lack of explainability.",
+          solution: "Built a 12-dimensional Neural Network with a Backtester. During a simulated 300-day bear market where 'Buy & Hold' lost -7.83%, the AI strategy generated a positive profit of +0.97%. Integrated native TensorFlow Integrated Gradients to provide mathematical proof of feature importance for every prediction.",
+          problemStatement: "How might we design a predictive trading algorithm that not only forecasts cryptocurrency prices using macroeconomic indicators, but also provides transparent, mathematically proven explainability so institutional investors can trust its decisions during high-volatility market crashes?",
+          problemOverview: [
+            { title: "Lagging Indicator Dependency", description: "Traditional crypto trading bots rely on lagging technical indicators (like Moving Averages and RSI) which react to past price movements rather than predicting future trends, causing severe drawdowns during sudden market crashes." },
+            { title: "Macro-Economic Blind Spots", description: "Standard models train in a vacuum, ignoring the massive correlation between global equities (Nasdaq) and fiat currency strength (US Dollar Index), leading to high false-positive buy signals." },
+            { title: "The 'Black-Box' Trust Issue", description: "Advanced Deep Learning models often output predictions with zero transparency, making it impossible for institutional investors to trust the AI with real capital during high-volatility events." },
+            { title: "Multi-Timeframe Latency", description: "Fetching and processing massive datasets for high-frequency trading (HFT) scalping often introduces latency or requires expensive premium API keys." }
+          ],
+          detailedSolution: [
+            { title: "Hybrid 1D CNN + GRU Architecture", description: "Engineered a dual-layer neural network. The 1D Convolutional Neural Network (CNN) extracts spatial feature relationships (e.g., how MACD interacts with Bollinger Bands), while the Gated Recurrent Unit (GRU) processes the chronological sequence to identify long-term time-series dependencies." },
+            { title: "Macro-Economic Feature Engineering", description: "Expanded the dataset to 12 dimensions by hooking into the Yahoo Finance API to pull live Nasdaq (^IXIC) and US Dollar Index (DXY) data, forward-filling weekend gaps to perfectly align with 24/7 crypto markets." },
+            { title: "TensorFlow Integrated Gradients", description: "Implemented a native mathematical explainability engine. By calculating the exact derivative of the model's activations, the system proves exactly which features drove the prediction, eliminating the black-box effect." },
+            { title: "Algorithmic Backtesting Simulator", description: "Built an institutional-style simulator that feeds the AI a virtual $10,000, forcing it to trade on unseen test data and deducting a strict 0.1% exchange fee per transaction." }
+          ],
+          uxImpactMetrics: [
+            { label: "Net Profit (Bear Market)", value: "+0.97%", detail: "Generated positive returns during a 300-day bear market simulation, outperforming standard strategies." },
+            { label: "Avoided Loss (Baseline)", value: "-7.83%", detail: "The standard Buy & Hold loss that the AI actively dodged by moving to cash during downturns." },
+            { label: "Data Dimensionality", value: "12 Features", detail: "Incorporated advanced technicals (MACD, RSI, ATR) alongside Macro metrics (Nasdaq, DXY)." }
+          ],
+          systemObjectives: [
+            {
+              system: "Multi-Timeframe Data Ingestion Engine",
+              description: "A robust data pipeline that fetches raw financial data and engineers it into a clean 3D tensor format for the neural network.",
+              objectives: [
+                { title: "Yahoo Finance API (yfinance)", content: "Pulls 5 years of daily data or 730 days of hourly data for macro-economic features." },
+                { title: "Binance Public REST API", content: "Fetches up to 50,000 minute-by-minute historical Klines directly from Binance for HFT scalping." },
+                { title: "Dynamic Feature Engineering", content: "Computes 10 technical indicators dynamically including SMA_20, SMA_50, EMA_20, RSI, MACD, ATR, and Bollinger Bands." }
+              ]
+            },
+            {
+              system: "Hybrid Neural Network (TensorFlow/Keras)",
+              description: "The core predictive model that ingests a 3D sequence [samples, timesteps, features] to forecast closing prices.",
+              objectives: [
+                { title: "1D Convolutional Neural Network (CNN)", content: "Uses 64 filters to perform spatial extraction across the 12 features, identifying local patterns between volume spikes and price drops." },
+                { title: "Gated Recurrent Unit (GRU)", content: "A 50-unit GRU layer captures the chronological sequence of the last 60 timeframes to understand long-term momentum." },
+                { title: "Regularization (Dropout)", content: "Implements Dropout(0.3) to randomly zero out neurons during training, preventing overfitting." }
+              ]
+            }
+          ],
+          userPersonas: [
+            {
+              name: "Marcus Vanguard",
+              role: "Quantitative Hedge Fund Manager",
+              age: "42",
+              education: "M.S. in Financial Engineering",
+              quote: "'I don't care how accurate the AI is; if I can't explain to my board WHY it made a trade, I can't use it.'",
+              goals: ["Achieve consistent alpha during bear markets", "Understand the exact mathematical reasoning behind model predictions"],
+              empathyMap: {
+                thinksAndFeels: ["Anxious about high-volatility crypto swings", "Skeptical of AI 'black-boxes'"],
+                saysAndDoes: ["Demands rigorous backtesting reports before deploying capital", "Monitors Nasdaq and DXY correlations heavily"],
+                sees: ["Competitors losing funds due to overfitting and lagging indicators"]
+              },
+              awareness: { familiarity: "Expert level in algorithmic trading", understanding: "Deep understanding of market mechanics but limited trust in deep learning." },
+              behavior: { sought: "Mathematically proven explainability engines", sources: "Bloomberg Terminal, Quantitative Research Papers" },
+              painPoints: {
+                challenges: ["Market crashes wiping out algorithmic gains"],
+                accessibility: ["AI models lack transparent visualization tools"],
+                overload: ["Too many false-positive buy signals from standard RSI bots"],
+                trust: ["Cannot trust standard Neural Networks due to lack of explainability"],
+                engagement: ["Needs programmatic APIs to pull reports easily"]
+              },
+              designPreferences: { appealing: "Institutional, clean, data-dense dashboards", preference: "Dark mode with high-contrast data visualization" },
+              expectations: { expectations: "Expects the model to output integrated gradients alongside predictions", desiredInfo: "Backtesting metrics including exchange fee penalties" },
+              contentPreferences: { preferred: "Jupyter Notebooks and Python Scripts", consumption: "Code reviews and direct backtest simulations" }
+            }
+          ],
+          competitorAnalysis: [
+            {
+              persona: "Algorithmic Investor",
+              keyNeeds: "Accurate predictive modeling, Macro-economic awareness, and Model Explainability.",
+              competitors: ["Standard RSI/MACD Trading Bots", "Basic LSTM Auto-Traders", "Proprietary Paid Signals"],
+              strengths: ["Easy deployment", "Fast execution times", "Simple APIs"],
+              weaknesses: ["Ignores Nasdaq/DXY global market correlations", "Massive capital loss during sudden liquidity crashes", "Zero transparency on why a trade was executed (Black-box)"]
+            }
+          ],
+          userJourneys: [
+            {
+              personaName: "Marcus Vanguard",
+              role: "Quantitative Hedge Fund Manager",
+              stages: [
+                {
+                  stage: "Discovery & Data Fetching",
+                  actions: ["Inputs target ticker into the Universal Predictor", "Selects timeframe (Daily, Hourly, Minute)"],
+                  thoughtsAndFeelings: ["Will this pull accurate, bias-free data?", "Is it properly handling weekend gaps for macro indicators?"],
+                  painPoints: ["Yahoo Finance API limits for minute-by-minute data"],
+                  opportunities: ["Implement Binance REST API fallback for high-frequency data"]
+                },
+                {
+                  stage: "Model Training & Explainability",
+                  actions: ["Initiates the CNN+GRU training sequence", "Reviews the Integrated Gradients output"],
+                  thoughtsAndFeelings: ["Impressive that it automatically scales 12 features", "Relieved to see mathematical proof that DXY is driving the prediction"],
+                  painPoints: ["Training deep learning models can be computationally expensive"],
+                  opportunities: ["Cache compiled .keras models locally for instant predictions on restart"]
+                },
+                {
+                  stage: "Simulation & Deployment",
+                  actions: ["Runs the Algorithmic Backtesting Simulator", "Analyzes the Net Profit vs Buy & Hold baseline"],
+                  thoughtsAndFeelings: ["The 0.1% exchange fee penalty makes this simulation highly realistic", "Confident in deploying real capital"],
+                  painPoints: ["Backtesting large datasets takes time"],
+                  opportunities: ["Generate beautiful matplotlib charts to visualize the wallet balance over time"]
+                }
+              ]
+            }
+          ]
+        }
+      },
     {
       title: "Nexus AI",
       category: "UX/UI Design",
