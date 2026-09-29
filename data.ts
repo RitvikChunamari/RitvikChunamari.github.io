@@ -131,33 +131,13 @@ export const resumeData: ResumeData = {
               ]
             }
           ],
-          userPersonas: [
-            {
-              name: "Marcus Vanguard",
-              role: "Quantitative Hedge Fund Manager",
-              age: "42",
-              education: "M.S. in Financial Engineering",
-              quote: "'I don't care how accurate the AI is; if I can't explain to my board WHY it made a trade, I can't use it.'",
-              goals: ["Achieve consistent alpha during bear markets", "Understand the exact mathematical reasoning behind model predictions"],
-              empathyMap: {
-                thinksAndFeels: ["Anxious about high-volatility crypto swings", "Skeptical of AI 'black-boxes'"],
-                saysAndDoes: ["Demands rigorous backtesting reports before deploying capital", "Monitors Nasdaq and DXY correlations heavily"],
-                sees: ["Competitors losing funds due to overfitting and lagging indicators"]
-              },
-              awareness: { familiarity: "Expert level in algorithmic trading", understanding: "Deep understanding of market mechanics but limited trust in deep learning." },
-              behavior: { sought: "Mathematically proven explainability engines", sources: "Bloomberg Terminal, Quantitative Research Papers" },
-              painPoints: {
-                challenges: ["Market crashes wiping out algorithmic gains"],
-                accessibility: ["AI models lack transparent visualization tools"],
-                overload: ["Too many false-positive buy signals from standard RSI bots"],
-                trust: ["Cannot trust standard Neural Networks due to lack of explainability"],
-                engagement: ["Needs programmatic APIs to pull reports easily"]
-              },
-              designPreferences: { appealing: "Institutional, clean, data-dense dashboards", preference: "Dark mode with high-contrast data visualization" },
-              expectations: { expectations: "Expects the model to output integrated gradients alongside predictions", desiredInfo: "Backtesting metrics including exchange fee penalties" },
-              contentPreferences: { preferred: "Jupyter Notebooks and Python Scripts", consumption: "Code reviews and direct backtest simulations" }
-            }
-          ],
+          
+          referencesList: [
+            { citationNumber: 1, text: "Long Short-Term Memory (LSTM) Networks in Quantitative Finance.", url: "https://arxiv.org/abs/1909.09586" },
+            { citationNumber: 2, text: "Axiomatic Attribution for Deep Networks (Integrated Gradients).", url: "https://arxiv.org/abs/1703.01365" },
+            { citationNumber: 3, text: "The impact of US Dollar Index (DXY) on Cryptocurrency Volatility.", url: "https://ssrn.com/abstract=3911560" }
+          ]
+,
           competitorAnalysis: [
             {
               persona: "Algorithmic Investor",
@@ -167,36 +147,7 @@ export const resumeData: ResumeData = {
               weaknesses: ["Ignores Nasdaq/DXY global market correlations", "Massive capital loss during sudden liquidity crashes", "Zero transparency on why a trade was executed (Black-box)"]
             }
           ],
-          userJourneys: [
-            {
-              personaName: "Marcus Vanguard",
-              role: "Quantitative Hedge Fund Manager",
-              stages: [
-                {
-                  stage: "Discovery & Data Fetching",
-                  actions: ["Inputs target ticker into the Universal Predictor", "Selects timeframe (Daily, Hourly, Minute)"],
-                  thoughtsAndFeelings: ["Will this pull accurate, bias-free data?", "Is it properly handling weekend gaps for macro indicators?"],
-                  painPoints: ["Yahoo Finance API limits for minute-by-minute data"],
-                  opportunities: ["Implement Binance REST API fallback for high-frequency data"]
-                },
-                {
-                  stage: "Model Training & Explainability",
-                  actions: ["Initiates the CNN+GRU training sequence", "Reviews the Integrated Gradients output"],
-                  thoughtsAndFeelings: ["Impressive that it automatically scales 12 features", "Relieved to see mathematical proof that DXY is driving the prediction"],
-                  painPoints: ["Training deep learning models can be computationally expensive"],
-                  opportunities: ["Cache compiled .keras models locally for instant predictions on restart"]
-                },
-                {
-                  stage: "Simulation & Deployment",
-                  actions: ["Runs the Algorithmic Backtesting Simulator", "Analyzes the Net Profit vs Buy & Hold baseline"],
-                  thoughtsAndFeelings: ["The 0.1% exchange fee penalty makes this simulation highly realistic", "Confident in deploying real capital"],
-                  painPoints: ["Backtesting large datasets takes time"],
-                  opportunities: ["Generate beautiful matplotlib charts to visualize the wallet balance over time"]
-                }
-              ]
-            }
-          ]
-        }
+          }
       },
     {
       title: "Nexus AI",
@@ -228,7 +179,14 @@ export const resumeData: ResumeData = {
           { title: "Informative Content", description: "Easy-to-understand explanations and data-driven insights." },
           { title: "Strong Calls to Action", description: "Encourage user engagement and conversions." }
         ],
-        competitorAnalysis: [
+        
+          referencesList: [
+            { citationNumber: 1, text: "Long Short-Term Memory (LSTM) Networks in Quantitative Finance.", url: "https://arxiv.org/abs/1909.09586" },
+            { citationNumber: 2, text: "Axiomatic Attribution for Deep Networks (Integrated Gradients).", url: "https://arxiv.org/abs/1703.01365" },
+            { citationNumber: 3, text: "The impact of US Dollar Index (DXY) on Cryptocurrency Volatility.", url: "https://ssrn.com/abstract=3911560" }
+          ]
+,
+          competitorAnalysis: [
           {
             persona: "Emily Chen",
             keyNeeds: "Advanced technical resources",
@@ -385,112 +343,8 @@ export const resumeData: ResumeData = {
             }
           }
         ],
-        userJourneys: [
-          {
-            personaName: "Emily Chen",
-            role: "Software Engineer",
-            stages: [
-              {
-                stage: "Awareness",
-                actions: ["Searches for 'AI research' or specific AI topic"],
-                thoughtsAndFeelings: ["Curious, excited to learn more", "Overwhelmed by amount of information"],
-                painPoints: ["Information overload"],
-                opportunities: ["Provide clear and concise search results"]
-              },
-              {
-                stage: "Research",
-                actions: ["Visits AI Nexus website", "Navigates to research section", "Searches for specific papers"],
-                thoughtsAndFeelings: ["Hopeful to find relevant info", "Frustrated if results irrelevant"],
-                painPoints: ["Irrelevant search results"],
-                opportunities: ["Improve search functionality", "Provide clear filtering options"]
-              },
-              {
-                stage: "Evaluation",
-                actions: ["Reads research papers", "Reviews code implementations", "Cross-references sources"],
-                thoughtsAndFeelings: ["Satisfied with quality", "Frustrated by complex notations"],
-                painPoints: ["Complex math notations"],
-                opportunities: ["Provide clear explanations", "Visualizations", "Community forums"]
-              },
-              {
-                stage: "Decision",
-                actions: ["Decides to use info for project", "Shares findings with colleagues"],
-                thoughtsAndFeelings: ["Empowered to contribute", "Difficulty applying research"],
-                painPoints: ["Difficulty applying to practical problems"],
-                opportunities: ["Provide tutorials, workshops", "Mentorship programs"]
-              }
-            ]
-          },
-          {
-            personaName: "Rohan Patel",
-            role: "CSE Student",
-            stages: [
-              {
-                stage: "Awareness",
-                actions: ["Searches for 'AI tutorials' or 'machine learning'"],
-                thoughtsAndFeelings: ["Curious, excited to learn", "Overwhelmed by info"],
-                painPoints: ["Information overload"],
-                opportunities: ["Provide clear introductory content"]
-              },
-              {
-                stage: "Exploration",
-                actions: ["Visits AI Nexus website", "Navigates to learning resources", "Watches tutorials"],
-                thoughtsAndFeelings: ["Excited to learn skills", "Frustrated by complex explanations"],
-                painPoints: ["Complex explanations"],
-                opportunities: ["Step-by-step tutorials", "Interactive exercises", "Quizzes"]
-              },
-              {
-                stage: "Practice",
-                actions: ["Tries out code examples", "Works on AI projects"],
-                thoughtsAndFeelings: ["Motivated to build skills", "Frustrated by debugging/errors"],
-                painPoints: ["Debugging errors", "Technical challenges"],
-                opportunities: ["Community forums", "Mentorship programs", "Troubleshooting resources"]
-              },
-              {
-                stage: "Achievement",
-                actions: ["Successfully completes projects", "Shares achievements with peers"],
-                thoughtsAndFeelings: ["Satisfied with learning", "Wants to continue improving"],
-                painPoints: [],
-                opportunities: ["Offer advanced courses", "Certifications", "Collaboration opportunities"]
-              }
-            ]
-          },
-          {
-            personaName: "David Lee",
-            role: "Non-Technical User",
-            stages: [
-              {
-                stage: "Awareness",
-                actions: ["Searches for 'AI in business' or 'AI trends'"],
-                thoughtsAndFeelings: ["Curious about potential", "Confused by technical jargon"],
-                painPoints: ["Technical jargon"],
-                opportunities: ["Provide clear, concise explanations"]
-              },
-              {
-                stage: "Exploration",
-                actions: ["Visits AI Nexus website", "Reads blog posts/case studies", "Watches explainer videos"],
-                thoughtsAndFeelings: ["Interested in applications", "Frustrated by lack of real examples"],
-                painPoints: ["Lack of real-world examples"],
-                opportunities: ["Practical case studies", "Industry insights", "Expert opinions"]
-              },
-              {
-                stage: "Decision",
-                actions: ["Decides to implement AI", "Shares insights with colleagues"],
-                thoughtsAndFeelings: ["Empowered to decide", "Unsure about best tools"],
-                painPoints: ["Uncertainty about tools/technologies"],
-                opportunities: ["Curated lists of tools", "Consulting services"]
-              },
-              {
-                stage: "Adoption",
-                actions: ["Starts using AI tools", "Monitors impact on business"],
-                thoughtsAndFeelings: ["Excited about potential", "Concerned about risks"],
-                painPoints: ["Risks and challenges of implementation"],
-                opportunities: ["Support and guidance", "Training and workshops"]
-              }
-            ]
-          }
-        ]
-      }
-    },
+        }
+      },
     {
       title: "USPS Organization Rebrand",
       category: "Brand Identity & Logo Redesign",
@@ -533,7 +387,14 @@ export const resumeData: ResumeData = {
           ]
         },
 
-        competitorAnalysis: [
+        
+          referencesList: [
+            { citationNumber: 1, text: "Long Short-Term Memory (LSTM) Networks in Quantitative Finance.", url: "https://arxiv.org/abs/1909.09586" },
+            { citationNumber: 2, text: "Axiomatic Attribution for Deep Networks (Integrated Gradients).", url: "https://arxiv.org/abs/1703.01365" },
+            { citationNumber: 3, text: "The impact of US Dollar Index (DXY) on Cryptocurrency Volatility.", url: "https://ssrn.com/abstract=3911560" }
+          ]
+,
+          competitorAnalysis: [
           {
             persona: "FedEx ($28.6B Brand Value)",
             keyNeeds: "Intelligent time-sensitive shipping, high-tech integration, and business logistics solutions.",
