@@ -89,7 +89,41 @@ export const resumeData: ResumeData = {
       caseStudy: {
         year: "2026",
         role: "AI / Data Engineer",
-        technologies: ["Python", "TensorFlow", "Keras", "Pandas", "Deep Learning"],
+        
+        technologies: ["Python", "TensorFlow", "Keras", "Pandas", "NumPy", "Matplotlib", "yfinance (Yahoo Finance API)", "Binance REST API"],
+        uxImpactMetrics: [
+          { label: "Net Profit", value: "+0.97%", detail: "Generated positive returns during a 300-day bear market backtest." },
+          { label: "Baseline Loss", value: "-7.83%", detail: "The standard Buy & Hold loss avoided by the AI." },
+          { label: "Features", value: "12 Dimensions", detail: "Incorporates complex macro-economic indicators." }
+        ],
+        systemObjectives: [
+          {
+            system: "Multi-Timeframe Data Ingestion Engine",
+            description: "A robust data pipeline that fetches raw financial data and engineers it into a clean 3D tensor format for the neural network, preventing lookahead bias.",
+            objectives: [
+              { title: "Yahoo Finance API (yfinance)", content: "Pulls 5 years of daily data or 730 days of hourly data for macro-economic features (Nasdaq, DXY) and forward-fills weekend gaps to align with crypto." },
+              { title: "Binance Public REST API", content: "Fetches up to 50,000 minute-by-minute historical Klines (candlesticks) directly from Binance without requiring premium API keys, enabling High-Frequency Trading (HFT) scalping." },
+              { title: "Feature Engineering", content: "Computes 10 technical indicators dynamically including SMA_20, SMA_50, EMA_20, RSI, MACD, ATR, and Bollinger Bands using the 'ta' library." }
+            ]
+          },
+          {
+            system: "Hybrid Neural Network (TensorFlow/Keras)",
+            description: "The core predictive model that ingests a 3D sequence [samples, timesteps, features] to forecast the exact closing price of the next timeframe.",
+            objectives: [
+              { title: "1D Convolutional Neural Network (CNN)", content: "Uses 64 filters and a kernel size of 3 to perform spatial extraction across the 12 features, identifying local patterns between volume spikes and price drops." },
+              { title: "Gated Recurrent Unit (GRU)", content: "A 50-unit GRU layer captures the chronological sequence of the last 60 timeframes (e.g., the last 60 days or hours) to understand long-term momentum." },
+              { title: "Regularization", content: "Implements Dropout(0.3) to randomly zero out neurons during training, preventing the model from memorizing the training data (overfitting)." }
+            ]
+          },
+          {
+            system: "AI Explainability & Backtesting",
+            description: "The mathematical verification layers ensuring the AI is completely transparent and historically profitable.",
+            objectives: [
+              { title: "tf.GradientTape() Integrated Gradients", content: "Replaced standard SHAP models with a native TensorFlow GradientTape script. It calculates the gradients of the model's output with respect to its input features, providing a feature importance score (e.g., proving that DXY has a 12% impact)." },
+              { title: "Algorithmic Simulator", content: "Simulates a trading environment by isolating the last 20% of data (Test Set). It buys when the AI predicts the price will rise, sells when it predicts a drop, and penalizes the wallet with a 0.1% exchange fee per trade." }
+            ]
+          }
+        ]
         overview: "An advanced deep learning model that analyzes 12 dimensions of data—including Nasdaq and US Dollar Index (DXY) correlations—to predict future cryptocurrency prices and protect against bear markets.",
         challenge: "Standard technical analysis bots rely solely on lagging indicators and ignore global macro-economic health, leading to inaccurate predictions during market crashes.",
         solution: "Built a 12-dimensional Neural Network with a Backtester. During a simulated 300-day bear market where 'Buy & Hold' lost -7.83%, the AI strategy generated a positive profit of +0.97%.",
