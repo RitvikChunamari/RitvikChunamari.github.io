@@ -79,19 +79,23 @@ export const resumeData: ResumeData = {
   ],
   projects: [
     {
-      id: "crypto-ai-predictor",
       title: "Institutional-Grade Crypto AI Predictor",
-      timeline: "Sept 2026",
-      role: "AI / Data Engineer",
-      context: "Independent Project",
-      thumbnail: "https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg",
-      description: "An advanced algorithmic trading pipeline using a Hybrid 1D CNN + GRU Neural Network to predict cryptocurrency prices.",
-      tags: ["Python", "TensorFlow", "Keras", "Pandas", "Deep Learning", "Quantitative Finance"],
-      overview: {
-        problem: "Standard technical analysis bots rely solely on lagging indicators (like RSI) and ignore global macro-economic health, leading to inaccurate predictions during market crashes.",
-        goal: "Build an institutional-grade deep learning model that analyzes 12 dimensions of data—including Nasdaq and US Dollar Index (DXY) correlations—to predict future prices and protect against bear markets.",
-        impact: "Developed a native TensorFlow Integrated Gradients explainability engine and a rigorous backtester. During a simulated 300-day bear market where 'Buy & Hold' lost -7.83%, the AI strategy generated a positive profit of +0.97%."
-      },
+      category: "AI & Quantitative Finance",
+      description: [
+        "Developed an advanced algorithmic trading pipeline using a Hybrid 1D CNN + GRU Neural Network to predict cryptocurrency prices.",
+        "Integrated a native TensorFlow Integrated Gradients engine for AI explainability and a rigorous backtesting simulator."
+      ],
+      link: "https://github.com/RitvikChunamari/Crypto-AI-Predictor",
+      caseStudy: {
+        year: "2026",
+        role: "AI / Data Engineer",
+        technologies: ["Python", "TensorFlow", "Keras", "Pandas", "Deep Learning"],
+        overview: "An advanced deep learning model that analyzes 12 dimensions of data—including Nasdaq and US Dollar Index (DXY) correlations—to predict future cryptocurrency prices and protect against bear markets.",
+        challenge: "Standard technical analysis bots rely solely on lagging indicators and ignore global macro-economic health, leading to inaccurate predictions during market crashes.",
+        solution: "Built a 12-dimensional Neural Network with a Backtester. During a simulated 300-day bear market where 'Buy & Hold' lost -7.83%, the AI strategy generated a positive profit of +0.97%."
+      }
+    },
+
       links: [
         {
           title: "View Source Code on GitHub",
