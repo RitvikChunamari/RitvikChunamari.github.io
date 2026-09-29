@@ -2177,6 +2177,9 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
         </section>
       )}
 
+      {project.title === 'Institutional-Grade Crypto AI Predictor' && <CryptoSimulator />}
+
+
       {/* Next Project Footer */}
       <div className="container mx-auto px-4 sm:px-6 md:px-12 border-t border-white/20 pt-12 md:pt-16 pb-20 md:pb-28 flex justify-center">
          <MagneticWrapper strength={0.1}>
