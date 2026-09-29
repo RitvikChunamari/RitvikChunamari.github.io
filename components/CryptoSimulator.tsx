@@ -60,7 +60,7 @@ const CryptoSimulator: React.FC = () => {
         try {
           // Attempt to hit the Python Backend API (Render)
           // If the backend isn't deployed yet, it falls back to a simulated response
-          const api_url = "https://crypto-ai-api.onrender.com/predict";
+          const api_url = "https://crypto-ai-api-y2j3.onrender.com/predict";
           const formatted_ticker = symbol.replace("USDT", "-USD");
           
           const res = await fetch(`${api_url}?ticker=${formatted_ticker}&mode=daily`);
