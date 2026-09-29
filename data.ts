@@ -95,15 +95,6 @@ export const resumeData: ResumeData = {
         solution: "Built a 12-dimensional Neural Network with a Backtester. During a simulated 300-day bear market where 'Buy & Hold' lost -7.83%, the AI strategy generated a positive profit of +0.97%."
       }
     },
-
-      links: [
-        {
-          title: "View Source Code on GitHub",
-          url: "https://github.com/RitvikChunamari/Crypto-AI-Predictor",
-          icon: "github"
-        }
-      ]
-    },
     {
       title: "Nexus AI",
       category: "UX/UI Design",
