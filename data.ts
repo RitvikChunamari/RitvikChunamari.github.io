@@ -79,8 +79,8 @@ export const resumeData: ResumeData = {
   ],
   projects: [
     {
-        title: "Institutional-Grade Crypto AI Predictor",
-        image: "/crypto_predictor_thumbnail.jpg",
+        title: "Kinetix Quant (Institutional AI)",
+        image: "/kinetix_thumbnail.svg",
         category: "AI & Quantitative Finance",
         description: [
           "Developed an advanced algorithmic trading pipeline using a Hybrid 1D CNN + GRU Neural Network to predict cryptocurrency prices.",
