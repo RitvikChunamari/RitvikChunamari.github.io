@@ -89,7 +89,7 @@ export const resumeData: ResumeData = {
         caseStudy: {
           year: "2026",
           role: "AI / Data Engineer",
-          technologies: ["Python", "TensorFlow", "Keras", "Pandas", "NumPy", "Matplotlib", "yfinance (Yahoo Finance API)", "Binance REST API"],
+          technologies: ["Python", "FastAPI", "TensorFlow", "Keras", "Render", "GitHub Actions (Cron)", "Binance WebSockets", "TradingView Advanced API", "Yahoo Finance (yfinance)", "CoinCap API"],
           overview: "An advanced deep learning model that analyzes 12 dimensions of data—including Nasdaq and US Dollar Index (DXY) correlations—to predict future cryptocurrency prices and protect against bear markets.",
           challenge: "Standard technical analysis bots rely solely on lagging indicators and ignore global macro-economic health, leading to inaccurate predictions during market crashes. Furthermore, institutional investors reject 'black-box' deep learning models due to a lack of explainability.",
           solution: "Built a 12-dimensional Neural Network with a Backtester. During a simulated 300-day bear market where 'Buy & Hold' lost -7.83%, the AI strategy generated a positive profit of +0.97%. Integrated native TensorFlow Integrated Gradients to provide mathematical proof of feature importance for every prediction.",
@@ -101,10 +101,11 @@ export const resumeData: ResumeData = {
             { title: "Multi-Timeframe Latency", description: "Fetching and processing massive datasets for high-frequency trading (HFT) scalping often introduces latency or requires expensive premium API keys." }
           ],
           detailedSolution: [
-            { title: "Hybrid 1D CNN + GRU Architecture", description: "Engineered a dual-layer neural network. The 1D Convolutional Neural Network (CNN) extracts spatial feature relationships (e.g., how MACD interacts with Bollinger Bands), while the Gated Recurrent Unit (GRU) processes the chronological sequence to identify long-term time-series dependencies." },
-            { title: "Macro-Economic Feature Engineering", description: "Expanded the dataset to 12 dimensions by hooking into the Yahoo Finance API to pull live Nasdaq (^IXIC) and US Dollar Index (DXY) data, forward-filling weekend gaps to perfectly align with 24/7 crypto markets." },
-            { title: "TensorFlow Integrated Gradients", description: "Implemented a native mathematical explainability engine. By calculating the exact derivative of the model's activations, the system proves exactly which features drove the prediction, eliminating the black-box effect." },
-            { title: "Algorithmic Backtesting Simulator", description: "Built an institutional-style simulator that feeds the AI a virtual $10,000, forcing it to trade on unseen test data and deducting a strict 0.1% exchange fee per transaction." }
+            { title: "Macro-Economic Feature Engineering (Why Nasdaq & DXY?)", description: "The model does NOT predict the Nasdaq or the US Dollar. Instead, it uses Nasdaq (Tech Equity correlation) and DXY (Dollar strength inverse-correlation) strictly as input features to help the AI understand the global economic environment before making a crypto prediction." },
+            { title: "Zero-Cold-Start Serverless Architecture", description: "Instead of relying on a lagging cloud server, the frontend is deployed as a static Single Page Application (SPA) on GitHub Pages CDN for 0ms load times. The backend is a Render FastAPI server kept alive 24/7 via a GitHub Actions Cron Job that pings it every 10 minutes." },
+            { title: "APIs & Core Services", description: "Utilizes Binance WebSockets for tick-by-tick live pricing, TradingView Widget API for interactive charting, yfinance for historical OHLCV & Macro data, and TensorFlow.keras for the CNN+GRU inference engine." },
+            { title: "12-Dimensional Metrics", description: "Calculates 12 metrics dynamically for every timeframe: Open, High, Low, Close, Volume, Simple Moving Average (20/50), Exponential Moving Average (20), RSI, MACD, Average True Range (ATR), Bollinger Bands, and Macro Equities." },
+            { title: "TensorFlow Integrated Gradients", description: "Implemented a native mathematical explainability engine. By calculating the exact derivative of the model's activations, the system proves exactly which features drove the prediction, eliminating the black-box effect." }
           ],
           uxImpactMetrics: [
             { label: "Net Profit (Bear Market)", value: "+0.97%", detail: "Generated positive returns during a 300-day bear market simulation, outperforming standard strategies." },
