@@ -2182,7 +2182,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
           <h3 className="text-2xl md:text-4xl font-mono text-white mb-6 tracking-tighter text-center">LIVE AI TERMINAL DEPLOYED</h3>
           <p className="text-white/50 text-center max-w-2xl mb-12 font-mono text-sm">The Deep Learning inference engine has been securely deployed to a standalone cloud server. Click below to launch the full-screen terminal.</p>
           <a 
-            href="https://crypto-ai-api-y2j3.onrender.com/" 
+            href="https://ritvikchunamari.github.io/crypto-terminal.html" 
             target="_blank" 
             rel="noopener noreferrer" 
             className="group relative px-12 py-6 border border-[#00E5FF]/40 bg-[#00E5FF]/5 font-mono text-sm tracking-[0.2em] uppercase overflow-hidden cursor-pointer transition-all hover:border-[#00E5FF] hover:shadow-[0_0_30px_rgba(0,229,255,0.3)]"
