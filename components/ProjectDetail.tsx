@@ -2181,15 +2181,27 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
         <div className="flex flex-col items-center justify-center py-20 px-4">
           <h3 className="text-2xl md:text-4xl font-mono text-white mb-6 tracking-tighter text-center">LIVE AI TERMINAL DEPLOYED</h3>
           <p className="text-white/50 text-center max-w-2xl mb-12 font-mono text-sm">The Deep Learning inference engine has been securely deployed to a standalone cloud server. Click below to launch the full-screen terminal.</p>
-          <a 
-            href="https://ritvikchunamari.github.io/crypto-terminal.html" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="group relative px-12 py-6 border border-[#00E5FF]/40 bg-[#00E5FF]/5 font-mono text-sm tracking-[0.2em] uppercase overflow-hidden cursor-pointer transition-all hover:border-[#00E5FF] hover:shadow-[0_0_30px_rgba(0,229,255,0.3)]"
-          >
-            <span className="relative z-10 font-bold text-[#00E5FF] transition-colors duration-300 group-hover:text-black">TEST LIVE APP</span>
-            <div className="absolute inset-0 bg-[#00E5FF] translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300 ease-out z-0"></div>
-          </a>
+          <div className="flex flex-col sm:flex-row gap-6">
+            <a 
+              href="https://ritvikchunamari.github.io/crypto-terminal.html" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="group relative px-12 py-6 border border-[#00E5FF]/40 bg-[#00E5FF]/5 font-mono text-sm tracking-[0.2em] uppercase overflow-hidden cursor-pointer transition-all hover:border-[#00E5FF] hover:shadow-[0_0_30px_rgba(0,229,255,0.3)] text-center"
+            >
+              <span className="relative z-10 font-bold text-[#00E5FF] transition-colors duration-300 group-hover:text-black">TEST LIVE APP</span>
+              <div className="absolute inset-0 h-full w-0 bg-[#00E5FF] transition-all duration-300 ease-out group-hover:w-full z-0"></div>
+            </a>
+            
+            <a 
+              href={project.link || "https://github.com/RitvikChunamari/Crypto-AI-Predictor"} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="group relative px-12 py-6 border border-white/40 bg-white/5 font-mono text-sm tracking-[0.2em] uppercase overflow-hidden cursor-pointer transition-all hover:border-white hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] text-center"
+            >
+              <span className="relative z-10 font-bold text-white transition-colors duration-300 group-hover:text-black">VIEW SOURCE ON GITHUB</span>
+              <div className="absolute inset-0 h-full w-0 bg-white transition-all duration-300 ease-out group-hover:w-full z-0"></div>
+            </a>
+            </div>
         </div>
       )}
 
