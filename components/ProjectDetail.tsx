@@ -2177,7 +2177,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
         </section>
       )}
 
-      {project.title === 'Institutional-Grade Crypto AI Predictor' && (
+      {project.title === 'Kinetix Quant (Institutional AI)' && (
         <div className="flex flex-col items-center justify-center py-20 px-4">
           <h3 className="text-2xl md:text-4xl font-mono text-white mb-6 tracking-tighter text-center">LIVE AI TERMINAL DEPLOYED</h3>
           <p className="text-white/50 text-center max-w-2xl mb-12 font-mono text-sm">The Deep Learning inference engine has been securely deployed to a standalone cloud server. Click below to launch the full-screen terminal.</p>
