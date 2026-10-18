@@ -12,6 +12,16 @@ const About: React.FC<AboutProps> = ({ data }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isReduced) {
+      if (sectionRef.current) {
+        sectionRef.current.classList.remove('opacity-0', 'translate-y-24');
+        sectionRef.current.classList.add('opacity-100', 'translate-y-0');
+      }
+      setIsVisible(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -29,8 +39,17 @@ const About: React.FC<AboutProps> = ({ data }) => {
       observer.observe(sectionRef.current);
     }
 
+    const fallback = setTimeout(() => {
+      if (sectionRef.current) {
+        sectionRef.current.classList.remove('opacity-0', 'translate-y-24');
+        sectionRef.current.classList.add('opacity-100', 'translate-y-0');
+      }
+      setIsVisible(true);
+    }, 2500);
+
     return () => {
       observer.disconnect();
+      clearTimeout(fallback);
     };
   }, []);
 
@@ -79,7 +98,10 @@ const About: React.FC<AboutProps> = ({ data }) => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32 relative">
           <div className="md:col-span-4">
             <div className="sticky top-32 self-start">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-4">● Profile</span>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-600 block mb-4 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#C62828]"></span>
+                <span className="text-[#C62828] font-bold">03 ///</span> CHAPTER 03 • PROFILE & ARCHITECTURE
+              </span>
             </div>
           </div>
           <div className="md:col-span-8" data-cursor-text="READING" data-edith-target="BIOMETRIC PROFILE // RITVIK CHUNAMARI">
@@ -111,7 +133,8 @@ const About: React.FC<AboutProps> = ({ data }) => {
                   download="Ritvik_Chunamari_Resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2 px-4 py-2 border border-black rounded-full font-mono text-[10px] md:text-xs uppercase tracking-wider text-black hover:bg-black hover:text-white transition-all duration-300"
+                  aria-label="Download Ritvik Chunamari Resume PDF"
+                  className="group inline-flex items-center gap-2 px-4 py-2 border border-black rounded-full font-mono text-[10px] md:text-xs uppercase tracking-wider text-black hover:bg-black hover:text-white transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
                   data-cursor-text="RESUME"
                 >
                   <span>Resume PDF</span>
@@ -161,7 +184,7 @@ const About: React.FC<AboutProps> = ({ data }) => {
                   <span className="absolute -left-[5px] top-0 w-[9px] h-[9px] bg-black rounded-full"></span>
                   <h5 className="text-2xl font-bold mb-2 text-black">{edu.school}</h5>
                   <p className="text-xl font-sans font-medium text-neutral-700 mb-4">{edu.degree}</p>
-                  <div className="flex gap-4 text-[10px] font-mono text-neutral-500 uppercase mb-4 tracking-widest">
+                  <div className="flex gap-4 text-[10px] font-mono text-neutral-600 uppercase mb-4 tracking-widest">
                       <span>{edu.duration}</span>
                       <span>{edu.location}</span>
                   </div>

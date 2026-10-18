@@ -76,6 +76,15 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
   useLayoutEffect(() => {
     if (!isLoaded) return;
 
+    const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isReduced) {
+      gsap.set('.hero-grid-h', { scaleX: 1 });
+      gsap.set('.hero-grid-v', { scaleY: 1 });
+      gsap.set('.hero-title-line', { y: '0%', filter: 'blur(0px)', opacity: 1 });
+      gsap.set('.hero-meta-reveal', { y: 0, opacity: 1 });
+      return;
+    }
+
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ delay: 0.1 });
 
@@ -113,6 +122,12 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
   useEffect(() => {
     const handleScroll = () => {
       if (!heroRef.current) return;
+      const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (isReduced) {
+        heroRef.current.style.opacity = '1';
+        heroRef.current.style.transform = 'none';
+        return;
+      }
       const y = window.scrollY || window.pageYOffset;
       const scrollFade = Math.max(0, 1 - y * 0.0012);
       const scrollParallax = -y * 0.22;
@@ -273,14 +288,14 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
         {/* Left: Designer Folio Identity */}
         <div className="flex items-center gap-3">
           <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
-          <span className="font-mono text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.25em] text-white/50 uppercase font-medium">
-            RITVIK CHUNAMARI <span className="text-white/20">///</span> FOLIO 2026
+          <span className="font-mono text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.25em] text-white/70 uppercase font-medium">
+            RITVIK CHUNAMARI <span className="text-white/40">///</span> FOLIO 2026
           </span>
         </div>
 
         {/* Right: Location */}
         <div className="flex items-center text-right">
-          <span className="font-mono text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.25em] text-white/40 uppercase font-medium">
+          <span className="font-mono text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.25em] text-white/70 uppercase font-medium">
             ARVADA, CO
           </span>
         </div>
@@ -300,6 +315,7 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
       >
         {/* Monumental Display Name with Dual-Layer Differential Parallax */}
         <h1 
+          aria-label="Ritvik Chunamari"
           className="text-[clamp(3.1rem,calc((100vw-48px)/5.62),16.5rem)] md:text-[clamp(4.5rem,13.5vw,16.5rem)] font-bold uppercase tracking-[-0.04em] leading-[0.84] text-cinema-white select-none -ml-0.5 md:-ml-2 flex flex-col w-full"
           style={{
             fontSize: mobileFontSize || undefined,
@@ -309,28 +325,30 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
             transition: 'text-shadow 0.3s ease',
           }}
         >
-          {/* Line 1: Ritvik with subtle magnetic shift */}
-          <div 
-            className="block overflow-hidden will-change-transform transition-transform duration-300 ease-out w-full"
-            style={{
-              transform: `translate3d(${mousePos.x * 12}px, ${mousePos.y * 8}px, 0)`,
-            }}
-          >
-            <span className="inline-block hero-title-line whitespace-nowrap">
-              {renderDynamicText("Ritvik")}
-            </span>
-          </div>
+          <div aria-hidden="true" className="flex flex-col w-full">
+            {/* Line 1: Ritvik with subtle magnetic shift */}
+            <div 
+              className="block overflow-hidden will-change-transform transition-transform duration-300 ease-out w-full"
+              style={{
+                transform: `translate3d(${mousePos.x * 12}px, ${mousePos.y * 8}px, 0)`,
+              }}
+            >
+              <span className="inline-block hero-title-line whitespace-nowrap">
+                {renderDynamicText("Ritvik")}
+              </span>
+            </div>
 
-          {/* Line 2: Chunamari with deeper magnetic shift */}
-          <div 
-            className="block overflow-hidden will-change-transform transition-transform duration-300 ease-out w-full"
-            style={{
-              transform: `translate3d(${mousePos.x * 22}px, ${mousePos.y * 14}px, 0)`,
-            }}
-          >
-            <span ref={chunamariSpanRef} className="inline-block hero-title-line whitespace-nowrap">
-              {renderDynamicText("Chunamari")}
-            </span>
+            {/* Line 2: Chunamari with deeper magnetic shift */}
+            <div 
+              className="block overflow-hidden will-change-transform transition-transform duration-300 ease-out w-full"
+              style={{
+                transform: `translate3d(${mousePos.x * 22}px, ${mousePos.y * 14}px, 0)`,
+              }}
+            >
+              <span ref={chunamariSpanRef} className="inline-block hero-title-line whitespace-nowrap">
+                {renderDynamicText("Chunamari")}
+              </span>
+            </div>
           </div>
         </h1>
 
@@ -343,12 +361,66 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
           }}
         />
 
-        {/* Manifesto Subtitle */}
+        {/* Professional Positioning & Manifesto Subtitle */}
         <div className="max-w-2xl hero-meta-reveal opacity-0">
-          <p className="text-base sm:text-lg md:text-2xl font-light text-neutral-300 leading-relaxed tracking-tight">
-            <span className="text-white font-medium shadow-glow">Creative Designer</span> and{' '}
-            <span className="text-white font-medium shadow-glow">Vibe Coder</span> crafting digital experiences at the intersection of logic and human intuition.
+          <span className="font-mono text-xs sm:text-sm tracking-widest text-[#FF3B30] uppercase font-bold block mb-2">
+            Product Designer &amp; Creative Developer
+          </span>
+          <p className="text-base sm:text-lg md:text-xl font-light text-neutral-300 leading-relaxed tracking-tight">
+            I turn complex ideas into intuitive, accessible products and memorable digital experiences at the intersection of logic and human intuition.
           </p>
+
+          {/* Direct Keyboard-Accessible Quick Navigation Action Pills */}
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3.5 mt-6 sm:mt-7">
+            <MagneticWrapper strength={0.2}>
+              <button
+                type="button"
+                onClick={() => onNavigate?.('work')}
+                className="group px-4 py-2 rounded-full border border-white/25 bg-white/5 hover:bg-white hover:text-black font-mono text-[10px] sm:text-xs uppercase tracking-widest transition-all duration-300 flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:outline-none shadow-sm cursor-pointer"
+                data-cursor-text="WORK"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] group-hover:bg-black transition-colors" />
+                <span>Selected Work</span>
+                <span className="text-[10px] opacity-60 group-hover:translate-y-0.5 transition-transform">↓</span>
+              </button>
+            </MagneticWrapper>
+
+            <MagneticWrapper strength={0.2}>
+              <button
+                type="button"
+                onClick={() => onNavigate?.('profile')}
+                className="px-4 py-2 rounded-full border border-white/15 bg-black/40 hover:border-white text-neutral-300 hover:text-white font-mono text-[10px] sm:text-xs uppercase tracking-widest transition-all duration-300 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none cursor-pointer"
+                data-cursor-text="ABOUT"
+              >
+                Profile &amp; About
+              </button>
+            </MagneticWrapper>
+
+            <MagneticWrapper strength={0.2}>
+              <a
+                href="./Ritvik_Chunamari_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                download="Ritvik_Chunamari_Resume.pdf"
+                className="px-4 py-2 rounded-full border border-white/15 bg-black/40 hover:border-white text-neutral-300 hover:text-white font-mono text-[10px] sm:text-xs uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none cursor-pointer"
+                data-cursor-text="RESUME"
+              >
+                <span>Résumé</span>
+                <span className="text-[9px] opacity-75">↗</span>
+              </a>
+            </MagneticWrapper>
+
+            <MagneticWrapper strength={0.2}>
+              <button
+                type="button"
+                onClick={() => onNavigate?.('contact')}
+                className="px-4 py-2 rounded-full border border-white/15 bg-black/40 hover:border-white text-neutral-300 hover:text-white font-mono text-[10px] sm:text-xs uppercase tracking-widest transition-all duration-300 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none cursor-pointer"
+                data-cursor-text="CONTACT"
+              >
+                Contact
+              </button>
+            </MagneticWrapper>
+          </div>
         </div>
       </div>
 
@@ -357,21 +429,23 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
           ───────────────────────────────────────────────────────────── */}
       <div className="relative z-10 w-full flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-t border-white/[0.08] pt-6 pointer-events-auto hero-meta-reveal opacity-0">
         {/* Education / Domain Focus */}
-        <div className="flex items-center gap-2 font-mono text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.2em] text-white/45 uppercase">
+        <div className="flex items-center gap-2 font-mono text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.2em] text-white/70 uppercase">
           <span>M.S. Creative Technology &amp; Design</span>
-          <span className="text-white/20">●</span>
+          <span className="text-white/30">●</span>
           <span>CU Boulder</span>
         </div>
 
         {/* Magnetic Scroll to Explore Button */}
         <MagneticWrapper strength={0.25}>
           <button
+            type="button"
             onClick={scrollToWork}
-            className="group flex items-center gap-3 font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-white/70 hover:text-white hover:tracking-[0.25em] transition-all duration-300 cursor-pointer"
+            aria-label="Scroll to selected works"
+            className="group flex items-center gap-3 font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-white/80 hover:text-white hover:tracking-[0.25em] transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-sm md:mr-32"
             data-cursor-text="SCROLL"
           >
             <span>Scroll to Explore</span>
-            <span className="w-4 h-4 rounded-full border border-white/30 flex items-center justify-center group-hover:border-white group-hover:scale-110 transition-all duration-300">
+            <span className="w-4 h-4 rounded-full border border-white/40 flex items-center justify-center group-hover:border-white group-hover:scale-110 transition-all duration-300">
               <span className="w-1 h-1 bg-white rounded-full group-hover:bg-[#FF3B30] transition-colors"></span>
             </span>
           </button>
@@ -383,9 +457,9 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
           ───────────────────────────────────────────────────────────── */}
       <div className="relative z-10 w-full flex flex-col items-center justify-center pt-8 pb-2 pointer-events-none hero-meta-reveal opacity-0">
         <div className="w-px h-12 bg-gradient-to-b from-[#FF3B30] via-white/20 to-transparent" />
-        <span className="font-mono text-[9px] tracking-[0.28em] uppercase text-white/40 mt-2 flex items-center gap-2">
+        <span className="font-mono text-[9px] tracking-[0.28em] uppercase text-white/50 mt-2 flex items-center gap-2">
           <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-          <span>01 / SELECTED WORKS</span>
+          <span>02 // CHAPTER 02 • SELECTED WORK</span>
         </span>
       </div>
 

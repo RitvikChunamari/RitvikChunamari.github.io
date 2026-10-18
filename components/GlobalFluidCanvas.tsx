@@ -39,20 +39,28 @@ const GlobalFluidCanvas: React.FC<GlobalFluidCanvasProps> = ({
 
     let width = window.innerWidth;
     let height = window.innerHeight;
+    const isMobile = width < 768;
 
-    // 1. Scene, Camera, Renderer
+    // 1. Scene, Camera, Renderer with WebGL safety check
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        alpha: true,
+        antialias: !isMobile,
+        powerPreference: 'high-performance',
+      });
+    } catch (err) {
+      console.warn('WebGL is unavailable or context could not be created:', err);
+      return;
+    }
+
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
     camera.position.set(0, -1.2, 6.2);
     camera.lookAt(0, 0.2, 0);
 
-    const renderer = new THREE.WebGLRenderer({
-      alpha: true,
-      antialias: true,
-      powerPreference: 'high-performance',
-    });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.15;
     container.appendChild(renderer.domElement);
@@ -215,8 +223,10 @@ const GlobalFluidCanvas: React.FC<GlobalFluidCanvasProps> = ({
       }
     `;
 
-    // 3. High-density Plane Geometry & Mesh
-    const geometry = new THREE.PlaneGeometry(18, 13, 160, 140);
+    // 3. Adaptive Density Plane Geometry & Mesh (Mobile optimized)
+    const segX = isMobile ? 80 : 160;
+    const segY = isMobile ? 70 : 140;
+    const geometry = new THREE.PlaneGeometry(18, 13, segX, segY);
     const material = new THREE.ShaderMaterial({
       vertexShader,
       fragmentShader,
@@ -300,22 +310,45 @@ const GlobalFluidCanvas: React.FC<GlobalFluidCanvasProps> = ({
     const handleResize = () => {
       width = window.innerWidth;
       height = window.innerHeight;
+      const isMob = width < 768;
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMob ? 1.5 : 2));
     };
 
     window.addEventListener('resize', handleResize);
 
-    // 6. Animation Loop
+    // 6. Animation Loop with Background Tab Pause and Delta Timing
     let animId: number;
-    const clock = new THREE.Clock();
+    let lastTime = performance.now();
+    let accumulatedTime = 0;
+    let isVisible = !document.hidden;
+
+    const prefersReducedMotion = typeof window !== 'undefined' && 
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const handleVisibilityChange = () => {
+      isVisible = !document.hidden;
+      if (isVisible) {
+        lastTime = performance.now();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
 
-      const delta = clock.getDelta();
-      const elapsedTime = clock.getElapsedTime();
+      if (!isVisible) return;
+
+      const now = performance.now();
+      const rawDelta = Math.min((now - lastTime) * 0.001, 0.1);
+      lastTime = now;
+      const timeScale = prefersReducedMotion ? 0.25 : 1.0;
+      accumulatedTime += rawDelta * timeScale;
+
+      const delta = rawDelta;
+      const elapsedTime = accumulatedTime;
       const m = mouseRef.current;
 
       // Smooth mouse plane coordinates
@@ -368,6 +401,7 @@ const GlobalFluidCanvas: React.FC<GlobalFluidCanvasProps> = ({
 
     return () => {
       cancelAnimationFrame(animId);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('touchstart', handleTouchMove);
       window.removeEventListener('touchmove', handleTouchMove);

@@ -80,6 +80,9 @@ const App: React.FC = () => {
   // Navigation State
   const [currentView, setCurrentView] = useState<'home' | 'project'>('home');
   const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const [activeSection, setActiveSection] = useState<'home' | 'work' | 'profile' | 'contact'>('home');
+  const activeSectionRef = useRef<'home' | 'work' | 'profile' | 'contact'>('home');
+  const savedHomeScrollY = useRef(0);
   
   // Animation Refs
   const requestRef = useRef<number>();
@@ -88,6 +91,8 @@ const App: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const progressCircleRef = useRef<SVGCircleElement>(null);
   const progressTextRef = useRef<HTMLSpanElement>(null);
+  const chapterNumRef = useRef<HTMLSpanElement>(null);
+  const chapterNameRef = useRef<HTMLSpanElement>(null);
 
   // Virtual Scroll State
   const scrollY = useRef(0);
@@ -109,6 +114,23 @@ const App: React.FC = () => {
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
+
+    // Direct Deep-Link handling on initial page load
+    const initialHash = decodeURIComponent(window.location.hash.replace(/^#/, ''));
+    if (initialHash) {
+      const matchedProject = resumeData.projects.find(
+        p => p.title.toLowerCase() === initialHash.toLowerCase()
+      );
+      if (matchedProject) {
+        setActiveProject(matchedProject);
+        setCurrentView('project');
+        setIsLoaded(true);
+        setShowContent(true);
+        window.scrollTo(0, 0);
+        return;
+      }
+    }
+
     window.scrollTo(0, 0);
     scrollY.current = 0;
     targetScrollY.current = 0;
@@ -129,6 +151,12 @@ const App: React.FC = () => {
     }
     setIsLoaded(true);
     setShowContent(true);
+
+    // If an initial section hash was specified (e.g. #work), scroll to it after preloader
+    const initialHash = decodeURIComponent(window.location.hash.replace(/^#/, ''));
+    if (initialHash && ['work', 'profile', 'contact'].includes(initialHash.toLowerCase())) {
+      setTimeout(() => scrollToSection(initialHash.toLowerCase()), 150);
+    }
   };
   
   useEffect(() => {
@@ -154,6 +182,7 @@ const App: React.FC = () => {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
+      document.body.classList.add('has-custom-cursor');
       if (cursor.current.x < -1000) {
         cursor.current.x = e.clientX;
         cursor.current.y = e.clientY;
@@ -164,6 +193,37 @@ const App: React.FC = () => {
       if (isTouchOrMobile()) {
         // On mobile & tablet screen, fade once it is moved
         scheduleCursorFade(600);
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Revert to native system focus ring when navigating via keyboard
+      if (['Tab', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'PageUp', 'PageDown'].includes(e.key)) {
+        document.body.classList.remove('has-custom-cursor');
+        if (cursorRef.current) cursorRef.current.style.opacity = '0';
+        if (cursorDotRef.current) cursorDotRef.current.style.opacity = '0';
+      }
+    };
+
+    const handleFocusIn = (e: FocusEvent) => {
+      if (currentView !== 'home') return;
+      const target = e.target as HTMLElement;
+      if (!target || !scrollRef.current) return;
+
+      document.body.classList.remove('has-custom-cursor');
+      if (cursorRef.current) cursorRef.current.style.opacity = '0';
+      if (cursorDotRef.current) cursorDotRef.current.style.opacity = '0';
+
+      const rect = target.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      // Scroll focused element into view smoothly if partially out of frame
+      if (rect.top < 90 || rect.bottom > viewportHeight - 80) {
+        const trueY = (window.scrollY || scrollY.current) + rect.top - 120;
+        window.scrollTo({
+          top: Math.max(0, trueY),
+          behavior: 'smooth'
+        });
+        targetScrollY.current = Math.max(0, trueY);
       }
     };
 
@@ -212,7 +272,7 @@ const App: React.FC = () => {
           cursorRef.current.className = "fixed top-0 left-0 pointer-events-none z-[10000] rounded-full will-change-transform flex items-center justify-center backdrop-blur-[2px] transition-[width,height,background-color,border-color,opacity] duration-500 ease-out w-[68px] h-[68px] border border-white bg-black/60";
           cursorTextRef.current.textContent = cursorTextAttr;
           cursorTextRef.current.style.opacity = '1';
-        } else if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('a') || target.closest('button')) {
+        } else if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.getAttribute('role') === 'button' || target.closest('a') || target.closest('button') || target.closest('[role="button"]')) {
           // Hover link / button state: crisp targeting reticle
           cursorRef.current.className = "fixed top-0 left-0 pointer-events-none z-[10000] rounded-full will-change-transform flex items-center justify-center backdrop-blur-[1px] transition-[width,height,background-color,border-color,opacity] duration-500 ease-out w-[52px] h-[52px] border border-white/90 bg-white/10";
           cursorTextRef.current.style.opacity = '0';
@@ -242,7 +302,10 @@ const App: React.FC = () => {
         }
       }
     });
-    if (scrollRef.current) resizeObserver.observe(scrollRef.current);
+    if (scrollRef.current) {
+      resizeObserver.observe(scrollRef.current);
+      scrollRef.current.addEventListener('focusin', handleFocusIn);
+    }
 
     const handleMouseDown = () => {
       isMouseDown.current = true;
@@ -284,9 +347,10 @@ const App: React.FC = () => {
       if (currentView === 'home') {
         const diff = targetScrollY.current - scrollY.current;
         const isTouch = isTouchOrMobile();
+        const isReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         
-        if (isTouch) {
-          // Instant 1:1 sync on mobile / touch devices for native responsiveness
+        if (isTouch || isReducedMotion) {
+          // Instant 1:1 sync on mobile / touch devices or reduced motion for native responsiveness
           scrollY.current = targetScrollY.current;
         } else {
           // Liquid smooth damping on desktop wheel / trackpad
@@ -298,7 +362,7 @@ const App: React.FC = () => {
         }
         scrollVelocityRef.current = diff;
         
-        const roundedY = Math.round(scrollY.current * 100) / 100;
+        const roundedY = Math.max(0, Math.round(scrollY.current * 100) / 100);
         if (scrollRef.current) {
           scrollRef.current.style.transform = `translate3d(0, -${roundedY}px, 0)`;
         }
@@ -312,12 +376,48 @@ const App: React.FC = () => {
         if (progressTextRef.current) {
           progressTextRef.current.textContent = `${Math.round(progress * 100)}%`;
         }
+
+        // Active Chapter detection (Zero re-render overhead via direct DOM refs, state updated only on boundary crossing)
+        const workElem = document.getElementById('work');
+        const profileElem = document.getElementById('profile');
+        const contactElem = document.getElementById('contact');
+
+        let chNum = '01';
+        let chName = 'IDENTITY';
+        let newSec: 'home' | 'work' | 'profile' | 'contact' = 'home';
+
+        const triggerOffset = window.innerHeight * 0.45;
+        if (contactElem && roundedY >= (contactElem.offsetTop - triggerOffset)) {
+          chNum = '04';
+          chName = 'CONTACT';
+          newSec = 'contact';
+        } else if (profileElem && roundedY >= (profileElem.offsetTop - triggerOffset)) {
+          chNum = '03';
+          chName = 'PROFILE';
+          newSec = 'profile';
+        } else if (workElem && roundedY >= (workElem.offsetTop - triggerOffset)) {
+          chNum = '02';
+          chName = 'SELECTED WORK';
+          newSec = 'work';
+        }
+
+        if (chapterNumRef.current && chapterNumRef.current.textContent !== `CH ${chNum}`) {
+          chapterNumRef.current.textContent = `CH ${chNum}`;
+        }
+        if (chapterNameRef.current && chapterNameRef.current.textContent !== chName) {
+          chapterNameRef.current.textContent = chName;
+        }
+        if (activeSectionRef.current !== newSec) {
+          activeSectionRef.current = newSec;
+          setActiveSection(newSec);
+        }
       }
 
       requestRef.current = requestAnimationFrame(animate);
     };
 
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('mouseleave', handleMouseLeave);
     window.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mouseup', handleMouseUp);
@@ -331,6 +431,7 @@ const App: React.FC = () => {
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mouseup', handleMouseUp);
@@ -340,13 +441,62 @@ const App: React.FC = () => {
       window.removeEventListener('touchcancel', handleTouchCancel);
       window.removeEventListener('mouseover', handleMouseOver);
       window.removeEventListener('scroll', handleScroll);
+      if (scrollRef.current) {
+        scrollRef.current.removeEventListener('focusin', handleFocusIn);
+      }
       if (cursorFadeTimer.current) clearTimeout(cursorFadeTimer.current);
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
       resizeObserver.disconnect();
     };
   }, [currentView]);
 
+  // Browser History & URL Hash Routing Listener
+  useEffect(() => {
+    const handlePopState = () => {
+      const hash = decodeURIComponent(window.location.hash.replace(/^#/, ''));
+      if (hash) {
+        const matched = resumeData.projects.find(
+          p => p.title.toLowerCase() === hash.toLowerCase()
+        );
+        if (matched) {
+          setActiveProject(matched);
+          setCurrentView('project');
+          window.scrollTo(0, 0);
+          return;
+        }
+        if (['work', 'profile', 'contact', 'home'].includes(hash.toLowerCase())) {
+          if (currentView === 'project') {
+            setCurrentView('home');
+            setActiveProject(null);
+            setTimeout(() => scrollToSection(hash.toLowerCase()), 100);
+            return;
+          }
+          scrollToSection(hash.toLowerCase());
+          return;
+        }
+      }
+
+      // If returning to root / home
+      if (currentView === 'project') {
+        setCurrentView('home');
+        setActiveProject(null);
+        setTimeout(() => {
+          window.scrollTo(0, savedHomeScrollY.current);
+          targetScrollY.current = savedHomeScrollY.current;
+          scrollY.current = savedHomeScrollY.current;
+        }, 50);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [currentView]);
+
   const scrollToSection = (targetId: string) => {
+    if (window.location.hash !== `#${targetId}`) {
+      window.history.replaceState({ section: targetId }, '', `#${targetId}`);
+    }
+
     if (targetId === 'home') {
       window.scrollTo({
         top: 0,
@@ -362,27 +512,20 @@ const App: React.FC = () => {
       (targetId === 'about' ? document.getElementById('profile') : null);
 
     if (element) {
-      // Calculate true offset within the scrollRef container
-      let top = 0;
-      let curr: HTMLElement | null = element;
-      while (curr && curr !== scrollRef.current && curr !== document.body) {
-        top += curr.offsetTop;
-        curr = curr.offsetParent as HTMLElement;
-      }
-
-      // If offsetTop loop returned 0, fallback to clientRect
-      if (top === 0) {
-        top = element.getBoundingClientRect().top + scrollY.current;
-      }
-
-      // For contact or bottom sections, scroll to maxScroll
+      const rect = element.getBoundingClientRect();
+      const currentY = window.scrollY || scrollY.current;
+      const targetY = rect.top + currentY;
       const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-      const finalTop = targetId === 'contact' ? maxScroll : Math.min(top, maxScroll);
+      const finalTop = targetId === 'contact' ? maxScroll : Math.min(Math.max(0, targetY), maxScroll);
 
       window.scrollTo({
         top: finalTop,
         behavior: 'smooth'
       });
+
+      // Transfer focus for keyboard accessibility
+      element.setAttribute('tabindex', '-1');
+      element.focus({ preventScroll: true });
     }
   };
 
@@ -393,7 +536,7 @@ const App: React.FC = () => {
        handleBackToHome();
        setTimeout(() => {
           scrollToSection(targetId);
-       }, 850);
+       }, 700);
        return;
     }
 
@@ -401,6 +544,13 @@ const App: React.FC = () => {
   };
 
   const handleProjectClick = (project: Project) => {
+    savedHomeScrollY.current = window.scrollY || scrollY.current;
+    window.history.pushState(
+      { view: 'project', title: project.title },
+      '',
+      `#${encodeURIComponent(project.title)}`
+    );
+
     setIsTransitioning(true);
     setTimeout(() => {
       setActiveProject(project);
@@ -415,29 +565,44 @@ const App: React.FC = () => {
          scrollRef.current.style.transform = `translate3d(0, 0, 0)`;
       }
       setTimeout(() => setIsTransitioning(false), 100);
-    }, 800);
+    }, 600);
   };
 
   const handleBackToHome = () => {
+    if (window.location.hash) {
+      window.history.pushState({ view: 'home' }, '', window.location.pathname);
+    }
     setIsTransitioning(true);
     setTimeout(() => {
       setCurrentView('home');
       setActiveProject(null);
-      window.scrollTo(0, 0);
-      setTimeout(() => setIsTransitioning(false), 100);
-    }, 800);
+      setTimeout(() => {
+        window.scrollTo(0, savedHomeScrollY.current);
+        targetScrollY.current = savedHomeScrollY.current;
+        scrollY.current = savedHomeScrollY.current;
+        setIsTransitioning(false);
+      }, 50);
+    }, 600);
   };
   
   const handleNextProject = () => {
      if (!activeProject) return;
+     const currentIndex = resumeData.projects.findIndex(p => p.title === activeProject.title);
+     const nextIndex = (currentIndex + 1) % resumeData.projects.length;
+     const nextProject = resumeData.projects[nextIndex];
+
+     window.history.pushState(
+       { view: 'project', title: nextProject.title },
+       '',
+       `#${encodeURIComponent(nextProject.title)}`
+     );
+
      setIsTransitioning(true);
      setTimeout(() => {
-       const currentIndex = resumeData.projects.findIndex(p => p.title === activeProject.title);
-       const nextIndex = (currentIndex + 1) % resumeData.projects.length;
-       setActiveProject(resumeData.projects[nextIndex]);
+       setActiveProject(nextProject);
        window.scrollTo(0, 0);
        setTimeout(() => setIsTransitioning(false), 100);
-     }, 800);
+     }, 600);
   };
 
   return (
@@ -495,38 +660,65 @@ const App: React.FC = () => {
           <span ref={cursorTextRef} className="text-white text-[9px] font-mono font-bold uppercase tracking-widest opacity-0 transition-opacity duration-150"></span>
         </div>
 
-        {/* Circular Scroll Progress Indicator (Zero React Re-renders) */}
+        {/* Circular Scroll Progress & Chapter HUD (Zero React Re-renders) */}
         {currentView === 'home' && (
-          <div className="fixed bottom-8 right-8 z-[50] mix-blend-difference hidden md:block">
-            <svg width="50" height="50" className="transform -rotate-90">
-              <circle 
-                cx="25" cy="25" r={radius} 
-                fill="transparent" 
-                stroke="rgba(255,255,255,0.1)" 
-                strokeWidth="2" 
-              />
-              <circle 
-                ref={progressCircleRef}
-                cx="25" cy="25" r={radius} 
-                fill="transparent" 
-                stroke="white" 
-                strokeWidth="2" 
-                strokeDasharray={circumference} 
-                strokeDashoffset={circumference}
-                className="transition-all duration-75 ease-linear"
-              />
-            </svg>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span ref={progressTextRef} className="text-[8px] font-mono text-white">0%</span>
+          <div 
+            className="fixed bottom-8 right-8 z-[50] mix-blend-difference hidden md:flex items-center gap-3 select-none pointer-events-none"
+            aria-hidden="true"
+          >
+            <div className="text-right font-mono tracking-widest text-[9px] uppercase">
+              <span ref={chapterNumRef} className="text-[#FF3B30] font-bold block">CH 01</span>
+              <span ref={chapterNameRef} className="text-white/60 tracking-wider">IDENTITY</span>
+            </div>
+            <div className="relative w-[48px] h-[48px] flex items-center justify-center">
+              <svg width="48" height="48" className="transform -rotate-90">
+                <circle 
+                  cx="24" cy="24" r={radius} 
+                  fill="transparent" 
+                  stroke="rgba(255,255,255,0.12)" 
+                  strokeWidth="2" 
+                />
+                <circle 
+                  ref={progressCircleRef}
+                  cx="24" cy="24" r={radius} 
+                  fill="transparent" 
+                  stroke="white" 
+                  strokeWidth="2" 
+                  strokeDasharray={circumference} 
+                  strokeDashoffset={circumference}
+                  className="transition-all duration-75 ease-linear"
+                />
+              </svg>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span ref={progressTextRef} className="text-[8px] font-mono text-white font-bold">0%</span>
+              </div>
             </div>
           </div>
         )}
 
-        {currentView === 'home' && <Header onNavigate={handleNavigate} />}
+        {/* Accessible Skip to Content Link */}
+        <a 
+          href="#work"
+          onClick={(e) => {
+            e.preventDefault();
+            scrollToSection('work');
+            const workHeading = document.getElementById('work');
+            if (workHeading) {
+              workHeading.setAttribute('tabindex', '-1');
+              workHeading.focus();
+            }
+          }}
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[10005] focus:px-4 focus:py-2.5 focus:bg-white focus:text-black focus:font-mono focus:text-xs focus:font-bold focus:uppercase focus:tracking-widest focus:outline-none focus:ring-2 focus:ring-[#FF3B30] shadow-2xl transition-all"
+        >
+          Skip to Selected Works
+        </a>
+
+        {currentView === 'home' && <Header onNavigate={handleNavigate} activeSection={activeSection} />}
         
         {/* VIEW ROUTER */}
         {currentView === 'home' ? (
-          <div 
+          <main 
+             id="main-content"
              ref={scrollRef} 
              className="fixed top-0 left-0 w-full z-10 origin-center will-change-transform"
              style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
@@ -538,15 +730,17 @@ const App: React.FC = () => {
             />
             <About data={resumeData} />
             <Footer personal={resumeData.personal} />
-          </div>
+          </main>
         ) : (
-           <ErrorBoundary onReset={handleBackToHome}>
-             <ProjectDetail 
-                project={activeProject!} 
-                onBack={handleBackToHome} 
-                onNext={handleNextProject}
-             />
-           </ErrorBoundary>
+          <main id="main-content">
+             <ErrorBoundary onReset={handleBackToHome}>
+               <ProjectDetail 
+                  project={activeProject!} 
+                  onBack={handleBackToHome} 
+                  onNext={handleNextProject}
+               />
+             </ErrorBoundary>
+          </main>
         )}
         
       </div>

@@ -78,11 +78,30 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
     setMousePos({ x, y });
   };
 
-  // Main Counter Interpolation & Sound triggers
+  // Returning visitor check & reduced motion bypass for instant accessibility
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const hasSeen = sessionStorage.getItem('hasSeenPortfolioLoader');
+      if (isReduced || hasSeen === 'true') {
+        onComplete();
+      }
+    }
+  }, [onComplete]);
+
+  // Main Counter Interpolation & Safe Progressive Pacing
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const hasSeen = sessionStorage.getItem('hasSeenPortfolioLoader');
+      if (isReduced || hasSeen === 'true') {
+        return;
+      }
+    }
+
     let animFrame: number;
     const startTime = Date.now();
-    const duration = 2800; // 2.8s cinematic Awwwards pacing
+    const duration = 1450; // Refined cinematic pacing without sluggish waiting
 
     let current = 0;
 
@@ -96,22 +115,20 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
         : 1 - Math.pow(-2 * linear + 2, 3) / 2;
 
       const target = ease * 100;
-      current += (target - current) * 0.18;
+      current += (target - current) * 0.22;
       const rounded = Math.min(100, Math.floor(current));
 
       setProgress(rounded);
 
-      // Sound blip at milestone transitions
-      if (rounded - lastProgressTick.current >= 15 && rounded < 95) {
-        lastProgressTick.current = rounded;
-        playEdithSound('blip');
-      }
-
-      if (linear < 1 || current < 99.4) {
+      if (linear < 1 || current < 99.2) {
         animFrame = requestAnimationFrame(update);
       } else {
         setProgress(100);
-        playEdithSound('boot');
+        try {
+          sessionStorage.setItem('hasSeenPortfolioLoader', 'true');
+        } catch {
+          // Storage quota / safety
+        }
 
         // Step 1: Text dissolve & flare
         setTextDissolve(true);
@@ -119,12 +136,12 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
         // Step 2: 5-pillar architectural curtain lift
         setTimeout(() => {
           setIsFinishing(true);
-        }, 260);
+        }, 180);
 
         // Step 3: Complete transition to reveal the portfolio hero
         setTimeout(() => {
           onComplete();
-        }, 1150);
+        }, 750);
       }
     };
 
@@ -133,14 +150,34 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
   }, [onComplete]);
 
   // Skip handler for instant accessibility
-  const handleSkip = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleSkip = (e?: React.MouseEvent | KeyboardEvent) => {
+    if (e && 'stopPropagation' in e) e.stopPropagation();
     setProgress(100);
-    playEdithSound('boot');
+    try {
+      sessionStorage.setItem('hasSeenPortfolioLoader', 'true');
+    } catch {
+      // Storage safety
+    }
+    try {
+      playEdithSound('boot');
+    } catch {
+      // Audio context safety
+    }
     setTextDissolve(true);
-    setTimeout(() => setIsFinishing(true), 150);
-    setTimeout(() => onComplete(), 750);
+    setTimeout(() => setIsFinishing(true), 120);
+    setTimeout(() => onComplete(), 500);
   };
+
+  // Keyboard shortcut listener (Escape or Enter to bypass intro)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleSkip(e);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Rolling Odometer digits
   const hundreds = Math.floor(progress / 100);
@@ -151,8 +188,17 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
     <div 
       ref={containerRef}
       onMouseMove={handleMouseMove}
+      role="progressbar"
+      aria-valuenow={progress}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-label="Portfolio loading progress"
       className="fixed inset-0 z-[10000] pointer-events-auto select-none overflow-hidden bg-[#070707] text-[#ededed]"
     >
+      {/* Screen reader live announcement */}
+      <div className="sr-only" aria-live="polite">
+        Loading Ritvik Chunamari Portfolio: {progress}% complete
+      </div>
       {/* 5-Pillar Architectural Shutter Panels (Awwwards Staggered Curtain Reveal) */}
       <div className="absolute inset-0 z-10 pointer-events-none flex">
         {[0, 1, 2, 3, 4].map((col) => (
@@ -451,13 +497,15 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
 
           {/* Interactive Skip Button */}
           <button 
+            type="button"
             onClick={handleSkip}
-            className="group flex items-center space-x-2 text-neutral-500 hover:text-white transition-colors duration-200 cursor-pointer"
-            title="Skip loading animation"
+            aria-label="Skip introductory animation (Press Escape or Enter)"
+            className="group flex items-center space-x-2 text-neutral-400 hover:text-white transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black px-2 py-1 rounded"
+            title="Skip loading animation (Esc)"
           >
-            <span className="text-neutral-600 group-hover:text-[#ff9933] transition-colors">⚡</span>
-            <span className="border-b border-transparent group-hover:border-white transition-all">SKIP INTRO</span>
-            <span className="text-[9px] text-neutral-600 font-sans">↵</span>
+            <span className="text-neutral-500 group-hover:text-[#ff9933] transition-colors" aria-hidden="true">⚡</span>
+            <span className="border-b border-transparent group-hover:border-white transition-all font-mono text-[10px] tracking-wider uppercase">SKIP INTRO</span>
+            <span className="text-[9px] text-neutral-500 font-sans" aria-hidden="true">↵</span>
           </button>
 
         </div>

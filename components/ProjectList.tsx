@@ -7,6 +7,15 @@ interface ProjectListProps {
   onProjectClick: (project: Project) => void;
 }
 
+const getProjectEditorialBadge = (title: string) => {
+  if (title.includes('Kinetix')) return { label: 'FLAGSHIP INSTITUTIONAL AI', tag: 'NEURAL MODEL' };
+  if (title.includes('USPS')) return { label: 'UNIVERSAL DESIGN SYSTEM', tag: 'FEDERAL REBRAND' };
+  if (title.includes('Security')) return { label: 'ENTERPRISE SOC & OPERATIONS', tag: 'MISSION CRITICAL' };
+  if (title.includes('Pill')) return { label: 'ASSISTIVE ROBOTICS & HARDWARE', tag: 'MEDTECH PROTOTYPE' };
+  if (title.includes('Mumbai') || title.includes('Olympic')) return { label: 'OLYMPIC GAMES KINETIC IDENTITY', tag: 'CULTURAL BRANDING' };
+  return { label: 'SELECTED CASE STUDY', tag: 'DESIGN & DEV' };
+};
+
 const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) => {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
   const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -14,6 +23,33 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
   const imageRefs = useRef<(HTMLImageElement | null)[]>([]);
 
   useEffect(() => {
+    const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (isReduced) {
+      rowRefs.current.forEach((row, index) => {
+        if (!row) return;
+        row.style.opacity = '1';
+        row.style.transform = 'none';
+        const container = containerRefs.current[index];
+        const img = imageRefs.current[index];
+        if (container) { container.style.opacity = '1'; container.style.transform = 'none'; }
+        if (img) { img.style.opacity = '1'; img.style.transform = 'none'; }
+        const title = row.querySelector('.project-title') as HTMLElement;
+        if (title) { title.style.transform = 'none'; title.style.opacity = '1'; }
+        row.querySelectorAll('.project-meta').forEach((m) => {
+          (m as HTMLElement).style.transform = 'none';
+          (m as HTMLElement).style.opacity = '1';
+        });
+        const redBar = row.querySelector('.project-red-bar') as HTMLElement;
+        if (redBar) { redBar.style.transform = 'none'; }
+        const arrow = row.querySelector('.project-arrow') as HTMLElement;
+        if (arrow) { arrow.style.transform = 'none'; arrow.style.opacity = '1'; }
+        const separator = row.querySelector('.separator') as HTMLElement;
+        if (separator) { separator.style.transform = 'none'; }
+      });
+      return;
+    }
+
     // Smooth Staggered Reveal Observer
     const observer = new IntersectionObserver(
       (entries) => {
@@ -87,6 +123,27 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
       if (row) observer.observe(row);
     });
 
+    // Graceful fallback to guarantee content is never permanently hidden
+    const fallbackTimer = setTimeout(() => {
+      rowRefs.current.forEach((row, index) => {
+        if (row && !row.classList.contains('ignited')) {
+          row.classList.add('ignited');
+          row.style.opacity = '1';
+          row.style.transform = 'none';
+          const container = containerRefs.current[index];
+          const img = imageRefs.current[index];
+          if (container) { container.style.opacity = '1'; }
+          if (img) { img.style.opacity = '1'; }
+          const title = row.querySelector('.project-title') as HTMLElement;
+          if (title) { title.style.transform = 'none'; title.style.opacity = '1'; }
+          row.querySelectorAll('.project-meta').forEach((m) => {
+            (m as HTMLElement).style.transform = 'none';
+            (m as HTMLElement).style.opacity = '1';
+          });
+        }
+      });
+    }, 2500);
+
     // Throttled Parallax on Scroll (Zero idle CPU / RAF thrashing)
     let ticking = false;
     const updateParallax = () => {
@@ -119,6 +176,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
 
     return () => {
       observer.disconnect();
+      clearTimeout(fallbackTimer);
       window.removeEventListener('scroll', handleScroll);
     };
   }, [projects]);
@@ -140,15 +198,15 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
         <div className="grid grid-cols-1 md:grid-cols-12 mb-16 md:mb-24 border-b border-white/10 pb-6 items-end">
            <div className="md:col-span-4 flex items-center gap-3">
              <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-             <h2 className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-white/80 font-medium">
-               01 /// SELECTED WORKS
+             <h2 className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-white/90 font-medium">
+               <span className="text-[#FF3B30] font-bold">02 ///</span> CHAPTER 02 • SELECTED WORKS
              </h2>
            </div>
            <div className="md:col-span-8 flex justify-between md:justify-end items-center gap-6">
-             <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-white/40">
+             <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-white/60">
                INDEX 001 — 00{projects.length}
              </span>
-             <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/30 hidden sm:inline-block">
+             <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/50 hidden sm:inline-block">
                CURATED ARCHIVE 2024–2026
              </span>
            </div>
@@ -161,8 +219,19 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
               key={index}
               data-index={index}
               ref={(el) => { if (el) rowRefs.current[index] = el; }}
+              role="button"
+              tabIndex={0}
+              aria-label={`View case study: ${project.title} (${project.category})`}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onProjectClick(project);
+                }
+              }}
+              onFocus={() => setHoveredProject(index)}
+              onBlur={() => setHoveredProject(null)}
               style={{ opacity: 0, transform: 'translate3d(0, 35px, 0)' }}
-              className="group relative cursor-pointer will-change-transform"
+              className="group relative cursor-pointer will-change-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/90 focus-visible:ring-offset-8 focus-visible:ring-offset-black rounded-sm"
               onMouseEnter={() => setHoveredProject(index)}
               onMouseLeave={() => setHoveredProject(null)}
               onClick={() => onProjectClick(project)}
@@ -172,40 +241,50 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
               <div 
                 ref={(el) => { if (el) containerRefs.current[index] = el; }}
                 onMouseMove={handleCardMouseMove}
-                className="image-container w-full h-[52vh] md:h-[72vh] relative overflow-hidden mb-8 rounded-sm bg-[#09090e]/75 backdrop-blur-md flex items-center justify-center p-8 md:p-16 border border-white/10 will-change-transform opacity-0 scale-[0.98] transition-[border-color,box-shadow] duration-500 group-hover:border-white/30 group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
+                className="image-container w-full h-[52vh] md:h-[72vh] relative overflow-hidden mb-8 rounded-sm bg-[#09090e]/75 backdrop-blur-md flex items-center justify-center p-8 md:p-16 border border-white/10 will-change-transform opacity-0 scale-[0.98] transition-[border-color,box-shadow] duration-500 group-hover:border-white/30 group-focus-visible:border-white/50 group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.6)] group-focus-visible:shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
               >
                 {/* Reactive Cursor Spotlight Sheen */}
                 <div 
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-sm z-10"
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-500 pointer-events-none rounded-sm z-10"
                   style={{
                     background: 'radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.06), transparent 60%)',
                   }}
                 />
 
                 {/* Swiss Corner Registration Brackets */}
-                <div className="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-6 opacity-35 group-hover:opacity-75 transition-opacity duration-300">
+                <div className="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-6 opacity-75 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300">
                   <div className="flex justify-between items-start">
-                    <span className="w-2.5 h-2.5 border-t border-l border-white/60"></span>
-                    <span className="font-mono text-[8px] tracking-widest text-white/40 uppercase">
-                      FOLIO // REF-0{index + 1}
-                    </span>
-                    <span className="w-2.5 h-2.5 border-t border-r border-white/60"></span>
+                    <span className="w-2.5 h-2.5 border-t border-l border-white/80"></span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-[8px] tracking-widest text-white font-bold uppercase bg-black/80 px-2 py-0.5 rounded border border-white/20 backdrop-blur-sm flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]" aria-hidden="true" />
+                        {getProjectEditorialBadge(project.title).label}
+                      </span>
+                      <span className="font-mono text-[8px] tracking-widest text-neutral-400 uppercase hidden sm:inline-block">
+                        FOLIO // REF-0{index + 1}
+                      </span>
+                    </div>
+                    <span className="w-2.5 h-2.5 border-t border-r border-white/80"></span>
                   </div>
                   <div className="flex justify-between items-end">
-                    <span className="w-2.5 h-2.5 border-b border-l border-white/60"></span>
-                    <span className="w-2.5 h-2.5 border-b border-r border-white/60"></span>
+                    <span className="w-2.5 h-2.5 border-b border-l border-white/80"></span>
+                    <span className="font-mono text-[8px] tracking-widest text-white/60 uppercase group-hover:text-white transition-colors flex items-center gap-1.5 bg-black/60 px-2.5 py-1 rounded-full border border-white/10 backdrop-blur-sm">
+                      <span>VIEW CASE STUDY</span>
+                      <span className="text-[#FF3B30]">↗</span>
+                    </span>
+                    <span className="w-2.5 h-2.5 border-b border-r border-white/80"></span>
                   </div>
                 </div>
 
                 {/* Ambient vignette */}
-                <div className="absolute inset-0 bg-black/15 z-10 group-hover:bg-transparent transition-colors duration-700 pointer-events-none"></div>
+                <div className="absolute inset-0 bg-black/15 z-10 group-hover:bg-transparent group-focus-visible:bg-transparent transition-colors duration-700 pointer-events-none"></div>
 
                 {/* Project Image with Silky Parallax Float */}
                 <img 
                   ref={(el) => { if (el) imageRefs.current[index] = el; }}
                   src={project.image} 
-                  alt={project.title} 
-                  className="max-w-[88%] max-h-[82%] object-contain relative z-10 group-hover:scale-105 transition-all duration-700 ease-out will-change-transform drop-shadow-[0_15px_40px_rgba(0,0,0,0.7)] opacity-0"
+                  alt={`Visual identity and case study preview for ${project.title}`} 
+                  className="max-w-[88%] max-h-[82%] object-contain relative z-10 group-hover:scale-105 group-focus-visible:scale-105 transition-all duration-700 ease-out will-change-transform drop-shadow-[0_15px_40px_rgba(0,0,0,0.7)] opacity-0"
                 />
               </div>
 
@@ -214,36 +293,36 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
                 
                 {/* Index Number */}
                 <div className="md:col-span-1 hidden md:block overflow-hidden pt-2">
-                  <span className="project-meta block font-mono text-xs text-white/40 group-hover:text-white transition-colors transform translate-y-full opacity-0 flex items-center gap-1.5">
-                    <span className="w-1 h-1 rounded-full bg-[#FF3B30] opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  <span className="project-meta block font-mono text-xs text-white/60 group-hover:text-white group-focus-visible:text-white transition-colors transform translate-y-full opacity-0 flex items-center gap-1.5">
+                    <span className="w-1 h-1 rounded-full bg-[#FF3B30] opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity"></span>
                     <span>{String(index + 1).padStart(2, '0')}</span>
                   </span>
                 </div>
 
                 {/* Title and Swiss Red Line */}
                 <div className="md:col-span-7 overflow-hidden py-2">
-                  <h3 className="project-title text-4xl sm:text-6xl md:text-8xl font-bold uppercase tracking-tighter text-white/90 group-hover:text-white transition-all duration-300 mix-blend-screen transform translate-y-[110%] will-change-transform">
+                  <h3 className="project-title text-4xl sm:text-6xl md:text-8xl font-bold uppercase tracking-tighter text-white/90 group-hover:text-white group-focus-visible:text-white transition-all duration-300 mix-blend-screen transform translate-y-[110%] will-change-transform">
                     {project.title}
                   </h3>
                   {/* Signature Swiss Red Accent Line matching Hero */}
-                  <div className="project-red-bar w-8 h-[2px] bg-[#FF3B30] mt-3 group-hover:w-16 origin-left transition-all duration-300 scale-x-0" />
+                  <div className="project-red-bar w-8 h-[2px] bg-[#FF3B30] mt-3 group-hover:w-16 group-focus-visible:w-16 origin-left transition-all duration-300 scale-x-0" />
                 </div>
 
                 {/* Category, Year & Arrow */}
                 <div className="md:col-span-4 flex justify-between items-start pt-2 md:pt-4 overflow-hidden">
                    <div className="flex flex-col gap-1.5">
-                     <span className="project-meta block text-xs md:text-sm font-bold uppercase tracking-widest text-white/60 group-hover:text-white transition-colors transform translate-y-full opacity-0">
+                     <span className="project-meta block text-xs md:text-sm font-bold uppercase tracking-widest text-white/70 group-hover:text-white group-focus-visible:text-white transition-colors transform translate-y-full opacity-0">
                        {project.category}
                      </span>
                      {project.caseStudy?.year && (
-                       <span className="project-meta block font-mono text-[10px] uppercase tracking-widest text-white/35 transform translate-y-full opacity-0">
+                       <span className="project-meta block font-mono text-[10px] uppercase tracking-widest text-white/55 transform translate-y-full opacity-0">
                          {project.caseStudy.year}
                        </span>
                      )}
                      {project.caseStudy?.technologies && (
                        <div className="flex flex-wrap gap-1.5 mt-2">
                          {project.caseStudy.technologies.slice(0, 3).map((tech, tIdx) => (
-                           <span key={tIdx} className="font-mono text-[9px] uppercase tracking-wider text-white/45 px-2 py-0.5 rounded bg-white/[0.04] border border-white/[0.06]">
+                           <span key={tIdx} className="font-mono text-[9px] uppercase tracking-wider text-white/60 px-2 py-0.5 rounded bg-white/[0.04] border border-white/[0.08]">
                              {tech}
                            </span>
                          ))}
@@ -252,8 +331,8 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
                    </div>
 
                    {/* Circular Interactive Arrow Button */}
-                   <div className="project-arrow w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-500 group-hover:scale-110 transform scale-50 opacity-0 flex-shrink-0 ml-4">
-                     <svg width="14" height="14" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="transform group-hover:rotate-45 transition-transform duration-500">
+                   <div className="project-arrow w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black group-focus-visible:bg-white group-focus-visible:text-black transition-all duration-500 group-hover:scale-110 group-focus-visible:scale-110 transform scale-50 opacity-0 flex-shrink-0 ml-4" aria-hidden="true">
+                     <svg width="14" height="14" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="transform group-hover:rotate-45 group-focus-visible:rotate-45 transition-transform duration-500">
                        <path d="M1 11L11 1M11 1H1M11 1V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
                      </svg>
                    </div>

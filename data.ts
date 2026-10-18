@@ -388,15 +388,7 @@ export const resumeData: ResumeData = {
             "Accessibility Challenges: Low contrast on certain backgrounds and intricate details create barriers for low-vision users."
           ]
         },
-
-        
-          referencesList: [
-            { citationNumber: 1, text: "Long Short-Term Memory (LSTM) Networks in Quantitative Finance.", url: "https://arxiv.org/abs/1909.09586" },
-            { citationNumber: 2, text: "Axiomatic Attribution for Deep Networks (Integrated Gradients).", url: "https://arxiv.org/abs/1703.01365" },
-            { citationNumber: 3, text: "The impact of US Dollar Index (DXY) on Cryptocurrency Volatility.", url: "https://ssrn.com/abstract=3911560" }
-          ]
-,
-          competitorAnalysis: [
+        competitorAnalysis: [
           {
             persona: "FedEx ($28.6B Brand Value)",
             keyNeeds: "Intelligent time-sensitive shipping, high-tech integration, and business logistics solutions.",

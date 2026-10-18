@@ -9,6 +9,16 @@ const ExperienceList: React.FC<ExperienceProps> = ({ experiences }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isReduced) {
+      const items = containerRef.current?.querySelectorAll('.experience-item');
+      items?.forEach((item) => {
+        item.classList.add('opacity-100', 'translate-y-0');
+        item.classList.remove('opacity-0', 'translate-y-8');
+      });
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -24,7 +34,18 @@ const ExperienceList: React.FC<ExperienceProps> = ({ experiences }) => {
     const items = containerRef.current?.querySelectorAll('.experience-item');
     items?.forEach((item) => observer.observe(item));
 
-    return () => observer.disconnect();
+    const fallback = setTimeout(() => {
+      const allItems = containerRef.current?.querySelectorAll('.experience-item');
+      allItems?.forEach((item) => {
+        item.classList.add('opacity-100', 'translate-y-0');
+        item.classList.remove('opacity-0', 'translate-y-8');
+      });
+    }, 2000);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(fallback);
+    };
   }, [experiences]);
 
   return (
@@ -37,13 +58,13 @@ const ExperienceList: React.FC<ExperienceProps> = ({ experiences }) => {
         >
           
           <div className="md:col-span-3 pl-2 border-l-2 border-transparent group-hover:border-black transition-colors duration-300">
-             <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-400 block mb-2">{exp.duration}</span>
+             <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-600 block mb-2">{exp.duration}</span>
              <h4 className="text-lg font-bold uppercase tracking-tight">{exp.company}</h4>
           </div>
 
           <div className="md:col-span-3">
-             <span className="text-sm font-medium uppercase tracking-wide text-neutral-600 block mb-1">{exp.role}</span>
-             <span className="text-xs text-neutral-400 font-mono">{exp.location}</span>
+             <span className="text-sm font-medium uppercase tracking-wide text-neutral-700 block mb-1">{exp.role}</span>
+             <span className="text-xs text-neutral-600 font-mono">{exp.location}</span>
           </div>
 
           <div className="md:col-span-6 md:pl-8">
