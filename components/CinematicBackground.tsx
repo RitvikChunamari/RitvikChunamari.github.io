@@ -40,8 +40,8 @@ const CinematicBackground: React.FC = () => {
     let dots: Dot[] = [];
     const ripples: Ripple[] = [];
 
-    // Adaptive dot grid spacing (Optimized density for mobile performance)
-    const getSpacing = () => (window.innerWidth < 768 ? 32 : (window.innerWidth < 1024 ? 28 : 25));
+    // Dense, delicate micro-grid spacing
+    const getSpacing = () => (window.innerWidth < 768 ? 20 : 25);
 
     const initDots = () => {
       dots = [];
@@ -105,13 +105,10 @@ const CinematicBackground: React.FC = () => {
     let isPaused = false;
     let time = 0;
 
-    const prefersReducedMotion = typeof window !== 'undefined' && 
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
     const render = () => {
       if (isPaused) return;
 
-      time += prefersReducedMotion ? 0.005 : 0.018;
+      time += 0.018;
       ctx.clearRect(0, 0, width, height);
 
       // Smoothly interpolate field strength for organic soft fade in and out
@@ -150,14 +147,13 @@ const CinematicBackground: React.FC = () => {
 
       // 2. Update Elastic Physics for All Monochromatic Dots
       const activeDots: Dot[] = [];
-      const waveAmp = prefersReducedMotion ? 0.0 : 1.0;
 
       for (let i = 0; i < dots.length; i++) {
         const d = dots[i];
 
         // Ambient zero-g harmonic wave drift
-        const waveX = Math.sin(time + d.originY * 0.02) * (1.2 * waveAmp);
-        const waveY = Math.cos(time + d.originX * 0.02) * (1.4 * waveAmp);
+        const waveX = Math.sin(time + d.originY * 0.02) * 1.2;
+        const waveY = Math.cos(time + d.originX * 0.02) * 1.4;
 
         const targetHomeX = d.originX + waveX;
         const targetHomeY = d.originY + waveY;
@@ -346,7 +342,6 @@ const CinematicBackground: React.FC = () => {
     const handleVisibilityChange = () => {
       isPaused = document.hidden;
       if (!isPaused) {
-        cancelAnimationFrame(animationFrameId);
         animationFrameId = requestAnimationFrame(render);
       }
     };
@@ -379,7 +374,8 @@ const CinematicBackground: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-[25] mix-blend-difference opacity-90 will-change-transform"
+      className="fixed inset-0 pointer-events-none z-[2] opacity-80 will-change-transform"
+      aria-hidden="true"
     />
   );
 };

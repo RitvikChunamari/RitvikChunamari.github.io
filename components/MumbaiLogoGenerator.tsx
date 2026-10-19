@@ -2,64 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Monument, MonumentType } from './Monuments';
 import { OlympicRings } from './OlympicRings';
 
-let uiAudioCtx: AudioContext | null = null;
-const playUISound = (type: 'monument' | 'layout' | 'effect') => {
-  try {
-    if (!uiAudioCtx) {
-      const AudioContextCtor = window.AudioContext || (window as any).webkitAudioContext;
-      if (!AudioContextCtor) return;
-      uiAudioCtx = new AudioContextCtor();
-    }
-    
-    if (uiAudioCtx.state === 'suspended') {
-      uiAudioCtx.resume();
-    }
-    
-    const osc = uiAudioCtx.createOscillator();
-    const gainNode = uiAudioCtx.createGain();
-    
-    osc.connect(gainNode);
-    gainNode.connect(uiAudioCtx.destination);
-    
-    const now = uiAudioCtx.currentTime;
-    
-    if (type === 'monument') {
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(200, now);
-      osc.frequency.exponentialRampToValueAtTime(50, now + 0.4);
-      gainNode.gain.setValueAtTime(0.3, now);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
-      osc.start(now);
-      osc.stop(now + 0.4);
-    } else if (type === 'layout') {
-      osc.type = 'square';
-      osc.frequency.setValueAtTime(300, now);
-      osc.frequency.exponentialRampToValueAtTime(100, now + 0.1);
-      
-      const filter = uiAudioCtx.createBiquadFilter();
-      filter.type = 'lowpass';
-      filter.frequency.value = 1000;
-      
-      osc.disconnect();
-      osc.connect(filter);
-      filter.connect(gainNode);
-      
-      gainNode.gain.setValueAtTime(0.12, now);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-      osc.start(now);
-      osc.stop(now + 0.1);
-    } else if (type === 'effect') {
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(800, now);
-      osc.frequency.exponentialRampToValueAtTime(1600, now + 0.2);
-      gainNode.gain.setValueAtTime(0.12, now);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
-      osc.start(now);
-      osc.stop(now + 0.2);
-    }
-  } catch (e) {
-    console.warn('UI Audio playback failed', e);
-  }
+// Audio effects disabled per strict design requirements
+const playUISound = (_type: 'monument' | 'layout' | 'effect') => {
+  // Silent no-op: Zero sound effects allowed
 };
 
 const COLORS = [

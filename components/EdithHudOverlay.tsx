@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { playEdithSound, toggleEdithSound } from '../src/utils/edithSound';
 
 interface EdithHudOverlayProps {
   scrollProgress: number;
@@ -65,13 +64,10 @@ const EdithHudOverlay: React.FC<EdithHudOverlayProps> = ({
   }, [scrollProgress, activeTargetName]);
 
   const handleAudioToggle = () => {
-    const newState = toggleEdithSound();
-    setAudioActive(newState);
-    if (newState) playEdithSound('toggle');
+    setAudioActive(false);
   };
 
   const handleModeClick = () => {
-    playEdithSound('boot');
     onToggleEdithMode();
   };
 
@@ -151,18 +147,8 @@ const EdithHudOverlay: React.FC<EdithHudOverlayProps> = ({
           <span>YAW: {yaw}°</span>
         </div>
 
-        <div className="flex items-center space-x-3 font-mono">
-          <button
-            onClick={handleAudioToggle}
-            onMouseEnter={() => playEdithSound('hover')}
-            className="px-2 py-0.5 bg-white/5 border border-white/15 text-neutral-300 hover:text-white hover:border-white transition-colors rounded text-[8px] uppercase tracking-wider"
-          >
-            SFX: {audioActive ? 'ON' : 'OFF'}
-          </button>
-
           <button
             onClick={handleModeClick}
-            onMouseEnter={() => playEdithSound('hover')}
             className={`px-2 py-0.5 border transition-all rounded text-[8px] uppercase tracking-wider ${
               isEdithMode
                 ? 'bg-white text-black border-white font-bold'

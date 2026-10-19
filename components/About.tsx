@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { ResumeData } from '../types';
 import ExperienceList from './Experience';
@@ -9,251 +8,313 @@ interface AboutProps {
 
 const About: React.FC<AboutProps> = ({ data }) => {
   const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const bioContainerRef = useRef<HTMLDivElement>(null);
+  const insightRef = useRef<HTMLDivElement>(null);
+  const wordRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const words = data.personal.summary.split(' ');
 
   useEffect(() => {
+    let ticking = false;
     const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (isReduced) {
-      if (sectionRef.current) {
-        sectionRef.current.classList.remove('opacity-0', 'translate-y-24');
-        sectionRef.current.classList.add('opacity-100', 'translate-y-0');
-      }
-      setIsVisible(true);
-      return;
-    }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.remove('opacity-0', 'translate-y-24');
-            entry.target.classList.add('opacity-100', 'translate-y-0');
-            setIsVisible(true);
+    const updateWords = () => {
+      if (isReduced) {
+        wordRefs.current.forEach((el) => {
+          if (el) {
+            el.style.opacity = '1';
+            el.style.color = '#FFFFFF';
+            el.style.transform = 'translate3d(0, 0, 0)';
           }
         });
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    const fallback = setTimeout(() => {
-      if (sectionRef.current) {
-        sectionRef.current.classList.remove('opacity-0', 'translate-y-24');
-        sectionRef.current.classList.add('opacity-100', 'translate-y-0');
+        ticking = false;
+        return;
       }
-      setIsVisible(true);
-    }, 2500);
+
+      if (!bioContainerRef.current) {
+        ticking = false;
+        return;
+      }
+
+      const rect = bioContainerRef.current.getBoundingClientRect();
+      const vh = window.innerHeight;
+
+      // Start illuminating when top of bio enters lower 82% of viewport, finish near 35%
+      const startTrigger = vh * 0.82;
+      const endTrigger = vh * 0.35;
+      const totalSpan = (startTrigger - endTrigger) + rect.height;
+      const rawProgress = (startTrigger - rect.top) / totalSpan;
+      const progress = Math.min(1, Math.max(0, rawProgress));
+
+      const total = wordRefs.current.length;
+      const activeFloat = progress * total;
+
+      wordRefs.current.forEach((el, idx) => {
+        if (!el) return;
+        if (idx < Math.floor(activeFloat)) {
+          el.style.opacity = '1';
+          el.style.color = '#FFFFFF';
+          el.style.transform = 'translate3d(0, 0, 0)';
+        } else if (idx === Math.floor(activeFloat)) {
+          const frac = activeFloat - Math.floor(activeFloat);
+          const op = 0.22 + 0.78 * frac;
+          el.style.opacity = op.toFixed(3);
+          el.style.color = frac > 0.4 ? '#FFFFFF' : 'rgba(255, 255, 255, 0.45)';
+          el.style.transform = `translate3d(0, ${((1 - frac) * -2).toFixed(1)}px, 0)`;
+        } else {
+          el.style.opacity = '0.22';
+          el.style.color = 'rgba(255, 255, 255, 0.3)';
+          el.style.transform = 'translate3d(0, 0, 0)';
+        }
+      });
+
+      // Insight card smooth elevation
+      if (insightRef.current) {
+        const insightRect = insightRef.current.getBoundingClientRect();
+        if (insightRect.top < vh && insightRect.bottom > 0) {
+          const inProgress = Math.min(1, Math.max(0, (vh - insightRect.top) / (vh * 0.5)));
+          insightRef.current.style.transform = `translate3d(0, ${(1 - inProgress) * 12}px, 0)`;
+          insightRef.current.style.opacity = `${Math.min(1, 0.35 + inProgress * 0.65)}`;
+        }
+      }
+
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(updateWords);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    requestAnimationFrame(updateWords);
 
     return () => {
-      observer.disconnect();
-      clearTimeout(fallback);
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [data.personal.summary]);
 
-  const renderSplitWords = (text: string, baseDelay: number = 0) => {
-    return text.split(' ').map((word, index) => (
+  const renderSplitWords = () => {
+    return words.map((word, index) => (
       <React.Fragment key={index}>
-        <span className="inline-block overflow-hidden align-baseline">
-          <span 
-            className={`inline-block transform transition-transform duration-1000 ease-expo ${isVisible ? 'translate-y-0' : 'translate-y-full'}`}
-            style={{ transitionDelay: `${baseDelay + (index * 30)}ms` }}
-          >
-            {word}
-          </span>
+        <span 
+          ref={(el) => { if (el) wordRefs.current[index] = el; }}
+          className="inline-block transition-[opacity,color,transform] duration-200 ease-out will-change-[opacity,color,transform]"
+          style={{ opacity: 0.22, color: 'rgba(255, 255, 255, 0.3)' }}
+        >
+          {word}
         </span>
         {' '}
       </React.Fragment>
     ));
   };
 
-  const renderRevealHeading = (text: string, baseDelay: number = 0) => {
-    return (
-      <span className="inline-block">
-        {text.split('').map((char, index) => (
-          <span key={index} className="inline-block overflow-hidden align-bottom">
-            <span
-              className={`inline-block transform transition-transform duration-1000 ease-expo ${isVisible ? 'translate-y-0' : 'translate-y-full'}`}
-              style={{ transitionDelay: `${baseDelay + (index * 25)}ms` }}
-            >
-              {char === ' ' ? '\u00A0' : char}
-            </span>
-          </span>
-        ))}
-      </span>
-    );
-  };
-
   return (
     <section 
       id="profile" 
       ref={sectionRef}
-      className="bg-white text-black relative z-20 rounded-t-[3rem] -mt-12 border-t border-black/10 shadow-[0_-10px_40px_rgba(0,0,0,0.15)] transition-all duration-1000 ease-out opacity-0 translate-y-24 will-change-transform"
+      className="bg-[#050508] text-white relative z-20 border-t border-white/10 pt-24 md:pt-32 pb-24 select-none"
     >
-      
-      {/* Intro Bio Container */}
-      <div className="px-6 md:px-12 pt-32 pb-20">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32 relative">
+      <div id="about" className="absolute -top-24 left-0 pointer-events-none" />
+      <div className="container mx-auto px-6 md:px-12 relative z-10">
+        
+        {/* Section Header Synchronized with Swiss Telemetry */}
+        <div className="grid grid-cols-1 md:grid-cols-12 mb-16 md:mb-24 border-b border-white/10 pb-6 items-end">
+           <div className="md:col-span-4 flex items-center gap-3">
+             <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
+             <h2 className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-white/80 font-medium">
+               02 /// PROFILE &amp; PHILOSOPHY
+             </h2>
+           </div>
+           <div className="md:col-span-8 flex justify-between md:justify-end items-center gap-6">
+             <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-white/40">
+               THEORY &amp; CRAFT
+             </span>
+             <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/30 hidden sm:inline-block">
+               ATLAS INSTITUTE // CU BOULDER
+             </span>
+           </div>
+        </div>
+
+        {/* Intro Bio & Philosophy Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-28 relative">
+          
+          {/* Left Column: Monospace Metadata & Coordinates */}
           <div className="md:col-span-4">
-            <div className="sticky top-32 self-start">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-4">● 02 / Profile</span>
+            <div className="sticky top-28 self-start space-y-6">
+              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/40 block">
+                ● CORE PERSPECTIVE
+              </span>
+              <div className="space-y-2 text-xs font-mono text-white/50">
+                <div className="flex items-center gap-2">
+                  <span className="text-[#FF3B30]">■</span>
+                  <span>LAT: 40.0076° N, LON: 105.2659° W</span>
+                </div>
+                <div>BOULDER, COLORADO</div>
+                <div>CREATIVE TECHNOLOGY &amp; DESIGN</div>
+              </div>
             </div>
           </div>
-          <div className="md:col-span-8" data-cursor-text="READING" data-edith-target="BIOMETRIC PROFILE // RITVIK CHUNAMARI">
-            <div className="text-3xl md:text-5xl font-sans font-semibold leading-[1.3] tracking-tight mb-12 text-black">
-               {/* Word by word staggered reveal */}
-               {renderSplitWords(data.personal.summary, 0)}
+
+          {/* Right Column: Monumental Scrubbed Bio */}
+          <div className="md:col-span-8" data-cursor-text="READ">
+            <div 
+              ref={bioContainerRef} 
+              className="text-2xl sm:text-4xl md:text-5xl font-sans font-medium leading-[1.28] tracking-tight mb-12 text-white"
+            >
+               {renderSplitWords()}
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="border-l-2 border-black pl-6 hover:pl-8 transition-all duration-300 bg-neutral-50/80 py-4 rounded-r-lg">
-                  <span className="block font-mono text-[10px] uppercase text-neutral-500 mb-2 tracking-widest">Personal Insight</span>
-                  <p className="text-lg italic font-medium text-neutral-900">{data.personal.insights}</p>
-                </div>
+
+            {/* Architectural Philosophy Card */}
+            <div 
+              ref={insightRef} 
+              className="border-l-2 border-[#FF3B30] pl-6 md:pl-8 py-5 bg-white/[0.02] border-y border-r border-white/[0.05] rounded-r-sm will-change-transform backdrop-blur-sm"
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#FF3B30] font-semibold">
+                  MANDATE // RADICAL ACCESSIBILITY
+                </span>
+              </div>
+              <p className="text-base sm:text-lg text-neutral-200 font-light leading-relaxed">
+                {data.personal.insights}
+              </p>
             </div>
           </div>
         </div>
 
-        {/* Experience - Swiss Layout with Border Rule */}
-        <div className="mb-20 pt-12 border-t border-black">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-12">
+        {/* Experience Section */}
+        <div className="mb-28 pt-12 border-t border-white/10">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12 items-end">
             <div className="md:col-span-4">
-               <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block">● Experience</span>
+               <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/40 block">
+                 ● APPLIED LEADERSHIP
+               </span>
             </div>
-            <div className="md:col-span-8 flex items-center justify-between border-b border-black/20 pb-6">
-                <h3 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-black">
-                  {renderRevealHeading("Experience", 200)}
+            <div className="md:col-span-8 flex items-center justify-between border-b border-white/10 pb-6">
+                <h3 className="text-3xl sm:text-5xl md:text-6xl font-bold uppercase tracking-tight text-white">
+                  Experience
                 </h3>
                 <a 
                   href="./Ritvik_Chunamari_Resume.pdf" 
                   download="Ritvik_Chunamari_Resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Download Ritvik Chunamari Resume PDF"
-                  className="group inline-flex items-center gap-2 px-4 py-2 border border-black rounded-full font-mono text-[10px] md:text-xs uppercase tracking-wider text-black hover:bg-black hover:text-white transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
-                  data-cursor-text="RESUME"
+                  className="group inline-flex items-center gap-2 px-4 py-2 border border-white/30 rounded-full font-mono text-[10px] md:text-xs uppercase tracking-wider text-white hover:bg-white hover:text-black transition-all duration-300"
+                  data-cursor-text="DOWNLOAD"
                 >
                   <span>Resume PDF</span>
                   <span className="transform group-hover:translate-y-0.5 transition-transform">↓</span>
                 </a>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-12">
-             <div className="md:col-span-12">
-                <ExperienceList experiences={data.experience} />
-             </div>
+
+          <div className="w-full">
+            <ExperienceList experiences={data.experience} />
           </div>
         </div>
-      </div>
 
-      {/* Kinetic Marquee Strip */}
-      <div className="overflow-hidden py-12 border-y border-black/10 bg-neutral-100 mb-20 select-none cursor-pointer group" data-cursor-text="CONNECT">
-        <div className="flex whitespace-nowrap animate-marquee group-hover:[animation-play-state:paused]">
-          {[1, 2, 3, 4].map((i) => (
-            <React.Fragment key={i}>
-              <span className="text-6xl md:text-8xl font-bold uppercase tracking-tighter mx-8 text-black">User Experience</span>
-              <span className="text-6xl md:text-8xl font-bold uppercase tracking-tighter mx-8 text-transparent stroke-text">Interaction</span>
-              <span className="text-6xl md:text-8xl font-bold uppercase tracking-tighter mx-8 text-black">Research</span>
-              <span className="text-6xl md:text-8xl font-bold uppercase tracking-tighter mx-8 text-transparent stroke-text">Prototyping</span>
-            </React.Fragment>
-          ))}
-        </div>
-      </div>
+        {/* Education & Disciplines Grid (Swiss 2-Column Architectural System) */}
+        <div className="pt-12 border-t border-white/10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+            
+            {/* Column 1: Academic Pedigree */}
+            <div className="lg:col-span-5 space-y-12">
+              <div className="border-b border-white/10 pb-4 flex items-center gap-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
+                <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/70 font-semibold">
+                  03 / ACADEMIC FOUNDATION
+                </span>
+              </div>
 
-      {/* Grid: Education & Skills - Swiss Layout with Border Rules */}
-      <div className="px-6 md:px-12 pb-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 border-t border-black pt-12">
-          
-          {/* Education Column */}
-          <div className="relative">
-            <div className="sticky top-32 self-start mb-12 bg-transparent py-2 z-10 pointer-events-none">
-              <h4 className="font-mono text-[10px] uppercase tracking-widest text-neutral-500">
-                 {renderRevealHeading("● Education", 400)}
-              </h4>
-            </div>
-            <div className="space-y-16">
-              {data.education.map((edu, idx) => (
-                <div 
-                  key={idx} 
-                  className="relative pl-8 border-l border-neutral-300 hover:border-black transition-colors duration-500 will-change-transform"
-                >
-                  <span className="absolute -left-[5px] top-0 w-[9px] h-[9px] bg-black rounded-full"></span>
-                  <h5 className="text-2xl font-bold mb-2 text-black">{edu.school}</h5>
-                  <p className="text-xl font-sans font-medium text-neutral-700 mb-4">{edu.degree}</p>
-                  <div className="flex gap-4 text-[10px] font-mono text-neutral-600 uppercase mb-4 tracking-widest">
+              <div className="space-y-12">
+                {data.education.map((edu, idx) => (
+                  <div 
+                    key={idx} 
+                    className="relative pl-6 border-l border-white/15 hover:border-[#FF3B30] transition-colors duration-300"
+                  >
+                    <span className="absolute -left-[4.5px] top-1.5 w-[8px] h-[8px] bg-[#FF3B30] rounded-full"></span>
+                    <h5 className="text-xl font-bold text-white mb-1">{edu.school}</h5>
+                    <p className="text-sm font-medium text-neutral-300 mb-2">{edu.degree}</p>
+                    <div className="flex gap-4 text-[10px] font-mono text-white/40 uppercase mb-3 tracking-widest">
                       <span>{edu.duration}</span>
                       <span>{edu.location}</span>
-                  </div>
-                  <ul className="space-y-2">
-                      {edu.details.map((d, i) => (
-                        <li key={i} className="text-sm text-neutral-800 leading-normal">{d}</li>
-                      ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Capabilities Column (Vertical Stack) */}
-          <div className="relative flex flex-col space-y-24">
-             <div className="sticky top-32 self-start mb-12 bg-transparent py-2 z-10 pointer-events-none">
-                <h4 className="font-mono text-[10px] uppercase tracking-widest text-neutral-500">
-                  {renderRevealHeading("● Capabilities", 600)}
-                </h4>
-            </div>
-            
-            {/* 1. Skillset */}
-            <div className="will-change-transform">
-              <div className="border-b border-black/20 pb-4 mb-8 flex items-end justify-between">
-                <span className="font-bold uppercase text-sm tracking-wide text-black">01 / Skillset</span>
-              </div>
-
-              <div className="space-y-10">
-                {data.skills.map((cat, idx) => (
-                  <div key={idx}>
-                    <span className="block font-mono text-[10px] text-neutral-500 mb-4 uppercase tracking-widest font-semibold">{cat.category}</span>
-                    <div className="flex flex-wrap gap-2">
-                      {cat.skills.split(', ').map((skill, sIdx) => (
-                        <span 
-                          key={sIdx} 
-                          className="px-3.5 py-1.5 border border-neutral-300 bg-neutral-50 rounded-sm text-xs font-semibold uppercase tracking-wide text-neutral-800 transition-all duration-300 cursor-default hover:bg-black hover:text-white hover:border-black hover:-translate-y-0.5 hover:shadow-md"
-                        >
-                          {skill}
-                        </span>
-                      ))}
                     </div>
+                    <ul className="space-y-1.5">
+                      {edu.details.map((d, i) => (
+                        <li key={i} className="text-xs text-neutral-400 leading-normal">{d}</li>
+                      ))}
+                    </ul>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* 2. Certifications (Refactored to Ruled List) */}
-            <div className="will-change-transform">
-              <div className="border-b border-black/20 pb-4 mb-8 flex items-end justify-between">
-                <span className="font-bold uppercase text-sm tracking-wide text-black">02 / Certifications</span>
+            {/* Column 2: Disciplines & Professional Credentials */}
+            <div className="lg:col-span-7 space-y-12">
+              
+              {/* Disciplines */}
+              <div>
+                <div className="border-b border-white/10 pb-4 mb-6 flex items-center gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
+                  <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/70 font-semibold">
+                    04 / STUDIO DISCIPLINES
+                  </span>
+                </div>
+
+                <div className="space-y-6">
+                  {data.skills.map((cat, idx) => (
+                    <div key={idx} className="border-b border-white/[0.05] pb-5">
+                      <span className="block font-mono text-[10px] text-white/40 mb-2.5 uppercase tracking-widest">
+                        {cat.category}
+                      </span>
+                      <div className="flex flex-wrap gap-2">
+                        {cat.skills.split(', ').map((skill, sIdx) => (
+                          <span 
+                            key={sIdx} 
+                            className="px-3 py-1 border border-white/10 bg-white/[0.03] rounded-sm text-xs font-mono uppercase tracking-wider text-neutral-300 transition-all duration-300 cursor-default hover:bg-white hover:text-black hover:border-white"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="flex flex-col">
-                {data.certifications.map((c, i) => (
-                  <div 
-                    key={i} 
-                    className="group relative py-4 border-b border-black/10 flex items-start justify-between transition-all duration-300 hover:bg-neutral-50 hover:pl-4" 
-                    data-cursor-text="VERIFY"
-                  >
-                     <span className="text-sm font-semibold text-neutral-700 group-hover:text-black transition-colors leading-relaxed max-w-[90%]">
-                        {c}
-                     </span>
-                     <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-black text-xs mt-1">
-                       ↗
-                     </span>
-                  </div>
-                ))}
+
+              {/* Verified Credentials */}
+              <div>
+                <div className="border-b border-white/10 pb-4 mb-6 flex items-center gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
+                  <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/70 font-semibold">
+                    05 / VERIFIED CREDENTIALS
+                  </span>
+                </div>
+
+                <div className="flex flex-col">
+                  {data.certifications.map((c, i) => (
+                    <div 
+                      key={i} 
+                      className="group relative py-3.5 border-b border-white/[0.07] flex items-center justify-between transition-all duration-300 hover:bg-white/[0.02] hover:pl-3" 
+                      data-cursor-text="CREDENTIAL"
+                    >
+                       <span className="text-xs sm:text-sm font-medium text-neutral-300 group-hover:text-white transition-colors">
+                          {c}
+                       </span>
+                       <span className="font-mono text-xs text-white/30 group-hover:text-[#FF3B30] group-hover:translate-x-0.5 transition-all">
+                         ↗
+                       </span>
+                    </div>
+                  ))}
+                </div>
               </div>
+
             </div>
 
           </div>
-
         </div>
+
       </div>
     </section>
   );

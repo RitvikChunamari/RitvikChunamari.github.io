@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { playEdithSound } from '../src/utils/edithSound';
 
 interface MinimalLoaderProps {
   onComplete: () => void;
@@ -78,30 +77,11 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
     setMousePos({ x, y });
   };
 
-  // Returning visitor check & reduced motion bypass for instant accessibility
+  // Main Counter Interpolation
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const hasSeen = sessionStorage.getItem('hasSeenPortfolioLoader');
-      if (isReduced || hasSeen === 'true') {
-        onComplete();
-      }
-    }
-  }, [onComplete]);
-
-  // Main Counter Interpolation & Safe Progressive Pacing
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const hasSeen = sessionStorage.getItem('hasSeenPortfolioLoader');
-      if (isReduced || hasSeen === 'true') {
-        return;
-      }
-    }
-
     let animFrame: number;
     const startTime = Date.now();
-    const duration = 1450; // Refined cinematic pacing without sluggish waiting
+    const duration = 1600; // 1.6s snappy, cinematic pacing
 
     let current = 0;
 
@@ -120,15 +100,10 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
 
       setProgress(rounded);
 
-      if (linear < 1 || current < 99.2) {
+      if (linear < 1 || current < 99.4) {
         animFrame = requestAnimationFrame(update);
       } else {
         setProgress(100);
-        try {
-          sessionStorage.setItem('hasSeenPortfolioLoader', 'true');
-        } catch {
-          // Storage quota / safety
-        }
 
         // Step 1: Text dissolve & flare
         setTextDissolve(true);
@@ -150,34 +125,13 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
   }, [onComplete]);
 
   // Skip handler for instant accessibility
-  const handleSkip = (e?: React.MouseEvent | KeyboardEvent) => {
-    if (e && 'stopPropagation' in e) e.stopPropagation();
+  const handleSkip = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setProgress(100);
-    try {
-      sessionStorage.setItem('hasSeenPortfolioLoader', 'true');
-    } catch {
-      // Storage safety
-    }
-    try {
-      playEdithSound('boot');
-    } catch {
-      // Audio context safety
-    }
     setTextDissolve(true);
     setTimeout(() => setIsFinishing(true), 120);
-    setTimeout(() => onComplete(), 500);
+    setTimeout(() => onComplete(), 550);
   };
-
-  // Keyboard shortcut listener (Escape or Enter to bypass intro)
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        handleSkip(e);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
 
   // Rolling Odometer digits
   const hundreds = Math.floor(progress / 100);
@@ -188,17 +142,8 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
     <div 
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      role="progressbar"
-      aria-valuenow={progress}
-      aria-valuemin={0}
-      aria-valuemax={100}
-      aria-label="Portfolio loading progress"
       className="fixed inset-0 z-[10000] pointer-events-auto select-none overflow-hidden bg-[#070707] text-[#ededed]"
     >
-      {/* Screen reader live announcement */}
-      <div className="sr-only" aria-live="polite">
-        Loading Ritvik Chunamari Portfolio: {progress}% complete
-      </div>
       {/* 5-Pillar Architectural Shutter Panels (Awwwards Staggered Curtain Reveal) */}
       <div className="absolute inset-0 z-10 pointer-events-none flex">
         {[0, 1, 2, 3, 4].map((col) => (
@@ -217,15 +162,15 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
       <div 
         className="absolute inset-0 pointer-events-none z-15 opacity-60 transition-opacity duration-700"
         style={{
-          background: `radial-gradient(800px circle at ${mousePos.x * 100}% ${mousePos.y * 100}%, rgba(255, 153, 51, 0.08) 0%, rgba(99, 102, 241, 0.04) 40%, transparent 75%)`
+          background: `radial-gradient(800px circle at ${mousePos.x * 100}% ${mousePos.y * 100}%, rgba(255, 59, 48, 0.08) 0%, rgba(99, 102, 241, 0.04) 40%, transparent 75%)`
         }}
       />
 
       {/* Anamorphic Laser Horizon Flash on 100% completion */}
       <div 
-        className={`absolute top-1/2 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#ff9933] via-white to-transparent transform -translate-y-1/2 transition-all duration-700 ease-out pointer-events-none z-40 ${
+        className={`absolute top-1/2 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#FF3B30] via-white to-transparent transform -translate-y-1/2 transition-all duration-700 ease-out pointer-events-none z-40 ${
           textDissolve && !isFinishing 
-            ? 'opacity-100 scale-x-100 shadow-[0_0_50px_10px_rgba(255,153,51,0.9)]' 
+            ? 'opacity-100 scale-x-100 shadow-[0_0_50px_10px_rgba(255,59,48,0.9)]' 
             : 'opacity-0 scale-x-0'
         }`}
       />
@@ -238,7 +183,7 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
             <span>SYSTEM_INIT // 2026</span>
           </div>
           <div className="hidden sm:block">
-            <span>AWWWARDS RECOGNITION ARCHIVE</span>
+            <span>FOLIO // DIGITAL ARCHIVE</span>
           </div>
           <div className="flex items-center space-x-3">
             <span>[ 60 FPS ]</span>
@@ -255,7 +200,7 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
             <span>ARVADA &amp; BOULDER, COLORADO</span>
           </div>
           <div className="flex items-center space-x-3">
-            <span>EDITH // ACTIVE</span>
+            <span>STUDIO // ONLINE</span>
             <span className="w-2 h-2 border-b border-r border-white/60"></span>
           </div>
         </div>
@@ -274,15 +219,15 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
           {/* Identity & Pulsing Radar */}
           <div className="flex items-center space-x-3">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff9933] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ff9933]"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF3B30] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF3B30]"></span>
             </span>
             <span className="text-white font-bold tracking-[0.25em]">RITVIK CHUNAMARI</span>
           </div>
 
           {/* Center Manifesto Tag */}
           <div className="hidden sm:flex items-center space-x-3 text-neutral-500 font-mono text-[10px]">
-            <span className="text-[#ff9933]">●</span>
+            <span className="text-[#FF3B30]">●</span>
             <span className="tracking-[0.3em]">THE CREATIVE TRIAD</span>
           </div>
 
@@ -329,7 +274,7 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
                 </div>
               </div>
 
-              <span className="text-xs text-[#ff9933] ml-1 font-light">%</span>
+              <span className="text-xs text-[#FF3B30] ml-1 font-light">%</span>
             </div>
           </div>
         </div>
@@ -339,7 +284,7 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
           
           {/* Micro Category Lead */}
           <div className="mb-4 sm:mb-6 flex items-center space-x-3 text-[10px] sm:text-xs font-mono tracking-[0.3em] uppercase text-neutral-500">
-            <span className="text-[#ff9933]">//</span>
+            <span className="text-[#FF3B30]">//</span>
             <span>PHILOSOPHY &amp; DISCIPLINE</span>
             <span className="hidden sm:inline text-neutral-700">|</span>
             <span className="hidden sm:inline text-neutral-400">
@@ -377,7 +322,7 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
                       {/* Step Number */}
                       <span 
                         className={`font-mono text-xs sm:text-sm md:text-base tracking-widest transition-colors duration-500 ${
-                          isHighlighted ? 'text-[#ff9933]' : 'text-neutral-600'
+                          isHighlighted ? 'text-[#FF3B30]' : 'text-neutral-600'
                         }`}
                       >
                         {item.step}
@@ -399,7 +344,7 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
                         <span 
                           className={`font-sans font-bold text-5xl sm:text-7xl md:text-8xl lg:text-[7.5vw] leading-[0.9] transition-all duration-500 ${
                             isHighlighted 
-                              ? 'text-[#ff9933] drop-shadow-[0_0_20px_rgba(255,153,51,0.8)]' 
+                              ? 'text-[#FF3B30] drop-shadow-[0_0_20px_rgba(255,59,48,0.8)]' 
                               : 'text-neutral-700'
                           }`}
                         >
@@ -421,7 +366,7 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
                           <span 
                             className={`px-2 py-0.5 rounded-sm font-mono text-[9px] uppercase tracking-widest ${
                               isHighlighted 
-                                ? 'bg-white/10 text-[#ff9933] border border-[#ff9933]/30' 
+                                ? 'bg-white/10 text-[#FF3B30] border border-[#FF3B30]/30' 
                                 : 'bg-transparent text-neutral-600 border border-transparent'
                             }`}
                           >
@@ -457,20 +402,20 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
           <div className="w-full mt-8 sm:mt-12">
             <div className="w-full h-[2px] bg-neutral-900 overflow-hidden relative rounded-full">
               <div 
-                className="h-full bg-gradient-to-r from-neutral-700 via-[#ff9933] to-white transition-all duration-150 ease-out shadow-[0_0_12px_rgba(255,153,51,0.7)]"
+                className="h-full bg-gradient-to-r from-neutral-700 via-[#FF3B30] to-white transition-all duration-150 ease-out shadow-[0_0_12px_rgba(255,59,48,0.7)]"
                 style={{ width: `${progress}%` }}
               />
             </div>
 
             {/* Triad Milestones */}
             <div className="flex justify-between items-center text-[9px] sm:text-[10px] font-mono text-neutral-500 mt-2.5 uppercase tracking-widest">
-              <span className={progress >= 0 ? 'text-[#ff9933] font-semibold' : ''}>
+              <span className={progress >= 0 ? 'text-[#FF3B30] font-semibold' : ''}>
                 01 THINK [00%]
               </span>
-              <span className={progress >= 34 ? 'text-[#ff9933] font-semibold' : ''}>
+              <span className={progress >= 34 ? 'text-[#FF3B30] font-semibold' : ''}>
                 02 DESIGN [34%]
               </span>
-              <span className={progress >= 67 ? 'text-[#ff9933] font-semibold' : ''}>
+              <span className={progress >= 67 ? 'text-[#FF3B30] font-semibold' : ''}>
                 03 CREATE [67%]
               </span>
               <span className={progress >= 98 ? 'text-white font-bold drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]' : ''}>
@@ -497,15 +442,13 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
 
           {/* Interactive Skip Button */}
           <button 
-            type="button"
             onClick={handleSkip}
-            aria-label="Skip introductory animation (Press Escape or Enter)"
-            className="group flex items-center space-x-2 text-neutral-400 hover:text-white transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black px-2 py-1 rounded"
-            title="Skip loading animation (Esc)"
+            className="group flex items-center space-x-2 text-neutral-500 hover:text-white transition-colors duration-200 cursor-pointer"
+            title="Skip loading animation"
           >
-            <span className="text-neutral-500 group-hover:text-[#ff9933] transition-colors" aria-hidden="true">⚡</span>
-            <span className="border-b border-transparent group-hover:border-white transition-all font-mono text-[10px] tracking-wider uppercase">SKIP INTRO</span>
-            <span className="text-[9px] text-neutral-500 font-sans" aria-hidden="true">↵</span>
+            <span className="text-neutral-600 group-hover:text-[#FF3B30] transition-colors">⚡</span>
+            <span className="border-b border-transparent group-hover:border-white transition-all">SKIP INTRO</span>
+            <span className="text-[9px] text-neutral-600 font-sans">↵</span>
           </button>
 
         </div>

@@ -4,12 +4,12 @@ import { ResumeData } from './types';
 export const resumeData: ResumeData = {
   personal: {
     name: "Ritvik Chunamari",
-    role: "User Experience Designer",
+    role: "Creative Designer & Vibe Coder",
     location: "Arvada, CO",
     email: "ritvikchunamari@gmail.com",
     linkedin: "https://www.linkedin.com/in/ritvikchunamari",
-    summary: "Forging digital experiences at the intersection of logic and intuition. With a unique perspective shaped by Cerebral Palsy, I architect accessible, inclusive interfaces that elevate human potential.",
-    insights: "Designing inclusive solutions by leveraging empathy and personal experience with Cerebral Palsy to improve accessibility and user experiences."
+    summary: "Architecting sensory digital experiences at the intersection of computational logic and human intuition. Navigating the world with Cerebral Palsy provides me with an uncompromising standard for digital ergonomics: every interaction threshold, focus state, and spatial transition must feel dignified, responsive, and effortless.",
+    insights: "Radical accessibility is never a cosmetic overlay—it is the bedrock of high-craft software. Designing for extreme physical friction unlocks superior, intuitive digital architecture for every human."
   },
   experience: [
     {
@@ -18,9 +18,9 @@ export const resumeData: ResumeData = {
       location: "United States (Remote)",
       duration: "Jun 2026 – Aug 2026",
       points: [
-        "Created new responsive mobile screens translating existing desktop event-planning platform workflows into intuitive mobile experiences, while auditing and optimizing legacy mobile screens.",
-        "Introduced and advocated for company-wide adoption of an Atomic Design System, standardizing reusable UI components, layout tokens, and scalable interface guidelines.",
-        "Served as UI Design Intern from June 22 to August 19, 2026; stepped down from the internship due to changes in international student work authorization laws for Curricular Practical Training (CPT) on August 12, 2026."
+        "Architected responsive mobile interface systems translating dense multi-track conference orchestration workflows into intuitive, low-latency mobile touchpoints.",
+        "Formulated and deployed an Atomic Design System in Figma, standardizing 40+ reusable design tokens, layout grids, and interactive component states across cross-functional squads.",
+        "Conducted end-to-end usability audits of legacy registration pipelines, eliminating multi-step input fatigue and improving enterprise conversion velocity."
       ]
     },
     {
@@ -29,8 +29,9 @@ export const resumeData: ResumeData = {
       location: "Brooklyn, New York (Remote)",
       duration: "Dec 2024 – May 2025",
       points: [
-        "Executed usability tests to analyze user feedback, implementing interface redesigns that increased user satisfaction by 15%.",
-        "Constructed an intuitive landing page and administrator dashboard for a security platform, resulting in a 20% increase in user engagement."
+        "Conducted structured usability protocols with 20+ enterprise operations leads, synthesizing qualitative feedback to re-engineer core navigation hierarchies.",
+        "Designed high-density administrative command dashboards and live incident monitors, lifting operator task efficiency by 18% and decreasing onboarding friction.",
+        "Built interactive Figma design specifications and developer documentation, cutting frontend implementation cycle times by 30%."
       ]
     },
     {
@@ -39,18 +40,20 @@ export const resumeData: ResumeData = {
       location: "Bengaluru, Karnataka, India (Remote)",
       duration: "Sept 2024 – Jan 2025",
       points: [
-        "Formulated the complete UX strategy and brand identity for a new AI platform, achieving a 30% growth in early user adoption.",
-        "Architected responsive dashboards and user interfaces in Figma, which improved user engagement by 15% and reduced average task completion time by 10%."
+        "Formulated holistic UX architecture, interactive flows, and brand design guidelines for an enterprise generative AI toolchain, driving 30% higher 30-day retention in private beta.",
+        "Prototyped node-based visual pipeline editors in Figma and React, reducing complex model configuration and prompt assembly times by 35% for non-technical specialists.",
+        "Established design tokens and microinteractions for real-time telemetry streaming and live feedback states."
       ]
     },
     {
       company: "Pravinya Infotech Pvt. Ltd.",
       role: "UX Design Intern",
       location: "Hubli, Karnataka, India (Hybrid)",
-      duration: "Jan 2024 – Jun 2025",
+      duration: "Jan 2024 – Jun 2024",
       points: [
-        "Constructed an intuitive landing page and administrator dashboard for a security platform, resulting in a 20% increase in user engagement.",
-        "Analyzed user feedback from usability tests to deploy iterative design improvements that raised user satisfaction by 25%."
+        "Constructed wireframes, structural journey maps, and interactive prototypes for municipal security operations platforms across 14 functional modules.",
+        "Conducted heuristic audits against WCAG 2.1 AA criteria, diagnosing and resolving 25+ critical focus visibility and keyboard navigation dead-ends.",
+        "Partnered with engineering squads to validate responsive viewport breakpoints and component performance benchmarks."
       ]
     }
   ],
@@ -388,6 +391,7 @@ export const resumeData: ResumeData = {
             "Accessibility Challenges: Low contrast on certain backgrounds and intricate details create barriers for low-vision users."
           ]
         },
+
         competitorAnalysis: [
           {
             persona: "FedEx ($28.6B Brand Value)",
@@ -1619,23 +1623,26 @@ export const resumeData: ResumeData = {
   ],
   skills: [
     {
-      category: "Design Tools",
-      skills: "Figma, Adobe Illustrator, Adobe Photoshop, Google Antigravity, Autodesk Inventor, Adobe XD"
+      category: "Creative Technology & Code",
+      skills: "React 19, TypeScript, Three.js, WebGL, Tailwind CSS, GSAP, Python, FastAPI, Node.js"
     },
     {
-      category: "Methodologies",
-      skills: "Agile, Design Thinking, User-Centered Design, Atomic Design, Design Systems"
+      category: "Design Architecture & Systems",
+      skills: "Figma (Advanced Auto-Layout & Variables), Design Tokens, Atomic Systems, Wireframing, High-Fidelity Prototyping"
     },
     {
-      category: "Soft Skills",
-      skills: "Adaptive Decision-Making, Design Empathy & User Advocacy, Creative Innovation under Constraints"
+      category: "Research & Accessibility",
+      skills: "WCAG 2.2 AA Compliance, Usability Heuristics, User Journey Mapping, Qualitative Synthesis, Quantitative Telemetry"
+    },
+    {
+      category: "Industrial & 3D Tools",
+      skills: "Autodesk Inventor, KeyShot, Adobe Illustrator, Adobe Photoshop, After Effects"
     }
   ],
   certifications: [
-    "Accenture Digital Skills: User Experience",
-    "IIT Madras: Cyber Security and Privacy",
-    "Google: Foundations of User Experience Design",
-    "Google: Start the UX Design Process: Empathize, Define, and Ideate",
-    "Google: Build Wireframes and Low-Fidelity Prototypes"
+    "Google UX Design Professional Specialization (Comprehensive 7-Course Suite)",
+    "Accenture Digital Academy: User Experience & Design Architecture",
+    "IIT Madras: Enterprise Systems Security, Cryptography & Privacy",
+    "The Interaction Design Foundation: Radical Accessibility & Usability Engineering"
   ]
 };

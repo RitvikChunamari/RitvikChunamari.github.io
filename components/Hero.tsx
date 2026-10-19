@@ -72,18 +72,13 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
   const heroRef = useRef<HTMLElement>(null);
   const titleContainerRef = useRef<HTMLDivElement>(null);
   const chunamariSpanRef = useRef<HTMLSpanElement>(null);
+  const line1Ref = useRef<HTMLDivElement>(null);
+  const line2Ref = useRef<HTMLDivElement>(null);
+  const redBarRef = useRef<HTMLDivElement>(null);
+  const mousePosRef = useRef({ x: 0, y: 0 });
 
   useLayoutEffect(() => {
     if (!isLoaded) return;
-
-    const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (isReduced) {
-      gsap.set('.hero-grid-h', { scaleX: 1 });
-      gsap.set('.hero-grid-v', { scaleY: 1 });
-      gsap.set('.hero-title-line', { y: '0%', filter: 'blur(0px)', opacity: 1 });
-      gsap.set('.hero-meta-reveal', { y: 0, opacity: 1 });
-      return;
-    }
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ delay: 0.1 });
@@ -120,24 +115,50 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
   }, [isLoaded]);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
       if (!heroRef.current) return;
       const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (isReduced) {
-        heroRef.current.style.opacity = '1';
-        heroRef.current.style.transform = 'none';
-        return;
-      }
-      const y = window.scrollY || window.pageYOffset;
+      const y = (window as any).__virtualScrollY ?? (window.scrollY || window.pageYOffset);
       const scrollFade = Math.max(0, 1 - y * 0.0012);
       const scrollParallax = -y * 0.22;
       heroRef.current.style.opacity = `${scrollFade}`;
       heroRef.current.style.transform = `translate3d(0, ${scrollParallax.toFixed(2)}px, 0)`;
       heroRef.current.style.pointerEvents = scrollFade < 0.05 ? 'none' : 'auto';
+
+      if (!isReduced) {
+        const isMobile = window.innerWidth < 768;
+        const drift = isMobile ? 0.08 : 0.16;
+        if (line1Ref.current) {
+          const x1 = (-y * drift) + (mousePosRef.current.x * 12);
+          const y1 = mousePosRef.current.y * 8;
+          line1Ref.current.style.transform = `translate3d(${x1.toFixed(2)}px, ${y1.toFixed(2)}px, 0)`;
+        }
+        if (line2Ref.current) {
+          const x2 = (y * drift) + (mousePosRef.current.x * 22);
+          const y2 = mousePosRef.current.y * 14;
+          line2Ref.current.style.transform = `translate3d(${x2.toFixed(2)}px, ${y2.toFixed(2)}px, 0)`;
+        }
+        if (redBarRef.current) {
+          const barScale = Math.min(2.5, 1 + y * 0.002);
+          redBarRef.current.style.transform = `scaleX(${barScale.toFixed(2)})`;
+        }
+      }
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   // Dynamically calculate the maximum font size on mobile so Chunamari fills 98% of the margin
@@ -168,6 +189,7 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
   const touchFadeRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const resetInteractiveState = () => {
+    mousePosRef.current = { x: 0, y: 0 };
     setMousePos({ x: 0, y: 0 });
     setRawMousePos({ clientX: -2000, clientY: -2000 });
   };
@@ -183,6 +205,7 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
     const { innerWidth, innerHeight } = window;
     const x = (clientX / innerWidth - 0.5) * 2;
     const y = (clientY / innerHeight - 0.5) * 2;
+    mousePosRef.current = { x, y };
     setMousePos({ x, y });
     setRawMousePos({ clientX, clientY });
   };
@@ -198,6 +221,7 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
       const { innerWidth, innerHeight } = window;
       const x = (clientX / innerWidth - 0.5) * 2;
       const y = (clientY / innerHeight - 0.5) * 2;
+      mousePosRef.current = { x, y };
       setMousePos({ x, y });
       setRawMousePos({ clientX, clientY });
 
@@ -213,6 +237,7 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
       const { innerWidth, innerHeight } = window;
       const x = (clientX / innerWidth - 0.5) * 2;
       const y = (clientY / innerHeight - 0.5) * 2;
+      mousePosRef.current = { x, y };
       setMousePos({ x, y });
       setRawMousePos({ clientX, clientY });
 
@@ -287,16 +312,16 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
       <div className="relative z-10 w-full flex items-center justify-between pointer-events-none hero-meta-reveal opacity-0">
         {/* Left: Designer Folio Identity */}
         <div className="flex items-center gap-3">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
+          <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
           <span className="font-mono text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.25em] text-white/70 uppercase font-medium">
-            RITVIK CHUNAMARI <span className="text-white/40">///</span> FOLIO 2026
+            RITVIK CHUNAMARI <span className="text-white/20">///</span> FOLIO 2026
           </span>
         </div>
 
-        {/* Right: Location */}
-        <div className="flex items-center text-right">
-          <span className="font-mono text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.25em] text-white/70 uppercase font-medium">
-            ARVADA, CO
+        {/* Right: Location & Affiliation */}
+        <div className="flex items-center text-right gap-3">
+          <span className="font-mono text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.25em] text-white/50 uppercase font-medium">
+            ATLAS INSTITUTE · CU BOULDER
           </span>
         </div>
       </div>
@@ -308,15 +333,14 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
         ref={titleContainerRef}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="my-auto py-8 md:py-12 relative z-10 will-change-transform w-full pointer-events-auto transition-transform duration-300 ease-out"
+        className="my-auto py-4 md:py-6 relative z-10 will-change-transform w-full pointer-events-auto transition-transform duration-300 ease-out"
         style={{
           transform: `perspective(1000px) rotateX(${-mousePos.y * 1.5}deg) rotateY(${mousePos.x * 1.5}deg)`,
         }}
       >
         {/* Monumental Display Name with Dual-Layer Differential Parallax */}
         <h1 
-          aria-label="Ritvik Chunamari"
-          className="text-[clamp(3.1rem,calc((100vw-48px)/5.62),16.5rem)] md:text-[clamp(4.5rem,13.5vw,16.5rem)] font-bold uppercase tracking-[-0.04em] leading-[0.84] text-cinema-white select-none -ml-0.5 md:-ml-2 flex flex-col w-full"
+          className="text-[clamp(2.75rem,8.2vw,9.6rem)] md:text-[clamp(4.2rem,8.8vw,10.2rem)] font-extrabold uppercase tracking-[-0.045em] leading-[0.84] text-cinema-white select-none -ml-0.5 md:-ml-2 flex flex-col w-full"
           style={{
             fontSize: mobileFontSize || undefined,
             textShadow: isHovered 
@@ -325,48 +349,51 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
             transition: 'text-shadow 0.3s ease',
           }}
         >
-          <div aria-hidden="true" className="flex flex-col w-full">
-            {/* Line 1: Ritvik with subtle magnetic shift */}
-            <div 
-              className="block overflow-hidden will-change-transform transition-transform duration-300 ease-out w-full"
-              style={{
-                transform: `translate3d(${mousePos.x * 12}px, ${mousePos.y * 8}px, 0)`,
-              }}
-            >
-              <span className="inline-block hero-title-line whitespace-nowrap">
-                {renderDynamicText("Ritvik")}
-              </span>
-            </div>
+          {/* Line 1: Ritvik with kinetic differential scroll dispersal */}
+          <div 
+            ref={line1Ref}
+            className="block overflow-hidden will-change-transform w-full"
+          >
+            <span className="inline-block hero-title-line whitespace-nowrap">
+              {renderDynamicText("Ritvik")}
+            </span>
+          </div>
 
-            {/* Line 2: Chunamari with deeper magnetic shift */}
-            <div 
-              className="block overflow-hidden will-change-transform transition-transform duration-300 ease-out w-full"
-              style={{
-                transform: `translate3d(${mousePos.x * 22}px, ${mousePos.y * 14}px, 0)`,
-              }}
-            >
-              <span ref={chunamariSpanRef} className="inline-block hero-title-line whitespace-nowrap">
-                {renderDynamicText("Chunamari")}
-              </span>
-            </div>
+          {/* Line 2: Chunamari with deeper kinetic differential scroll dispersal */}
+          <div 
+            ref={line2Ref}
+            className="block overflow-hidden will-change-transform w-full"
+          >
+            <span ref={chunamariSpanRef} className="inline-block hero-title-line whitespace-nowrap">
+              {renderDynamicText("Chunamari")}
+            </span>
           </div>
         </h1>
 
-        {/* Swiss Red Accent Bar */}
+        {/* Swiss Red Accent Bar with kinetic scroll expansion */}
         <div 
-          className="w-12 h-[2px] bg-[#FF3B30] my-6 md:my-8 hero-meta-reveal opacity-0 transition-all duration-300"
+          ref={redBarRef}
+          className="w-14 h-[2px] bg-[#FF3B30] my-5 md:my-6 hero-meta-reveal opacity-0 will-change-transform"
           style={{
-            transform: `scaleX(${isHovered ? 1.4 : 1})`,
             transformOrigin: 'left',
           }}
         />
 
         {/* Manifesto Subtitle */}
         <div className="max-w-2xl hero-meta-reveal opacity-0">
-          <p className="text-base sm:text-lg md:text-2xl font-light text-neutral-300 leading-relaxed tracking-tight">
-            <span className="text-white font-medium shadow-glow">Creative Designer</span> and{' '}
-            <span className="text-white font-medium shadow-glow">Vibe Coder</span> crafting digital experiences at the intersection of logic and human intuition.
+          <p className="text-base sm:text-lg md:text-xl font-light text-neutral-300 leading-relaxed tracking-tight">
+            <span className="text-white font-medium">Creative Designer</span> and{' '}
+            <span className="text-white font-medium">Vibe Coder</span> crafting sensory digital interfaces at the intersection of computational logic and human intuition.
           </p>
+          {/* Disciplines Index (Swiss Typographic Hierarchy — Zero AI Slop Boxes) */}
+          <div className="mt-6 pt-5 border-t border-white/[0.08] flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-white/60">
+            <span className="text-[#FF3B30] font-bold">// DISCIPLINES:</span>
+            <span className="hover:text-white transition-colors"><strong className="text-white font-mono mr-1">01</strong> INTERACTION ARCHITECTURE</span>
+            <span className="text-white/20">/</span>
+            <span className="hover:text-white transition-colors"><strong className="text-white font-mono mr-1">02</strong> CREATIVE COMPUTING</span>
+            <span className="text-white/20">/</span>
+            <span className="hover:text-white transition-colors"><strong className="text-white font-mono mr-1">03</strong> RADICAL ACCESSIBILITY</span>
+          </div>
         </div>
       </div>
 
@@ -375,23 +402,21 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
           ───────────────────────────────────────────────────────────── */}
       <div className="relative z-10 w-full flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-t border-white/[0.08] pt-6 pointer-events-auto hero-meta-reveal opacity-0">
         {/* Education / Domain Focus */}
-        <div className="flex items-center gap-2 font-mono text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.2em] text-white/70 uppercase">
+        <div className="flex items-center gap-2 font-mono text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.2em] text-white/45 uppercase">
           <span>M.S. Creative Technology &amp; Design</span>
-          <span className="text-white/30">●</span>
+          <span className="text-white/20">●</span>
           <span>CU Boulder</span>
         </div>
 
         {/* Magnetic Scroll to Explore Button */}
         <MagneticWrapper strength={0.25}>
           <button
-            type="button"
             onClick={scrollToWork}
-            aria-label="Scroll to selected works"
-            className="group flex items-center gap-3 font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-white/80 hover:text-white hover:tracking-[0.25em] transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-sm"
+            className="group flex items-center gap-3 font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-white/70 hover:text-white hover:tracking-[0.25em] transition-all duration-300 cursor-pointer"
             data-cursor-text="SCROLL"
           >
             <span>Scroll to Explore</span>
-            <span className="w-4 h-4 rounded-full border border-white/40 flex items-center justify-center group-hover:border-white group-hover:scale-110 transition-all duration-300">
+            <span className="w-4 h-4 rounded-full border border-white/30 flex items-center justify-center group-hover:border-white group-hover:scale-110 transition-all duration-300">
               <span className="w-1 h-1 bg-white rounded-full group-hover:bg-[#FF3B30] transition-colors"></span>
             </span>
           </button>
@@ -403,7 +428,7 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
           ───────────────────────────────────────────────────────────── */}
       <div className="relative z-10 w-full flex flex-col items-center justify-center pt-8 pb-2 pointer-events-none hero-meta-reveal opacity-0">
         <div className="w-px h-12 bg-gradient-to-b from-[#FF3B30] via-white/20 to-transparent" />
-        <span className="font-mono text-[9px] tracking-[0.28em] uppercase text-white/50 mt-2 flex items-center gap-2">
+        <span className="font-mono text-[9px] tracking-[0.28em] uppercase text-white/40 mt-2 flex items-center gap-2">
           <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
           <span>01 / SELECTED WORKS</span>
         </span>
