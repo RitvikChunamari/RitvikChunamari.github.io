@@ -80,24 +80,12 @@ export default function MumbaiLogoGenerator() {
   const [textEffect, setTextEffect] = useState<'none' | 'outline' | 'shadow' | 'glow'>('none');
   const [layout, setLayout] = useState<LayoutType>('stacked');
   const [animation, setAnimation] = useState<AnimationType>('none');
-  const [musicEnabled, setMusicEnabled] = useState<boolean>(false);
   const [theme, setTheme] = useState<ThemeType>('dark');
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   
   const previewRef = useRef<HTMLDivElement>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [exportMessage, setExportMessage] = useState<{type: 'error' | 'info' | 'success', text: string} | null>(null);
-
-  useEffect(() => {
-    if (!audioRef.current) return;
-    
-    if (musicEnabled) {
-      audioRef.current.play().catch(e => console.log('Audio playback prevented by browser:', e));
-    } else {
-      audioRef.current.pause();
-    }
-  }, [musicEnabled]);
 
   const cycleTheme = () => {
     const currentIndex = THEMES.indexOf(theme);
@@ -572,34 +560,11 @@ export default function MumbaiLogoGenerator() {
                 </button>
               ))}
             </div>
-
-            <button
-              onClick={() => setMusicEnabled(!musicEnabled)}
-              className="w-full p-2.5 border text-[10px] font-mono uppercase tracking-wider rounded flex items-center justify-between transition-all"
-              style={{
-                backgroundColor: musicEnabled ? themeInk : 'transparent',
-                color: musicEnabled ? themeBg : themeInk,
-                borderColor: musicEnabled ? themeInk : themeBorder
-              }}
-            >
-              <span>Indian Sitar Scoring</span>
-              <span className="font-bold">{musicEnabled ? 'ACTIVE' : 'OFF'}</span>
-            </button>
           </section>
         </aside>
 
         {/* Right Main Stage / Live Preview */}
         <main className="flex-1 flex flex-col relative overflow-hidden" style={{ backgroundColor: themeBg }}>
-          
-          {/* Audio stream for sitar ambience */}
-          <audio 
-            ref={audioRef} 
-            src="https://upload.wikimedia.org/wikipedia/commons/4/41/Raga_Yaman_Kalyan_on_Sitar.ogg" 
-            loop 
-            autoPlay={false}
-            className="hidden"
-            crossOrigin="anonymous"
-          />
 
           {/* Top Stage Header & Export Actions */}
           <div 

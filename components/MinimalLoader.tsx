@@ -79,6 +79,12 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
 
   // Main Counter Interpolation
   useEffect(() => {
+    const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isReduced) {
+      onComplete();
+      return;
+    }
+
     let animFrame: number;
     const startTime = Date.now();
     const duration = 1600; // 1.6s snappy, cinematic pacing
@@ -431,7 +437,7 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
           
           <div className="flex items-center space-x-3">
             <span className="text-neutral-600">[ IDENT ]</span>
-            <span className="text-neutral-300">UX ARCHITECT &amp; VIBE CODER</span>
+            <span className="text-neutral-300">PRODUCT DESIGNER &amp; CREATIVE TECHNOLOGIST</span>
           </div>
 
           <div className="hidden md:flex items-center space-x-6 text-neutral-600">

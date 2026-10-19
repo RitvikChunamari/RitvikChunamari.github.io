@@ -1,66 +1,98 @@
 # Project Memory: Ritvik Chunamari Portfolio
 
-## 1. Project Purpose & Architecture
-- **Purpose**: High-craftsmanship cinematic design & engineering portfolio for Ritvik Chunamari (Creative Designer & Vibe Coder).
-- **Core Visual Identity**:
-  - Dark cinematic atmosphere with subtle film grain and obsidian depth
-  - Swiss-inspired architectural and editorial typography (Inter, IBM Plex Mono, Montserrat, Playfair Display)
-  - Monochrome black/white palette with signature red accents (`#FF3B30` on dark, `#C62828` on light) and cobalt/blue highlights (`#60A5FA`)
-  - Monumental interactive hero typography with responsive mobile scaling and physics
-  - Clean hero manifesto typography ("Creative Designer and Vibe Coder crafting digital experiences...") with no redundant buttons
-  - Fluid elastic cursor with velocity squash/stretch and contextual state targets
-  - Smooth custom virtual scroll with zero-overhead circular progress indicator
-  - Pristine project showcase cards with Swiss registration crop marks and smooth parallax
-  - Comprehensive, deep case study views (`ProjectDetail.tsx`) with live interactive tools (Figma embed, terminal, logo generator)
+## 1. Project Purpose & Positioning Architecture
+- **Purpose**: Awwwards-caliber digital experience and portfolio for **Ritvik Chunamari**.
+- **Primary Positioning**: **Product Designer & Creative Technologist**
+  - Secondary Competencies: UX/UI Design, Product Architecture, Creative Technology, AI-Assisted Development, Visual Identity Systems.
+  - Vibe Coding Stance: Retained strictly as an accelerated creative prototyping capability, grounded by rigorous human-centered UX heuristics, design tokens, and production engineering.
+- **Brand Statement**: *"Design for humans. Build for wonder."*
+- **Visual Design Identity**:
+  - Swiss architectural minimalism and high-density telemetry.
+  - Palette: Obsidian `#050507`, Elevated Cards `#08080C`, Soft White `#EDEDED`, Signature Red `#FF3B30`, subtle translucent borders (`border-white/10`).
+  - Strict WCAG 2.2 AA accessibility: minimum 44×44px touch targets (48px standard), high contrast text (>= 16:1 on primary body), visible keyboard focus rings (`outline: 2px solid #FF3B30`).
+  - Universal cursor accessibility: native OS cursor preserved across all devices; custom follower ring is activated purely as an enhancement on fine-pointer desktop viewports (`@media (hover: hover) and (pointer: fine)`).
+- **Audio Engine**: Strict Zero Audio Policy (zero audio files, zero Web Audio context, zero acoustic triggers).
+
+---
 
 ## 2. Technology Stack & Key Dependencies
-- **Core**: React 19.2.0, Vite 6.2.0, TypeScript 5.8.2
-- **Animation & Graphics**: GSAP 3.13.0, Three.js 0.185.1, Lenis 1.1.20
-- **Styling**: Tailwind CSS configuration
-- **Routing**: URL hash routing (`#work`, `#profile`, `#contact`, `#<ProjectTitle>`) with browser history `popstate` support, scroll restoration, and keyboard Escape navigation.
-- **Audio Engine**: 100% Silenced stubs (strict compliance: no Web Audio context, synthesis, or acoustic triggers).
+- **Core Framework**: React 19.2.0, TypeScript 5.8.2, Vite 6.4.3
+- **CSS Architecture**: Local Tailwind CSS 3.4.17 + PostCSS + Autoprefixer build pipeline (no runtime CDN scripts). Entrypoint: `src/index.css`.
+- **Animation & Graphics**:
+  - Three.js 0.185.1 (Single dominant `GlobalFluidCanvas` WebGL fluid shader with ACESFilmic tone mapping).
+  - GSAP 3.13.0 (Precision typographic reveals and telemetry triggers).
+  - Lenis 1.1.20 (Momentum scrolling with strictly managed RAF lifecycle).
+- **Code-Splitting Architecture**:
+  - Vite Rollup chunking: `vendor-three`, `vendor-gsap`, `vendor-lenis`.
+  - Lazy-loaded `ProjectDetail` via `React.lazy` and `React.Suspense`.
+  - Initial entry JavaScript bundle reduced by 62% (from 1.2 MB to 459 kB).
+- **Deep Linking & Routing**:
+  - Native `window.location.hash` routing with `popstate` and `hashchange` listeners in `App.tsx`.
+  - Deep-linkable routes for all 7 projects: `#impact-events`, `#kinetix-quant`, `#nexus-ai`, `#usps-organization-rebrand`, `#security-agency-ux`, `#pill-dispenser-3d`, `#mumbai-olympics-2028`.
+  - In-situ Swiss 404 state with "PROJECT NOT FOUND" indicator and `← Return to Exhibition` recovery button.
+  - Keyboard Escape key returns to exhibition index.
 
-## 3. Awwwards-Caliber Scroll Animations Architecture
-1. **Butter-Smooth Momentum (Lenis)**:
-   - Native DOM flow preserved with smooth momentum scroll via `Lenis` (`v1.1.20`).
-   - Zero layout collapse or virtual scroll calculation fragility; fully compatible with keyboard, native search, and Playwright automation.
-2. **Hero Kinetic Differential Dispersal (`components/Hero.tsx`)**:
-   - Split-word horizontal kinetic drift: "Ritvik" drifts left (`-x * drift`) and "Chunamari" drifts right (`+x * drift`) as the user scrolls, snapping seamlessly back into place on scroll up.
-   - Swiss red accent line expands (`scaleX`) as scroll velocity increases.
-   - Direct hardware-accelerated `translate3d` transforms driven via RAF without React state re-rendering overhead.
-3. **Synchronized Header Obsidian Glass & Progress Line (`components/Header.tsx`)**:
-   - High-contrast obsidian glass bar (`bg-[#050508]/85 backdrop-blur-md border-b border-white/10`) eliminating blend-mode text collisions.
-   - Continuous 1.5px gradient micro-line (`#FF3B30` via `white/80` to `#FF3B30`) tracking scroll progress across the header base.
-4. **Scrubbed Reading Word Illumination (`components/About.tsx`)**:
-   - Personal summary paragraph words scrub continuously from subtle ghost white (`rgba(255,255,255,0.22)`) to pure crisp white (`#FFFFFF`) in direct sync with the user's scroll position through the bio section.
-5. **Cinematic Curtain Reveal & 3D Specular Tilt (`components/ProjectList.tsx`)**:
-   - Cards reveal with an elegant `clip-path: inset(0% 0% 0% 0% round 4px)` curtain wipe.
-   - 3D perspective mouse tilt (`rotateX`, `rotateY`) and reactive specular cursor spotlight sheen.
-   - Center-focus telemetry ignition: when a project aligns with the center 45% of the viewport, the Swiss red bar expands and the corner registration brackets illuminate.
-6. **Vertical Swiss Guide Rail & Milestone Node Ignition (`components/Experience.tsx`)**:
-   - Dark obsidian background (`bg-[#050508]`) with vertical 2px guide rail on desktop and continuous red laser beam (`scaleY(progress)`).
-   - Milestone node dots at each company ignite to crimson red (`#FF3B30`) with micro-glow when the laser beam touches each job role.
-7. **Monumental Reveal & Direct Intake in Footer (`components/Footer.tsx`)**:
-   - Velocity-weighted scrub that lifts the massive "Let's Talk" (11vw) heading out of its overflow mask with cubic easing directly tethered to scroll progress.
-   - Click-to-copy email microinteraction with instant visual state feedback and resilient fallback.
-8. **Accessibility & Reduced Motion**:
-   - Full support for `prefers-reduced-motion: reduce`: static fallbacks with 100% opacity, 1:1 scroll, zero kinetic displacement.
-   - Zero layout thrashing: all transforms run on GPU compositor (`translate3d`, `scaleX`, `scaleY`, `opacity`).
+---
 
-## 4. Case Study & Project Detail Architecture (`components/ProjectDetail.tsx`)
-- **Aesthetic**: Unified Swiss brutalist dark obsidian aesthetic matching the homepage.
-- **Palette**: Deep obsidian backgrounds (`#09090e`, `#050508`), hairline borders (`border-white/10`), signature Swiss Red accents (`#FF3B30`), high-contrast display typography, and uppercase monospace telemetry.
-- **Fixed Swiss Navigation Header**: Full-width bar with real-time laser scroll progress line (`laserLineRef`), magnetic `← RETURN TO INDEX`, telemetry breadcrumb with pulsing `#FF3B30` active node, and `NEXT PROJECT →`.
-- **Monumental Display Hero**: High-contrast uppercase title (`leading-[0.88] tracking-[-0.04em]`), Swiss red accent bar (`w-12 h-[2px] bg-[#FF3B30]`), rectangular badges (`rounded-sm`), and 4-column metadata grid (`ROLE`, `YEAR`, `TECH STACK`).
-- **Showcase Stage**: Obsidian media card wrapped in `bg-[#09090e]/85 backdrop-blur-md border border-white/10 rounded-sm` with corner registration brackets (`corner-brackets`).
-- **Interactive Tools**:
-  - `FigmaViewerWindow.tsx`: Sharp architectural window frame (`bg-[#09090e] border border-white/10 rounded-sm`), monochrome active page tabs, `#FF3B30` indicator.
-  - `SecurityUXSection.tsx`: Deep-dive security switchers, objectives, and telemetry metrics.
-  - `MumbaiLogoGenerator.tsx` & `CryptoSimulator.tsx`: Interactive studios aligned with obsidian aesthetics.
-- **Monumental Next Case Transition Curtain**: Architectural full-width transition curtain featuring telemetry badge (`TRANSITION // 0X OF 0Y`), category subtitle, massive display title (`text-9xl`), Swiss red expanding laser bar, and directional indicator.
+## 3. Core Modules & Component Architecture
 
-## 5. Verification Commands
-- `npm run build`: Production bundle compilation (passes cleanly in ~1.4s)
-- `node verify_portfolio.cjs`: Playwright automation test suite (passes with 0 errors across 1440x900 and 375x812, 0 audio context instances)
-- `npm run dev`: Local development server (port 3000)
+### 3.1 Hero & Atmospheric WebGL (`components/Hero.tsx`, `components/GlobalFluidCanvas.tsx`)
+- Title: "RITVIK CHUNAMARI" with kinetic differential horizontal dispersal on scroll.
+- Subtitle: "PRODUCT DESIGNER / CREATIVE TECHNOLOGIST".
+- Brand manifesto: "Design for humans. Build for wonder." with "Explore Selected Work ↓" CTA.
+- Single dominant WebGL fluid simulation with pointer velocity tracking. Decommissioned redundant 2D canvas `CinematicBackground`.
+- Mobile touch physics: Synthetic mouse overrides on `touchmove` disabled to restore native mobile scrolling.
 
+### 3.2 Human Interface Lab (`components/HumanInterfaceLab.tsx`)
+Interactive creative technology section with 3 live sandboxes:
+1. **Exp 01: The Feel of an Interface** (Kinetic spring vs. linear physics with real-time Canvas trajectory graphing).
+2. **Exp 02: Universal Ergonomics** (24px vs. 48px touch targets, AAA contrast modes, keyboard focus rings).
+3. **Exp 03: Token Synthesizer** (Real-time design token adjustments with Swiss, Editorial, and Cyber presets).
+
+### 3.3 Project Exhibition (`components/ProjectList.tsx`, `data.ts`)
+- **Ordering & Categorization:** Strictly presents all 4 featured Product & UX case studies first (`impact-events`, `nexus-ai`, `security-agency-ux`, `usps-organization-rebrand`), followed by 3 Technology Experiments (`kinetix-quant`, `pill-dispenser-3d`, `mumbai-olympics-2028`).
+- **Category Division Telemetry:** Dedicated category dividers in Mode A (`01.2 /// CREATIVE COMPUTING & EXPERIMENTS`) and Mode B with dynamic filtering support.
+- **Mode A: Editorial Exhibition:** Monumental cover imagery, typographic reveal animations, category tags, and primary metric highlights.
+- **Mode B: Compact Index:** High-density monospace tabular format displaying project year, client/domain, role, and technologies.
+- **Filter Chips:** Instant filtering between "All", "Product & UX" (Featured), and "Experiments".
+- Top Featured Project: *Impact Events* (Enterprise Event Platform) with custom cover asset `public/impact-events-cover.svg`.
+
+### 3.4 Deep Modular Case Studies (`components/ProjectDetail.tsx`)
+- **30-Second Executive Summary Module (Section 01.1):**
+  - Strategic thesis banner.
+  - 4-card Swiss friction/intervention/impact/ownership matrix.
+  - Rapid-scan metric tickers.
+- **Design Retrospective & Reflection Module (Section 09):**
+  - *What Held Up in Validation:* Architectural successes and system coherence.
+  - *What Would Be Re-Engineered in V2:* Critical self-critique and technical debt analysis.
+  - *Core Human-Interface Takeaways:* Foundational design philosophy and token scalability.
+- **Monumental Next Project Curtain:** Full-width transition curtain featuring telemetry indicator and massive title.
+
+### 3.5 Elevated 404 Archive Radar (`App.tsx`)
+- In-situ Swiss dark-mode panel with `SYSTEM NOTIFICATION // ARCHIVE COORDINATE UNRESOLVED` indicator and `Trajectory Lost` title.
+- Direct recovery matrix with click-through navigation pills for all 7 case studies.
+- "Return to Exhibition" button resets scroll, URL hash, and refreshes GSAP ScrollTrigger.
+- `GlobalFluidCanvas` pauses rendering (`paused={currentView !== 'home'}`) when outside home to preserve GPU battery.
+
+---
+
+## 4. Quality Assurance & Verification
+- **Automated QA Script**: `verify_awwwards_portfolio.cjs`
+  - Automated Playwright suite testing across 5 viewports:
+    - Desktop Large (1920 × 1080)
+    - Desktop Standard (1440 × 900)
+    - Tablet Portrait (768 × 1024)
+    - Mobile Standard (390 × 844)
+    - Mobile Compact (375 × 812)
+  - Tests category dividers in Editorial and Index modes.
+  - Tests deep interactions in Human Interface Lab Exp 01, 02, and 03 without skips.
+  - Tests deep linking across all 7 project routes.
+  - Tests 404 state navigation, archive radar launch, and clean reset.
+  - Tests `prefers-reduced-motion` instant emulation.
+  - Asserts zero unhandled console errors.
+  - Asserts strict Zero Audio compliance via `AudioContext` runtime proxies.
+- **Verification Commands**:
+  - Production Build: `npm run build` (~1.7s build time, exit code 0)
+  - Playwright QA Suite: `node verify_awwwards_portfolio.cjs` (39/39 tests passing)
+  - Local Preview: `npm run preview`
+  - Local Dev: `npm run dev`

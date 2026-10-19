@@ -19,6 +19,18 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
+      },
+      build: {
+        rollupOptions: {
+          output: {
+            manualChunks: {
+              'vendor-three': ['three'],
+              'vendor-gsap': ['gsap'],
+              'vendor-lenis': ['lenis']
+            }
+          }
+        },
+        chunkSizeWarningLimit: 800
       }
     };
 });

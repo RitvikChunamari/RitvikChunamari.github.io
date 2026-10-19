@@ -4,13 +4,17 @@ import * as THREE from 'three';
 interface GlobalFluidCanvasProps {
   scrollProgress?: number;
   scrollVelocity?: number;
+  paused?: boolean;
 }
 
 const GlobalFluidCanvas: React.FC<GlobalFluidCanvasProps> = ({
   scrollProgress = 0,
   scrollVelocity = 0,
+  paused = false,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const pausedRef = useRef(paused);
+  pausedRef.current = paused;
   const mouseRef = useRef({
     screenX: 0,
     screenY: 0,
@@ -308,17 +312,12 @@ const GlobalFluidCanvas: React.FC<GlobalFluidCanvasProps> = ({
     window.addEventListener('resize', handleResize);
 
     // 6. Animation Loop
-    let animId: number;
+    let animId: number | undefined;
     let lastTime = performance.now();
     const startTime = performance.now();
+    const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const animate = () => {
-      animId = requestAnimationFrame(animate);
-
-      const currentTime = performance.now();
-      const delta = Math.min((currentTime - lastTime) / 1000, 0.1);
-      lastTime = currentTime;
-      const elapsedTime = (currentTime - startTime) / 1000;
+    const renderFrame = (elapsedTime: number, delta: number) => {
       const m = mouseRef.current;
 
       // Smooth mouse plane coordinates
@@ -359,7 +358,26 @@ const GlobalFluidCanvas: React.FC<GlobalFluidCanvasProps> = ({
       renderer.render(scene, camera);
     };
 
-    animate();
+    if (isReduced) {
+      renderFrame(1.0, 0.016);
+    } else {
+      const animate = () => {
+        animId = requestAnimationFrame(animate);
+
+        if (pausedRef.current || document.hidden) {
+          return;
+        }
+
+        const currentTime = performance.now();
+        const delta = Math.min((currentTime - lastTime) / 1000, 0.1);
+        lastTime = currentTime;
+        const elapsedTime = (currentTime - startTime) / 1000;
+
+        renderFrame(elapsedTime, delta);
+      };
+
+      animate();
+    }
 
     // 7. Cleanup
     const handleWindowScroll = () => {
@@ -370,7 +388,7 @@ const GlobalFluidCanvas: React.FC<GlobalFluidCanvasProps> = ({
     handleWindowScroll();
 
     return () => {
-      cancelAnimationFrame(animId);
+      if (animId) cancelAnimationFrame(animId);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('touchstart', handleTouchMove);
       window.removeEventListener('touchmove', handleTouchMove);

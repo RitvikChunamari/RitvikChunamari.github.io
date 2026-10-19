@@ -239,6 +239,23 @@ export interface CaseStudy {
   figmaPages?: FigmaPageTab[];
   videoUrl?: string;
   isOlympicIdentity?: boolean;
+  executiveSummary?: ExecutiveSummary;
+  designRetrospective?: DesignRetrospective;
+}
+
+export interface ExecutiveSummary {
+  headline?: string;
+  coreProblem: string;
+  intervention: string;
+  impact: string;
+  roleAndScope: string;
+  keyStats?: { label: string; value: string }[];
+}
+
+export interface DesignRetrospective {
+  whatWorked: string[];
+  whatCouldImprove: string[];
+  lessonsLearned: string[];
 }
 
 export interface FigmaPageTab {
@@ -255,6 +272,9 @@ export interface Project {
   image?: string;
   logo?: string;
   link?: string;
+  slug?: string;
+  isFeatured?: boolean;
+  projectGroup?: 'featured' | 'experiment';
   caseStudy?: CaseStudy;
 }
 
@@ -274,6 +294,7 @@ export interface ResumeData {
     linkedin: string;
     summary: string;
     insights: string;
+    brandStatement?: string;
   };
   experience: Experience[];
   education: Education[];

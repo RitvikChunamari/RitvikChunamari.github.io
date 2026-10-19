@@ -132,13 +132,18 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
         </div>
 
         {/* Navigation - Right Aligned Grid */}
-        <nav className="w-auto md:w-auto flex items-center justify-end space-x-5 sm:space-x-7 md:space-x-8">
-          {['Work', 'Profile', 'Contact'].map((item) => (
+        <nav className="w-auto md:w-auto flex items-center justify-end space-x-4 sm:space-x-6 md:space-x-7" aria-label="Main Navigation">
+          {[
+            { label: 'Work', id: 'work' },
+            { label: 'Lab', id: 'experiments' },
+            { label: 'About', id: 'about' },
+            { label: 'Contact', id: 'contact' },
+          ].map((item) => (
             <MagneticNavItem 
-              key={item}
-              onClick={() => onNavigate(item.toLowerCase())}
+              key={item.id}
+              onClick={() => onNavigate(item.id)}
             >
-              {item}
+              {item.label}
             </MagneticNavItem>
           ))}
 

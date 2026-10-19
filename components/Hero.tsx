@@ -370,57 +370,79 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
           </div>
         </h1>
 
-        {/* Swiss Red Accent Bar with kinetic scroll expansion */}
-        <div 
-          ref={redBarRef}
-          className="w-14 h-[2px] bg-[#FF3B30] my-5 md:my-6 hero-meta-reveal opacity-0 will-change-transform"
-          style={{
-            transformOrigin: 'left',
-          }}
-        />
+        {/* Supporting Profession & Swiss Red Accent Bar */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 my-4 md:my-5 hero-meta-reveal opacity-0">
+          <div 
+            ref={redBarRef}
+            className="w-12 h-[2px] bg-[#FF3B30] origin-left will-change-transform"
+          />
+          <span className="font-mono text-xs sm:text-sm md:text-base font-bold uppercase tracking-[0.22em] text-[#EDEDED]">
+            PRODUCT DESIGNER <span className="text-[#FF3B30]">/</span> CREATIVE TECHNOLOGIST
+          </span>
+        </div>
 
-        {/* Manifesto Subtitle */}
-        <div className="max-w-2xl hero-meta-reveal opacity-0">
-          <p className="text-base sm:text-lg md:text-xl font-light text-neutral-300 leading-relaxed tracking-tight">
-            <span className="text-white font-medium">Creative Designer</span> and{' '}
-            <span className="text-white font-medium">Vibe Coder</span> crafting sensory digital interfaces at the intersection of computational logic and human intuition.
+        {/* Brand Manifesto & Bio */}
+        <div className="max-w-2xl hero-meta-reveal opacity-0 mt-2">
+          {/* Manifesto Statement */}
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white mb-3">
+            Design for humans. <span className="text-[#FF3B30]">Build for wonder.</span>
+          </h2>
+
+          <p className="text-sm sm:text-base md:text-lg font-light text-neutral-300 leading-relaxed tracking-tight">
+            Architecting sensory digital experiences at the intersection of human-centered design, interaction architecture, and computational precision. Navigating the world with Cerebral Palsy grounds an uncompromising standard for digital ergonomics.
           </p>
-          {/* Disciplines Index (Swiss Typographic Hierarchy — Zero AI Slop Boxes) */}
-          <div className="mt-6 pt-5 border-t border-white/[0.08] flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-white/60">
+
+          {/* Disciplines Index */}
+          <div className="mt-5 pt-4 border-t border-white/[0.08] flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[9px] sm:text-[10px] tracking-[0.2em] uppercase text-white/60">
             <span className="text-[#FF3B30] font-bold">// DISCIPLINES:</span>
-            <span className="hover:text-white transition-colors"><strong className="text-white font-mono mr-1">01</strong> INTERACTION ARCHITECTURE</span>
+            <span className="hover:text-white transition-colors"><strong className="text-white font-mono mr-1">01</strong> PRODUCT &amp; UX</span>
             <span className="text-white/20">/</span>
             <span className="hover:text-white transition-colors"><strong className="text-white font-mono mr-1">02</strong> CREATIVE COMPUTING</span>
             <span className="text-white/20">/</span>
             <span className="hover:text-white transition-colors"><strong className="text-white font-mono mr-1">03</strong> RADICAL ACCESSIBILITY</span>
+            <span className="text-white/20">/</span>
+            <span className="hover:text-white transition-colors"><strong className="text-white font-mono mr-1">04</strong> PROTOTYPING</span>
           </div>
         </div>
       </div>
 
       {/* ─────────────────────────────────────────────────────────────
-          5. BOTTOM EDITORIAL BAR & SCROLL TRIGGER
+          5. BOTTOM EDITORIAL BAR & ACTIONABLE PATH TO WORK
           ───────────────────────────────────────────────────────────── */}
-      <div className="relative z-10 w-full flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-t border-white/[0.08] pt-6 pointer-events-auto hero-meta-reveal opacity-0">
-        {/* Education / Domain Focus */}
-        <div className="flex items-center gap-2 font-mono text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.2em] text-white/45 uppercase">
-          <span>M.S. Creative Technology &amp; Design</span>
+      <div className="relative z-10 w-full flex flex-col sm:flex-row justify-between items-start sm:items-end gap-5 border-t border-white/[0.08] pt-6 pointer-events-auto hero-meta-reveal opacity-0">
+        {/* Education & Research Base */}
+        <div className="flex items-center gap-2.5 font-mono text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.2em] text-white/50 uppercase">
+          <span>ATLAS INSTITUTE</span>
           <span className="text-white/20">●</span>
-          <span>CU Boulder</span>
+          <span>M.S. CREATIVE TECHNOLOGY &amp; DESIGN</span>
+          <span className="text-white/20">●</span>
+          <span>CU BOULDER</span>
         </div>
 
-        {/* Magnetic Scroll to Explore Button */}
-        <MagneticWrapper strength={0.25}>
+        {/* Action Buttons: Direct Path to Work */}
+        <div className="flex items-center gap-4">
           <button
             onClick={scrollToWork}
-            className="group flex items-center gap-3 font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-white/70 hover:text-white hover:tracking-[0.25em] transition-all duration-300 cursor-pointer"
-            data-cursor-text="SCROLL"
+            className="px-5 py-2.5 rounded-full bg-white text-black font-mono text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-[#EDEDED] active:scale-95 transition-all shadow-md cursor-pointer flex items-center gap-2"
+            data-cursor-text="WORK"
           >
-            <span>Scroll to Explore</span>
-            <span className="w-4 h-4 rounded-full border border-white/30 flex items-center justify-center group-hover:border-white group-hover:scale-110 transition-all duration-300">
-              <span className="w-1 h-1 bg-white rounded-full group-hover:bg-[#FF3B30] transition-colors"></span>
-            </span>
+            <span>Explore Selected Work</span>
+            <span className="text-xs">↓</span>
           </button>
-        </MagneticWrapper>
+
+          <MagneticWrapper strength={0.25}>
+            <button
+              onClick={scrollToWork}
+              className="group hidden sm:flex items-center gap-2.5 font-mono text-[10px] md:text-xs tracking-[0.2em] uppercase text-white/60 hover:text-white transition-all duration-300 cursor-pointer"
+              data-cursor-text="SCROLL"
+            >
+              <span>Scroll</span>
+              <span className="w-4 h-4 rounded-full border border-white/30 flex items-center justify-center group-hover:border-white transition-all duration-300">
+                <span className="w-1 h-1 bg-[#FF3B30] rounded-full"></span>
+              </span>
+            </button>
+          </MagneticWrapper>
+        </div>
       </div>
 
       {/* ─────────────────────────────────────────────────────────────

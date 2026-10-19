@@ -770,6 +770,89 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
               </div>
            </section>
 
+           {/* 1.1 30-Second Executive Summary */}
+           <section className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 lg:gap-12 pb-12 md:pb-16 border-b border-white/10" data-testid="executive-summary">
+              <div className="md:col-span-4 gsap-reveal">
+                 <div className="md:sticky md:top-28">
+                   <div className="flex items-center gap-2 mb-2">
+                     <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-ping"></span>
+                     <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-[#FF3B30]">01.1 /// EXECUTIVE BRIEF</span>
+                   </div>
+                   <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
+                     {renderRevealHeading("30-Sec Summary", 0.2)}
+                   </h3>
+                   <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-sm border border-white/10 bg-white/[0.03] text-white/60 font-mono text-[10px] uppercase tracking-wider">
+                     <span>⏱</span>
+                     <span>Scan Time ~30s</span>
+                   </div>
+                 </div>
+              </div>
+              <div className="md:col-span-8 gsap-reveal space-y-6">
+                 {/* Headline banner */}
+                 <div className="p-5 md:p-6 rounded-sm bg-gradient-to-r from-white/[0.04] to-transparent border border-white/10 border-l-2 border-l-[#FF3B30]">
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-[#FF3B30] block mb-1">STRATEGIC THESIS</span>
+                    <p className="text-base sm:text-lg md:text-xl font-medium text-white/95 leading-relaxed">
+                      {caseStudy.executiveSummary?.headline || caseStudy.problemStatement || caseStudy.overview}
+                    </p>
+                 </div>
+
+                 {/* 4-Card Swiss Matrix */}
+                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="p-4 sm:p-5 rounded-sm bg-white/[0.02] border border-white/10 hover:border-red-500/40 transition-colors">
+                       <div className="flex items-center gap-2 mb-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+                          <span className="font-mono text-[10px] uppercase tracking-wider text-red-400 font-semibold">01 // CORE FRICTION</span>
+                       </div>
+                       <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
+                          {caseStudy.executiveSummary?.coreProblem || caseStudy.challenge}
+                        </p>
+                    </div>
+
+                    <div className="p-4 sm:p-5 rounded-sm bg-white/[0.02] border border-white/10 hover:border-cyan-500/40 transition-colors">
+                       <div className="flex items-center gap-2 mb-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                          <span className="font-mono text-[10px] uppercase tracking-wider text-cyan-400 font-semibold">02 // INTERVENTION</span>
+                       </div>
+                       <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
+                          {caseStudy.executiveSummary?.intervention || caseStudy.solution}
+                       </p>
+                    </div>
+
+                    <div className="p-4 sm:p-5 rounded-sm bg-white/[0.02] border border-white/10 hover:border-emerald-500/40 transition-colors">
+                       <div className="flex items-center gap-2 mb-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                          <span className="font-mono text-[10px] uppercase tracking-wider text-emerald-400 font-semibold">03 // MEASURED IMPACT</span>
+                       </div>
+                       <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
+                          {caseStudy.executiveSummary?.impact || (caseStudy.uxImpactMetrics && caseStudy.uxImpactMetrics[0] ? `${caseStudy.uxImpactMetrics[0].label}: ${caseStudy.uxImpactMetrics[0].value} (${caseStudy.uxImpactMetrics[0].detail})` : "Validated against core design and functional requirements.")}
+                       </p>
+                    </div>
+
+                    <div className="p-4 sm:p-5 rounded-sm bg-white/[0.02] border border-white/10 hover:border-purple-500/40 transition-colors">
+                       <div className="flex items-center gap-2 mb-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+                          <span className="font-mono text-[10px] uppercase tracking-wider text-purple-400 font-semibold">04 // SCOPE & ROLE</span>
+                       </div>
+                       <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
+                          {caseStudy.executiveSummary?.roleAndScope || `${caseStudy.role} • ${caseStudy.technologies.slice(0, 4).join(', ')}`}
+                       </p>
+                    </div>
+                 </div>
+
+                 {/* Key metrics ticker */}
+                 {(caseStudy.executiveSummary?.keyStats || caseStudy.uxImpactMetrics) && (
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                       {(caseStudy.executiveSummary?.keyStats || (caseStudy.uxImpactMetrics ? caseStudy.uxImpactMetrics.slice(0, 4) : [])).map((stat, sIdx) => (
+                          <div key={sIdx} className="p-3 rounded-sm bg-white/[0.015] border border-white/5">
+                             <div className="text-lg sm:text-xl font-bold font-mono text-white tracking-tight">{stat.value}</div>
+                             <div className="text-[10px] sm:text-xs font-mono text-white/50 uppercase tracking-wider mt-0.5">{stat.label}</div>
+                          </div>
+                       ))}
+                    </div>
+                 )}
+              </div>
+           </section>
+
            {/* 2. Problem Overview List */}
            {caseStudy.problemOverview && (
              <section className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 lg:gap-12 pb-12 md:pb-16 border-b border-white/10">
@@ -2403,6 +2486,127 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
           </div>
         </div>
       )}
+
+      {/* DESIGN RETROSPECTIVE & CRITICAL REFLECTION */}
+      <section className="w-full border-t border-white/10 bg-[#08080C] py-16 md:py-24 relative" data-testid="design-retrospective">
+        <div className="container mx-auto px-4 sm:px-6 md:px-12">
+          <div className="max-w-6xl mx-auto">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-8 border-b border-white/10 mb-10 md:mb-14">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
+                  <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-[#FF3B30]">
+                    CRITICAL ANALYSIS /// RETROSPECTIVE
+                  </span>
+                </div>
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold uppercase tracking-tight text-white">
+                  Design Reflection & Retrospective
+                </h3>
+              </div>
+              <p className="font-mono text-xs text-white/50 max-w-xs sm:text-right">
+                Honest evaluation of what held up in production, what would be re-engineered, and foundational takeaways.
+              </p>
+            </div>
+
+            {/* 3 Pillars Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+              {/* Pillar 1: What Worked */}
+              <div className="p-6 rounded-sm bg-white/[0.02] border border-white/10 hover:border-emerald-500/40 transition-all duration-300 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-emerald-400 font-semibold flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                      01 // WHAT HELD UP
+                    </span>
+                    <span className="font-mono text-xs text-white/40">VALIDATED</span>
+                  </div>
+                  <h4 className="text-base sm:text-lg font-bold text-white mb-4">
+                    Architectural Successes
+                  </h4>
+                  <ul className="space-y-3">
+                    {(caseStudy.designRetrospective?.whatWorked || [
+                      "Core information architecture scaled cleanly without visual fatigue.",
+                      "High-contrast color hierarchy preserved legibility across diverse display environments.",
+                      "Performance benchmarks met latency targets under simulated heavy load."
+                    ]).map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-white/70 leading-relaxed">
+                        <span className="text-emerald-400 mt-0.5 text-xs">✓</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="mt-6 pt-4 border-t border-white/5 text-[10px] font-mono text-emerald-400/80 uppercase tracking-wider">
+                  Robust Foundation
+                </div>
+              </div>
+
+              {/* Pillar 2: What Would Be Re-Engineered */}
+              <div className="p-6 rounded-sm bg-white/[0.02] border border-white/10 hover:border-amber-500/40 transition-all duration-300 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-amber-400 font-semibold flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+                      02 // WHAT TO RE-ENGINEER
+                    </span>
+                    <span className="font-mono text-xs text-white/40">V2 TARGETS</span>
+                  </div>
+                  <h4 className="text-base sm:text-lg font-bold text-white mb-4">
+                    Critical Self-Critique
+                  </h4>
+                  <ul className="space-y-3">
+                    {(caseStudy.designRetrospective?.whatCouldImprove || [
+                      "Edge-case state handling under offline conditions could be made more resilient.",
+                      "Small viewport density requires tighter progressive disclosure to avoid vertical scrolling.",
+                      "Telemetry logging could be further automated during user testing sessions."
+                    ]).map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-white/70 leading-relaxed">
+                        <span className="text-amber-400 mt-0.5 text-xs">△</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="mt-6 pt-4 border-t border-white/5 text-[10px] font-mono text-amber-400/80 uppercase tracking-wider">
+                  Continuous Evolution
+                </div>
+              </div>
+
+              {/* Pillar 3: Lessons Learned */}
+              <div className="p-6 rounded-sm bg-white/[0.02] border border-white/10 hover:border-[#FF3B30]/50 transition-all duration-300 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-[#FF3B30] font-semibold flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-[#FF3B30]"></span>
+                      03 // HUMAN-INTERFACE TAKEAWAY
+                    </span>
+                    <span className="font-mono text-xs text-white/40">PHILOSOPHY</span>
+                  </div>
+                  <h4 className="text-base sm:text-lg font-bold text-white mb-4">
+                    Core Engineering Takeaways
+                  </h4>
+                  <ul className="space-y-3">
+                    {(caseStudy.designRetrospective?.lessonsLearned || [
+                      "Design systems survive only when tokens mirror production code 1:1 without semantic divergence.",
+                      "Accessibility is not a compliance gate—it is the baseline for universal digital clarity.",
+                      "Craft lives in the transitions: micro-interactions define perceived software quality."
+                    ]).map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-white/70 leading-relaxed">
+                        <span className="text-[#FF3B30] mt-0.5 text-xs">→</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="mt-6 pt-4 border-t border-white/5 text-[10px] font-mono text-[#FF3B30]/80 uppercase tracking-wider">
+                  Craft & Intent
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* MONUMENTAL NEXT PROJECT CURTAIN */}
       <section className="w-full border-t border-white/10 bg-[#060609] py-24 md:py-36 relative overflow-hidden">

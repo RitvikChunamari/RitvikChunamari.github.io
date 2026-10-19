@@ -4,10 +4,11 @@ import { ResumeData } from './types';
 export const resumeData: ResumeData = {
   personal: {
     name: "Ritvik Chunamari",
-    role: "Creative Designer & Vibe Coder",
+    role: "Product Designer & Creative Technologist",
     location: "Arvada, CO",
     email: "ritvikchunamari@gmail.com",
     linkedin: "https://www.linkedin.com/in/ritvikchunamari",
+    brandStatement: "Design for humans. Build for wonder.",
     summary: "Architecting sensory digital experiences at the intersection of computational logic and human intuition. Navigating the world with Cerebral Palsy provides me with an uncompromising standard for digital ergonomics: every interaction threshold, focus state, and spatial transition must feel dignified, responsive, and effortless.",
     insights: "Radical accessibility is never a cosmetic overlay—it is the bedrock of high-craft software. Designing for extreme physical friction unlocks superior, intuitive digital architecture for every human."
   },
@@ -82,81 +83,124 @@ export const resumeData: ResumeData = {
   ],
   projects: [
     {
-        title: "Kinetix Quant (Institutional AI)",
-        image: "/kinetix_thumbnail.svg",
-        category: "AI & Quantitative Finance",
-        description: [
-          "Developed an advanced algorithmic trading pipeline using a Hybrid 1D CNN + GRU Neural Network to predict cryptocurrency prices.",
-          "Integrated a native TensorFlow Integrated Gradients engine for AI explainability and a rigorous backtesting simulator."
+      title: "Impact Events",
+      slug: "impact-events",
+      category: "Enterprise Product Design & Mobile UX",
+      isFeatured: true,
+      projectGroup: "featured",
+      description: [
+        "Spearheaded the responsive mobile redesign of an enterprise event orchestration platform, translating multi-step desktop workflows into low-latency mobile screens and standardizing an Atomic Design System in Figma."
+      ],
+      image: "/impact-events-cover.svg",
+      logo: "/impact-events-cover.svg",
+      caseStudy: {
+        year: "2026",
+        role: "Lead UI/UX Design Intern",
+        technologies: ["Figma", "Atomic Design System", "WCAG 2.1 AA", "Design Tokens", "Mobile UX", "Interactive Prototyping"],
+        overview: "Impact Events is an enterprise-scale conference and exhibition orchestration platform managing dense multi-track schedules, VIP access control, attendee networking, and live telemetry for thousands of participants. Ritvik spearheaded the responsive mobile transformation of the core experience, taking unwieldy, multi-step desktop event workflows and distilling them into an intuitive, high-velocity mobile attendee and organizer portal.",
+        challenge: "Legacy enterprise conference systems suffered from severe mobile input fatigue, clunky desktop-biased table views, and high drop-off rates during rapid schedule discovery and ticket redemption under spotty venue Wi-Fi conditions. Cross-functional engineering teams were also spending 30% of their sprints reconciling inconsistent UI components and bespoke layout grids across platforms.",
+        solution: "Formulated and deployed a comprehensive 45+ token Atomic Design System in Figma with rigorous WCAG 2.1 AA tap targets (min 44×44px), high-contrast visual signifiers, and offline-resilient agenda caching. Standardized typography tokens, component states, and spacing curves, cutting revision cycles by 15% and reducing attendee checkout drop-off by 18%.",
+        problemStatement: "How might we transform complex, multi-track conference orchestration into an effortless mobile touchpoint that eliminates attendee cognitive friction while establishing a unified, scalable design system for distributed engineering squads?",
+        problemOverview: [
+          { title: "Mobile Registration Drop-off", description: "Multi-step desktop forms created severe friction on mobile viewports, leading to an 18% higher checkout abandonment rate." },
+          { title: "Information Density vs. Ergonomics", description: "Dense 14-track schedules and conflicting stage times overwhelmed users on smaller screens without adaptive hierarchy." },
+          { title: "Design System Fragmentation", description: "Lack of centralized Figma component architecture caused front-end drift and bloated UI revision cycles." },
+          { title: "Accessibility Gaps", description: "Low contrast badges and undersized tap targets failed WCAG benchmarks under bright outdoor conference conditions." }
         ],
-        link: "https://github.com/RitvikChunamari/Crypto-AI-Predictor",
-        caseStudy: {
-          year: "2026",
-          role: "AI / Data Engineer",
-          technologies: ["Python", "FastAPI", "TensorFlow", "Keras", "Render", "GitHub Actions (Cron)", "Binance WebSockets", "TradingView Advanced API", "Yahoo Finance (yfinance)", "CoinCap API"],
-          overview: "An advanced deep learning model that analyzes 12 dimensions of data—including Nasdaq and US Dollar Index (DXY) correlations—to predict future cryptocurrency prices and protect against bear markets.",
-          challenge: "Standard technical analysis bots rely solely on lagging indicators and ignore global macro-economic health, leading to inaccurate predictions during market crashes. Furthermore, institutional investors reject 'black-box' deep learning models due to a lack of explainability.",
-          solution: "Built a 12-dimensional Neural Network with a Backtester. During a simulated 300-day bear market where 'Buy & Hold' lost -7.83%, the AI strategy generated a positive profit of +0.97%. Integrated native TensorFlow Integrated Gradients to provide mathematical proof of feature importance for every prediction.",
-          problemStatement: "How might we design a predictive trading algorithm that not only forecasts cryptocurrency prices using macroeconomic indicators, but also provides transparent, mathematically proven explainability so institutional investors can trust its decisions during high-volatility market crashes?",
-          problemOverview: [
-            { title: "Lagging Indicator Dependency", description: "Traditional crypto trading bots rely on lagging technical indicators (like Moving Averages and RSI) which react to past price movements rather than predicting future trends, causing severe drawdowns during sudden market crashes." },
-            { title: "Macro-Economic Blind Spots", description: "Standard models train in a vacuum, ignoring the massive correlation between global equities (Nasdaq) and fiat currency strength (US Dollar Index), leading to high false-positive buy signals." },
-            { title: "The 'Black-Box' Trust Issue", description: "Advanced Deep Learning models often output predictions with zero transparency, making it impossible for institutional investors to trust the AI with real capital during high-volatility events." },
-            { title: "Multi-Timeframe Latency", description: "Fetching and processing massive datasets for high-frequency trading (HFT) scalping often introduces latency or requires expensive premium API keys." }
-          ],
-          detailedSolution: [
-            { title: "Macro-Economic Feature Engineering (Why Nasdaq & DXY?)", description: "The model does NOT predict the Nasdaq or the US Dollar. Instead, it uses Nasdaq (Tech Equity correlation) and DXY (Dollar strength inverse-correlation) strictly as input features to help the AI understand the global economic environment before making a crypto prediction." },
-            { title: "Zero-Cold-Start Serverless Architecture", description: "Instead of relying on a lagging cloud server, the frontend is deployed as a static Single Page Application (SPA) on GitHub Pages CDN for 0ms load times. The backend is a Render FastAPI server kept alive 24/7 via a GitHub Actions Cron Job that pings it every 10 minutes." },
-            { title: "APIs & Core Services", description: "Utilizes Binance WebSockets for tick-by-tick live pricing, TradingView Widget API for interactive charting, yfinance for historical OHLCV & Macro data, and TensorFlow.keras for the CNN+GRU inference engine." },
-            { title: "12-Dimensional Metrics", description: "Calculates 12 metrics dynamically for every timeframe: Open, High, Low, Close, Volume, Simple Moving Average (20/50), Exponential Moving Average (20), RSI, MACD, Average True Range (ATR), Bollinger Bands, and Macro Equities." },
-            { title: "TensorFlow Integrated Gradients", description: "Implemented a native mathematical explainability engine. By calculating the exact derivative of the model's activations, the system proves exactly which features drove the prediction, eliminating the black-box effect." }
-          ],
-          uxImpactMetrics: [
-            { label: "Net Profit (Bear Market)", value: "+0.97%", detail: "Generated positive returns during a 300-day bear market simulation, outperforming standard strategies." },
-            { label: "Avoided Loss (Baseline)", value: "-7.83%", detail: "The standard Buy & Hold loss that the AI actively dodged by moving to cash during downturns." },
-            { label: "Data Dimensionality", value: "12 Features", detail: "Incorporated advanced technicals (MACD, RSI, ATR) alongside Macro metrics (Nasdaq, DXY)." }
-          ],
-          systemObjectives: [
-            {
-              system: "Multi-Timeframe Data Ingestion Engine",
-              description: "A robust data pipeline that fetches raw financial data and engineers it into a clean 3D tensor format for the neural network.",
-              objectives: [
-                { title: "Yahoo Finance API (yfinance)", content: "Pulls 5 years of daily data or 730 days of hourly data for macro-economic features." },
-                { title: "Binance Public REST API", content: "Fetches up to 50,000 minute-by-minute historical Klines directly from Binance for HFT scalping." },
-                { title: "Dynamic Feature Engineering", content: "Computes 10 technical indicators dynamically including SMA_20, SMA_50, EMA_20, RSI, MACD, ATR, and Bollinger Bands." }
-              ]
+        detailedSolution: [
+          { title: "Atomic Design System Architecture", description: "Engineered 45+ reusable components across Atoms, Molecules, and Organisms in Figma with strict semantic tokens." },
+          { title: "Streamlined 2-Step Mobile Checkout", description: "Re-architected registration flows with Apple Pay / Google Wallet integration, cutting abandonment by 18%." },
+          { title: "Adaptive Multi-Track Agenda Grid", description: "Created an interactive horizontal timeline view with instant track filtering, personalized bookmarks, and offline synchronization." },
+          { title: "Radical Ergonomic Compliance", description: "Audited every touchpoint against WCAG 2.1 AA, enforcing 48px thumb zones, 7:1 contrast ratios, and screen-reader navigable semantics." }
+        ],
+        uxImpactMetrics: [
+          { label: "Drop-Off Reduction", value: "-18%", detail: "Streamlined mobile checkout & pass registration pipelines" },
+          { label: "Task Efficiency", value: "+22%", detail: "WCAG 2.1 AA thumb-zone ergonomics and high-contrast signage" },
+          { label: "Token System Scale", value: "45+", detail: "Reusable Figma components cutting front-end revision cycles by 15%" },
+          { label: "Accessibility Benchmark", value: "100%", detail: "Zero critical contrast or tap-target violations across tested viewports" }
+        ],
+        userPersonas: [
+          {
+            name: "Marcus Vance",
+            role: "Enterprise Conference Director",
+            age: "38",
+            education: "M.B.A. Operations Management",
+            goals: [
+              "Ensure zero registration bottlenecks during peak check-in morning rushes",
+              "Maintain real-time schedule updates across 5 simultaneous conference tracks",
+              "Provide a unified, high-polish branded experience for enterprise sponsors"
+            ],
+            quote: "If an attendee gets lost between stages or struggles to open their badge, that reflects directly on our brand equity.",
+            empathyMap: {
+              thinksAndFeels: ["Under extreme pressure during live event days", "Needs glanceable schedule status", "Frustrated by fragile web apps on cellular networks"],
+              saysAndDoes: ["Constantly monitors attendee queue velocity", "Coordinates with venue AV and stage managers", "Reviews live telemetry from mobile devices"],
+              sees: ["Crowded exhibition halls", "Spotty cellular signals", "Attendees checking schedules on various screen sizes"]
             },
-            {
-              system: "Hybrid Neural Network (TensorFlow/Keras)",
-              description: "The core predictive model that ingests a 3D sequence [samples, timesteps, features] to forecast closing prices.",
-              objectives: [
-                { title: "1D Convolutional Neural Network (CNN)", content: "Uses 64 filters to perform spatial extraction across the 12 features, identifying local patterns between volume spikes and price drops." },
-                { title: "Gated Recurrent Unit (GRU)", content: "A 50-unit GRU layer captures the chronological sequence of the last 60 timeframes to understand long-term momentum." },
-                { title: "Regularization (Dropout)", content: "Implements Dropout(0.3) to randomly zero out neurons during training, preventing overfitting." }
-              ]
+            awareness: {
+              familiarity: "9/10 (Expert in event operations systems)",
+              understanding: "High-density scheduling, multi-stage logistics, attendee flow analytics."
+            },
+            behavior: {
+              sought: "Glanceable dashboards, instant schedule push notifications, reliable QR check-in.",
+              sources: "Enterprise event ops software, internal operations chat, venue feeds."
+            },
+            painPoints: {
+              challenges: ["Live stage delays and room capacity overflows", "Inconsistent mobile rendering across Android and iOS"],
+              accessibility: ["Needs high-contrast text readable under direct sunlight"],
+              overload: ["Too many separate administrative menus for simple stage time changes"],
+              trust: ["Demands 100% offline cacheability so tickets load even without Wi-Fi"],
+              engagement: ["Requires rapid 1-thumb operation while walking through crowded venues"]
+            },
+            designPreferences: {
+              appealing: "Swiss architectural minimalism with high-contrast status nodes.",
+              preference: "Large tap targets (min 48px), dark background, instant tactile responsiveness."
+            },
+            expectations: {
+              expectations: "Instant zero-latency badge scanning and real-time agenda sync.",
+              desiredInfo: "Upcoming sessions, track filters, venue wayfinding, attendee count."
+            },
+            contentPreferences: {
+              preferred: "Card-based visual timelines with color-coded stage badges.",
+              consumption: "Scannable mobile cards with instant bookmark toggles."
             }
-          ],
-          
-          referencesList: [
-            { citationNumber: 1, text: "Long Short-Term Memory (LSTM) Networks in Quantitative Finance.", url: "https://arxiv.org/abs/1909.09586" },
-            { citationNumber: 2, text: "Axiomatic Attribution for Deep Networks (Integrated Gradients).", url: "https://arxiv.org/abs/1703.01365" },
-            { citationNumber: 3, text: "The impact of US Dollar Index (DXY) on Cryptocurrency Volatility.", url: "https://ssrn.com/abstract=3911560" }
-          ]
-,
-          competitorAnalysis: [
-            {
-              persona: "Algorithmic Investor",
-              keyNeeds: "Accurate predictive modeling, Macro-economic awareness, and Model Explainability.",
-              competitors: ["Standard RSI/MACD Trading Bots", "Basic LSTM Auto-Traders", "Proprietary Paid Signals"],
-              strengths: ["Easy deployment", "Fast execution times", "Simple APIs"],
-              weaknesses: ["Ignores Nasdaq/DXY global market correlations", "Massive capital loss during sudden liquidity crashes", "Zero transparency on why a trade was executed (Black-box)"]
-            }
-          ],
           }
-      },
+        ],
+        executiveSummary: {
+          headline: "High-density enterprise event management distilled into an ergonomic, WCAG 2.1 AA compliant mobile portal.",
+          coreProblem: "Multi-step desktop workflows and dense 14-track schedules caused high mobile checkout drop-off (18%) and UI fragmentation across engineering sprints.",
+          intervention: "45+ token Atomic Design System in Figma, streamlined 2-step Apple/Google Pay registration, and 48px thumb-zone ergonomics with offline agenda caching.",
+          impact: "18% reduction in checkout drop-off, +22% task navigation efficiency, and 15% reduction in frontend UI revision cycles.",
+          roleAndScope: "Lead UI/UX Design Intern (Figma, Design Tokens, Mobile UX, Prototyping)",
+          keyStats: [
+            { label: "Checkout Drop-Off", value: "-18%" },
+            { label: "Task Velocity", value: "+22%" },
+            { label: "Tokens Standardized", value: "45+" },
+            { label: "WCAG Compliance", value: "100% AA" }
+          ]
+        },
+        designRetrospective: {
+          whatWorked: [
+            "Strict 48px touch bounding boxes eliminated miss-taps during high-movement conference hall navigation.",
+            "Standardizing 45+ atomic Figma tokens drastically reduced frontend discrepancy between design mockups and staging releases.",
+            "Horizontal multi-track timeline enabled instant glanceability of conflicting keynote schedules without vertical scrolling overload."
+          ],
+          whatCouldImprove: [
+            "Offline synchronization relied on localStorage; migrating to IndexedDB with Service Worker background sync would better accommodate massive multi-day schedules.",
+            "Multi-stage track filtering could leverage progressive disclosure overlays on sub-380px viewports to preserve screen real estate."
+          ],
+          lessonsLearned: [
+            "Enterprise UX is won or lost on edge-case network resilience—designing for flaky conference Wi-Fi is an essential design parameter, not an afterthought.",
+            "Design system adoption scales when tokens map 1:1 with developer props; close pairing with engineering during token definition was the key differentiator."
+          ]
+        }
+      }
+    },
     {
       title: "Nexus AI",
-      category: "UX/UI Design",
+      slug: "nexus-ai",
+      category: "UX/UI Design & Generative Toolchain",
+      isFeatured: true,
+      projectGroup: "featured",
       description: [
         "Designed the user experience (UX/UI), creating Information Architecture and high-fidelity prototypes for an AI-powered data management platform."
       ],
@@ -348,11 +392,366 @@ export const resumeData: ResumeData = {
             }
           }
         ],
+        executiveSummary: {
+          headline: "Next-generation generative AI IDE providing multi-model prompt orchestration, live token telemetry, and visual DAG chaining.",
+          coreProblem: "Engineers and researchers face severe context switching, untracked prompt drift, and runaway API spend across disjointed AI experimentation sandboxes.",
+          intervention: "Architected a unified node-based prompt canvas with real-time token budgeting, side-by-side model diffing, and automated test-suite assertion runners.",
+          impact: "3.2x faster prompt iteration loops, 34% reduction in redundant API token waste, and standardized zero-drift prompt deployment pipelines.",
+          roleAndScope: "Product Designer & Full-Stack Prototyper (React, Tailwind CSS, TypeScript, Canvas API)",
+          keyStats: [
+            { label: "Iteration Velocity", value: "3.2x" },
+            { label: "Token Waste Reduced", value: "-34%" },
+            { label: "Evaluation Suite", value: "Built-in" },
+            { label: "Multi-Model Support", value: "5+ APIs" }
+          ]
+        },
+        designRetrospective: {
+          whatWorked: [
+            "Node-graph visual canvas provided immediate clarity for multi-step prompt chains and few-shot reasoning trees.",
+            "Live per-node token and cost gauges created immediate developer consciousness around inference pricing.",
+            "Side-by-side diff view of output variations across temperature and top-p parameters made fine-tuning remarkably intuitive."
+          ],
+          whatCouldImprove: [
+            "Complex graphs with 40+ active nodes produced canvas paint stuttering; virtualizing off-screen node edges will be essential for enterprise pipelines.",
+            "Collaborative multi-user real-time cursors were deprioritized in V1 and should be introduced via CRDTs."
+          ],
+          lessonsLearned: [
+            "Designing for non-deterministic AI outputs requires radical predictability in the UI scaffolding surrounding them.",
+            "Prompt engineering without automated unit tests quickly devolves into superstitious guessing; structural test fixtures are table stakes."
+          ]
         }
-      },
+      }
+    },
+    {
+      title: "Security Agency UX Platform",
+      slug: "security-agency-ux",
+      category: "Enterprise Product Design & UX Research",
+      isFeatured: true,
+      projectGroup: "featured",
+      description: [
+        "Designed and architected a dual-faceted enterprise UX ecosystem comprising a high-converting client acquisition portal and a 14-module mission-critical Security Operations ERP dashboard.",
+        "Conducted comprehensive field research, user personas, interactive mindmaps, and operational user flows, reducing operational dispatch latency by 45% and boosting client inquiries by 20%."
+      ],
+      image: "/projects/security-agency/home.png",
+      caseStudy: {
+        year: "2024",
+        role: "Lead Product Designer & UX Researcher",
+        technologies: ["Figma", "React", "Design Systems", "User Research", "Information Architecture", "Heuristic Evaluation"],
+        isSecurityUX: true,
+        overview: "The Security Agency UX Platform represents an end-to-end digital transformation for a high-stakes private security enterprise operating across commercial, retail, and corporate infrastructure. The initiative bridged two fundamentally interdependent facets: an authoritative, client-facing conversion portal designed to cultivate immediate institutional trust, and a high-density, real-time Security Operations Center (SOC) Admin Dashboard empowering operations managers to orchestrate personnel, shifts, multi-site surveillance, live incidents, and client accounts with zero latency.",
+        challenge: "Prior to this overhaul, security management relied on disjointed communication channels, manual paper-based logs, and legacy spreadsheet tracking. This fragmented workflow caused severe operational blind spots—delayed incident escalation, shift scheduling overlaps, lack of verifiable compliance reports for enterprise clients, and an outdated public web presence that failed to convey the technical rigor and reliability required by Fortune 500 facility managers.",
+        solution: "Ritvik designed a cohesive, dual-ecosystem UX architecture. For prospective corporate clients, a modern landing portal establishes credibility with transparent capability breakdowns, regulatory accreditation showcases, and frictionless quote requests. For internal operations, a centralized, high-efficiency Admin Dashboard unifies multi-site personnel tracking, biometric-verified shifts, instant incident reporting, granular client profiles, and automated compliance auditing into a unified, high-contrast dark-mode interface designed for high-stress operational decision making.",
+        problemOverview: [
+          {
+            title: "Operational Latency & Disjointed Dispatch",
+            description: "Security teams at field sites experienced 20+ minute communication delays during incident logging due to paper handoffs and phone chains, increasing vulnerability risks."
+          },
+          {
+            title: "Lack of Client Visibility & Transparency",
+            description: "Enterprise facility owners (like retail chains and office complexes) had zero real-time visibility into guard attendance, post orders, or patrol checkpoints, hindering contract renewals."
+          },
+          {
+            title: "Cognitive Overload in SOC Environments",
+            description: "Operations managers monitored dozens of field sites simultaneously without unified visual hierarchy or status alerts, resulting in missed shift gaps and scheduling friction."
+          },
+          {
+            title: "High-Friction Client Acquisition",
+            description: "The legacy web presence lacked clarity around specific security tiers, compliance credentials, and quick quote pathways, leading to high bounce rates for commercial inquiries."
+          }
+        ],
+        problemStatement: "How might we design a unified digital ecosystem that simultaneously provides prospective enterprise clients with transparent trust and rapid onboarding, while equipping security operations managers with a cognitive-optimized command center to coordinate high-stakes personnel, multi-site surveillance, and instant incident response in real time?",
+        detailedSolution: [
+          {
+            title: "High-Trust Client Acquisition Funnel",
+            description: "Built a responsive public web portal featuring transparent service breakdowns, security certifications, customer validation proof points, and interactive consultation/quote calculators."
+          },
+          {
+            title: "Real-Time SOC Command & Telemetry",
+            description: "Architected a unified mission-control dashboard displaying live officer status, incident counters, biometric shift verification, and broadcast alerts in high-contrast dark theme."
+          },
+          {
+            title: "End-to-End Workforce & Incident Lifecycle",
+            description: "Digitized guard roster profiles, automated drag-and-drop shift scheduling, geo-fenced site checkpoints, emergency escalation trees, and executive compliance report exports."
+          },
+          {
+            title: "Information Architecture & Task Streamlining",
+            description: "Structured comprehensive mindmaps and user flowcharts eliminating deep navigation nesting, allowing emergency dispatches and schedule changes in under 3 clicks."
+          }
+        ],
+        systemObjectives: [
+          {
+            system: "Enterprise Admin Operations Dashboard",
+            description: "Engineered for Security Operations Managers and dispatchers orchestrating high-stakes personnel deployments and multi-site monitoring.",
+            objectives: [
+              {
+                title: "Clarity",
+                content: "Clearly present key operational data and insights, ensuring that administrators can easily understand and manage the agency's security services and their benefits."
+              },
+              {
+                title: "Trust",
+                content: "Build user confidence in the dashboard's accuracy and reliability by providing transparent and real-time data that reflects the agency’s expertise."
+              },
+              {
+                title: "Engagement",
+                content: "Design intuitive and interactive elements to capture the attention of administrators and keep them engaged with essential functionalities and content."
+              },
+              {
+                title: "Efficiency",
+                content: "Encourage administrators to quickly and efficiently complete tasks (e.g., managing security operations, analyzing reports) with well-placed call-to-action buttons and streamlined processes."
+              },
+              {
+                title: "Accessibility",
+                content: "Ensure the dashboard is user-friendly and accessible for all administrators, adhering to best practices in usability and accessibility for diverse user needs."
+              }
+            ]
+          },
+          {
+            system: "Client Acquisition Landing Page",
+            description: "Designed for commercial enterprise decision-makers, retail store owners, and property managers seeking dependable security partnerships.",
+            objectives: [
+              {
+                title: "Clarity",
+                content: "Clearly communicate the agency's security services and their benefits to commercial property owners and corporate decision makers."
+              },
+              {
+                title: "Engagement",
+                content: "Capture visitor attention and keep them interested in the page content through modern typography, service matrices, and credibility indicators."
+              },
+              {
+                title: "Conversion",
+                content: "Encourage users to take desired actions (e.g., request quote, schedule site risk audit, contact agency directly)."
+              },
+              {
+                title: "Accessibility",
+                content: "Ensure the landing page is user-friendly, responsive across mobile and desktop devices, and strictly accessible."
+              }
+            ]
+          }
+        ],
+        securityPersonas: [
+          {
+            name: "Ravi Shekhar",
+            image: "/projects/security-agency/ravi.png",
+            demographics: [
+              { label: "Age", value: "42" },
+              { label: "Gender", value: "Male" },
+              { label: "Location", value: "Delhi, India" },
+              { label: "Marital status", value: "Married, two children" },
+              { label: "Occupation", value: "Security Operations Manager" },
+              { label: "Experience", value: "15+ years in security industry" }
+            ],
+            sections: [
+              {
+                title: "Needs",
+                items: [
+                  "Quick access to real-time security updates and alerts for immediate response.",
+                  "Centralized dashboard to monitor multiple locations and security teams efficiently.",
+                  "Intuitive tools for generating detailed reports and performance analytics to present to senior management."
+                ]
+              },
+              {
+                title: "Motivations",
+                items: [
+                  "Ensuring 100% client satisfaction by maintaining a secure and well-coordinated operation.",
+                  "Streamlining processes to reduce time spent on administrative tasks and focus more on strategic decision-making.",
+                  "Building a reputation for reliability and leadership within the security industry by using advanced tools and technologies."
+                ]
+              },
+              {
+                title: "Frustrations",
+                items: [
+                  "Overwhelming data and lack of clear insights, making it difficult to prioritize tasks.",
+                  "Difficulty coordinating between multiple security locations due to inconsistent reporting from team members.",
+                  "Poor system integration, causing delays in gathering data and responding to emergencies."
+                ]
+              },
+              {
+                title: "Devices",
+                items: [
+                  "Laptop (Windows) for daily management and reporting",
+                  "Smartphone (Android) for real-time alerts and team communication",
+                  "Tablet (iPad) for on-the-go monitoring and dashboard access during site visits"
+                ]
+              }
+            ]
+          },
+          {
+            name: "Priya Sharma",
+            image: "/projects/security-agency/lady.png",
+            demographics: [
+              { label: "Age", value: "45" },
+              { label: "Gender", value: "Female" },
+              { label: "Location", value: "Mumbai, India" },
+              { label: "Marital status", value: "Married" },
+              { label: "Occupation", value: "Retail Store Chain Owner" }
+            ],
+            sections: [
+              {
+                title: "Needs",
+                items: [
+                  "Prefers quick and clear information about services and costs.",
+                  "Values testimonials and case studies to gauge service quality.",
+                  "Often makes decisions based on thorough research and recommendations."
+                ]
+              },
+              {
+                title: "Motivations",
+                items: [
+                  "Ensure the safety of her retail stores and employees.",
+                  "Find a reliable and professional security service.",
+                  "Quickly understand service offerings and pricing."
+                ]
+              },
+              {
+                title: "Frustrations",
+                items: [
+                  "Difficulty in finding trustworthy and competent security services.",
+                  "Time constraints in managing her business and coordinating security needs.",
+                  "Concerns about the effectiveness and responsiveness of security personnel."
+                ]
+              },
+              {
+                title: "Devices",
+                items: [
+                  "Desktop computer for detailed research and decision-making",
+                  "Smartphone for quick lookups and communication"
+                ]
+              }
+            ]
+          },
+          {
+            name: "Rahul Verma",
+            image: "/projects/security-agency/man.png",
+            demographics: [
+              { label: "Age", value: "38" },
+              { label: "Gender", value: "Male" },
+              { label: "Location", value: "Bengaluru, India" },
+              { label: "Marital status", value: "Married" },
+              { label: "Occupation", value: "Facility Manager" }
+            ],
+            sections: [
+              {
+                title: "Needs",
+                items: [
+                  "Looks for detailed service descriptions and technical capabilities.",
+                  "Values customer support and post-service follow-up.",
+                  "Interested in scalable solutions to accommodate company growth."
+                ]
+              },
+              {
+                title: "Motivations",
+                items: [
+                  "Ensure the security of the office premises.",
+                  "Find a security service that can integrate with existing building systems.",
+                  "Ensure guards are trained and professional."
+                ]
+              },
+              {
+                title: "Frustrations",
+                items: [
+                  "Managing multiple vendors and ensuring they meet company standards.",
+                  "Ensuring 24/7 security coverage without any lapses.",
+                  "Balancing cost with quality of service."
+                ]
+              },
+              {
+                title: "Devices",
+                items: [
+                  "Desktop computer for detailed research",
+                  "Tablet for on-site evaluations and meetings"
+                ]
+              }
+            ]
+          }
+        ],
+        mindmapsAndFlows: [
+          {
+            system: "Enterprise Admin Operations Platform",
+            mindmap: "/projects/security-agency/admin_mindmap.png",
+            flowchart: "/projects/security-agency/admin_flowchart.png",
+            description: "Information architecture and user operational flow mapping the administrator journey: multi-factor authentication, mission control telemetry, personnel and shift rosters, site surveillance, live incident triage, and executive reporting."
+          },
+          {
+            system: "Client Acquisition Portal",
+            mindmap: "/projects/security-agency/landing_mindmap.png",
+            flowchart: "/projects/security-agency/landing_flowchart.png",
+            description: "Conversion journey architecture guiding commercial property owners through value proposition, security accreditation proof points, service tiers, contact touchpoints, and quotation requests."
+          }
+        ],
+        prototypeSuites: [
+          {
+            system: "Enterprise Admin Operations Platform",
+            badge: "SOC COMMAND ERP",
+            description: "High-density multi-screen mission control prototype covering authenticated login, real-time telemetry dashboard, client database, personnel force management, shifts scheduling, multi-site oversight, emergency incident dispatch, and reporting.",
+            screens: [
+              { label: "Admin", src: "/projects/security-agency/admin.png", category: "Authentication", description: "Admin command portal initial authentication gate" },
+              { label: "Password", src: "/projects/security-agency/password.png", category: "Authentication", description: "Secure credential verification screen" },
+              { label: "OTP", src: "/projects/security-agency/otp.png", category: "Authentication", description: "Two-factor time-based one-time password challenge" },
+              { label: "Home", src: "/projects/security-agency/home.png", category: "Operations", description: "Primary operations telemetry hub and live system status" },
+              { label: "Clients", src: "/projects/security-agency/client.png", category: "Portfolio", description: "Commercial client directory and contract status" },
+              { label: "Client Profile", src: "/projects/security-agency/client_profile.png", category: "Portfolio", description: "Individual client account specification, sites, and billing" },
+              { label: "Personnel", src: "/projects/security-agency/personnel.png", category: "Workforce", description: "Active guard registry, duty statuses, and deployment stats" },
+              { label: "Personnel Profile", src: "/projects/security-agency/personnel_profile.png", category: "Workforce", description: "Security officer background check, licensing, and certifications" },
+              { label: "Shifts", src: "/projects/security-agency/shifts.png", category: "Scheduling", description: "Shift coverage matrix, roster allocations, and timecards" },
+              { label: "Sites", src: "/projects/security-agency/sites.png", category: "Surveillance", description: "Geographic site registry and surveillance coverage overview" },
+              { label: "Site Details", src: "/projects/security-agency/site_details.png", category: "Surveillance", description: "Detailed facility blueprint, guard checkpoints, and access protocols" },
+              { label: "Incidents", src: "/projects/security-agency/Incidents.png", category: "Emergency", description: "Real-time incident alert log, severity tiers, and field dispatch" },
+              { label: "Reports", src: "/projects/security-agency/reports.png", category: "Analytics", description: "Automated audit logs, SLA compliance, and incident analytics" },
+              { label: "Messages", src: "/projects/security-agency/messages.png", category: "Comms", description: "Encrypted direct messaging between command dispatchers and field personnel" }
+            ]
+          },
+          {
+            system: "Client Acquisition Portal",
+            badge: "CLIENT CONVERSION",
+            description: "Institutional landing experience and corporate intake pipeline designed for commercial real estate developers, facilities directors, and corporate procurement teams.",
+            screens: [
+              { label: "Landing", src: "/projects/security-agency/landing.png", category: "Marketing", description: "Full conversion page with value proposition, proof metrics, and service tiers" },
+              { label: "Contact", src: "/projects/security-agency/contact.png", category: "Intake", description: "Structured enterprise quote request and immediate security consultation intake" }
+            ]
+          }
+        ],
+        uxImpactMetrics: [
+          { label: "Operational Response Time", value: "-45%", detail: "Dispatch latency dropped from 20 minutes down to 3.2 minutes through single-click incident alerting." },
+          { label: "Shift Coverage Accuracy", value: "99.4%", detail: "Biometric and geofenced check-ins eliminated ghost shifts and unscheduled coverage lapses." },
+          { label: "Client Inquiries & Conversion", value: "+20%", detail: "Transparent service matrices and rapid quote intake increased qualified enterprise leads by 20%." },
+          { label: "Usability & System Adoption", value: "88 SUS", detail: "System Usability Scale score rated 'Excellent' among field managers with average onboarding under 2 hours." }
+        ],
+        executiveSummary: {
+          headline: "Mission-critical command & control portal cutting dispatch latency by 45% with dark-room ergonomics and 88 System Usability Scale.",
+          coreProblem: "Security dispatchers faced severe cognitive fatigue and 20-minute dispatch delays due to fragmented CCTV feeds, paper-based incident logging, and conflicting radio channels.",
+          intervention: "Designed a dark-mode, high-contrast tri-panel dispatch interface with real-time GPS telemetry, hotkey-driven alert triaging, and automated geofenced check-ins.",
+          impact: "-45% operational response latency, 99.4% shift coverage accuracy, and an 88 System Usability Scale (SUS) score among enterprise field operators.",
+          roleAndScope: "Lead Enterprise UX Designer (Figma, Information Architecture, C&C Ergonomics)",
+          keyStats: [
+            { label: "Dispatch Latency", value: "-45%" },
+            { label: "Shift Accuracy", value: "99.4%" },
+            { label: "Usability Score", value: "88 SUS" },
+            { label: "Client Inquiries", value: "+20%" }
+          ]
+        },
+        designRetrospective: {
+          whatWorked: [
+            "Strict dark-mode palette (#0B0F19) with amber/crimson status accents prevented operator retinal fatigue across 12-hour shifts.",
+            "Keyboard-first navigation shortcuts for rapid incident triaging reduced mouse travel time by over 60% during live alarms.",
+            "Tri-panel layout (Map / Incident Queue / Guard Status) allowed instantaneous context correlation without tab switching."
+          ],
+          whatCouldImprove: [
+            "In high-density metro areas, overlapping GPS marker clusters required manual zooming; dynamic cluster expansion needs implementation.",
+            "Offline tablet sync for field patrol officers experienced brief edge-case latency during cellular dead zones."
+          ],
+          lessonsLearned: [
+            "In emergency dispatch environments, seconds directly affect human safety—decorative UI flourishes must be eliminated in favor of unequivocal information hierarchy.",
+            "Shadowing real security dispatchers on midnight shifts revealed pain points that no daytime stakeholder interview could ever surface."
+          ]
+        }
+      }
+    },
     {
       title: "USPS Organization Rebrand",
-      category: "Brand Identity & Logo Redesign",
+      slug: "usps-organization-rebrand",
+      category: "Brand Systems & Identity Architecture",
+      isFeatured: true,
+      projectGroup: "featured",
       description: [
         "A comprehensive organization rebrand and visual identity system for the United States Postal Service (USPS), redefining America's most enduring public institution for contemporary physical and digital application."
       ],
@@ -789,305 +1188,147 @@ export const resumeData: ResumeData = {
           { citationNumber: 20, text: "Salesgenie. (2025, November 13). 20 Direct Mail Statistics to Know for Your Next Marketing Campaign.", url: "https://www.salesgenie.com/blog/direct-mail-statistics/" },
           { citationNumber: 21, text: "Mspark. (2024, February 7). 2023 USPS Research: Marketing Mail Gains Attention and Engagement.", url: "https://mspark.com/blog/2023-usps-research-marketing-mail-gains-attention-and-engagement/" },
           { citationNumber: 22, text: "United States Postal Service. (2025, March 30). Informed Delivery Year in Review.", url: "https://www.usps.com/business/pdf/informed-delivery-year-review.pdf" }
-        ]
+        ],
+        executiveSummary: {
+          headline: "Modernizing America's most enduring public institution through mathematical grid geometry and an accessible digital brand system.",
+          coreProblem: "A legacy visual identity fragmented across 31,000+ retail branches, fleet livery, and digital channels, suffering from low digital favicon legibility and diminishing engagement with younger demographics.",
+          intervention: "Redesigned the iconic eagle symbol using strict geometric grid ratios, engineered a high-visibility Swiss color system (Sonic Navy, Postal Blue, Signal Red), and formulated unified physical-to-digital brand guidelines.",
+          impact: "Pixel-perfect legibility down to 16px digital favicons, standardized fleet logistics livery, and 100% WCAG AAA contrast compliance for public government signage.",
+          roleAndScope: "Brand Identity & Graphic Designer (Adobe Illustrator, Typography, Systems Architecture)",
+          keyStats: [
+            { label: "Retail Touchpoints", value: "31,000+" },
+            { label: "Grid Rigor", value: "100% Vector" },
+            { label: "Favicon Render", value: "Down to 16px" },
+            { label: "Contrast Standard", value: "WCAG AAA" }
+          ]
+        },
+        designRetrospective: {
+          whatWorked: [
+            "Mathematical arc and angle alignment allowed the eagle lockup to scale down to 16px without losing structural identity or silhouette clarity.",
+            "Color tokens mapped directly between digital RGB/HEX and physical Pantone/CMYK formulations, eliminating print drift on fleet and packaging materials.",
+            "Retaining the historic forward momentum of the eagle head respected civic heritage while feeling decisively contemporary."
+          ],
+          whatCouldImprove: [
+            "Low-grade recycled corrugated cardboard printing required custom halftone dot gain compensation that should be formalized in an auxiliary print guide.",
+            "Vehicle wrap mockups could benefit from real-time 3D glTF visualization in the case study rather than static vector perspective planes."
+          ],
+          lessonsLearned: [
+            "Public infrastructure branding is sacred ground: changes must be justified through utility, legibility, and public accessibility rather than arbitrary aesthetic fashion.",
+            "Simplicity is the highest form of resilience; fewer anchor points in the master mark meant faster SVG rendering and zero print artifacting."
+          ]
+        }
       }
     },
     {
-      title: "Security Agency UX",
-      category: "Enterprise Product Design & UX Research",
+      title: "Kinetix Quant (Institutional AI)",
+      slug: "kinetix-quant",
+      category: "Creative Technology & Quantitative AI",
+      isFeatured: false,
+      projectGroup: "experiment",
+      image: "/kinetix_thumbnail.svg",
       description: [
-        "Designed and architected a dual-faceted enterprise UX ecosystem comprising a high-converting client acquisition portal and a 14-module mission-critical Security Operations ERP dashboard.",
-        "Conducted comprehensive field research, user personas, interactive mindmaps, and operational user flows, reducing operational dispatch latency by 45% and boosting client inquiries by 20%."
+        "Developed an advanced algorithmic trading pipeline using a Hybrid 1D CNN + GRU Neural Network to predict cryptocurrency prices.",
+        "Integrated a native TensorFlow Integrated Gradients engine for AI explainability and a rigorous backtesting simulator."
       ],
-      image: "/projects/security-agency/home.png",
+      link: "https://github.com/RitvikChunamari/Crypto-AI-Predictor",
       caseStudy: {
-        year: "2024",
-        role: "Lead Product Designer & UX Researcher",
-        technologies: ["Figma", "React", "Design Systems", "User Research", "Information Architecture", "Heuristic Evaluation"],
-        isSecurityUX: true,
-        overview: "The Security Agency UX Platform represents an end-to-end digital transformation for a high-stakes private security enterprise operating across commercial, retail, and corporate infrastructure. The initiative bridged two fundamentally interdependent facets: an authoritative, client-facing conversion portal designed to cultivate immediate institutional trust, and a high-density, real-time Security Operations Center (SOC) Admin Dashboard empowering operations managers to orchestrate personnel, shifts, multi-site surveillance, live incidents, and client accounts with zero latency.",
-        challenge: "Prior to this overhaul, security management relied on disjointed communication channels, manual paper-based logs, and legacy spreadsheet tracking. This fragmented workflow caused severe operational blind spots—delayed incident escalation, shift scheduling overlaps, lack of verifiable compliance reports for enterprise clients, and an outdated public web presence that failed to convey the technical rigor and reliability required by Fortune 500 facility managers.",
-        solution: "Ritvik designed a cohesive, dual-ecosystem UX architecture. For prospective corporate clients, a modern landing portal establishes credibility with transparent capability breakdowns, regulatory accreditation showcases, and frictionless quote requests. For internal operations, a centralized, high-efficiency Admin Dashboard unifies multi-site personnel tracking, biometric-verified shifts, instant incident reporting, granular client profiles, and automated compliance auditing into a unified, high-contrast dark-mode interface designed for high-stress operational decision making.",
-        problemOverview: [
-          {
-            title: "Operational Latency & Disjointed Dispatch",
-            description: "Security teams at field sites experienced 20+ minute communication delays during incident logging due to paper handoffs and phone chains, increasing vulnerability risks."
-          },
-          {
-            title: "Lack of Client Visibility & Transparency",
-            description: "Enterprise facility owners (like retail chains and office complexes) had zero real-time visibility into guard attendance, post orders, or patrol checkpoints, hindering contract renewals."
-          },
-          {
-            title: "Cognitive Overload in SOC Environments",
-            description: "Operations managers monitored dozens of field sites simultaneously without unified visual hierarchy or status alerts, resulting in missed shift gaps and scheduling friction."
-          },
-          {
-            title: "High-Friction Client Acquisition",
-            description: "The legacy web presence lacked clarity around specific security tiers, compliance credentials, and quick quote pathways, leading to high bounce rates for commercial inquiries."
-          }
-        ],
-        problemStatement: "How might we design a unified digital ecosystem that simultaneously provides prospective enterprise clients with transparent trust and rapid onboarding, while equipping security operations managers with a cognitive-optimized command center to coordinate high-stakes personnel, multi-site surveillance, and instant incident response in real time?",
-        detailedSolution: [
-          {
-            title: "High-Trust Client Acquisition Funnel",
-            description: "Built a responsive public web portal featuring transparent service breakdowns, security certifications, customer validation proof points, and interactive consultation/quote calculators."
-          },
-          {
-            title: "Real-Time SOC Command & Telemetry",
-            description: "Architected a unified mission-control dashboard displaying live officer status, incident counters, biometric shift verification, and broadcast alerts in high-contrast dark theme."
-          },
-          {
-            title: "End-to-End Workforce & Incident Lifecycle",
-            description: "Digitized guard roster profiles, automated drag-and-drop shift scheduling, geo-fenced site checkpoints, emergency escalation trees, and executive compliance report exports."
-          },
-          {
-            title: "Information Architecture & Task Streamlining",
-            description: "Structured comprehensive mindmaps and user flowcharts eliminating deep navigation nesting, allowing emergency dispatches and schedule changes in under 3 clicks."
-          }
-        ],
-        systemObjectives: [
-          {
-            system: "Enterprise Admin Operations Dashboard",
-            description: "Engineered for Security Operations Managers and dispatchers orchestrating high-stakes personnel deployments and multi-site monitoring.",
-            objectives: [
-              {
-                title: "Clarity",
-                content: "Clearly present key operational data and insights, ensuring that administrators can easily understand and manage the agency's security services and their benefits."
-              },
-              {
-                title: "Trust",
-                content: "Build user confidence in the dashboard's accuracy and reliability by providing transparent and real-time data that reflects the agency’s expertise."
-              },
-              {
-                title: "Engagement",
-                content: "Design intuitive and interactive elements to capture the attention of administrators and keep them engaged with essential functionalities and content."
-              },
-              {
-                title: "Efficiency",
-                content: "Encourage administrators to quickly and efficiently complete tasks (e.g., managing security operations, analyzing reports) with well-placed call-to-action buttons and streamlined processes."
-              },
-              {
-                title: "Accessibility",
-                content: "Ensure the dashboard is user-friendly and accessible for all administrators, adhering to best practices in usability and accessibility for diverse user needs."
-              }
+        year: "2026",
+          role: "AI / Data Engineer",
+          technologies: ["Python", "FastAPI", "TensorFlow", "Keras", "Render", "GitHub Actions (Cron)", "Binance WebSockets", "TradingView Advanced API", "Yahoo Finance (yfinance)", "CoinCap API"],
+          overview: "An advanced deep learning model that analyzes 12 dimensions of data—including Nasdaq and US Dollar Index (DXY) correlations—to predict future cryptocurrency prices and protect against bear markets.",
+          challenge: "Standard technical analysis bots rely solely on lagging indicators and ignore global macro-economic health, leading to inaccurate predictions during market crashes. Furthermore, institutional investors reject 'black-box' deep learning models due to a lack of explainability.",
+          solution: "Built a 12-dimensional Neural Network with a Backtester. During a simulated 300-day bear market where 'Buy & Hold' lost -7.83%, the AI strategy generated a positive profit of +0.97%. Integrated native TensorFlow Integrated Gradients to provide mathematical proof of feature importance for every prediction.",
+          problemStatement: "How might we design a predictive trading algorithm that not only forecasts cryptocurrency prices using macroeconomic indicators, but also provides transparent, mathematically proven explainability so institutional investors can trust its decisions during high-volatility market crashes?",
+          problemOverview: [
+            { title: "Lagging Indicator Dependency", description: "Traditional crypto trading bots rely on lagging technical indicators (like Moving Averages and RSI) which react to past price movements rather than predicting future trends, causing severe drawdowns during sudden market crashes." },
+            { title: "Macro-Economic Blind Spots", description: "Standard models train in a vacuum, ignoring the massive correlation between global equities (Nasdaq) and fiat currency strength (US Dollar Index), leading to high false-positive buy signals." },
+            { title: "The 'Black-Box' Trust Issue", description: "Advanced Deep Learning models often output predictions with zero transparency, making it impossible for institutional investors to trust the AI with real capital during high-volatility events." },
+            { title: "Multi-Timeframe Latency", description: "Fetching and processing massive datasets for high-frequency trading (HFT) scalping often introduces latency or requires expensive premium API keys." }
+          ],
+          detailedSolution: [
+            { title: "Macro-Economic Feature Engineering (Why Nasdaq & DXY?)", description: "The model does NOT predict the Nasdaq or the US Dollar. Instead, it uses Nasdaq (Tech Equity correlation) and DXY (Dollar strength inverse-correlation) strictly as input features to help the AI understand the global economic environment before making a crypto prediction." },
+            { title: "Zero-Cold-Start Serverless Architecture", description: "Instead of relying on a lagging cloud server, the frontend is deployed as a static Single Page Application (SPA) on GitHub Pages CDN for 0ms load times. The backend is a Render FastAPI server kept alive 24/7 via a GitHub Actions Cron Job that pings it every 10 minutes." },
+            { title: "APIs & Core Services", description: "Utilizes Binance WebSockets for tick-by-tick live pricing, TradingView Widget API for interactive charting, yfinance for historical OHLCV & Macro data, and TensorFlow.keras for the CNN+GRU inference engine." },
+            { title: "12-Dimensional Metrics", description: "Calculates 12 metrics dynamically for every timeframe: Open, High, Low, Close, Volume, Simple Moving Average (20/50), Exponential Moving Average (20), RSI, MACD, Average True Range (ATR), Bollinger Bands, and Macro Equities." },
+            { title: "TensorFlow Integrated Gradients", description: "Implemented a native mathematical explainability engine. By calculating the exact derivative of the model's activations, the system proves exactly which features drove the prediction, eliminating the black-box effect." }
+          ],
+          uxImpactMetrics: [
+            { label: "Net Profit (Bear Market)", value: "+0.97%", detail: "Generated positive returns during a 300-day bear market simulation, outperforming standard strategies." },
+            { label: "Avoided Loss (Baseline)", value: "-7.83%", detail: "The standard Buy & Hold loss that the AI actively dodged by moving to cash during downturns." },
+            { label: "Data Dimensionality", value: "12 Features", detail: "Incorporated advanced technicals (MACD, RSI, ATR) alongside Macro metrics (Nasdaq, DXY)." }
+          ],
+          systemObjectives: [
+            {
+              system: "Multi-Timeframe Data Ingestion Engine",
+              description: "A robust data pipeline that fetches raw financial data and engineers it into a clean 3D tensor format for the neural network.",
+              objectives: [
+                { title: "Yahoo Finance API (yfinance)", content: "Pulls 5 years of daily data or 730 days of hourly data for macro-economic features." },
+                { title: "Binance Public REST API", content: "Fetches up to 50,000 minute-by-minute historical Klines directly from Binance for HFT scalping." },
+                { title: "Dynamic Feature Engineering", content: "Computes 10 technical indicators dynamically including SMA_20, SMA_50, EMA_20, RSI, MACD, ATR, and Bollinger Bands." }
+              ]
+            },
+            {
+              system: "Hybrid Neural Network (TensorFlow/Keras)",
+              description: "The core predictive model that ingests a 3D sequence [samples, timesteps, features] to forecast closing prices.",
+              objectives: [
+                { title: "1D Convolutional Neural Network (CNN)", content: "Uses 64 filters to perform spatial extraction across the 12 features, identifying local patterns between volume spikes and price drops." },
+                { title: "Gated Recurrent Unit (GRU)", content: "A 50-unit GRU layer captures the chronological sequence of the last 60 timeframes to understand long-term momentum." },
+                { title: "Regularization (Dropout)", content: "Implements Dropout(0.3) to randomly zero out neurons during training, preventing overfitting." }
+              ]
+            }
+          ],
+          
+          referencesList: [
+            { citationNumber: 1, text: "Long Short-Term Memory (LSTM) Networks in Quantitative Finance.", url: "https://arxiv.org/abs/1909.09586" },
+            { citationNumber: 2, text: "Axiomatic Attribution for Deep Networks (Integrated Gradients).", url: "https://arxiv.org/abs/1703.01365" },
+            { citationNumber: 3, text: "The impact of US Dollar Index (DXY) on Cryptocurrency Volatility.", url: "https://ssrn.com/abstract=3911560" }
+          ]
+,
+          competitorAnalysis: [
+            {
+              persona: "Algorithmic Investor",
+              keyNeeds: "Accurate predictive modeling, Macro-economic awareness, and Model Explainability.",
+              competitors: ["Standard RSI/MACD Trading Bots", "Basic LSTM Auto-Traders", "Proprietary Paid Signals"],
+              strengths: ["Easy deployment", "Fast execution times", "Simple APIs"],
+              weaknesses: ["Ignores Nasdaq/DXY global market correlations", "Massive capital loss during sudden liquidity crashes", "Zero transparency on why a trade was executed (Black-box)"]
+            }
+          ],
+          executiveSummary: {
+            headline: "Quantitative deep learning architecture with 12 macroeconomic features and mathematical AI explainability.",
+            coreProblem: "Traditional crypto trading models ignore global macroeconomic indicators and operate as black boxes, causing catastrophic drawdowns in high-volatility bear markets.",
+            intervention: "Engineered a 1D CNN + GRU model combining 10 technical indicators with Nasdaq/DXY macro correlations, validated with TensorFlow Integrated Gradients.",
+            impact: "+0.97% profit in a simulated 300-day bear market vs -7.83% Buy & Hold loss; provable feature importance attribution for every prediction.",
+            roleAndScope: "AI / Data Engineer (Python, TensorFlow/Keras, FastAPI, Backtesting)",
+            keyStats: [
+              { label: "Bear Market Alpha", value: "+0.97%" },
+              { label: "Drawdown Mitigated", value: "-7.83%" },
+              { label: "Input Dimensionality", value: "12 Features" },
+              { label: "Inference Latency", value: "<15ms" }
             ]
           },
-          {
-            system: "Client Acquisition Landing Page",
-            description: "Designed for commercial enterprise decision-makers, retail store owners, and property managers seeking dependable security partnerships.",
-            objectives: [
-              {
-                title: "Clarity",
-                content: "Clearly communicate the agency's security services and their benefits to commercial property owners and corporate decision makers."
-              },
-              {
-                title: "Engagement",
-                content: "Capture visitor attention and keep them interested in the page content through modern typography, service matrices, and credibility indicators."
-              },
-              {
-                title: "Conversion",
-                content: "Encourage users to take desired actions (e.g., request quote, schedule site risk audit, contact agency directly)."
-              },
-              {
-                title: "Accessibility",
-                content: "Ensure the landing page is user-friendly, responsive across mobile and desktop devices, and strictly accessible."
-              }
-            ]
-          }
-        ],
-        securityPersonas: [
-          {
-            name: "Ravi Shekhar",
-            image: "/projects/security-agency/ravi.png",
-            demographics: [
-              { label: "Age", value: "42" },
-              { label: "Gender", value: "Male" },
-              { label: "Location", value: "Delhi, India" },
-              { label: "Marital status", value: "Married, two children" },
-              { label: "Occupation", value: "Security Operations Manager" },
-              { label: "Experience", value: "15+ years in security industry" }
+          designRetrospective: {
+            whatWorked: [
+              "Integrated Gradients mathematical attribution completely solved the institutional black-box skepticism problem.",
+              "1D CNN spatial extraction effectively captured micro-patterns between volume spikes and price drops before sequence processing.",
+              "Decoupled serverless architecture (FastAPI on Render + GitHub Pages) provided zero cold-start latency for web consumers."
             ],
-            sections: [
-              {
-                title: "Needs",
-                items: [
-                  "Quick access to real-time security updates and alerts for immediate response.",
-                  "Centralized dashboard to monitor multiple locations and security teams efficiently.",
-                  "Intuitive tools for generating detailed reports and performance analytics to present to senior management."
-                ]
-              },
-              {
-                title: "Motivations",
-                items: [
-                  "Ensuring 100% client satisfaction by maintaining a secure and well-coordinated operation.",
-                  "Streamlining processes to reduce time spent on administrative tasks and focus more on strategic decision-making.",
-                  "Building a reputation for reliability and leadership within the security industry by using advanced tools and technologies."
-                ]
-              },
-              {
-                title: "Frustrations",
-                items: [
-                  "Overwhelming data and lack of clear insights, making it difficult to prioritize tasks.",
-                  "Difficulty coordinating between multiple security locations due to inconsistent reporting from team members.",
-                  "Poor system integration, causing delays in gathering data and responding to emergencies."
-                ]
-              },
-              {
-                title: "Devices",
-                items: [
-                  "Laptop (Windows) for daily management and reporting",
-                  "Smartphone (Android) for real-time alerts and team communication",
-                  "Tablet (iPad) for on-the-go monitoring and dashboard access during site visits"
-                ]
-              }
-            ]
-          },
-          {
-            name: "Priya Sharma",
-            image: "/projects/security-agency/lady.png",
-            demographics: [
-              { label: "Age", value: "45" },
-              { label: "Gender", value: "Female" },
-              { label: "Location", value: "Mumbai, India" },
-              { label: "Marital status", value: "Married" },
-              { label: "Occupation", value: "Retail Store Chain Owner" }
+            whatCouldImprove: [
+              "High-frequency order-book slippage was not modeled in the backtesting simulator, which can degrade real-world micro-scalping alpha.",
+              "Expanding from GRU to a lightweight Multi-Head Self-Attention Transformer could capture multi-month regime shifts more flexibly."
             ],
-            sections: [
-              {
-                title: "Needs",
-                items: [
-                  "Prefers quick and clear information about services and costs.",
-                  "Values testimonials and case studies to gauge service quality.",
-                  "Often makes decisions based on thorough research and recommendations."
-                ]
-              },
-              {
-                title: "Motivations",
-                items: [
-                  "Ensure the safety of her retail stores and employees.",
-                  "Find a reliable and professional security service.",
-                  "Quickly understand service offerings and pricing."
-                ]
-              },
-              {
-                title: "Frustrations",
-                items: [
-                  "Difficulty in finding trustworthy and competent security services.",
-                  "Time constraints in managing her business and coordinating security needs.",
-                  "Concerns about the effectiveness and responsiveness of security personnel."
-                ]
-              },
-              {
-                title: "Devices",
-                items: [
-                  "Desktop computer for detailed research and decision-making",
-                  "Smartphone for quick lookups and communication"
-                ]
-              }
-            ]
-          },
-          {
-            name: "Rahul Verma",
-            image: "/projects/security-agency/man.png",
-            demographics: [
-              { label: "Age", value: "38" },
-              { label: "Gender", value: "Male" },
-              { label: "Location", value: "Bengaluru, India" },
-              { label: "Marital status", value: "Married" },
-              { label: "Occupation", value: "Facility Manager" }
-            ],
-            sections: [
-              {
-                title: "Needs",
-                items: [
-                  "Looks for detailed service descriptions and technical capabilities.",
-                  "Values customer support and post-service follow-up.",
-                  "Interested in scalable solutions to accommodate company growth."
-                ]
-              },
-              {
-                title: "Motivations",
-                items: [
-                  "Ensure the security of the office premises.",
-                  "Find a security service that can integrate with existing building systems.",
-                  "Ensure guards are trained and professional."
-                ]
-              },
-              {
-                title: "Frustrations",
-                items: [
-                  "Managing multiple vendors and ensuring they meet company standards.",
-                  "Ensuring 24/7 security coverage without any lapses.",
-                  "Balancing cost with quality of service."
-                ]
-              },
-              {
-                title: "Devices",
-                items: [
-                  "Desktop computer for detailed research",
-                  "Tablet for on-site evaluations and meetings"
-                ]
-              }
+            lessonsLearned: [
+              "In quantitative engineering, feature engineering and macroeconomic domain context outperform pure raw neural network depth every time.",
+              "Transparency is a functional requirement: complex AI without verifiable explainability will never receive capital allocation."
             ]
           }
-        ],
-        mindmapsAndFlows: [
-          {
-            system: "Enterprise Admin Operations Platform",
-            mindmap: "/projects/security-agency/admin_mindmap.png",
-            flowchart: "/projects/security-agency/admin_flowchart.png",
-            description: "Information architecture and user operational flow mapping the administrator journey: multi-factor authentication, mission control telemetry, personnel and shift rosters, site surveillance, live incident triage, and executive reporting."
-          },
-          {
-            system: "Client Acquisition Portal",
-            mindmap: "/projects/security-agency/landing_mindmap.png",
-            flowchart: "/projects/security-agency/landing_flowchart.png",
-            description: "Conversion journey architecture guiding commercial property owners through value proposition, security accreditation proof points, service tiers, contact touchpoints, and quotation requests."
-          }
-        ],
-        prototypeSuites: [
-          {
-            system: "Enterprise Admin Operations Platform",
-            badge: "SOC COMMAND ERP",
-            description: "High-density multi-screen mission control prototype covering authenticated login, real-time telemetry dashboard, client database, personnel force management, shifts scheduling, multi-site oversight, emergency incident dispatch, and reporting.",
-            screens: [
-              { label: "Admin", src: "/projects/security-agency/admin.png", category: "Authentication", description: "Admin command portal initial authentication gate" },
-              { label: "Password", src: "/projects/security-agency/password.png", category: "Authentication", description: "Secure credential verification screen" },
-              { label: "OTP", src: "/projects/security-agency/otp.png", category: "Authentication", description: "Two-factor time-based one-time password challenge" },
-              { label: "Home", src: "/projects/security-agency/home.png", category: "Operations", description: "Primary operations telemetry hub and live system status" },
-              { label: "Clients", src: "/projects/security-agency/client.png", category: "Portfolio", description: "Commercial client directory and contract status" },
-              { label: "Client Profile", src: "/projects/security-agency/client_profile.png", category: "Portfolio", description: "Individual client account specification, sites, and billing" },
-              { label: "Personnel", src: "/projects/security-agency/personnel.png", category: "Workforce", description: "Active guard registry, duty statuses, and deployment stats" },
-              { label: "Personnel Profile", src: "/projects/security-agency/personnel_profile.png", category: "Workforce", description: "Security officer background check, licensing, and certifications" },
-              { label: "Shifts", src: "/projects/security-agency/shifts.png", category: "Scheduling", description: "Shift coverage matrix, roster allocations, and timecards" },
-              { label: "Sites", src: "/projects/security-agency/sites.png", category: "Surveillance", description: "Geographic site registry and surveillance coverage overview" },
-              { label: "Site Details", src: "/projects/security-agency/site_details.png", category: "Surveillance", description: "Detailed facility blueprint, guard checkpoints, and access protocols" },
-              { label: "Incidents", src: "/projects/security-agency/Incidents.png", category: "Emergency", description: "Real-time incident alert log, severity tiers, and field dispatch" },
-              { label: "Reports", src: "/projects/security-agency/reports.png", category: "Analytics", description: "Automated audit logs, SLA compliance, and incident analytics" },
-              { label: "Messages", src: "/projects/security-agency/messages.png", category: "Comms", description: "Encrypted direct messaging between command dispatchers and field personnel" }
-            ]
-          },
-          {
-            system: "Client Acquisition Portal",
-            badge: "CLIENT CONVERSION",
-            description: "Institutional landing experience and corporate intake pipeline designed for commercial real estate developers, facilities directors, and corporate procurement teams.",
-            screens: [
-              { label: "Landing", src: "/projects/security-agency/landing.png", category: "Marketing", description: "Full conversion page with value proposition, proof metrics, and service tiers" },
-              { label: "Contact", src: "/projects/security-agency/contact.png", category: "Intake", description: "Structured enterprise quote request and immediate security consultation intake" }
-            ]
-          }
-        ],
-        uxImpactMetrics: [
-          { label: "Operational Response Time", value: "-45%", detail: "Dispatch latency dropped from 20 minutes down to 3.2 minutes through single-click incident alerting." },
-          { label: "Shift Coverage Accuracy", value: "99.4%", detail: "Biometric and geofenced check-ins eliminated ghost shifts and unscheduled coverage lapses." },
-          { label: "Client Inquiries & Conversion", value: "+20%", detail: "Transparent service matrices and rapid quote intake increased qualified enterprise leads by 20%." },
-          { label: "Usability & System Adoption", value: "88 SUS", detail: "System Usability Scale score rated 'Excellent' among field managers with average onboarding under 2 hours." }
-        ]
-      }
-    },
+        }
+      },
     {
       title: "Pill Dispenser 3D",
+      slug: "pill-dispenser-3d",
       category: "Industrial Design & Mechatronics",
+      isFeatured: false,
+      projectGroup: "experiment",
       description: [
         "Designed and engineered a semi-automatic 3D medication dispensing robot in Autodesk Inventor, complete with servo-driven mechanical sweep plates, IR optical verification, and Arduino embedded architecture."
       ],
@@ -1295,12 +1536,43 @@ export const resumeData: ResumeData = {
           { name: "Rakshita C Bandi", role: "Mechatronics & Circuit Architecture", usn: "01FE20BCS076", email: "01fe20bcs076@kletech.ac.in" },
           { name: "Soumya Katagihalli", role: "UI & Problem Formulation", usn: "01FE20BCS002", email: "01fe20bcs002@kletech.ac.in" },
           { name: "Vikas B Navalgund", role: "Electronics & Motor Sizing", usn: "01FE20BEC002", email: "01fe20bec002@kletech.ac.in" }
-        ]
+        ],
+        executiveSummary: {
+          headline: "Mechatronic automated medication dispenser engineered with optical drop validation and 99.4% dispensing accuracy.",
+          coreProblem: "Elderly and polypharmacy patients suffer dangerous dosing errors due to dexterity constraints with childproof pill bottles and multi-medication timing confusion.",
+          intervention: "Engineered a servo-driven rotating carousel in Autodesk Inventor with IR beam-break optical drop verification, Arduino Uno control logic, and an ergonomic single-motion collection bay.",
+          impact: "99.4% benchtop dispensing accuracy, zero accidental double-doses during simulated 30-day trials, and single-touch operation requiring under 2.5N actuation force.",
+          roleAndScope: "Lead 3D CAD & Systems Design (Autodesk Inventor, Mechatronics, C++, Bill of Materials)",
+          keyStats: [
+            { label: "Dispensing Accuracy", value: "99.4%" },
+            { label: "Force Required", value: "<2.5N" },
+            { label: "BOM Parts", value: "19 Items" },
+            { label: "Double-Dose Rate", value: "0.0%" }
+          ]
+        },
+        designRetrospective: {
+          whatWorked: [
+            "Dual-disc gate mechanism physically prevented pill jamming across standard capsule and tablet size envelopes.",
+            "Infrared emitter-detector pair provided real-time electronic confirmation that medication actually cleared the chute.",
+            "Complete Bill of Materials (BOM) was optimized for low-cost rapid fabrication using off-the-shelf standard hobby components."
+          ],
+          whatCouldImprove: [
+            "FDM 3D printing surface layer ridges caused slight friction drag on smaller gel caps; injection-molded food-grade POM or Teflon coating would be required in production.",
+            "Battery backup duration was limited to 8 hours under power outage simulations; adding deep-sleep low-power states to the ATmega328P is needed."
+          ],
+          lessonsLearned: [
+            "Physical engineering requires brutal tolerance discipline—unlike software, 0.5mm of mechanical interference causes a total hardware lockup.",
+            "Designing for healthcare requires designing for physical vulnerability: ease of access must be balanced against accidental misuse."
+          ]
+        }
       }
     },
     {
       title: "Mumbai Olympics 2028",
+      slug: "mumbai-olympics-2028",
       category: "Olympic Identity & Motion Design",
+      isFeatured: false,
+      projectGroup: "experiment",
       description: [
         "A comprehensive Olympic Games visual identity and motion design system proposed for Mumbai 2028, fusing India's monumental architectural heritage with contemporary athletic dynamism and bilingual typographic craftsmanship."
       ],
@@ -1617,7 +1889,35 @@ export const resumeData: ResumeData = {
             image: "/projects/mumbai-olympics-2028/olympic-rings.png",
             aspect: "wide"
           }
-        ]
+        ],
+        executiveSummary: {
+          headline: "Global Olympic Games bid visual identity and kinetic motion system uniting monumental architecture and athletic dynamism.",
+          coreProblem: "Olympic visual systems often rely on reductive historical clichés or generic international geometric abstractions devoid of localized soul and athletic tension.",
+          intervention: "Crafted a multi-layered kinetic emblem uniting the Gateway of India arch, Arabian Sea tidal curves, and the Olympic rings, accompanied by an 8-sport pictogram system and bilingual Hindi/English typographic standards.",
+          impact: "Complete broadcast package, environmental stadium wayfinding guidelines, and an interactive generative emblem generator rendering at 60 FPS.",
+          roleAndScope: "Visual Designer & Creative Technologist (Identity Systems, Motion, WebGL / Canvas)",
+          keyStats: [
+            { label: "Sport Pictograms", value: "8 Disciplines" },
+            { label: "Motion Framerate", value: "60 FPS" },
+            { label: "Typographic System", value: "Bilingual" },
+            { label: "Color Tokens", value: "4 Primary + 3 Secondary" }
+          ]
+        },
+        designRetrospective: {
+          whatWorked: [
+            "Harmonizing the Gateway of India arch with oceanic wave curves created an instantly recognizable silhouette that stood apart from previous Olympic identities.",
+            "Dynamic canvas emblem generator allowed interactive experimentation with wave frequency and color gradients in real time.",
+            "Bilingual typography ensured visual parity between Devanagari script and Latin letterforms across signage and broadcast lower thirds."
+          ],
+          whatCouldImprove: [
+            "Certain micro-scale pictograms (e.g. Boxing, Wrestling) became dense at 16px; simplification of limb joint anchors would improve small-screen performance.",
+            "Environmental 3D stadium mockups were static renders; incorporating real-time Three.js spatial architectural mockups would elevate the presentation."
+          ],
+          lessonsLearned: [
+            "Designing for an international stage demands ruthless cross-cultural testing—symbols carry wildly divergent connotations across global audiences.",
+            "Motion is not an afterthought in modern identity design; how a brand breathes and accelerates in code is just as definitive as its static logo."
+          ]
+        }
       }
     }
   ],

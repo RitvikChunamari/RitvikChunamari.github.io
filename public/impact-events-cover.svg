@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <radialGradient id="grad" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#181822"/>
+      <stop offset="100%" stop-color="#09090E"/>
+    </radialGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="800" fill="url(#grad)"/>
+  <rect width="1200" height="800" fill="url(#grid)"/>
+
+  <!-- Background Frame & Swiss Grid -->
+  <rect x="60" y="60" width="1080" height="680" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <line x1="60" y1="140" x2="1140" y2="140" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+  <!-- Top Metadata -->
+  <text x="90" y="110" font-family="'IBM Plex Mono', monospace" font-size="13" letter-spacing="0.25em" fill="rgba(255,255,255,0.5)">IMPACT EVENTS // MOBILE EVENT ORCHESTRATION</text>
+  <text x="1110" y="110" font-family="'IBM Plex Mono', monospace" font-size="13" letter-spacing="0.25em" fill="#FF3B30" text-anchor="end">ATOMIC DESIGN SYSTEM 2026</text>
+
+  <!-- Left: System Blueprint & Tokens -->
+  <g transform="translate(100, 180)">
+    <!-- Architecture Cards -->
+    <rect x="0" y="0" width="460" height="240" rx="4" fill="#0C0C12" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+    <text x="24" y="38" font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="0.2em" fill="#FF3B30">01 // MULTI-TRACK STAGE SCHEDULE</text>
+    <text x="24" y="68" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="20" font-weight="700" fill="#EDEDED">Live Keynote &amp; Interactive Breakouts</text>
+    
+    <!-- Timeline Rows -->
+    <g transform="translate(24, 92)">
+      <rect x="0" y="0" width="412" height="42" rx="2" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)"/>
+      <circle cx="20" cy="21" r="5" fill="#FF3B30"/>
+      <text x="36" y="25" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#EDEDED">09:00 AM — Opening Keynote: Designing for Friction</text>
+      <text x="390" y="25" font-family="'IBM Plex Mono', monospace" font-size="10" fill="rgba(255,255,255,0.4)" text-anchor="end">STAGE A</text>
+    </g>
+
+    <g transform="translate(24, 144)">
+      <rect x="0" y="0" width="412" height="42" rx="2" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)"/>
+      <circle cx="20" cy="21" r="5" fill="#EDEDED"/>
+      <text x="36" y="25" font-family="'IBM Plex Mono', monospace" font-size="11" fill="rgba(255,255,255,0.85)">10:30 AM — Atomic Component Token Workshop</text>
+      <text x="390" y="25" font-family="'IBM Plex Mono', monospace" font-size="10" fill="rgba(255,255,255,0.4)" text-anchor="end">HALL 3</text>
+    </g>
+
+    <!-- Metrics Stat Box -->
+    <rect x="0" y="260" width="460" height="260" rx="4" fill="#0C0C12" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+    <text x="24" y="296" font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="0.2em" fill="#FF3B30">02 // VERIFIED QUANTITATIVE IMPACT</text>
+    
+    <g transform="translate(24, 320)">
+      <text x="0" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="36" font-weight="800" fill="#EDEDED">-18%</text>
+      <text x="140" y="20" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#EDEDED">REGISTRATION DROP-OFF</text>
+      <text x="140" y="36" font-family="'Inter', sans-serif" font-size="12" fill="rgba(255,255,255,0.5)">Streamlined multi-step attendee flow</text>
+    </g>
+    <line x1="24" y1="380" x2="436" y2="380" stroke="rgba(255,255,255,0.08)"/>
+
+    <g transform="translate(24, 400)">
+      <text x="0" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="36" font-weight="800" fill="#EDEDED">+22%</text>
+      <text x="140" y="20" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#EDEDED">TASK EFFICIENCY VELOCITY</text>
+      <text x="140" y="36" font-family="'Inter', sans-serif" font-size="12" fill="rgba(255,255,255,0.5)">WCAG 2.1 AA tap-target ergonomics</text>
+    </g>
+    <line x1="24" y1="460" x2="436" y2="460" stroke="rgba(255,255,255,0.08)"/>
+
+    <g transform="translate(24, 480)">
+      <text x="0" y="26" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="28" font-weight="800" fill="#FF3B30">45+</text>
+      <text x="80" y="16" font-family="'IBM Plex Mono', monospace" font-size="11" fill="#EDEDED">ATOMIC DESIGN SYSTEM TOKENS</text>
+      <text x="80" y="32" font-family="'Inter', sans-serif" font-size="12" fill="rgba(255,255,255,0.5)">Reduced front-end revision cycles by 15%</text>
+    </g>
+  </g>
+
+  <!-- Right: Mobile Device Frame with High-Fidelity UI -->
+  <g transform="translate(620, 160)">
+    <!-- Device Shell -->
+    <rect x="0" y="0" width="460" height="540" rx="28" fill="#07070A" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+    <!-- Speaker Notch -->
+    <rect x="180" y="16" width="100" height="6" rx="3" fill="rgba(255,255,255,0.2)"/>
+
+    <!-- App Screen -->
+    <g transform="translate(20, 40)">
+      <!-- App Header -->
+      <text x="16" y="24" font-family="'IBM Plex Mono', monospace" font-size="10" letter-spacing="0.2em" fill="#FF3B30">IMPACT SUMMIT 2026</text>
+      <text x="16" y="48" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="22" font-weight="800" fill="#EDEDED">Attendee Portal</text>
+      <circle cx="390" cy="36" r="14" fill="rgba(255,255,255,0.08)"/>
+      <text x="390" y="40" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#EDEDED" text-anchor="middle">RC</text>
+
+      <!-- Digital Pass Card -->
+      <rect x="16" y="70" width="388" height="150" rx="8" fill="linear-gradient(135deg, #181824, #0D0D14)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <path d="M 16 170 L 404 170" stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="4 4"/>
+      <text x="36" y="104" font-family="'IBM Plex Mono', monospace" font-size="9" letter-spacing="0.2em" fill="rgba(255,255,255,0.4)">VIP ACCESS PASS</text>
+      <text x="36" y="132" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="20" font-weight="700" fill="#FFFFFF">Ritvik Chunamari</text>
+      <text x="36" y="152" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#FF3B30">PRODUCT DESIGNER // SPEAKER</text>
+      <!-- QR Placeholder -->
+      <rect x="330" y="90" width="56" height="56" fill="white" rx="3"/>
+      <rect x="336" y="96" width="16" height="16" fill="black"/>
+      <rect x="364" y="96" width="16" height="16" fill="black"/>
+      <rect x="336" y="124" width="16" height="16" fill="black"/>
+      <text x="36" y="196" font-family="'IBM Plex Mono', monospace" font-size="9" fill="rgba(255,255,255,0.4)">HALL A · ROW 04 · SEAT 12 · VERIFIED NFC</text>
+
+      <!-- Active Session Live Widget -->
+      <rect x="16" y="235" width="388" height="110" rx="8" fill="rgba(255,255,255,0.03)" stroke="#FF3B30" stroke-width="1"/>
+      <circle cx="36" cy="260" r="4" fill="#FF3B30"/>
+      <text x="48" y="264" font-family="'IBM Plex Mono', monospace" font-size="9" letter-spacing="0.15em" fill="#FF3B30">HAPPENING NOW // LIVE STAGE</text>
+      <text x="36" y="292" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="15" font-weight="600" fill="#EDEDED">Human Sensitivity meets Machine Precision</text>
+      <text x="36" y="320" font-family="'IBM Plex Mono', monospace" font-size="10" fill="rgba(255,255,255,0.45)">Interactive Q&amp;A · 1,420 Live Attendees Connected</text>
+
+      <!-- Bottom Nav Bar -->
+      <g transform="translate(16, 360)">
+        <rect x="0" y="0" width="388" height="54" rx="27" fill="#101016" stroke="rgba(255,255,255,0.1)"/>
+        <text x="48" y="32" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#FF3B30" font-weight="bold">SCHEDULE</text>
+        <text x="144" y="32" font-family="'IBM Plex Mono', monospace" font-size="10" fill="rgba(255,255,255,0.5)">PASS</text>
+        <text x="230" y="32" font-family="'IBM Plex Mono', monospace" font-size="10" fill="rgba(255,255,255,0.5)">NETWORK</text>
+        <text x="328" y="32" font-family="'IBM Plex Mono', monospace" font-size="10" fill="rgba(255,255,255,0.5)">MAPS</text>
+      </g>
+    </g>
+  </g>
+</svg>
