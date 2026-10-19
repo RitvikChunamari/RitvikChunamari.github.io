@@ -173,7 +173,7 @@ const About: React.FC<AboutProps> = ({ data }) => {
             >
               <div className="flex items-center gap-2 mb-2">
                 <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#FF3B30] font-semibold">
-                  MANDATE // RADICAL ACCESSIBILITY
+                  MANDATE // ERGONOMICS &amp; ACCESSIBILITY
                 </span>
               </div>
               <p className="text-base sm:text-lg text-neutral-200 font-light leading-relaxed">

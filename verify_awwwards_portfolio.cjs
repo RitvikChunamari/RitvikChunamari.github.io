@@ -118,13 +118,22 @@ async function runTestSuite() {
         results.failed++;
       }
 
-      // Check Brand Manifesto
+      // Check Brand Manifesto & Humanized Introduction
       const hasManifesto = heroText.includes('Design for humans. Build for wonder.');
       if (hasManifesto) {
         console.log(`  ✓ Brand statement "Design for humans. Build for wonder." is present`);
         results.passed++;
       } else {
         console.error(`  ✗ Brand statement missing`);
+        results.failed++;
+      }
+
+      const hasHumanIntro = heroText.includes('turning complex ideas into simple, thoughtful digital experiences');
+      if (hasHumanIntro) {
+        console.log(`  ✓ Grounded human introduction ("turning complex ideas into simple, thoughtful digital experiences") verified`);
+        results.passed++;
+      } else {
+        console.error(`  ✗ Grounded human introduction missing from page body!`);
         results.failed++;
       }
 
@@ -159,7 +168,16 @@ async function runTestSuite() {
 
     await page.goto(`${BASE_URL}/#work`, { waitUntil: 'networkidle' });
 
-    // Verify Experiment Category Divider in Mode A (Editorial)
+    // Verify Tier 2 (Branding) & Tier 3 (Experiments) Category Dividers in Mode A (Editorial)
+    const brandingDivider = await page.$('[data-testid="branding-category-divider"]');
+    if (brandingDivider) {
+      console.log(`  ✓ Visual Systems & Branding category divider rendered in Editorial mode`);
+      results.passed++;
+    } else {
+      console.error(`  ✗ Visual Systems & Branding category divider missing in Editorial mode!`);
+      results.failed++;
+    }
+
     const categoryDivider = await page.$('[data-testid="experiment-category-divider"]');
     if (categoryDivider) {
       console.log(`  ✓ Technology Experiments category divider rendered in Editorial mode`);
@@ -174,6 +192,16 @@ async function runTestSuite() {
     if (indexModeBtn) {
       await indexModeBtn.click();
       await page.waitForTimeout(300);
+
+      const brandingIndexDivider = await page.$('[data-testid="branding-index-divider"]');
+      if (brandingIndexDivider) {
+        console.log(`  ✓ Visual Systems & Branding divider rendered in Index mode`);
+        results.passed++;
+      } else {
+        console.error(`  ✗ Visual Systems & Branding divider missing in Index mode!`);
+        results.failed++;
+      }
+
       const indexDivider = await page.$('[data-testid="experiment-index-divider"]');
       if (indexDivider) {
         console.log(`  ✓ Technology Experiments category divider rendered in Index mode`);
@@ -350,9 +378,9 @@ async function runTestSuite() {
       'nexus-ai',
       'security-agency-ux',
       'usps-organization-rebrand',
+      'mumbai-olympics-2028',
       'kinetix-quant',
-      'pill-dispenser-3d',
-      'mumbai-olympics-2028'
+      'pill-dispenser-3d'
     ];
 
     console.log(`\n--- Validating Deep Links for All 7 Projects ---`);

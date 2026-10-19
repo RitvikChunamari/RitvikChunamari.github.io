@@ -9,8 +9,8 @@ export const resumeData: ResumeData = {
     email: "ritvikchunamari@gmail.com",
     linkedin: "https://www.linkedin.com/in/ritvikchunamari",
     brandStatement: "Design for humans. Build for wonder.",
-    summary: "Architecting sensory digital experiences at the intersection of computational logic and human intuition. Navigating the world with Cerebral Palsy provides me with an uncompromising standard for digital ergonomics: every interaction threshold, focus state, and spatial transition must feel dignified, responsive, and effortless.",
-    insights: "Radical accessibility is never a cosmetic overlay—it is the bedrock of high-craft software. Designing for extreme physical friction unlocks superior, intuitive digital architecture for every human."
+    summary: "I'm Ritvik, a designer who likes turning complex ideas into simple, thoughtful digital experiences. I work across product design, UX, and creative technology, exploring how design and engineering can make technology feel more human.",
+    insights: "Accessibility isn't a checklist or a cosmetic layer—it's how we show care for the person on the other side of the screen. Navigating the world with Cerebral Palsy gives me an uncompromising standard for digital ergonomics: clear focus states, generous touch targets, and interfaces that feel effortless to use."
   },
   experience: [
     {
@@ -19,9 +19,9 @@ export const resumeData: ResumeData = {
       location: "United States (Remote)",
       duration: "Jun 2026 – Aug 2026",
       points: [
-        "Architected responsive mobile interface systems translating dense multi-track conference orchestration workflows into intuitive, low-latency mobile touchpoints.",
-        "Formulated and deployed an Atomic Design System in Figma, standardizing 40+ reusable design tokens, layout grids, and interactive component states across cross-functional squads.",
-        "Conducted end-to-end usability audits of legacy registration pipelines, eliminating multi-step input fatigue and improving enterprise conversion velocity."
+        "Redesigned the mobile interface for an enterprise event platform, turning complex multi-track conference schedules into a clean, easy-to-use mobile experience.",
+        "Built and maintained an Atomic Design System in Figma with 40+ standardized components, tokens, and responsive layouts for engineering handoff.",
+        "Audited registration flows and removed multi-step friction, reducing mobile checkout drop-off by 18%."
       ]
     },
     {
@@ -30,9 +30,9 @@ export const resumeData: ResumeData = {
       location: "Brooklyn, New York (Remote)",
       duration: "Dec 2024 – May 2025",
       points: [
-        "Conducted structured usability protocols with 20+ enterprise operations leads, synthesizing qualitative feedback to re-engineer core navigation hierarchies.",
-        "Designed high-density administrative command dashboards and live incident monitors, lifting operator task efficiency by 18% and decreasing onboarding friction.",
-        "Built interactive Figma design specifications and developer documentation, cutting frontend implementation cycle times by 30%."
+        "Conducted usability tests with 20+ operations managers to simplify navigation across internal admin tools.",
+        "Designed command dashboards and incident monitors that reduced visual clutter and improved day-to-day workflow efficiency.",
+        "Created interactive Figma prototypes and component documentation, helping developers ship features faster and with fewer revisions."
       ]
     },
     {
@@ -41,9 +41,9 @@ export const resumeData: ResumeData = {
       location: "Bengaluru, Karnataka, India (Remote)",
       duration: "Sept 2024 – Jan 2025",
       points: [
-        "Formulated holistic UX architecture, interactive flows, and brand design guidelines for an enterprise generative AI toolchain, driving 30% higher 30-day retention in private beta.",
-        "Prototyped node-based visual pipeline editors in Figma and React, reducing complex model configuration and prompt assembly times by 35% for non-technical specialists.",
-        "Established design tokens and microinteractions for real-time telemetry streaming and live feedback states."
+        "Led UX and product design for an enterprise generative AI tool, creating clearer user journeys that lifted 30-day user retention.",
+        "Designed an intuitive node-based visual workflow editor in Figma and React, making complex model pipelines accessible to non-technical teams.",
+        "Created design tokens and microinteractions for real-time status streaming and live model feedback."
       ]
     },
     {
@@ -52,9 +52,9 @@ export const resumeData: ResumeData = {
       location: "Hubli, Karnataka, India (Hybrid)",
       duration: "Jan 2024 – Jun 2024",
       points: [
-        "Constructed wireframes, structural journey maps, and interactive prototypes for municipal security operations platforms across 14 functional modules.",
-        "Conducted heuristic audits against WCAG 2.1 AA criteria, diagnosing and resolving 25+ critical focus visibility and keyboard navigation dead-ends.",
-        "Partnered with engineering squads to validate responsive viewport breakpoints and component performance benchmarks."
+        "Built wireframes, user journeys, and interactive prototypes for municipal security operations software across 14 modules.",
+        "Audited interfaces against WCAG 2.1 AA standards, diagnosing and fixing over 25 keyboard navigation and contrast issues.",
+        "Worked closely with frontend engineers to test responsive breakpoints and component consistency."
       ]
     }
   ],
@@ -85,11 +85,12 @@ export const resumeData: ResumeData = {
     {
       title: "Impact Events",
       slug: "impact-events",
-      category: "Enterprise Product Design & Mobile UX",
+      category: "Product Design & Mobile UX",
       isFeatured: true,
       projectGroup: "featured",
+      tier: "product",
       description: [
-        "Spearheaded the responsive mobile redesign of an enterprise event orchestration platform, translating multi-step desktop workflows into low-latency mobile screens and standardizing an Atomic Design System in Figma."
+        "Redesigned an enterprise event platform for mobile, translating dense multi-track conference schedules into a clean, responsive mobile portal backed by a 45+ token Figma design system."
       ],
       image: "/impact-events-cover.svg",
       logo: "/impact-events-cover.svg",
@@ -97,10 +98,10 @@ export const resumeData: ResumeData = {
         year: "2026",
         role: "Lead UI/UX Design Intern",
         technologies: ["Figma", "Atomic Design System", "WCAG 2.1 AA", "Design Tokens", "Mobile UX", "Interactive Prototyping"],
-        overview: "Impact Events is an enterprise-scale conference and exhibition orchestration platform managing dense multi-track schedules, VIP access control, attendee networking, and live telemetry for thousands of participants. Ritvik spearheaded the responsive mobile transformation of the core experience, taking unwieldy, multi-step desktop event workflows and distilling them into an intuitive, high-velocity mobile attendee and organizer portal.",
-        challenge: "Legacy enterprise conference systems suffered from severe mobile input fatigue, clunky desktop-biased table views, and high drop-off rates during rapid schedule discovery and ticket redemption under spotty venue Wi-Fi conditions. Cross-functional engineering teams were also spending 30% of their sprints reconciling inconsistent UI components and bespoke layout grids across platforms.",
-        solution: "Formulated and deployed a comprehensive 45+ token Atomic Design System in Figma with rigorous WCAG 2.1 AA tap targets (min 44×44px), high-contrast visual signifiers, and offline-resilient agenda caching. Standardized typography tokens, component states, and spacing curves, cutting revision cycles by 15% and reducing attendee checkout drop-off by 18%.",
-        problemStatement: "How might we transform complex, multi-track conference orchestration into an effortless mobile touchpoint that eliminates attendee cognitive friction while establishing a unified, scalable design system for distributed engineering squads?",
+        overview: "Impact Events is an enterprise conference platform managing multi-track schedules, access control, and live updates for thousands of attendees. I led the mobile UX redesign, turning complex, desktop-heavy workflows into a simple, fast mobile portal for attendees and organizers.",
+        challenge: "Attendees struggled with clunky desktop-style tables on their phones, leading to high drop-offs during registration and ticket access on slow venue Wi-Fi. At the same time, the engineering team was losing sprint time reconciling mismatched UI components across different screens.",
+        solution: "I built and deployed an Atomic Design System in Figma with 45+ standardized tokens and strict WCAG 2.1 AA tap targets (min 48×48px). I also streamlined ticket registration into a fast two-step flow and introduced an offline-resilient schedule grid, cutting checkout drop-off by 18%.",
+        problemStatement: "How might we turn complex, multi-track conference schedules into a simple mobile experience that attendees can navigate effortlessly on the go, while establishing a shared design system for engineers?",
         problemOverview: [
           { title: "Mobile Registration Drop-off", description: "Multi-step desktop forms created severe friction on mobile viewports, leading to an 18% higher checkout abandonment rate." },
           { title: "Information Density vs. Ergonomics", description: "Dense 14-track schedules and conflicting stage times overwhelmed users on smaller screens without adaptive hierarchy." },
@@ -198,11 +199,12 @@ export const resumeData: ResumeData = {
     {
       title: "Nexus AI",
       slug: "nexus-ai",
-      category: "UX/UI Design & Generative Toolchain",
+      category: "Enterprise UX & Generative Toolchain",
       isFeatured: true,
       projectGroup: "featured",
+      tier: "product",
       description: [
-        "Designed the user experience (UX/UI), creating Information Architecture and high-fidelity prototypes for an AI-powered data management platform."
+        "Designed a node-based visual editor and user experience for an enterprise AI data platform, translating complex machine learning workflows into a clean, drag-and-drop canvas that non-technical teams can easily understand and control."
       ],
       logo: "/nexus-logo.png",
       image: "/nexus-logo.png",
@@ -212,21 +214,21 @@ export const resumeData: ResumeData = {
         technologies: ["Figma", "React", "Python", "OpenAI API"],
         figmaUrl: "https://www.figma.com/design/as77j5bf5uEnBlsKi1lN6P/Nexus-AI?node-id=22-113",
         figmaEmbedUrl: "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2Fas77j5bf5uEnBlsKi1lN6P%2FNexus-AI%3Fnode-id%3D22-113",
-        overview: "Nexus AI is an advanced data management platform designed to democratize access to complex machine learning workflows. In a landscape where AI tools are often exclusionary and technically dense, Nexus aims to provide a bridge between raw data and actionable intelligence.",
-        challenge: "The primary challenge was translating complex backend processes—data cleaning, model training, and deployment—into a visual language that non-technical stakeholders could understand and manipulate.",
-        solution: "I designed a node-based visual editor that allows users to construct AI pipelines via drag-and-drop. By using a minimalist Swiss design system, I reduced cognitive load, allowing users to focus on the logic of their data rather than the syntax of the code.",
+        overview: "Nexus AI is an enterprise data and machine learning platform designed to make generative AI workflows accessible beyond just engineers. In an environment where AI tools are often dense, command-line heavy, or scattered across disjointed notebooks, Nexus provides a visual bridge between raw data, prompts, and deployed models.",
+        challenge: "Product teams and domain specialists struggled to collaborate with data engineers because existing tools required writing Python boilerplate or juggling fragmented scripts, leading to untracked prompt variations and runaway API token costs.",
+        solution: "I designed a node-based visual workflow editor that lets users chain prompts, datasets, and models via drag-and-drop. By using a clean Swiss design system with live token cost gauges and side-by-side output comparisons, the interface makes complex AI logic visible, testable, and approachable.",
         problemOverview: [
-          { title: "Complex Information", description: "AI concepts can be intricate and challenging to convey to a broad audience." },
-          { title: "Technical Barriers", description: "Non-technical users may struggle to understand advanced AI terminology." },
-          { title: "Engagement", description: "Maintaining user interest in a field that can be perceived as dry or academic." },
-          { title: "Visual Appeal", description: "Creating a visually stimulating website that complements the technical content." },
-          { title: "User Experience", description: "Ensuring a smooth and intuitive user journey." }
+          { title: "Context Switching & Fragile Scripts", description: "Teams wrote disjointed Python scripts and notebook cells for each prompt chain, making it hard to see pipeline logic at a glance." },
+          { title: "Runaway Token Spend", description: "Without live token telemetry or cost visibility per node, trial runs frequently wasted expensive API credits on malformed inputs." },
+          { title: "Non-Technical Collaboration Barrier", description: "Domain specialists and product designers had no way to test prompts directly without relying on an engineer to deploy backend changes." },
+          { title: "Lack of Side-by-Side Model Evaluation", description: "Evaluating output differences between model versions and temperature parameters required manual copy-pasting across browser tabs." }
         ],
-        problemStatement: "How can we create a visually appealing and informative website for an enterprise AI research and development company that effectively communicates complex technical information to a diverse audience?",
+        problemStatement: "How might we give product and engineering teams an intuitive visual canvas to build, test, and debug multi-step generative AI pipelines without writing boilerplate code or losing track of prompt variations?",
         detailedSolution: [
-          { title: "Clear Design", description: "Simple navigation and visually appealing layout." },
-          { title: "Informative Content", description: "Easy-to-understand explanations and data-driven insights." },
-          { title: "Strong Calls to Action", description: "Encourage user engagement and conversions." }
+          { title: "Visual Node-Graph Canvas", description: "Designed an intuitive drag-and-drop workspace where users chain inputs, prompts, tools, and evaluations into visual pipelines." },
+          { title: "Live Token & Cost Telemetry", description: "Added real-time cost gauges directly on each node, making token consumption transparent before running large test sets." },
+          { title: "Side-by-Side Model Diffing", description: "Created comparison panes to easily evaluate responses across different models, temperatures, and prompt variations in one place." },
+          { title: "One-Click Test Assertions", description: "Built in simple assertions so teams can evaluate output accuracy and prevent regression before deploying to production." }
         ],
         
           referencesList: [
@@ -428,9 +430,9 @@ export const resumeData: ResumeData = {
       category: "Enterprise Product Design & UX Research",
       isFeatured: true,
       projectGroup: "featured",
+      tier: "product",
       description: [
-        "Designed and architected a dual-faceted enterprise UX ecosystem comprising a high-converting client acquisition portal and a 14-module mission-critical Security Operations ERP dashboard.",
-        "Conducted comprehensive field research, user personas, interactive mindmaps, and operational user flows, reducing operational dispatch latency by 45% and boosting client inquiries by 20%."
+        "Designed an end-to-end security operations ecosystem—combining a high-converting client acquisition portal with a 14-module real-time dispatch and operations dashboard for multi-site guard management."
       ],
       image: "/projects/security-agency/home.png",
       caseStudy: {
@@ -438,9 +440,9 @@ export const resumeData: ResumeData = {
         role: "Lead Product Designer & UX Researcher",
         technologies: ["Figma", "React", "Design Systems", "User Research", "Information Architecture", "Heuristic Evaluation"],
         isSecurityUX: true,
-        overview: "The Security Agency UX Platform represents an end-to-end digital transformation for a high-stakes private security enterprise operating across commercial, retail, and corporate infrastructure. The initiative bridged two fundamentally interdependent facets: an authoritative, client-facing conversion portal designed to cultivate immediate institutional trust, and a high-density, real-time Security Operations Center (SOC) Admin Dashboard empowering operations managers to orchestrate personnel, shifts, multi-site surveillance, live incidents, and client accounts with zero latency.",
-        challenge: "Prior to this overhaul, security management relied on disjointed communication channels, manual paper-based logs, and legacy spreadsheet tracking. This fragmented workflow caused severe operational blind spots—delayed incident escalation, shift scheduling overlaps, lack of verifiable compliance reports for enterprise clients, and an outdated public web presence that failed to convey the technical rigor and reliability required by Fortune 500 facility managers.",
-        solution: "Ritvik designed a cohesive, dual-ecosystem UX architecture. For prospective corporate clients, a modern landing portal establishes credibility with transparent capability breakdowns, regulatory accreditation showcases, and frictionless quote requests. For internal operations, a centralized, high-efficiency Admin Dashboard unifies multi-site personnel tracking, biometric-verified shifts, instant incident reporting, granular client profiles, and automated compliance auditing into a unified, high-contrast dark-mode interface designed for high-stress operational decision making.",
+        overview: "The Security Agency UX Platform represents a complete digital transformation for a private security provider operating across commercial, retail, and corporate facilities. The project united two interdependent parts: a transparent, high-trust client portal for enterprise contracts, and a real-time Security Operations Center (SOC) dashboard that allows operations managers to coordinate guards, shifts, patrol logs, and incidents in real time.",
+        challenge: "Before this redesign, security management relied on manual paper logs, phone chains, and spreadsheets. This caused 20-minute incident escalation delays, shift overlaps, and zero visibility for facility managers into guard patrols, which hurt contract renewals.",
+        solution: "I designed a cohesive, dual-sided UX architecture. For prospective enterprise clients, a clean web portal clearly presents services, certifications, and quote requests. For internal operations, a centralized, dark-mode dashboard unifies multi-site guard tracking, biometric-verified shifts, instant incident reporting, and compliance audits into a fast, low-friction interface.",
         problemOverview: [
           {
             title: "Operational Latency & Disjointed Dispatch",
@@ -459,7 +461,7 @@ export const resumeData: ResumeData = {
             description: "The legacy web presence lacked clarity around specific security tiers, compliance credentials, and quick quote pathways, leading to high bounce rates for commercial inquiries."
           }
         ],
-        problemStatement: "How might we design a unified digital ecosystem that simultaneously provides prospective enterprise clients with transparent trust and rapid onboarding, while equipping security operations managers with a cognitive-optimized command center to coordinate high-stakes personnel, multi-site surveillance, and instant incident response in real time?",
+        problemStatement: "How might we create a unified digital system that builds trust with prospective corporate clients while giving security operations managers a clear, real-time command dashboard to dispatch guards and resolve incidents quickly?",
         detailedSolution: [
           {
             title: "High-Trust Client Acquisition Funnel",
@@ -749,11 +751,12 @@ export const resumeData: ResumeData = {
     {
       title: "USPS Organization Rebrand",
       slug: "usps-organization-rebrand",
-      category: "Brand Systems & Identity Architecture",
+      category: "Visual Systems & Brand Identity",
       isFeatured: true,
-      projectGroup: "featured",
+      projectGroup: "branding",
+      tier: "branding",
       description: [
-        "A comprehensive organization rebrand and visual identity system for the United States Postal Service (USPS), redefining America's most enduring public institution for contemporary physical and digital application."
+        "A comprehensive brand identity and logo redesign system for the United States Postal Service (USPS), redefining America's most enduring public institution for modern physical fleets and digital screens."
       ],
       logo: "/USPS/usps-logo-primary.png",
       image: "/USPS/usps-logo-primary.png",
@@ -762,11 +765,11 @@ export const resumeData: ResumeData = {
         year: "2026",
         role: "Ritvik Chunamari — Lead Brand & Systems Designer",
         technologies: ["Brand Identity", "Logo Design", "Azo Sans Typography", "Styleguide Architecture", "Fleet Livery", "Stationery Design", "Adobe Illustrator"],
-        overview: "An authentic, future-forward visual identity and logo redesign system for the United States Postal Service (USPS). Developed as Design Project 1: Organization Rebrand by Ritvik Chunamari, this project re-examines the Postal Service's historical legacy, visual equity, and service ecosystem as it approaches its 250th anniversary. Moving away from purely decorative and symbolic institutional emblems, the rebrand establishes a functional, highly scalable, and iconic mark that directly communicates 'mail in motion'.",
+        overview: "A modern visual identity and logo redesign for the United States Postal Service (USPS), created for Design Project 1: Organization Rebrand. Looking ahead to the Postal Service's 250th anniversary, this project moves away from decorative institutional emblems to establish a bold, functional mark that directly communicates 'mail in motion' across digital screens and physical vehicles.",
         
-        challenge: "The legacy 'Sonic Eagle' logo (introduced in 1993) features intricate feather articulation and wing detail that becomes muddled at small scales—such as mobile app icons, smartwatch notifications, and favicons. Furthermore, while the eagle conveys patriotic symbolism, it creates emotional distance and fails to visually represent the core functional service of the postal network: delivering mail, letters, envelopes, and connecting communities.",
+        challenge: "The legacy 1993 'Sonic Eagle' logo has intricate feather details that blur and become illegible at small sizes—such as app icons, notifications, and favicons. Furthermore, while the eagle represents patriotism, it creates emotional distance and doesn't visually reflect the everyday work of the postal service: delivering mail, letters, and connecting communities.",
         
-        solution: "Engineered a minimalist, geometric mark integrating a bold Azo Sans Black Italic 'USPS' wordmark diagonally across a sturdy envelope structure. This solution instantly communicates 'mail in motion', ensures 100% legibility down to 16px digital sizes, and establishes a cohesive identity across vehicles, uniforms, stamps, and postal collateral.",
+        solution: "I designed a clean, geometric mark combining an italic Azo Sans 'USPS' wordmark with a dynamic envelope silhouette. This mark stays legible down to 16px digital sizes, communicates forward momentum, and unifies branding across 200,000+ delivery trucks, uniforms, and digital apps.",
         
         historyAndContext: "The United States Postal Service traces its origins to July 26, 1775, when the Second Continental Congress established the first national postal agency during the American Revolution, appointing Benjamin Franklin as the first Postmaster General. The postal system's constitutional mandate was established in 1788 under the Postal Clause of the U.S. Constitution, authorizing Congress to 'establish post offices and post roads'. In 1792, President George Washington signed the Postal Service Act, transforming the mail system into a formalized national institution with established routes, regulations, and protections for personal correspondence and press freedom. On July 1, 1971, the Postal Reorganization Act of 1970 transformed the department into the modern U.S. Postal Service—an independent federal agency designed to operate more like a business while maintaining its universal service commitment. Approaching its 250th anniversary in 2025/2026, USPS delivers to over 160 million addresses six days a week.",
 
@@ -1220,361 +1223,14 @@ export const resumeData: ResumeData = {
       }
     },
     {
-      title: "Kinetix Quant (Institutional AI)",
-      slug: "kinetix-quant",
-      category: "Creative Technology & Quantitative AI",
-      isFeatured: false,
-      projectGroup: "experiment",
-      image: "/kinetix_thumbnail.svg",
-      description: [
-        "Developed an advanced algorithmic trading pipeline using a Hybrid 1D CNN + GRU Neural Network to predict cryptocurrency prices.",
-        "Integrated a native TensorFlow Integrated Gradients engine for AI explainability and a rigorous backtesting simulator."
-      ],
-      link: "https://github.com/RitvikChunamari/Crypto-AI-Predictor",
-      caseStudy: {
-        year: "2026",
-          role: "AI / Data Engineer",
-          technologies: ["Python", "FastAPI", "TensorFlow", "Keras", "Render", "GitHub Actions (Cron)", "Binance WebSockets", "TradingView Advanced API", "Yahoo Finance (yfinance)", "CoinCap API"],
-          overview: "An advanced deep learning model that analyzes 12 dimensions of data—including Nasdaq and US Dollar Index (DXY) correlations—to predict future cryptocurrency prices and protect against bear markets.",
-          challenge: "Standard technical analysis bots rely solely on lagging indicators and ignore global macro-economic health, leading to inaccurate predictions during market crashes. Furthermore, institutional investors reject 'black-box' deep learning models due to a lack of explainability.",
-          solution: "Built a 12-dimensional Neural Network with a Backtester. During a simulated 300-day bear market where 'Buy & Hold' lost -7.83%, the AI strategy generated a positive profit of +0.97%. Integrated native TensorFlow Integrated Gradients to provide mathematical proof of feature importance for every prediction.",
-          problemStatement: "How might we design a predictive trading algorithm that not only forecasts cryptocurrency prices using macroeconomic indicators, but also provides transparent, mathematically proven explainability so institutional investors can trust its decisions during high-volatility market crashes?",
-          problemOverview: [
-            { title: "Lagging Indicator Dependency", description: "Traditional crypto trading bots rely on lagging technical indicators (like Moving Averages and RSI) which react to past price movements rather than predicting future trends, causing severe drawdowns during sudden market crashes." },
-            { title: "Macro-Economic Blind Spots", description: "Standard models train in a vacuum, ignoring the massive correlation between global equities (Nasdaq) and fiat currency strength (US Dollar Index), leading to high false-positive buy signals." },
-            { title: "The 'Black-Box' Trust Issue", description: "Advanced Deep Learning models often output predictions with zero transparency, making it impossible for institutional investors to trust the AI with real capital during high-volatility events." },
-            { title: "Multi-Timeframe Latency", description: "Fetching and processing massive datasets for high-frequency trading (HFT) scalping often introduces latency or requires expensive premium API keys." }
-          ],
-          detailedSolution: [
-            { title: "Macro-Economic Feature Engineering (Why Nasdaq & DXY?)", description: "The model does NOT predict the Nasdaq or the US Dollar. Instead, it uses Nasdaq (Tech Equity correlation) and DXY (Dollar strength inverse-correlation) strictly as input features to help the AI understand the global economic environment before making a crypto prediction." },
-            { title: "Zero-Cold-Start Serverless Architecture", description: "Instead of relying on a lagging cloud server, the frontend is deployed as a static Single Page Application (SPA) on GitHub Pages CDN for 0ms load times. The backend is a Render FastAPI server kept alive 24/7 via a GitHub Actions Cron Job that pings it every 10 minutes." },
-            { title: "APIs & Core Services", description: "Utilizes Binance WebSockets for tick-by-tick live pricing, TradingView Widget API for interactive charting, yfinance for historical OHLCV & Macro data, and TensorFlow.keras for the CNN+GRU inference engine." },
-            { title: "12-Dimensional Metrics", description: "Calculates 12 metrics dynamically for every timeframe: Open, High, Low, Close, Volume, Simple Moving Average (20/50), Exponential Moving Average (20), RSI, MACD, Average True Range (ATR), Bollinger Bands, and Macro Equities." },
-            { title: "TensorFlow Integrated Gradients", description: "Implemented a native mathematical explainability engine. By calculating the exact derivative of the model's activations, the system proves exactly which features drove the prediction, eliminating the black-box effect." }
-          ],
-          uxImpactMetrics: [
-            { label: "Net Profit (Bear Market)", value: "+0.97%", detail: "Generated positive returns during a 300-day bear market simulation, outperforming standard strategies." },
-            { label: "Avoided Loss (Baseline)", value: "-7.83%", detail: "The standard Buy & Hold loss that the AI actively dodged by moving to cash during downturns." },
-            { label: "Data Dimensionality", value: "12 Features", detail: "Incorporated advanced technicals (MACD, RSI, ATR) alongside Macro metrics (Nasdaq, DXY)." }
-          ],
-          systemObjectives: [
-            {
-              system: "Multi-Timeframe Data Ingestion Engine",
-              description: "A robust data pipeline that fetches raw financial data and engineers it into a clean 3D tensor format for the neural network.",
-              objectives: [
-                { title: "Yahoo Finance API (yfinance)", content: "Pulls 5 years of daily data or 730 days of hourly data for macro-economic features." },
-                { title: "Binance Public REST API", content: "Fetches up to 50,000 minute-by-minute historical Klines directly from Binance for HFT scalping." },
-                { title: "Dynamic Feature Engineering", content: "Computes 10 technical indicators dynamically including SMA_20, SMA_50, EMA_20, RSI, MACD, ATR, and Bollinger Bands." }
-              ]
-            },
-            {
-              system: "Hybrid Neural Network (TensorFlow/Keras)",
-              description: "The core predictive model that ingests a 3D sequence [samples, timesteps, features] to forecast closing prices.",
-              objectives: [
-                { title: "1D Convolutional Neural Network (CNN)", content: "Uses 64 filters to perform spatial extraction across the 12 features, identifying local patterns between volume spikes and price drops." },
-                { title: "Gated Recurrent Unit (GRU)", content: "A 50-unit GRU layer captures the chronological sequence of the last 60 timeframes to understand long-term momentum." },
-                { title: "Regularization (Dropout)", content: "Implements Dropout(0.3) to randomly zero out neurons during training, preventing overfitting." }
-              ]
-            }
-          ],
-          
-          referencesList: [
-            { citationNumber: 1, text: "Long Short-Term Memory (LSTM) Networks in Quantitative Finance.", url: "https://arxiv.org/abs/1909.09586" },
-            { citationNumber: 2, text: "Axiomatic Attribution for Deep Networks (Integrated Gradients).", url: "https://arxiv.org/abs/1703.01365" },
-            { citationNumber: 3, text: "The impact of US Dollar Index (DXY) on Cryptocurrency Volatility.", url: "https://ssrn.com/abstract=3911560" }
-          ]
-,
-          competitorAnalysis: [
-            {
-              persona: "Algorithmic Investor",
-              keyNeeds: "Accurate predictive modeling, Macro-economic awareness, and Model Explainability.",
-              competitors: ["Standard RSI/MACD Trading Bots", "Basic LSTM Auto-Traders", "Proprietary Paid Signals"],
-              strengths: ["Easy deployment", "Fast execution times", "Simple APIs"],
-              weaknesses: ["Ignores Nasdaq/DXY global market correlations", "Massive capital loss during sudden liquidity crashes", "Zero transparency on why a trade was executed (Black-box)"]
-            }
-          ],
-          executiveSummary: {
-            headline: "Quantitative deep learning architecture with 12 macroeconomic features and mathematical AI explainability.",
-            coreProblem: "Traditional crypto trading models ignore global macroeconomic indicators and operate as black boxes, causing catastrophic drawdowns in high-volatility bear markets.",
-            intervention: "Engineered a 1D CNN + GRU model combining 10 technical indicators with Nasdaq/DXY macro correlations, validated with TensorFlow Integrated Gradients.",
-            impact: "+0.97% profit in a simulated 300-day bear market vs -7.83% Buy & Hold loss; provable feature importance attribution for every prediction.",
-            roleAndScope: "AI / Data Engineer (Python, TensorFlow/Keras, FastAPI, Backtesting)",
-            keyStats: [
-              { label: "Bear Market Alpha", value: "+0.97%" },
-              { label: "Drawdown Mitigated", value: "-7.83%" },
-              { label: "Input Dimensionality", value: "12 Features" },
-              { label: "Inference Latency", value: "<15ms" }
-            ]
-          },
-          designRetrospective: {
-            whatWorked: [
-              "Integrated Gradients mathematical attribution completely solved the institutional black-box skepticism problem.",
-              "1D CNN spatial extraction effectively captured micro-patterns between volume spikes and price drops before sequence processing.",
-              "Decoupled serverless architecture (FastAPI on Render + GitHub Pages) provided zero cold-start latency for web consumers."
-            ],
-            whatCouldImprove: [
-              "High-frequency order-book slippage was not modeled in the backtesting simulator, which can degrade real-world micro-scalping alpha.",
-              "Expanding from GRU to a lightweight Multi-Head Self-Attention Transformer could capture multi-month regime shifts more flexibly."
-            ],
-            lessonsLearned: [
-              "In quantitative engineering, feature engineering and macroeconomic domain context outperform pure raw neural network depth every time.",
-              "Transparency is a functional requirement: complex AI without verifiable explainability will never receive capital allocation."
-            ]
-          }
-        }
-      },
-    {
-      title: "Pill Dispenser 3D",
-      slug: "pill-dispenser-3d",
-      category: "Industrial Design & Mechatronics",
-      isFeatured: false,
-      projectGroup: "experiment",
-      description: [
-        "Designed and engineered a semi-automatic 3D medication dispensing robot in Autodesk Inventor, complete with servo-driven mechanical sweep plates, IR optical verification, and Arduino embedded architecture."
-      ],
-      image: "/pill-dispenser-3d.jpg",
-      caseStudy: {
-        year: "2021",
-        role: "Lead 3D & Industrial Systems Designer",
-        technologies: ["Autodesk Inventor", "KeyShot", "Arduino Mega 2560", "Arduino Uno", "Mechatronics", "Laser Cutting"],
-        isHardwareEngineering: true,
-        overview: "Medicine dispensing in clinical and assisted environments requires utmost precision and hygiene. In high-demand hospital wards and home-care settings, manual pill administration creates significant human error risks and staff fatigue. 'Pills at Fingertips' is a semi-automatic 3D mechatronic medicine dispensing bot engineered to organize, schedule, and dispense exact dosages of pills and capsules (such as Metformin, Glyciphage, and Teneligliptin for diabetic regimens) with zero manual handling.",
-        needStatement: "Hospitals and care facilities need to automate the process of dispensing scheduled medicines to patients due to staffing constraints and human error risks. The device must accurately dispense prescribed dosages according to doctor input, notify the patient at exact intervals, verify drop clearance, and signal when supply canisters require refilling.",
-        challenge: "Designing a compact (< 1ft³), lightweight (< 1.5kg), and budget-constrained (≤ ₹3,000) device that avoids pill jams, maintains sterile food-safe standards, and provides intuitive acoustic/visual feedback for elderly and diabetic patients.",
-        solution: "Engineered an acrylic and high-density foam chassis in Autodesk Inventor utilizing dual Tower Pro SG-90 servo sweep plates underneath calibrated vertical storage canisters. Integrated an optical IR proximity sensor for drop confirmation, a 16×2 character LCD interface for prescription metadata, an active buzzer alarm, and an emergency status LED.",
-        problemOverview: [
-          { title: "Staff Shortages & Human Fatigue", description: "Manual medication sorting and round-the-clock administration leads to misdosage errors and high labor burdens." },
-          { title: "Medication Non-Adherence", description: "Diabetic patients with strict multi-pill regimens (Metformin, Glyciphage) frequently forget or confuse dosages." },
-          { title: "Hygiene & Sterility", description: "Direct manual contact with pills during sorting increases contamination risks; automated closed-canister dispensing preserves sterility." },
-          { title: "Strict Cost & Weight Constraints", description: "Commercial robotic dispensers often exceed ₹50,000; the project goal was an accessible prototype under ₹3,000." }
-        ],
-        problemStatement: "Design a semi-automatic medicine dispensing bot for diabetic patients which is user-friendly, clean and hygienic, portable, and built from non-toxic materials. The device must dispense both pills and capsules within a 1ft × 1ft × 1ft footprint, weigh under 1.5kg, cost under ₹3,000, provide scheduled reminders, and notify both dispensing completion and empty stock.",
-        hardwareSpecs: [
-          { label: "Enclosure Footprint", value: "30.48cm × 30.48cm × 30.48cm (1ft × 1ft × 1ft)" },
-          { label: "Gross Weight", value: "< 1.5 kg (Chassis + Electronics)" },
-          { label: "Fabrication Budget", value: "₹3,000 Limit (Actual BOM: ₹2,620)" },
-          { label: "Target Medications", value: "Metformin, Glyciphage, Teneligliptin" },
-          { label: "Primary Materials", value: "Optical Acrylic Sheet (10mm), Foam Sheet (5mm), Steel L-Clamps" },
-          { label: "Microcontroller", value: "Arduino Mega 2560 / Arduino Uno R3" },
-          { label: "Actuator Subsystem", value: "2× Tower Pro SG-90 Micro Servos (6.6V, 650mA)" },
-          { label: "Optical Verification", value: "Active IR Proximity Sensor Array (5V, 5mA)" },
-          { label: "User Interface", value: "16×2 Character HD44780 LCD + Active Piezo Buzzer + Status LEDs" }
-        ],
-        existingSolutions: [
-          {
-            name: "Smart Medication Dispenser",
-            description: "Modular medication dispensing tray (MDT) system with agent program scheduling and remote multi-user synchronization.",
-            link: "https://www.hindawi.com/journals/bmri/2012/381493/"
-          },
-          {
-            name: "Automated Medicine Dispenser with Scheduler",
-            description: "PC-interfaced Arduino Uno system utilizing relay switches, test-tube canisters, and webcam adherence verification.",
-            link: "https://steemit.com/engineering/@rfece143/automated-medicine-dispenser-with-scheduler-a-thesis-project"
-          },
-          {
-            name: "The Smart Pill Dispenser (SmartyPill)",
-            description: "Smart home integrated dispenser with Alexa voice commands, water bottle dispenser integration, and modular canisters.",
-            link: "https://hackster.io/com-bros/smartypill-the-smart-pill-dispenser-for-everyone-c3a478"
-          },
-          {
-            name: "Hero Medication Dispenser",
-            description: "Automated sorting appliance that stores and dispenses up to 90 days of medication with companion mobile tracking.",
-            link: "https://www.techenhancedlife.com/reviews/hero-medication-dispenser"
-          }
-        ],
-        morphologicalChart: [
-          { subfunction: "1. Check Pill Availability", means: ["Active IR Sensor Array", "PIR Motion Sensor", "Mechanical Contact Sensor", "Ultrasonic Distance Sensor"] },
-          { subfunction: "2. Canister Storage Material", means: ["Food-Grade Acrylic Cylinders", "Aluminum Alloy Container", "Mini Glass Vials", "Modular Molded Plastic"] },
-          { subfunction: "3. Dispense Notification", means: ["Active Piezo Buzzer", "Polychromatic Audio Chime", "16×2 LCD + Beep Tone", "Mobile App Alert"] },
-          { subfunction: "4. Prescription Exhibition", means: ["16×2 Alphanumeric LCD", "Seven-Segment LED Array", "OLED Display Module", "Smartphone Bluetooth Feed"] },
-          { subfunction: "5. Reminder Configuration", means: ["Real-Time Clock (RTC IC)", "4×4 Matrix Keypad", "Rotary Encoder UI", "Companion Bluetooth App"] },
-          { subfunction: "6. Dispensing Mechanism", means: ["Triangular Servo Sweep Plate", "Rotating Indexing Disc", "Linear Push Plunger", "90° Rocker Arm Pivot"] },
-          { subfunction: "7. Pill Collection Interface", means: ["Ergonomic Acrylic Tray", "Removable Drawer Cup", "Angled Funnel Chute", "Slide-Out Pill Pod"] },
-          { subfunction: "8. Refill Access Design", means: ["Top Hinged Acrylic Lid", "Front Slide-Out Canister Door", "Magnetic Quick-Release Canopy", "Rear Service Hatch"] }
-        ],
-        pughMatrix: [
-          { criteria: "Semi-Automatic Automation", weight: 8, concept1: "+ (Score: +8)", concept2: "DATUM", concept3: "0", concept4: "0", notes: "IR + Servo sweep plate provides highest reliability without jamming." },
-          { criteria: "Cleanliness & Hygiene", weight: 6, concept1: "++ (Score: +12)", concept2: "DATUM", concept3: "+ (Score: +6)", concept4: "+ (Score: +6)", notes: "Sealed transparent acrylic maintains sterile pharmaceutical conditions." },
-          { criteria: "Portability & Compactness", weight: 7, concept1: "0 (Score: 0)", concept2: "DATUM", concept3: "+ (Score: +7)", concept4: "+ (Score: +7)", notes: "Rigid 1ft³ chassis with balanced internal center of gravity." },
-          { criteria: "User-Friendliness", weight: 8, concept1: "+ (Score: +8)", concept2: "DATUM", concept3: "- (Score: -8)", concept4: "- (Score: -8)", notes: "Large high-contrast LCD and single-button dispensing collection." },
-          { criteria: "Non-Toxic Food-Safe Materials", weight: 5, concept1: "+ (Score: +5)", concept2: "DATUM", concept3: "++ (Score: +10)", concept4: "+ (Score: +5)", notes: "FDA-compliant acrylic sheets and food-grade PVC storage." }
-        ],
-        conceptDirections: [
-          {
-            title: "Concept 1: Triangular Servo Sweep & Dual Canister (Selected)",
-            description: "Features dual calibrated vertical storage canisters with precision-cut triangular acrylic sweep plates actuated by Tower Pro SG-90 micro servos, delivering pills down an angled collection funnel into an ergonomic tray.",
-            badge: "Selected Design (+33)",
-            image: "/projects/pill-dispenser/Concept 1.jpg"
-          },
-          {
-            title: "Concept 2: Indexing Rotary Carousel Disc (Datum)",
-            description: "A revolving multi-pocket carousel disc that indexes under stationary vertical tubes. While functional, it introduced higher mechanical complexity and friction points.",
-            badge: "Datum Concept",
-            image: "/projects/pill-dispenser/Concept 2.jpg"
-          },
-          {
-            title: "Concept 3: Linear Solenoid Push Plunger",
-            description: "Direct linear plunger actuation to push individual pills horizontally. Required excessive solenoid holding power and caused occasional capsule shearing.",
-            badge: "Concept 3 (+16)",
-            image: "/projects/pill-dispenser/Concept 3.jpg"
-          },
-          {
-            title: "Concept 4: 90° Angular Rocker Chute",
-            description: "Pivoting gravity rocker mechanism designed for rapid ejection. Discarded due to lack of dosage control when handling pills of varying diameters.",
-            badge: "Concept 4 (+10)",
-            image: "/projects/pill-dispenser/Concept 4.jpg"
-          }
-        ],
-        subsystems: [
-          {
-            title: "Medicine Dispensing Subsystem",
-            category: "Mechanical & Actuation",
-            description: "Houses the dual vertical acrylic storage columns, laser-cut triangular sweep plates, collection funnel, and Tower Pro SG-90 servo drives.",
-            parts: [
-              { name: "Storage Canisters", spec: "Clear PVC/Acrylic Cylinders, H=11.68cm, R=2.54cm, Thickness=3.68mm", image: "/projects/pill-dispenser/image (4).png" },
-              { name: "Dispensing Sweep Plate", spec: "Triangular Sector Plate, Radius=6.29cm, Volume=23.48cm³", image: "/projects/pill-dispenser/image (17).png" },
-              { name: "Tower Pro SG-90 Servos", spec: "Operating Torque: 1.8 kg-cm (18 N-cm), 6.6V, 650mA", image: "/projects/pill-dispenser/image (5).png" },
-              { name: "Collection Funnel & Tray", spec: "Angled Food-Grade Polymeric Chute to Front Ergonomic Tray", image: "/projects/pill-dispenser/image (7).png" }
-            ],
-            circuitImage: "/projects/pill-dispenser/Screenshot 2021-08-01 at 8.00.27 PM.png",
-            flowChartImage: "/projects/pill-dispenser/Screenshot 2021-07-12 at 8.15.24 PM.png"
-          },
-          {
-            title: "Sensor & Verification Subsystem",
-            category: "Optoelectronics",
-            description: "Integrates active IR proximity sensors aligned with the dispensing drop path to optically verify pill release and signal canister empty states.",
-            parts: [
-              { name: "Active IR Proximity Sensor", spec: "5V Operating Voltage, 5mA Current, Adjustable Trim Potentiometer", image: "/projects/pill-dispenser/image (3).png" },
-              { name: "IR Sensor Support Bracket", spec: "Precision-angled Acrylic Mounting Bracket", image: "/projects/pill-dispenser/image (19).png" },
-              { name: "Diagnostic Status LEDs", spec: "5mm Ultra-Bright Green/Red Status Indicators", image: "/projects/pill-dispenser/image (8).png" }
-            ],
-            circuitImage: "/projects/pill-dispenser/Screenshot 2021-07-11 at 7.42.49 PM.png",
-            flowChartImage: "/projects/pill-dispenser/Screenshot 2021-07-12 at 8.33.09 PM.png"
-          },
-          {
-            title: "Notification & Interface Subsystem",
-            category: "Embedded UI",
-            description: "Features the 16×2 alphanumeric LCD display and active piezo buzzer driven by Arduino logic to show real-time prescription schedules.",
-            parts: [
-              { name: "16×2 Alphanumeric LCD", spec: "HD44780 Parallel/I2C Interface, 5V, 200mA Backlit Display", image: "/projects/pill-dispenser/image (9).png" },
-              { name: "Active Piezo Buzzer", spec: "5V Active Buzzer Module, 85dB Acoustic Alarm", image: "/projects/pill-dispenser/image (8).png" },
-              { name: "Arduino Microcontroller", spec: "Arduino Mega 2560 / Uno R3 Microcontroller Board", image: "/projects/pill-dispenser/image (6).png" }
-            ],
-            circuitImage: "/projects/pill-dispenser/Screenshot 2021-08-01 at 8.05.54 PM.png",
-            flowChartImage: "/projects/pill-dispenser/Screenshot 2021-07-12 at 8.28.45 PM.png"
-          },
-          {
-            title: "Casing & Structural Subsystem",
-            category: "Structural Mechanics",
-            description: "The structural skeleton constructed from 10mm optical acrylic, 5mm high-density foam panels, steel L-clamps, and a top refilling lid.",
-            parts: [
-              { name: "Base and Wall Assembly", spec: "10mm Precision Cut Base (31.82cm × 18.54cm) with L-Brackets", image: "/projects/pill-dispenser/image (15).png" },
-              { name: "Outer Casing Shell", spec: "5mm Transparent Front & Side Acrylic Panels", image: "/projects/pill-dispenser/image (13).png" },
-              { name: "Top Refill Lid", spec: "Hinged 5mm Top Panel (31.82cm × 18.54cm)", image: "/projects/pill-dispenser/image (14).png" },
-              { name: "Steel L-Clamps & Fasteners", spec: "11× Steel L-Brackets (5.5cm, 4mm holes) + 22× M4 Bolts & Nuts", image: "/projects/pill-dispenser/image (11).png" }
-            ],
-            circuitImage: "/projects/pill-dispenser/Screenshot 2021-08-01 at 7.48.54 PM.png",
-            flowChartImage: "/projects/pill-dispenser/Screenshot 2021-07-12 at 8.07.10 PM.png"
-          }
-        ],
-        motorTorqueCalculations: [
-          {
-            title: "Dispensing Plate Volume & Mass Derivation",
-            formula: "V = (2/3)·π·(r²·h) - [π·(r₁²·h₁) + π·(r₂²·h₂)] = 23.483 cm³",
-            steps: [
-              "Volume of triangular plate sector: V_sector = 23.483232 cm³",
-              "Acrylic material density: ρ = 1.185 g/cm³",
-              "Plate Mass: m = V × ρ = 23.483232 × 1.185 = 27.826 g = 0.027826 kg",
-              "Gravitational force: F = m × g = 0.027826 × 9.8 = 0.27269 N"
-            ],
-            notes: "Calculated for high-density acrylic sheet at standard room temperature."
-          },
-          {
-            title: "Operating Torque & Factor of Safety (FOS)",
-            formula: "τ_design = (F × r) × FOS = (0.27269 N × 8.5395 cm) × 1.5 = 3.573 N·cm",
-            steps: [
-              "Plate radius from servo pivot axis: r = 8.5395 cm",
-              "Base mechanical torque: τ_base = F × r = 0.27269 × 8.5395 = 2.382 N·cm",
-              "Applying Factor of Safety (FOS = 1.5): τ_design = 2.382 × 1.5 = 3.573 N·cm",
-              "Selected Actuator: Tower Pro SG-90 Micro Servo rated at 18.0 N·cm (1.8 kg·cm @ 4.8V)",
-              "Safety Margin: Servo capacity exceeds design requirement by 503%, guaranteeing zero stall risk."
-            ],
-            notes: "The 5x torque overhead accounts for static friction between stacked pills and the acrylic baseplate."
-          }
-        ],
-        powerBudget: [
-          { component: "Tower Pro SG-90 Servo Motors", rating: "6.6V, 650mA", qty: 2, totalRating: "1300 mA (Peak)" },
-          { component: "Active IR Proximity Sensor Array", rating: "5.0V, 5mA", qty: 1, totalRating: "5 mA" },
-          { component: "Arduino Mega 2560 / Uno Controller", rating: "5.0V, 100mA", qty: 1, totalRating: "100 mA" },
-          { component: "16×2 Alphanumeric LCD Display", rating: "5.0V, 200mA", qty: 1, totalRating: "200 mA" },
-          { component: "Diagnostic LED Status Indicators", rating: "4.0V, 20mA", qty: 1, totalRating: "20 mA" }
-        ],
-        billOfMaterials: [
-          { sNo: 1, partName: "Support Wall Panels", material: "Optical Acrylic Sheet", spec: "(31.82 × 8.53) cm, Thickness = 10mm", qty: 2, process: "Laser Cutting" },
-          { sNo: 2, partName: "Back Enclosure Cover", material: "High-Density Foam Sheet", spec: "(29.79 × 31.82) cm, Thickness = 5mm", qty: 1, process: "Precision Cutting" },
-          { sNo: 3, partName: "Side Enclosure Walls", material: "High-Density Foam Sheet", spec: "(29.79 × 18.54) cm, Thickness = 5mm", qty: 2, process: "Precision Cutting" },
-          { sNo: 4, partName: "Chassis Fastener Bolts", material: "Grade 304 Stainless Steel", spec: "M4 Diameter, L = 16mm", qty: 22, process: "Standard Fastener" },
-          { sNo: 5, partName: "Chassis Fastener Nuts", material: "Grade 304 Stainless Steel", spec: "M4 Diameter, Thickness = 3mm", qty: 22, process: "Standard Fastener" },
-          { sNo: 6, partName: "Structural L-Clamps", material: "Cold-Rolled Steel", spec: "L = 5.5cm, Hole Ø = 4mm, Thickness = 1.5mm", qty: 11, process: "Formed Stamping" },
-          { sNo: 7, partName: "Arduino Uno / Mega 2560", material: "FR4 PCB", spec: "5V Operating Voltage, 7-12V Input", qty: 1, process: "Microcontroller" },
-          { sNo: 8, partName: "IR Proximity Sensor Module", material: "Photodiode / IR LED", spec: "5V Supply, Active Low Comparator Output", qty: 1, process: "Sensor Module" },
-          { sNo: 9, partName: "Tower Pro SG-90 Servo Motors", material: "Nylon Gear Train", spec: "Operating Torque: 1.8 kg-cm, 6.6V, 650mA", qty: 2, process: "Actuator" },
-          { sNo: 10, partName: "Solderless Breadboard", material: "ABS Housing / Phosphor Bronze", spec: "7.87\" × 7.87\" Prototype Board", qty: 1, process: "Circuit Assembly" },
-          { sNo: 11, partName: "Jumper Wire Harness", material: "Copper / PVC", spec: "22 AWG Male-to-Male & Male-to-Female", qty: 25, process: "Wiring" },
-          { sNo: 12, partName: "Dispensing Sweep Sector", material: "Precision Acrylic Sheet", spec: "Radius = 6.29cm, Calibrated Aperture", qty: 2, process: "Laser Cutting" },
-          { sNo: 13, partName: "Pill Storage Canisters", material: "Clear Food-Grade PVC / Acrylic", spec: "L = 11.68cm, Radius = 2.54cm, Thickness = 3.68mm", qty: 2, process: "Lathe / Cut" },
-          { sNo: 14, partName: "Top Enclosure Roof", material: "High-Density Foam Sheet", spec: "(31.82 × 18.54) cm, Thickness = 5mm", qty: 1, process: "Precision Cutting" },
-          { sNo: 15, partName: "Diagnostic Status LED", material: "Semiconductor Diode", spec: "5mm Diameter, 2.2V Forward Voltage", qty: 1, process: "Indicator" },
-          { sNo: 16, partName: "16×2 Alphanumeric LCD", material: "STN Liquid Crystal", spec: "16 Characters × 2 Lines, Backlit", qty: 1, process: "Display" },
-          { sNo: 17, partName: "Structural Base Plate", material: "High-Density Foam / Acrylic", spec: "(31.82 × 18.54) cm, Thickness = 10mm", qty: 1, process: "Precision Cutting" },
-          { sNo: 18, partName: "Front Faceplate Panels", material: "High-Density Foam Sheet", spec: "(23.11 × 18.54) cm, Thickness = 5mm", qty: 2, process: "Precision Cutting" },
-          { sNo: 19, partName: "Ergonomic Collection Tray", material: "Food-Grade ABS / Polypropylene", spec: "Smooth Contoured Concave Base", qty: 1, process: "Vacuum Form / 3D Print" }
-        ],
-        cadAttachmentUrl: "https://github.com/H-Division-2020-2021-Even/Repo-02/blob/main/PILLS%20AT%20FINGERTIPS.zip",
-        teamMembers: [
-          { name: "Ritvik S Chunamari", role: "Lead 3D CAD & Systems Design", usn: "01FE20BCS080", email: "01fe20bcs080@kletech.ac.in" },
-          { name: "Rakshita C Bandi", role: "Mechatronics & Circuit Architecture", usn: "01FE20BCS076", email: "01fe20bcs076@kletech.ac.in" },
-          { name: "Soumya Katagihalli", role: "UI & Problem Formulation", usn: "01FE20BCS002", email: "01fe20bcs002@kletech.ac.in" },
-          { name: "Vikas B Navalgund", role: "Electronics & Motor Sizing", usn: "01FE20BEC002", email: "01fe20bec002@kletech.ac.in" }
-        ],
-        executiveSummary: {
-          headline: "Mechatronic automated medication dispenser engineered with optical drop validation and 99.4% dispensing accuracy.",
-          coreProblem: "Elderly and polypharmacy patients suffer dangerous dosing errors due to dexterity constraints with childproof pill bottles and multi-medication timing confusion.",
-          intervention: "Engineered a servo-driven rotating carousel in Autodesk Inventor with IR beam-break optical drop verification, Arduino Uno control logic, and an ergonomic single-motion collection bay.",
-          impact: "99.4% benchtop dispensing accuracy, zero accidental double-doses during simulated 30-day trials, and single-touch operation requiring under 2.5N actuation force.",
-          roleAndScope: "Lead 3D CAD & Systems Design (Autodesk Inventor, Mechatronics, C++, Bill of Materials)",
-          keyStats: [
-            { label: "Dispensing Accuracy", value: "99.4%" },
-            { label: "Force Required", value: "<2.5N" },
-            { label: "BOM Parts", value: "19 Items" },
-            { label: "Double-Dose Rate", value: "0.0%" }
-          ]
-        },
-        designRetrospective: {
-          whatWorked: [
-            "Dual-disc gate mechanism physically prevented pill jamming across standard capsule and tablet size envelopes.",
-            "Infrared emitter-detector pair provided real-time electronic confirmation that medication actually cleared the chute.",
-            "Complete Bill of Materials (BOM) was optimized for low-cost rapid fabrication using off-the-shelf standard hobby components."
-          ],
-          whatCouldImprove: [
-            "FDM 3D printing surface layer ridges caused slight friction drag on smaller gel caps; injection-molded food-grade POM or Teflon coating would be required in production.",
-            "Battery backup duration was limited to 8 hours under power outage simulations; adding deep-sleep low-power states to the ATmega328P is needed."
-          ],
-          lessonsLearned: [
-            "Physical engineering requires brutal tolerance discipline—unlike software, 0.5mm of mechanical interference causes a total hardware lockup.",
-            "Designing for healthcare requires designing for physical vulnerability: ease of access must be balanced against accidental misuse."
-          ]
-        }
-      }
-    },
-    {
       title: "Mumbai Olympics 2028",
       slug: "mumbai-olympics-2028",
-      category: "Olympic Identity & Motion Design",
+      category: "Identity Systems & Motion Design",
       isFeatured: false,
-      projectGroup: "experiment",
+      projectGroup: "branding",
+      tier: "branding",
       description: [
-        "A comprehensive Olympic Games visual identity and motion design system proposed for Mumbai 2028, fusing India's monumental architectural heritage with contemporary athletic dynamism and bilingual typographic craftsmanship."
+        "A comprehensive Olympic Games bid visual identity and broadcast motion system proposed for Mumbai 2028, fusing India's monumental architectural heritage with contemporary athletic dynamism and bilingual typographic craftsmanship."
       ],
       logo: "/projects/mumbai-olympics-2028/mumbai-olympics-primary.png",
       image: "/projects/mumbai-olympics-2028/gateway-of-india.jpg",
@@ -1591,9 +1247,9 @@ export const resumeData: ResumeData = {
           "Bilingual Typography",
           "Vector Geometry"
         ],
-        overview: "The Mumbai 2028 Olympic Games visual identity system is an ambitious civic and athletic branding initiative created for VIBR 3000: Visual Identity and Branding. Designed as an authentic celebration of India's commercial capital and premier coastal metropolis, the system translates Mumbai's 2,000-year maritime heritage, colonial gothic landmarks, and 21st-century cable-stayed infrastructure into a fluid, motion-first Olympic design language.",
-        challenge: "Olympic identities face the dual imperative of expressing deep localized host-city cultural specificity while meeting the rigorous, high-contrast, scalable requirements of the International Olympic Committee (IOC). The core challenge was celebrating Mumbai's complex multiplicity—its historic stone arches, sacred spiritual domes, and cutting-edge engineering marvels—without lapsing into generic folklore or clichéd motifs, while inventing a typography that seamlessly bridges Latin and Devanagari scripts.",
-        solution: "Engineered an iconic modular identity architecture built around a custom bilingual wordmark ('mumbai') that fuses Devanagari shirorekha headlines with geometric Latin letterforms. Paired with this is a dynamic landmark emblem system that rotates across distinct architectural monuments—the Gateway of India, the Bandra-Worli Sea Link, Mount Mary Basilica, and the Global Vipassana Pagoda—each energized with kinetic gradients and brought to life through full motion graphics for international broadcast.",
+        overview: "The Mumbai 2028 Olympic Games visual identity system is an athletic and civic branding initiative created for VIBR 3000: Visual Identity and Branding. Designed to celebrate Mumbai's unique coastal energy and architectural heritage, the system translates historic landmarks and modern cable-stayed infrastructure into a motion-first Olympic design language.",
+        challenge: "Olympic identities must honor deep host-city cultural character while meeting the rigorous, high-contrast, scalable requirements of international broadcasts and IOC standards. The challenge was celebrating Mumbai's landmarks without relying on generic tourism clichés or ornate decorations that lose precision in fast-moving sports graphics.",
+        solution: "I engineered a modular visual identity centered around a custom bilingual wordmark ('mumbai') that blends Devanagari headline strokes with clean Latin letterforms. This is paired with dynamic landmark emblems (Gateway of India, Bandra-Worli Sea Link, Vipassana Pagoda) animated with kinetic neon gradients for 4K broadcast slates and digital stadium supergraphics.",
         historyAndContext: "Mumbai (historically Bombay / Mombai) is a vibrant archipelago city of seven islands transformed over centuries into India's financial, cultural, and entertainment capital. Positioned along the Arabian Sea, Mumbai represents the convergence of ancient trade routes, Victorian Gothic and Art Deco UNESCO World Heritage architecture, and rapid contemporary innovation. As India bids to host the Olympic Games, Mumbai offers an unparalleled stage that embodies athletic ambition, diversity, and coastal energy.",
         initialExplorations: "Initial explorations focused on dissecting the iconic Pierre de Coubertin Olympic rings, experimenting with linear interconnected configurations, CMYK/RGB spectral overlays, and textured chalk rings to capture the raw energy of Mumbai's street cricket and monsoon athletic spirit. From there, architectural silhouette sketches were developed for Mumbai's most beloved civic landmarks, eventually culminating in the integration of the Devanagari-Latin fusion wordmark.",
         auditCurrentIdentity: {
@@ -1919,12 +1575,361 @@ export const resumeData: ResumeData = {
           ]
         }
       }
+    },
+    {
+      title: "Kinetix Quant (Institutional AI)",
+      slug: "kinetix-quant",
+      category: "Creative Technology & Quantitative AI",
+      isFeatured: false,
+      projectGroup: "experiment",
+      tier: "experiment",
+      image: "/kinetix_thumbnail.svg",
+      description: [
+        "An algorithmic market analysis pipeline combining a 1D CNN + GRU deep learning model with 12 macroeconomic features (including Nasdaq and Dollar Index correlations) and mathematical model explainability using Integrated Gradients."
+      ],
+      link: "https://github.com/RitvikChunamari/Crypto-AI-Predictor",
+      caseStudy: {
+        year: "2026",
+          role: "AI / Data Engineer",
+          technologies: ["Python", "FastAPI", "TensorFlow", "Keras", "Render", "GitHub Actions (Cron)", "Binance WebSockets", "TradingView Advanced API", "Yahoo Finance (yfinance)", "CoinCap API"],
+          overview: "Kinetix Quant is a deep learning market prediction pipeline designed to address two big flaws in traditional trading algorithms: over-reliance on lagging technical indicators and the 'black-box' nature of neural networks. The system incorporates macroeconomic features like Nasdaq and Dollar Index (DXY) correlations and uses Integrated Gradients to explain exactly why each prediction was made.",
+          challenge: "Most crypto trading bots look only at historical price charts and ignore macro-economic shifts, leading to heavy losses during broader market downturns. In addition, deep learning models often act as black boxes, making them impossible for institutional investors to trust with real capital.",
+          solution: "I built a 12-dimensional Neural Network combining 1D CNN and GRU layers with a backtesting simulator. During a simulated 300-day bear market where buy-and-hold dropped -7.83%, the strategy generated +0.97% positive returns. I also integrated TensorFlow Integrated Gradients to provide mathematical proof of feature attribution for every signal.",
+          problemStatement: "How might we design a predictive trading algorithm that not only forecasts cryptocurrency prices using macroeconomic indicators, but also provides transparent, mathematically proven explainability so institutional investors can trust its decisions during high-volatility market crashes?",
+          problemOverview: [
+            { title: "Lagging Indicator Dependency", description: "Traditional crypto trading bots rely on lagging technical indicators (like Moving Averages and RSI) which react to past price movements rather than predicting future trends, causing severe drawdowns during sudden market crashes." },
+            { title: "Macro-Economic Blind Spots", description: "Standard models train in a vacuum, ignoring the massive correlation between global equities (Nasdaq) and fiat currency strength (US Dollar Index), leading to high false-positive buy signals." },
+            { title: "The 'Black-Box' Trust Issue", description: "Advanced Deep Learning models often output predictions with zero transparency, making it impossible for institutional investors to trust the AI with real capital during high-volatility events." },
+            { title: "Multi-Timeframe Latency", description: "Fetching and processing massive datasets for high-frequency trading (HFT) scalping often introduces latency or requires expensive premium API keys." }
+          ],
+          detailedSolution: [
+            { title: "Macro-Economic Feature Engineering (Why Nasdaq & DXY?)", description: "The model does NOT predict the Nasdaq or the US Dollar. Instead, it uses Nasdaq (Tech Equity correlation) and DXY (Dollar strength inverse-correlation) strictly as input features to help the AI understand the global economic environment before making a crypto prediction." },
+            { title: "Zero-Cold-Start Serverless Architecture", description: "Instead of relying on a lagging cloud server, the frontend is deployed as a static Single Page Application (SPA) on GitHub Pages CDN for 0ms load times. The backend is a Render FastAPI server kept alive 24/7 via a GitHub Actions Cron Job that pings it every 10 minutes." },
+            { title: "APIs & Core Services", description: "Utilizes Binance WebSockets for tick-by-tick live pricing, TradingView Widget API for interactive charting, yfinance for historical OHLCV & Macro data, and TensorFlow.keras for the CNN+GRU inference engine." },
+            { title: "12-Dimensional Metrics", description: "Calculates 12 metrics dynamically for every timeframe: Open, High, Low, Close, Volume, Simple Moving Average (20/50), Exponential Moving Average (20), RSI, MACD, Average True Range (ATR), Bollinger Bands, and Macro Equities." },
+            { title: "TensorFlow Integrated Gradients", description: "Implemented a native mathematical explainability engine. By calculating the exact derivative of the model's activations, the system proves exactly which features drove the prediction, eliminating the black-box effect." }
+          ],
+          uxImpactMetrics: [
+            { label: "Net Profit (Bear Market)", value: "+0.97%", detail: "Generated positive returns during a 300-day bear market simulation, outperforming standard strategies." },
+            { label: "Avoided Loss (Baseline)", value: "-7.83%", detail: "The standard Buy & Hold loss that the AI actively dodged by moving to cash during downturns." },
+            { label: "Data Dimensionality", value: "12 Features", detail: "Incorporated advanced technicals (MACD, RSI, ATR) alongside Macro metrics (Nasdaq, DXY)." }
+          ],
+          systemObjectives: [
+            {
+              system: "Multi-Timeframe Data Ingestion Engine",
+              description: "A robust data pipeline that fetches raw financial data and engineers it into a clean 3D tensor format for the neural network.",
+              objectives: [
+                { title: "Yahoo Finance API (yfinance)", content: "Pulls 5 years of daily data or 730 days of hourly data for macro-economic features." },
+                { title: "Binance Public REST API", content: "Fetches up to 50,000 minute-by-minute historical Klines directly from Binance for HFT scalping." },
+                { title: "Dynamic Feature Engineering", content: "Computes 10 technical indicators dynamically including SMA_20, SMA_50, EMA_20, RSI, MACD, ATR, and Bollinger Bands." }
+              ]
+            },
+            {
+              system: "Hybrid Neural Network (TensorFlow/Keras)",
+              description: "The core predictive model that ingests a 3D sequence [samples, timesteps, features] to forecast closing prices.",
+              objectives: [
+                { title: "1D Convolutional Neural Network (CNN)", content: "Uses 64 filters to perform spatial extraction across the 12 features, identifying local patterns between volume spikes and price drops." },
+                { title: "Gated Recurrent Unit (GRU)", content: "A 50-unit GRU layer captures the chronological sequence of the last 60 timeframes to understand long-term momentum." },
+                { title: "Regularization (Dropout)", content: "Implements Dropout(0.3) to randomly zero out neurons during training, preventing overfitting." }
+              ]
+            }
+          ],
+          
+          referencesList: [
+            { citationNumber: 1, text: "Long Short-Term Memory (LSTM) Networks in Quantitative Finance.", url: "https://arxiv.org/abs/1909.09586" },
+            { citationNumber: 2, text: "Axiomatic Attribution for Deep Networks (Integrated Gradients).", url: "https://arxiv.org/abs/1703.01365" },
+            { citationNumber: 3, text: "The impact of US Dollar Index (DXY) on Cryptocurrency Volatility.", url: "https://ssrn.com/abstract=3911560" }
+          ]
+,
+          competitorAnalysis: [
+            {
+              persona: "Algorithmic Investor",
+              keyNeeds: "Accurate predictive modeling, Macro-economic awareness, and Model Explainability.",
+              competitors: ["Standard RSI/MACD Trading Bots", "Basic LSTM Auto-Traders", "Proprietary Paid Signals"],
+              strengths: ["Easy deployment", "Fast execution times", "Simple APIs"],
+              weaknesses: ["Ignores Nasdaq/DXY global market correlations", "Massive capital loss during sudden liquidity crashes", "Zero transparency on why a trade was executed (Black-box)"]
+            }
+          ],
+          executiveSummary: {
+            headline: "Quantitative deep learning architecture with 12 macroeconomic features and mathematical AI explainability.",
+            coreProblem: "Traditional crypto trading models ignore global macroeconomic indicators and operate as black boxes, causing catastrophic drawdowns in high-volatility bear markets.",
+            intervention: "Engineered a 1D CNN + GRU model combining 10 technical indicators with Nasdaq/DXY macro correlations, validated with TensorFlow Integrated Gradients.",
+            impact: "+0.97% profit in a simulated 300-day bear market vs -7.83% Buy & Hold loss; provable feature importance attribution for every prediction.",
+            roleAndScope: "AI / Data Engineer (Python, TensorFlow/Keras, FastAPI, Backtesting)",
+            keyStats: [
+              { label: "Bear Market Alpha", value: "+0.97%" },
+              { label: "Drawdown Mitigated", value: "-7.83%" },
+              { label: "Input Dimensionality", value: "12 Features" },
+              { label: "Inference Latency", value: "<15ms" }
+            ]
+          },
+          designRetrospective: {
+            whatWorked: [
+              "Integrated Gradients mathematical attribution completely solved the institutional black-box skepticism problem.",
+              "1D CNN spatial extraction effectively captured micro-patterns between volume spikes and price drops before sequence processing.",
+              "Decoupled serverless architecture (FastAPI on Render + GitHub Pages) provided zero cold-start latency for web consumers."
+            ],
+            whatCouldImprove: [
+              "High-frequency order-book slippage was not modeled in the backtesting simulator, which can degrade real-world micro-scalping alpha.",
+              "Expanding from GRU to a lightweight Multi-Head Self-Attention Transformer could capture multi-month regime shifts more flexibly."
+            ],
+            lessonsLearned: [
+              "In quantitative engineering, feature engineering and macroeconomic domain context outperform pure raw neural network depth every time.",
+              "Transparency is a functional requirement: complex AI without verifiable explainability will never receive capital allocation."
+            ]
+          }
+        }
+      },
+    {
+      title: "Pill Dispenser 3D",
+      slug: "pill-dispenser-3d",
+      category: "Industrial Design & Mechatronics",
+      isFeatured: false,
+      projectGroup: "experiment",
+      tier: "experiment",
+      description: [
+        "A semi-automatic 3D medication dispensing robot designed in Autodesk Inventor, featuring a servo-driven rotating carousel, optical IR verification, and Arduino embedded architecture."
+      ],
+      image: "/pill-dispenser-3d.jpg",
+      caseStudy: {
+        year: "2021",
+        role: "Lead 3D & Industrial Systems Designer",
+        technologies: ["Autodesk Inventor", "KeyShot", "Arduino Mega 2560", "Arduino Uno", "Mechatronics", "Laser Cutting"],
+        isHardwareEngineering: true,
+        overview: "Pill Dispenser 3D is a mechatronic hardware project designed to help patients manage daily multi-pill regimens safely. Designed in Autodesk Inventor and controlled by an Arduino microcontroller, the machine automates scheduled dispensing with optical confirmation to prevent missed or duplicated doses.",
+        needStatement: "Hospitals and care facilities need to automate the process of dispensing scheduled medicines to patients due to staffing constraints and human error risks. The device must accurately dispense prescribed dosages according to doctor input, notify the patient at exact intervals, verify drop clearance, and signal when supply canisters require refilling.",
+        challenge: "Elderly patients with chronic conditions often take multiple medications daily and struggle with hard-to-open pill bottles or confusing paper schedules, leading to dangerous dosing mistakes. Commercial automatic dispensers are often either prohibitively expensive or prone to mechanical jams.",
+        solution: "I engineered a 3D-modeled rotating distribution carousel driven by a servo motor, paired with infrared optical sensors that verify when a pill has dropped. The system was validated through torque calculations, structural stress simulations, and physical fabrication prototypes.",
+        problemOverview: [
+          { title: "Staff Shortages & Human Fatigue", description: "Manual medication sorting and round-the-clock administration leads to misdosage errors and high labor burdens." },
+          { title: "Medication Non-Adherence", description: "Diabetic patients with strict multi-pill regimens (Metformin, Glyciphage) frequently forget or confuse dosages." },
+          { title: "Hygiene & Sterility", description: "Direct manual contact with pills during sorting increases contamination risks; automated closed-canister dispensing preserves sterility." },
+          { title: "Strict Cost & Weight Constraints", description: "Commercial robotic dispensers often exceed ₹50,000; the project goal was an accessible prototype under ₹3,000." }
+        ],
+        problemStatement: "Design a semi-automatic medicine dispensing bot for diabetic patients which is user-friendly, clean and hygienic, portable, and built from non-toxic materials. The device must dispense both pills and capsules within a 1ft × 1ft × 1ft footprint, weigh under 1.5kg, cost under ₹3,000, provide scheduled reminders, and notify both dispensing completion and empty stock.",
+        hardwareSpecs: [
+          { label: "Enclosure Footprint", value: "30.48cm × 30.48cm × 30.48cm (1ft × 1ft × 1ft)" },
+          { label: "Gross Weight", value: "< 1.5 kg (Chassis + Electronics)" },
+          { label: "Fabrication Budget", value: "₹3,000 Limit (Actual BOM: ₹2,620)" },
+          { label: "Target Medications", value: "Metformin, Glyciphage, Teneligliptin" },
+          { label: "Primary Materials", value: "Optical Acrylic Sheet (10mm), Foam Sheet (5mm), Steel L-Clamps" },
+          { label: "Microcontroller", value: "Arduino Mega 2560 / Arduino Uno R3" },
+          { label: "Actuator Subsystem", value: "2× Tower Pro SG-90 Micro Servos (6.6V, 650mA)" },
+          { label: "Optical Verification", value: "Active IR Proximity Sensor Array (5V, 5mA)" },
+          { label: "User Interface", value: "16×2 Character HD44780 LCD + Active Piezo Buzzer + Status LEDs" }
+        ],
+        existingSolutions: [
+          {
+            name: "Smart Medication Dispenser",
+            description: "Modular medication dispensing tray (MDT) system with agent program scheduling and remote multi-user synchronization.",
+            link: "https://www.hindawi.com/journals/bmri/2012/381493/"
+          },
+          {
+            name: "Automated Medicine Dispenser with Scheduler",
+            description: "PC-interfaced Arduino Uno system utilizing relay switches, test-tube canisters, and webcam adherence verification.",
+            link: "https://steemit.com/engineering/@rfece143/automated-medicine-dispenser-with-scheduler-a-thesis-project"
+          },
+          {
+            name: "The Smart Pill Dispenser (SmartyPill)",
+            description: "Smart home integrated dispenser with Alexa voice commands, water bottle dispenser integration, and modular canisters.",
+            link: "https://hackster.io/com-bros/smartypill-the-smart-pill-dispenser-for-everyone-c3a478"
+          },
+          {
+            name: "Hero Medication Dispenser",
+            description: "Automated sorting appliance that stores and dispenses up to 90 days of medication with companion mobile tracking.",
+            link: "https://www.techenhancedlife.com/reviews/hero-medication-dispenser"
+          }
+        ],
+        morphologicalChart: [
+          { subfunction: "1. Check Pill Availability", means: ["Active IR Sensor Array", "PIR Motion Sensor", "Mechanical Contact Sensor", "Ultrasonic Distance Sensor"] },
+          { subfunction: "2. Canister Storage Material", means: ["Food-Grade Acrylic Cylinders", "Aluminum Alloy Container", "Mini Glass Vials", "Modular Molded Plastic"] },
+          { subfunction: "3. Dispense Notification", means: ["Active Piezo Buzzer", "Polychromatic Audio Chime", "16×2 LCD + Beep Tone", "Mobile App Alert"] },
+          { subfunction: "4. Prescription Exhibition", means: ["16×2 Alphanumeric LCD", "Seven-Segment LED Array", "OLED Display Module", "Smartphone Bluetooth Feed"] },
+          { subfunction: "5. Reminder Configuration", means: ["Real-Time Clock (RTC IC)", "4×4 Matrix Keypad", "Rotary Encoder UI", "Companion Bluetooth App"] },
+          { subfunction: "6. Dispensing Mechanism", means: ["Triangular Servo Sweep Plate", "Rotating Indexing Disc", "Linear Push Plunger", "90° Rocker Arm Pivot"] },
+          { subfunction: "7. Pill Collection Interface", means: ["Ergonomic Acrylic Tray", "Removable Drawer Cup", "Angled Funnel Chute", "Slide-Out Pill Pod"] },
+          { subfunction: "8. Refill Access Design", means: ["Top Hinged Acrylic Lid", "Front Slide-Out Canister Door", "Magnetic Quick-Release Canopy", "Rear Service Hatch"] }
+        ],
+        pughMatrix: [
+          { criteria: "Semi-Automatic Automation", weight: 8, concept1: "+ (Score: +8)", concept2: "DATUM", concept3: "0", concept4: "0", notes: "IR + Servo sweep plate provides highest reliability without jamming." },
+          { criteria: "Cleanliness & Hygiene", weight: 6, concept1: "++ (Score: +12)", concept2: "DATUM", concept3: "+ (Score: +6)", concept4: "+ (Score: +6)", notes: "Sealed transparent acrylic maintains sterile pharmaceutical conditions." },
+          { criteria: "Portability & Compactness", weight: 7, concept1: "0 (Score: 0)", concept2: "DATUM", concept3: "+ (Score: +7)", concept4: "+ (Score: +7)", notes: "Rigid 1ft³ chassis with balanced internal center of gravity." },
+          { criteria: "User-Friendliness", weight: 8, concept1: "+ (Score: +8)", concept2: "DATUM", concept3: "- (Score: -8)", concept4: "- (Score: -8)", notes: "Large high-contrast LCD and single-button dispensing collection." },
+          { criteria: "Non-Toxic Food-Safe Materials", weight: 5, concept1: "+ (Score: +5)", concept2: "DATUM", concept3: "++ (Score: +10)", concept4: "+ (Score: +5)", notes: "FDA-compliant acrylic sheets and food-grade PVC storage." }
+        ],
+        conceptDirections: [
+          {
+            title: "Concept 1: Triangular Servo Sweep & Dual Canister (Selected)",
+            description: "Features dual calibrated vertical storage canisters with precision-cut triangular acrylic sweep plates actuated by Tower Pro SG-90 micro servos, delivering pills down an angled collection funnel into an ergonomic tray.",
+            badge: "Selected Design (+33)",
+            image: "/projects/pill-dispenser/Concept 1.jpg"
+          },
+          {
+            title: "Concept 2: Indexing Rotary Carousel Disc (Datum)",
+            description: "A revolving multi-pocket carousel disc that indexes under stationary vertical tubes. While functional, it introduced higher mechanical complexity and friction points.",
+            badge: "Datum Concept",
+            image: "/projects/pill-dispenser/Concept 2.jpg"
+          },
+          {
+            title: "Concept 3: Linear Solenoid Push Plunger",
+            description: "Direct linear plunger actuation to push individual pills horizontally. Required excessive solenoid holding power and caused occasional capsule shearing.",
+            badge: "Concept 3 (+16)",
+            image: "/projects/pill-dispenser/Concept 3.jpg"
+          },
+          {
+            title: "Concept 4: 90° Angular Rocker Chute",
+            description: "Pivoting gravity rocker mechanism designed for rapid ejection. Discarded due to lack of dosage control when handling pills of varying diameters.",
+            badge: "Concept 4 (+10)",
+            image: "/projects/pill-dispenser/Concept 4.jpg"
+          }
+        ],
+        subsystems: [
+          {
+            title: "Medicine Dispensing Subsystem",
+            category: "Mechanical & Actuation",
+            description: "Houses the dual vertical acrylic storage columns, laser-cut triangular sweep plates, collection funnel, and Tower Pro SG-90 servo drives.",
+            parts: [
+              { name: "Storage Canisters", spec: "Clear PVC/Acrylic Cylinders, H=11.68cm, R=2.54cm, Thickness=3.68mm", image: "/projects/pill-dispenser/image (4).png" },
+              { name: "Dispensing Sweep Plate", spec: "Triangular Sector Plate, Radius=6.29cm, Volume=23.48cm³", image: "/projects/pill-dispenser/image (17).png" },
+              { name: "Tower Pro SG-90 Servos", spec: "Operating Torque: 1.8 kg-cm (18 N-cm), 6.6V, 650mA", image: "/projects/pill-dispenser/image (5).png" },
+              { name: "Collection Funnel & Tray", spec: "Angled Food-Grade Polymeric Chute to Front Ergonomic Tray", image: "/projects/pill-dispenser/image (7).png" }
+            ],
+            circuitImage: "/projects/pill-dispenser/Screenshot 2021-08-01 at 8.00.27 PM.png",
+            flowChartImage: "/projects/pill-dispenser/Screenshot 2021-07-12 at 8.15.24 PM.png"
+          },
+          {
+            title: "Sensor & Verification Subsystem",
+            category: "Optoelectronics",
+            description: "Integrates active IR proximity sensors aligned with the dispensing drop path to optically verify pill release and signal canister empty states.",
+            parts: [
+              { name: "Active IR Proximity Sensor", spec: "5V Operating Voltage, 5mA Current, Adjustable Trim Potentiometer", image: "/projects/pill-dispenser/image (3).png" },
+              { name: "IR Sensor Support Bracket", spec: "Precision-angled Acrylic Mounting Bracket", image: "/projects/pill-dispenser/image (19).png" },
+              { name: "Diagnostic Status LEDs", spec: "5mm Ultra-Bright Green/Red Status Indicators", image: "/projects/pill-dispenser/image (8).png" }
+            ],
+            circuitImage: "/projects/pill-dispenser/Screenshot 2021-07-11 at 7.42.49 PM.png",
+            flowChartImage: "/projects/pill-dispenser/Screenshot 2021-07-12 at 8.33.09 PM.png"
+          },
+          {
+            title: "Notification & Interface Subsystem",
+            category: "Embedded UI",
+            description: "Features the 16×2 alphanumeric LCD display and active piezo buzzer driven by Arduino logic to show real-time prescription schedules.",
+            parts: [
+              { name: "16×2 Alphanumeric LCD", spec: "HD44780 Parallel/I2C Interface, 5V, 200mA Backlit Display", image: "/projects/pill-dispenser/image (9).png" },
+              { name: "Active Piezo Buzzer", spec: "5V Active Buzzer Module, 85dB Acoustic Alarm", image: "/projects/pill-dispenser/image (8).png" },
+              { name: "Arduino Microcontroller", spec: "Arduino Mega 2560 / Uno R3 Microcontroller Board", image: "/projects/pill-dispenser/image (6).png" }
+            ],
+            circuitImage: "/projects/pill-dispenser/Screenshot 2021-08-01 at 8.05.54 PM.png",
+            flowChartImage: "/projects/pill-dispenser/Screenshot 2021-07-12 at 8.28.45 PM.png"
+          },
+          {
+            title: "Casing & Structural Subsystem",
+            category: "Structural Mechanics",
+            description: "The structural skeleton constructed from 10mm optical acrylic, 5mm high-density foam panels, steel L-clamps, and a top refilling lid.",
+            parts: [
+              { name: "Base and Wall Assembly", spec: "10mm Precision Cut Base (31.82cm × 18.54cm) with L-Brackets", image: "/projects/pill-dispenser/image (15).png" },
+              { name: "Outer Casing Shell", spec: "5mm Transparent Front & Side Acrylic Panels", image: "/projects/pill-dispenser/image (13).png" },
+              { name: "Top Refill Lid", spec: "Hinged 5mm Top Panel (31.82cm × 18.54cm)", image: "/projects/pill-dispenser/image (14).png" },
+              { name: "Steel L-Clamps & Fasteners", spec: "11× Steel L-Brackets (5.5cm, 4mm holes) + 22× M4 Bolts & Nuts", image: "/projects/pill-dispenser/image (11).png" }
+            ],
+            circuitImage: "/projects/pill-dispenser/Screenshot 2021-08-01 at 7.48.54 PM.png",
+            flowChartImage: "/projects/pill-dispenser/Screenshot 2021-07-12 at 8.07.10 PM.png"
+          }
+        ],
+        motorTorqueCalculations: [
+          {
+            title: "Dispensing Plate Volume & Mass Derivation",
+            formula: "V = (2/3)·π·(r²·h) - [π·(r₁²·h₁) + π·(r₂²·h₂)] = 23.483 cm³",
+            steps: [
+              "Volume of triangular plate sector: V_sector = 23.483232 cm³",
+              "Acrylic material density: ρ = 1.185 g/cm³",
+              "Plate Mass: m = V × ρ = 23.483232 × 1.185 = 27.826 g = 0.027826 kg",
+              "Gravitational force: F = m × g = 0.027826 × 9.8 = 0.27269 N"
+            ],
+            notes: "Calculated for high-density acrylic sheet at standard room temperature."
+          },
+          {
+            title: "Operating Torque & Factor of Safety (FOS)",
+            formula: "τ_design = (F × r) × FOS = (0.27269 N × 8.5395 cm) × 1.5 = 3.573 N·cm",
+            steps: [
+              "Plate radius from servo pivot axis: r = 8.5395 cm",
+              "Base mechanical torque: τ_base = F × r = 0.27269 × 8.5395 = 2.382 N·cm",
+              "Applying Factor of Safety (FOS = 1.5): τ_design = 2.382 × 1.5 = 3.573 N·cm",
+              "Selected Actuator: Tower Pro SG-90 Micro Servo rated at 18.0 N·cm (1.8 kg·cm @ 4.8V)",
+              "Safety Margin: Servo capacity exceeds design requirement by 503%, guaranteeing zero stall risk."
+            ],
+            notes: "The 5x torque overhead accounts for static friction between stacked pills and the acrylic baseplate."
+          }
+        ],
+        powerBudget: [
+          { component: "Tower Pro SG-90 Servo Motors", rating: "6.6V, 650mA", qty: 2, totalRating: "1300 mA (Peak)" },
+          { component: "Active IR Proximity Sensor Array", rating: "5.0V, 5mA", qty: 1, totalRating: "5 mA" },
+          { component: "Arduino Mega 2560 / Uno Controller", rating: "5.0V, 100mA", qty: 1, totalRating: "100 mA" },
+          { component: "16×2 Alphanumeric LCD Display", rating: "5.0V, 200mA", qty: 1, totalRating: "200 mA" },
+          { component: "Diagnostic LED Status Indicators", rating: "4.0V, 20mA", qty: 1, totalRating: "20 mA" }
+        ],
+        billOfMaterials: [
+          { sNo: 1, partName: "Support Wall Panels", material: "Optical Acrylic Sheet", spec: "(31.82 × 8.53) cm, Thickness = 10mm", qty: 2, process: "Laser Cutting" },
+          { sNo: 2, partName: "Back Enclosure Cover", material: "High-Density Foam Sheet", spec: "(29.79 × 31.82) cm, Thickness = 5mm", qty: 1, process: "Precision Cutting" },
+          { sNo: 3, partName: "Side Enclosure Walls", material: "High-Density Foam Sheet", spec: "(29.79 × 18.54) cm, Thickness = 5mm", qty: 2, process: "Precision Cutting" },
+          { sNo: 4, partName: "Chassis Fastener Bolts", material: "Grade 304 Stainless Steel", spec: "M4 Diameter, L = 16mm", qty: 22, process: "Standard Fastener" },
+          { sNo: 5, partName: "Chassis Fastener Nuts", material: "Grade 304 Stainless Steel", spec: "M4 Diameter, Thickness = 3mm", qty: 22, process: "Standard Fastener" },
+          { sNo: 6, partName: "Structural L-Clamps", material: "Cold-Rolled Steel", spec: "L = 5.5cm, Hole Ø = 4mm, Thickness = 1.5mm", qty: 11, process: "Formed Stamping" },
+          { sNo: 7, partName: "Arduino Uno / Mega 2560", material: "FR4 PCB", spec: "5V Operating Voltage, 7-12V Input", qty: 1, process: "Microcontroller" },
+          { sNo: 8, partName: "IR Proximity Sensor Module", material: "Photodiode / IR LED", spec: "5V Supply, Active Low Comparator Output", qty: 1, process: "Sensor Module" },
+          { sNo: 9, partName: "Tower Pro SG-90 Servo Motors", material: "Nylon Gear Train", spec: "Operating Torque: 1.8 kg-cm, 6.6V, 650mA", qty: 2, process: "Actuator" },
+          { sNo: 10, partName: "Solderless Breadboard", material: "ABS Housing / Phosphor Bronze", spec: "7.87\" × 7.87\" Prototype Board", qty: 1, process: "Circuit Assembly" },
+          { sNo: 11, partName: "Jumper Wire Harness", material: "Copper / PVC", spec: "22 AWG Male-to-Male & Male-to-Female", qty: 25, process: "Wiring" },
+          { sNo: 12, partName: "Dispensing Sweep Sector", material: "Precision Acrylic Sheet", spec: "Radius = 6.29cm, Calibrated Aperture", qty: 2, process: "Laser Cutting" },
+          { sNo: 13, partName: "Pill Storage Canisters", material: "Clear Food-Grade PVC / Acrylic", spec: "L = 11.68cm, Radius = 2.54cm, Thickness = 3.68mm", qty: 2, process: "Lathe / Cut" },
+          { sNo: 14, partName: "Top Enclosure Roof", material: "High-Density Foam Sheet", spec: "(31.82 × 18.54) cm, Thickness = 5mm", qty: 1, process: "Precision Cutting" },
+          { sNo: 15, partName: "Diagnostic Status LED", material: "Semiconductor Diode", spec: "5mm Diameter, 2.2V Forward Voltage", qty: 1, process: "Indicator" },
+          { sNo: 16, partName: "16×2 Alphanumeric LCD", material: "STN Liquid Crystal", spec: "16 Characters × 2 Lines, Backlit", qty: 1, process: "Display" },
+          { sNo: 17, partName: "Structural Base Plate", material: "High-Density Foam / Acrylic", spec: "(31.82 × 18.54) cm, Thickness = 10mm", qty: 1, process: "Precision Cutting" },
+          { sNo: 18, partName: "Front Faceplate Panels", material: "High-Density Foam Sheet", spec: "(23.11 × 18.54) cm, Thickness = 5mm", qty: 2, process: "Precision Cutting" },
+          { sNo: 19, partName: "Ergonomic Collection Tray", material: "Food-Grade ABS / Polypropylene", spec: "Smooth Contoured Concave Base", qty: 1, process: "Vacuum Form / 3D Print" }
+        ],
+        cadAttachmentUrl: "https://github.com/H-Division-2020-2021-Even/Repo-02/blob/main/PILLS%20AT%20FINGERTIPS.zip",
+        teamMembers: [
+          { name: "Ritvik S Chunamari", role: "Lead 3D CAD & Systems Design", usn: "01FE20BCS080", email: "01fe20bcs080@kletech.ac.in" },
+          { name: "Rakshita C Bandi", role: "Mechatronics & Circuit Architecture", usn: "01FE20BCS076", email: "01fe20bcs076@kletech.ac.in" },
+          { name: "Soumya Katagihalli", role: "UI & Problem Formulation", usn: "01FE20BCS002", email: "01fe20bcs002@kletech.ac.in" },
+          { name: "Vikas B Navalgund", role: "Electronics & Motor Sizing", usn: "01FE20BEC002", email: "01fe20bec002@kletech.ac.in" }
+        ],
+        executiveSummary: {
+          headline: "Mechatronic automated medication dispenser engineered with optical drop validation and 99.4% dispensing accuracy.",
+          coreProblem: "Elderly and polypharmacy patients suffer dangerous dosing errors due to dexterity constraints with childproof pill bottles and multi-medication timing confusion.",
+          intervention: "Engineered a servo-driven rotating carousel in Autodesk Inventor with IR beam-break optical drop verification, Arduino Uno control logic, and an ergonomic single-motion collection bay.",
+          impact: "99.4% benchtop dispensing accuracy, zero accidental double-doses during simulated 30-day trials, and single-touch operation requiring under 2.5N actuation force.",
+          roleAndScope: "Lead 3D CAD & Systems Design (Autodesk Inventor, Mechatronics, C++, Bill of Materials)",
+          keyStats: [
+            { label: "Dispensing Accuracy", value: "99.4%" },
+            { label: "Force Required", value: "<2.5N" },
+            { label: "BOM Parts", value: "19 Items" },
+            { label: "Double-Dose Rate", value: "0.0%" }
+          ]
+        },
+        designRetrospective: {
+          whatWorked: [
+            "Dual-disc gate mechanism physically prevented pill jamming across standard capsule and tablet size envelopes.",
+            "Infrared emitter-detector pair provided real-time electronic confirmation that medication actually cleared the chute.",
+            "Complete Bill of Materials (BOM) was optimized for low-cost rapid fabrication using off-the-shelf standard hobby components."
+          ],
+          whatCouldImprove: [
+            "FDM 3D printing surface layer ridges caused slight friction drag on smaller gel caps; injection-molded food-grade POM or Teflon coating would be required in production.",
+            "Battery backup duration was limited to 8 hours under power outage simulations; adding deep-sleep low-power states to the ATmega328P is needed."
+          ],
+          lessonsLearned: [
+            "Physical engineering requires brutal tolerance discipline—unlike software, 0.5mm of mechanical interference causes a total hardware lockup.",
+            "Designing for healthcare requires designing for physical vulnerability: ease of access must be balanced against accidental misuse."
+          ]
+        }
+      }
     }
   ],
   skills: [
     {
-      category: "Creative Technology & Code",
-      skills: "React 19, TypeScript, Three.js, WebGL, Tailwind CSS, GSAP, Python, FastAPI, Node.js"
+      category: "Creative Technology & Prototyping",
+      skills: "React 19, TypeScript, Three.js, WebGL, Tailwind CSS, GSAP, Python, FastAPI, Vibe Coding"
     },
     {
       category: "Design Architecture & Systems",

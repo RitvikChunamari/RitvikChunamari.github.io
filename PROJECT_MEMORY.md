@@ -3,8 +3,9 @@
 ## 1. Project Purpose & Positioning Architecture
 - **Purpose**: Awwwards-caliber digital experience and portfolio for **Ritvik Chunamari**.
 - **Primary Positioning**: **Product Designer & Creative Technologist**
+  - Introduction: *"I'm Ritvik, a designer who likes turning complex ideas into simple, thoughtful digital experiences. I work across product design, UX, and creative technology, exploring how design and engineering can make technology feel more human."*
   - Secondary Competencies: UX/UI Design, Product Architecture, Creative Technology, AI-Assisted Development, Visual Identity Systems.
-  - Vibe Coding Stance: Retained strictly as an accelerated creative prototyping capability, grounded by rigorous human-centered UX heuristics, design tokens, and production engineering.
+  - Vibe Coding Stance: Retained strictly as an accelerated creative prototyping capability in skills and coursework, grounded by rigorous human-centered UX heuristics, design tokens, and production engineering.
 - **Brand Statement**: *"Design for humans. Build for wonder."*
 - **Visual Design Identity**:
   - Swiss architectural minimalism and high-density telemetry.
@@ -50,12 +51,23 @@ Interactive creative technology section with 3 live sandboxes:
 3. **Exp 03: Token Synthesizer** (Real-time design token adjustments with Swiss, Editorial, and Cyber presets).
 
 ### 3.3 Project Exhibition (`components/ProjectList.tsx`, `data.ts`)
-- **Ordering & Categorization:** Strictly presents all 4 featured Product & UX case studies first (`impact-events`, `nexus-ai`, `security-agency-ux`, `usps-organization-rebrand`), followed by 3 Technology Experiments (`kinetix-quant`, `pill-dispenser-3d`, `mumbai-olympics-2028`).
-- **Category Division Telemetry:** Dedicated category dividers in Mode A (`01.2 /// CREATIVE COMPUTING & EXPERIMENTS`) and Mode B with dynamic filtering support.
-- **Mode A: Editorial Exhibition:** Monumental cover imagery, typographic reveal animations, category tags, and primary metric highlights.
-- **Mode B: Compact Index:** High-density monospace tabular format displaying project year, client/domain, role, and technologies.
-- **Filter Chips:** Instant filtering between "All", "Product & UX" (Featured), and "Experiments".
-- Top Featured Project: *Impact Events* (Enterprise Event Platform) with custom cover asset `public/impact-events-cover.svg`.
+- **3-Tier Narrative Hierarchy:**
+  - **Tier 1 (Featured Product & UX):**
+    1. *Impact Events* (Enterprise Event Platform & Mobile UX)
+    2. *Nexus AI* (Enterprise UX & Generative Toolchain)
+    3. *Security Agency UX Platform* (Dual-faceted Client Funnel & SOC Operations Dashboard)
+  - **Tier 2 (Visual Systems & Branding):**
+    4. *USPS Organization Rebrand* (250th Anniversary Brand Identity & Fleet System)
+    5. *Mumbai Olympics 2028* (Civic Olympic Bid Identity & Broadcast Motion System)
+  - **Tier 3 (Creative Technology & Experiments):**
+    6. *Kinetix Quant* (Institutional AI, 1D CNN+GRU & Integrated Gradients)
+    7. *Pill Dispenser 3D* (Industrial Design, Autodesk Inventor & Mechatronics)
+- **Category Division Telemetry:**
+  - `01.0 /// FEATURED PRODUCT & UX`
+  - `01.1 /// VISUAL SYSTEMS & BRANDING` (`data-testid="branding-category-divider"` and `data-testid="branding-index-divider"`)
+  - `01.2 /// CREATIVE TECHNOLOGY & EXPERIMENTS` (`data-testid="experiment-category-divider"` and `data-testid="experiment-index-divider"`)
+- **Filter Chips:** 4 instant filters: "All", "Product & UX", "Visual & Brand", "Creative Tech".
+- **Humanized Voice & Tone:** Pruned corporate AI buzzwords; project narratives speak in clear, authentic designer voice detailing real user frictions, design decisions, and measured outcomes.
 
 ### 3.4 Deep Modular Case Studies (`components/ProjectDetail.tsx`)
 - **30-Second Executive Summary Module (Section 01.1):**
@@ -93,6 +105,6 @@ Interactive creative technology section with 3 live sandboxes:
   - Asserts strict Zero Audio compliance via `AudioContext` runtime proxies.
 - **Verification Commands**:
   - Production Build: `npm run build` (~1.7s build time, exit code 0)
-  - Playwright QA Suite: `node verify_awwwards_portfolio.cjs` (39/39 tests passing)
+  - Playwright QA Suite: `node verify_awwwards_portfolio.cjs` (46/46 tests passing (including grounded copy verification and 3-tier dividers))
   - Local Preview: `npm run preview`
   - Local Dev: `npm run dev`

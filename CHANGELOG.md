@@ -1,3 +1,17 @@
+## [2026-10-19] — Humanized Copy & 3-Tier Portfolio Hierarchy
+
+### Changed
+- **Primary Professional Identity**: Positioned as "Product Designer & Creative Technologist", clarifying value for UX/product roles while retaining "vibe coding" as an accelerated prototyping capability in skills and coursework.
+- **Introduction**: Replaced abstract manifesto with grounded designer introduction:
+  *"I'm Ritvik, a designer who likes turning complex ideas into simple, thoughtful digital experiences. I work across product design, UX, and creative technology, exploring how design and engineering can make technology feel more human."*
+- **3-Tier Project Ordering**:
+  - **Tier 1 (Featured UX / Product Work)**: *Impact Events*, *Nexus AI*, *Security Agency UX Platform*.
+  - **Tier 2 (Visual Design & Branding)**: *USPS Organization Rebrand*, *Mumbai Olympics 2028*.
+  - **Tier 3 (Creative Technology & Experiments)**: *Kinetix Quant*, *Pill Dispenser 3D*.
+- **Copy Grounding**: Rewrote elevator pitches, problem statements, and solutions across all 7 projects to speak in an authentic, first-person designer voice, eliminating AI buzzwords and corporate placeholders.
+- **Project Exhibition Filter & Divider Telemetry**: Added 4 filter chips ("All", "Product & UX", "Visual & Brand", "Creative Tech") and distinct editorial section dividers for Tier 2 and Tier 3 in both Editorial and Index modes.
+- **Verification**: Updated test suite in `verify_awwwards_portfolio.cjs` — all 46 Playwright assertions passing across 5 viewports with 0 console errors and 0 audio triggers.
+
 # Changelog
 **Ritvik Chunamari Portfolio — Awwwards-Caliber Elevation**
 *All notable changes to this project are documented in this file.*

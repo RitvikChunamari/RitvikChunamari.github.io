@@ -9,7 +9,7 @@ interface ProjectListProps {
 
 export const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) => {
   const [viewMode, setViewMode] = useState<'editorial' | 'index'>('editorial');
-  const [selectedFilter, setSelectedFilter] = useState<'all' | 'product' | 'experiment'>('all');
+  const [selectedFilter, setSelectedFilter] = useState<'all' | 'product' | 'branding' | 'experiment'>('all');
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
 
   const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -20,10 +20,13 @@ export const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectCli
   const filteredProjects = projects.filter(p => {
     if (selectedFilter === 'all') return true;
     if (selectedFilter === 'product') {
-      return p.projectGroup === 'featured' || p.category.toLowerCase().includes('ux') || p.category.toLowerCase().includes('design') || p.category.toLowerCase().includes('rebrand');
+      return p.projectGroup === 'featured' || p.category.toLowerCase().includes('ux') || p.category.toLowerCase().includes('product');
+    }
+    if (selectedFilter === 'branding') {
+      return p.projectGroup === 'branding' || p.category.toLowerCase().includes('brand') || p.category.toLowerCase().includes('identity');
     }
     if (selectedFilter === 'experiment') {
-      return p.projectGroup === 'experiment' || p.category.toLowerCase().includes('ai') || p.category.toLowerCase().includes('mechatronics') || p.category.toLowerCase().includes('motion');
+      return p.projectGroup === 'experiment' || p.category.toLowerCase().includes('ai') || p.category.toLowerCase().includes('mechatronics') || p.category.toLowerCase().includes('quant');
     }
     return true;
   });
@@ -234,19 +237,24 @@ export const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectCli
              
              {/* Category Filter Chips */}
              <div className="flex items-center gap-1.5 bg-white/5 p-1 rounded-sm border border-white/10" role="tablist" aria-label="Project Category Filter">
-               {(['all', 'product', 'experiment'] as const).map(filter => (
+               {[
+                 { id: 'all', label: 'All' },
+                 { id: 'product', label: 'Product & UX' },
+                 { id: 'branding', label: 'Visual & Brand' },
+                 { id: 'experiment', label: 'Creative Tech' },
+               ].map(filter => (
                  <button
-                   key={filter}
+                   key={filter.id}
                    role="tab"
-                   aria-selected={selectedFilter === filter}
-                   onClick={() => setSelectedFilter(filter)}
+                   aria-selected={selectedFilter === filter.id}
+                   onClick={() => setSelectedFilter(filter.id as any)}
                    className={`px-3 py-1 text-[10px] sm:text-xs font-mono uppercase tracking-wider rounded-sm transition-all duration-200 cursor-pointer ${
-                     selectedFilter === filter
+                     selectedFilter === filter.id
                        ? 'bg-white text-black font-bold shadow-sm'
                        : 'text-neutral-400 hover:text-white'
                    }`}
                  >
-                   {filter === 'all' ? 'All' : filter === 'product' ? 'Product & UX' : 'Experiments'}
+                   {filter.label}
                  </button>
                ))}
              </div>
@@ -288,24 +296,43 @@ export const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectCli
         {viewMode === 'editorial' ? (
           <div className="flex flex-col gap-28 md:gap-36">
             {filteredProjects.map((project, index) => {
-              const showExperimentDivider = selectedFilter === 'all' && project.projectGroup === 'experiment' && (index === 0 || filteredProjects[index - 1]?.projectGroup === 'featured');
+              const showBrandingDivider = selectedFilter === 'all' && project.projectGroup === 'branding' && (index === 0 || filteredProjects[index - 1]?.projectGroup === 'featured');
+              const showExperimentDivider = selectedFilter === 'all' && project.projectGroup === 'experiment' && (index === 0 || filteredProjects[index - 1]?.projectGroup !== 'experiment');
               return (
                 <React.Fragment key={project.slug || project.title}>
-                  {showExperimentDivider && (
-                    <div className="pt-12 pb-4 border-t border-white/10 flex flex-col md:flex-row justify-between items-start md:items-end gap-4" data-testid="experiment-category-divider">
+                  {showBrandingDivider && (
+                    <div className="pt-16 pb-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-start md:items-end gap-4" data-testid="branding-category-divider">
                       <div className="flex items-center gap-3">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
                         <div>
                           <h3 className="text-xs font-mono uppercase tracking-[0.25em] text-white/80 font-medium">
-                            01.2 /// CREATIVE COMPUTING &amp; EXPERIMENTS
+                            01.1 /// VISUAL SYSTEMS &amp; BRANDING
                           </h3>
                           <p className="text-xs text-neutral-400 font-mono mt-1">
-                            Quantitative AI, Physical Computing &amp; Generative Identity Systems
+                            Brand Identity Systems, Editorial Art Direction &amp; Motion Design
                           </p>
                         </div>
                       </div>
                       <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/40">
-                        RESEARCH LAB // 03 EXPERIMENTS
+                        STUDIO FOLIO // 02 WORKS
+                      </span>
+                    </div>
+                  )}
+                  {showExperimentDivider && (
+                    <div className="pt-16 pb-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-start md:items-end gap-4" data-testid="experiment-category-divider">
+                      <div className="flex items-center gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
+                        <div>
+                          <h3 className="text-xs font-mono uppercase tracking-[0.25em] text-white/80 font-medium">
+                            01.2 /// CREATIVE TECHNOLOGY &amp; EXPERIMENTS
+                          </h3>
+                          <p className="text-xs text-neutral-400 font-mono mt-1">
+                            Quantitative AI, Machine Learning &amp; Physical Mechatronics
+                          </p>
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/40">
+                        RESEARCH LAB // 02 EXPERIMENTS
                       </span>
                     </div>
                   )}
@@ -455,16 +482,36 @@ export const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectCli
             {/* Index Rows */}
             <div className="divide-y divide-white/[0.06]">
               {filteredProjects.map((project, idx) => {
-                const showExperimentDivider = selectedFilter === 'all' && project.projectGroup === 'experiment' && (idx === 0 || filteredProjects[idx - 1]?.projectGroup === 'featured');
+                const showFeaturedDivider = selectedFilter === 'all' && idx === 0;
+                const showBrandingDivider = selectedFilter === 'all' && project.projectGroup === 'branding' && (idx === 0 || filteredProjects[idx - 1]?.projectGroup === 'featured');
+                const showExperimentDivider = selectedFilter === 'all' && project.projectGroup === 'experiment' && (idx === 0 || filteredProjects[idx - 1]?.projectGroup !== 'experiment');
                 return (
                   <React.Fragment key={project.slug || project.title}>
+                    {showFeaturedDivider && (
+                      <div className="px-6 py-3 bg-white/[0.02] border-b border-white/10 flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-white/60">
+                        <div className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
+                          <span>01.0 /// FEATURED PRODUCT &amp; UX</span>
+                        </div>
+                        <span className="text-white/40">ENTERPRISE PLATFORMS &amp; MOBILE APPS</span>
+                      </div>
+                    )}
+                    {showBrandingDivider && (
+                      <div className="px-6 py-3 bg-white/[0.02] border-y border-white/10 flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-white/60" data-testid="branding-index-divider">
+                        <div className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
+                          <span>01.1 /// VISUAL SYSTEMS &amp; BRANDING</span>
+                        </div>
+                        <span className="text-white/40">IDENTITY SYSTEMS &amp; MOTION</span>
+                      </div>
+                    )}
                     {showExperimentDivider && (
                       <div className="px-6 py-3 bg-white/[0.02] border-y border-white/10 flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-white/60" data-testid="experiment-index-divider">
                         <div className="flex items-center gap-2">
                           <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
-                          <span>TECHNOLOGY EXPERIMENTS &amp; COMPUTATIONAL CRAFT</span>
+                          <span>01.2 /// CREATIVE TECHNOLOGY &amp; EXPERIMENTS</span>
                         </div>
-                        <span className="text-white/40">RESEARCH LAB</span>
+                        <span className="text-white/40">QUANTITATIVE AI &amp; MECHATRONICS</span>
                       </div>
                     )}
                     <div

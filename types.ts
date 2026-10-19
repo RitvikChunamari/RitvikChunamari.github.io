@@ -274,7 +274,8 @@ export interface Project {
   link?: string;
   slug?: string;
   isFeatured?: boolean;
-  projectGroup?: 'featured' | 'experiment';
+  projectGroup?: 'featured' | 'branding' | 'experiment';
+  tier?: 'product' | 'branding' | 'experiment';
   caseStudy?: CaseStudy;
 }
 

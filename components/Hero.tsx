@@ -389,7 +389,7 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
           </h2>
 
           <p className="text-sm sm:text-base md:text-lg font-light text-neutral-300 leading-relaxed tracking-tight">
-            Architecting sensory digital experiences at the intersection of human-centered design, interaction architecture, and computational precision. Navigating the world with Cerebral Palsy grounds an uncompromising standard for digital ergonomics.
+            I'm a designer who likes turning complex ideas into simple, thoughtful digital experiences across product design, UX, and creative technology.
           </p>
 
           {/* Disciplines Index */}
@@ -397,11 +397,11 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
             <span className="text-[#FF3B30] font-bold">// DISCIPLINES:</span>
             <span className="hover:text-white transition-colors"><strong className="text-white font-mono mr-1">01</strong> PRODUCT &amp; UX</span>
             <span className="text-white/20">/</span>
-            <span className="hover:text-white transition-colors"><strong className="text-white font-mono mr-1">02</strong> CREATIVE COMPUTING</span>
+            <span className="hover:text-white transition-colors"><strong className="text-white font-mono mr-1">02</strong> VISUAL SYSTEMS</span>
             <span className="text-white/20">/</span>
-            <span className="hover:text-white transition-colors"><strong className="text-white font-mono mr-1">03</strong> RADICAL ACCESSIBILITY</span>
+            <span className="hover:text-white transition-colors"><strong className="text-white font-mono mr-1">03</strong> CREATIVE TECH</span>
             <span className="text-white/20">/</span>
-            <span className="hover:text-white transition-colors"><strong className="text-white font-mono mr-1">04</strong> PROTOTYPING</span>
+            <span className="hover:text-white transition-colors"><strong className="text-white font-mono mr-1">04</strong> ACCESSIBILITY</span>
           </div>
         </div>
       </div>
