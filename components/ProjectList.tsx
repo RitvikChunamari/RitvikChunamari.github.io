@@ -7,14 +7,6 @@ interface ProjectListProps {
   onProjectClick: (project: Project) => void;
 }
 
-const getProjectEditorialBadge = (title: string) => {
-  if (title.includes('Kinetix')) return { label: 'FLAGSHIP INSTITUTIONAL AI', tag: 'NEURAL MODEL' };
-  if (title.includes('USPS')) return { label: 'UNIVERSAL DESIGN SYSTEM', tag: 'FEDERAL REBRAND' };
-  if (title.includes('Security')) return { label: 'ENTERPRISE SOC & OPERATIONS', tag: 'MISSION CRITICAL' };
-  if (title.includes('Pill')) return { label: 'ASSISTIVE ROBOTICS & HARDWARE', tag: 'MEDTECH PROTOTYPE' };
-  if (title.includes('Mumbai') || title.includes('Olympic')) return { label: 'OLYMPIC GAMES KINETIC IDENTITY', tag: 'CULTURAL BRANDING' };
-  return { label: 'SELECTED CASE STUDY', tag: 'DESIGN & DEV' };
-};
 
 const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) => {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
@@ -194,12 +186,12 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
     <section id="work" className="relative py-24 md:py-32 min-h-screen z-20">
       <div className="container mx-auto px-6 md:px-12 relative z-10">
         
-        {/* Section Header Synchronized with Hero Swiss Telemetry */}
-        <div className="grid grid-cols-1 md:grid-cols-12 mb-16 md:mb-24 border-b border-white/10 pb-6 items-end">
+        {/* Minimal Section Header */}
+        <div className="grid grid-cols-1 md:grid-cols-12 mb-16 md:mb-24 border-b border-white/10 pb-4 items-end">
            <div className="md:col-span-4 flex items-center gap-3">
              <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-             <h2 className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-white/90 font-medium">
-               <span className="text-[#FF3B30] font-bold">02 ///</span> CHAPTER 02 • SELECTED WORKS
+             <h2 className="text-[9px] md:text-[10px] font-mono uppercase tracking-[0.25em] text-white/50">
+               01 / Selected Works
              </h2>
            </div>
            <div className="md:col-span-8 flex justify-between md:justify-end items-center gap-6">
@@ -252,27 +244,14 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
                 />
 
                 {/* Swiss Corner Registration Brackets */}
-                <div className="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-6 opacity-75 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300">
+                <div className="absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-6 opacity-40 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300">
                   <div className="flex justify-between items-start">
-                    <span className="w-2.5 h-2.5 border-t border-l border-white/80"></span>
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-[8px] tracking-widest text-white font-bold uppercase bg-black/80 px-2 py-0.5 rounded border border-white/20 backdrop-blur-sm flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]" aria-hidden="true" />
-                        {getProjectEditorialBadge(project.title).label}
-                      </span>
-                      <span className="font-mono text-[8px] tracking-widest text-neutral-400 uppercase hidden sm:inline-block">
-                        FOLIO // REF-0{index + 1}
-                      </span>
-                    </div>
-                    <span className="w-2.5 h-2.5 border-t border-r border-white/80"></span>
+                    <span className="w-2.5 h-2.5 border-t border-l border-white/60"></span>
+                    <span className="w-2.5 h-2.5 border-t border-r border-white/60"></span>
                   </div>
                   <div className="flex justify-between items-end">
-                    <span className="w-2.5 h-2.5 border-b border-l border-white/80"></span>
-                    <span className="font-mono text-[8px] tracking-widest text-white/60 uppercase group-hover:text-white transition-colors flex items-center gap-1.5 bg-black/60 px-2.5 py-1 rounded-full border border-white/10 backdrop-blur-sm">
-                      <span>VIEW CASE STUDY</span>
-                      <span className="text-[#FF3B30]">↗</span>
-                    </span>
-                    <span className="w-2.5 h-2.5 border-b border-r border-white/80"></span>
+                    <span className="w-2.5 h-2.5 border-b border-l border-white/60"></span>
+                    <span className="w-2.5 h-2.5 border-b border-r border-white/60"></span>
                   </div>
                 </div>
 

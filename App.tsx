@@ -91,8 +91,6 @@ const App: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const progressCircleRef = useRef<SVGCircleElement>(null);
   const progressTextRef = useRef<HTMLSpanElement>(null);
-  const chapterNumRef = useRef<HTMLSpanElement>(null);
-  const chapterNameRef = useRef<HTMLSpanElement>(null);
 
   // Virtual Scroll State
   const scrollY = useRef(0);
@@ -377,36 +375,21 @@ const App: React.FC = () => {
           progressTextRef.current.textContent = `${Math.round(progress * 100)}%`;
         }
 
-        // Active Chapter detection (Zero re-render overhead via direct DOM refs, state updated only on boundary crossing)
+        // Active section detection for header
         const workElem = document.getElementById('work');
         const profileElem = document.getElementById('profile');
         const contactElem = document.getElementById('contact');
 
-        let chNum = '01';
-        let chName = 'IDENTITY';
         let newSec: 'home' | 'work' | 'profile' | 'contact' = 'home';
-
         const triggerOffset = window.innerHeight * 0.45;
         if (contactElem && roundedY >= (contactElem.offsetTop - triggerOffset)) {
-          chNum = '04';
-          chName = 'CONTACT';
           newSec = 'contact';
         } else if (profileElem && roundedY >= (profileElem.offsetTop - triggerOffset)) {
-          chNum = '03';
-          chName = 'PROFILE';
           newSec = 'profile';
         } else if (workElem && roundedY >= (workElem.offsetTop - triggerOffset)) {
-          chNum = '02';
-          chName = 'SELECTED WORK';
           newSec = 'work';
         }
 
-        if (chapterNumRef.current && chapterNumRef.current.textContent !== `CH ${chNum}`) {
-          chapterNumRef.current.textContent = `CH ${chNum}`;
-        }
-        if (chapterNameRef.current && chapterNameRef.current.textContent !== chName) {
-          chapterNameRef.current.textContent = chName;
-        }
         if (activeSectionRef.current !== newSec) {
           activeSectionRef.current = newSec;
           setActiveSection(newSec);
@@ -660,16 +643,12 @@ const App: React.FC = () => {
           <span ref={cursorTextRef} className="text-white text-[9px] font-mono font-bold uppercase tracking-widest opacity-0 transition-opacity duration-150"></span>
         </div>
 
-        {/* Circular Scroll Progress & Chapter HUD (Zero React Re-renders) */}
+        {/* Minimal Circular Scroll Progress Indicator */}
         {currentView === 'home' && (
           <div 
-            className="fixed bottom-8 right-8 z-[50] mix-blend-difference hidden md:flex items-center gap-3 select-none pointer-events-none"
+            className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[50] mix-blend-difference hidden md:flex items-center justify-center select-none pointer-events-none"
             aria-hidden="true"
           >
-            <div className="text-right font-mono tracking-widest text-[9px] uppercase">
-              <span ref={chapterNumRef} className="text-[#FF3B30] font-bold block">CH 01</span>
-              <span ref={chapterNameRef} className="text-white/60 tracking-wider">IDENTITY</span>
-            </div>
             <div className="relative w-[48px] h-[48px] flex items-center justify-center">
               <svg width="48" height="48" className="transform -rotate-90">
                 <circle 

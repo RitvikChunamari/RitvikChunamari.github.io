@@ -98,10 +98,7 @@ const About: React.FC<AboutProps> = ({ data }) => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32 relative">
           <div className="md:col-span-4">
             <div className="sticky top-32 self-start">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-600 block mb-4 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#C62828]"></span>
-                <span className="text-[#C62828] font-bold">03 ///</span> CHAPTER 03 • PROFILE & ARCHITECTURE
-              </span>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-4">● 02 / Profile</span>
             </div>
           </div>
           <div className="md:col-span-8" data-cursor-text="READING" data-edith-target="BIOMETRIC PROFILE // RITVIK CHUNAMARI">

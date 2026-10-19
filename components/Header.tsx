@@ -129,25 +129,19 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, activeSection = 'home' }) =
         </div>
 
         {/* Navigation - Right Aligned Grid */}
-        <nav aria-label="Main Navigation" className="w-auto md:w-auto flex items-center justify-end space-x-3 sm:space-x-7 md:space-x-8">
-          {['Work', 'Profile', 'Contact'].map((item) => {
-            const isActive = activeSection === item.toLowerCase();
-            return (
-              <MagneticNavItem 
-                key={item}
-                onClick={() => onNavigate(item.toLowerCase())}
-                ariaLabel={`Navigate to ${item} section`}
-                className={`text-[10px] md:text-xs font-bold uppercase tracking-widest transition-colors duration-200 ${
-                  isActive ? 'text-white' : 'text-neutral-400 hover:text-white'
-                }`}
-              >
-                <span className="flex items-center gap-1.5">
-                  {isActive && <span className="w-1 h-1 rounded-full bg-[#FF3B30] animate-pulse" aria-hidden="true" />}
-                  {item}
-                </span>
-              </MagneticNavItem>
-            );
-          })}
+        <nav aria-label="Main Navigation" className="w-auto md:w-auto flex items-center justify-end space-x-5 sm:space-x-7 md:space-x-8">
+          {['Work', 'Profile', 'Contact'].map((item) => (
+            <MagneticNavItem 
+              key={item}
+              onClick={() => onNavigate(item.toLowerCase())}
+              ariaLabel={`Navigate to ${item} section`}
+              className={`text-[10px] md:text-xs font-bold uppercase tracking-widest transition-colors duration-200 ${
+                activeSection === item.toLowerCase() ? 'text-white' : 'text-white/70 hover:text-white'
+              }`}
+            >
+              {item}
+            </MagneticNavItem>
+          ))}
 
           {/* Action Button: RESUME */}
           <MagneticNavItem

@@ -437,50 +437,6 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
   const heroImageRef = useRef<HTMLImageElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeLightbox, setActiveLightbox] = React.useState<{ image: string; title: string; subtitle?: string } | null>(null);
-  const [readingDepth, setReadingDepth] = React.useState<'overview' | 'deepdive'>('overview');
-
-  const getProjectMetrics = (title: string) => {
-    if (title.includes('Kinetix')) {
-      return [
-        { value: '+0.97%', label: 'STRATEGY PROFIT', desc: 'vs -7.83% Buy & Hold loss in simulated 300-day bear market' },
-        { value: '12', label: 'MACRO DIMENSIONS', desc: 'Neural engine training on Nasdaq, DXY, volume & market correlations' },
-        { value: '100%', label: 'EXPLAINABLE AI', desc: 'TensorFlow Integrated Gradients proving exact feature attributions' },
-      ];
-    }
-    if (title.includes('USPS')) {
-      return [
-        { value: '250-YR', label: 'HERITAGE CONTINUITY', desc: 'Balancing historical trust with contemporary universal digital design' },
-        { value: '3', label: 'SYSTEM PROFILES', desc: 'Comprehensive vehicle livery, official postal stationery, and merchandise' },
-        { value: 'WCAG AAA', label: 'ACCESSIBLE PALETTE', desc: 'Universal color contrast and typographic legibility standards' },
-      ];
-    }
-    if (title.includes('Security')) {
-      return [
-        { value: '+20%', label: 'USER ENGAGEMENT', desc: 'Streamlined client acquisition and operational transparency portal' },
-        { value: '+15%', label: 'USER SATISFACTION', desc: 'Validated through structured usability tests and user interviews' },
-        { value: '40%', label: 'DISPATCH VELOCITY', desc: 'Elimination of redundant telemetry friction in mission-critical SOC flows' },
-      ];
-    }
-    if (title.includes('Pill')) {
-      return [
-        { value: '< ₹3,000', label: 'PROTOTYPE COST', desc: 'Radical cost reduction vs ₹50,000 commercial robotic dispensers' },
-        { value: '100%', label: 'STERILE DISPENSING', desc: 'Closed-canister automated feed preventing manual contamination' },
-        { value: '3-TIER', label: 'SAFETY SUBSYSTEMS', desc: 'Dual servo sweep, optical beam sensor, and LCD verification alert' },
-      ];
-    }
-    if (title.includes('Mumbai') || title.includes('Olympic')) {
-      return [
-        { value: '5', label: 'MODULAR EMBLEMS', desc: 'Distinct architectural marks celebrating cultural landmarks of Mumbai' },
-        { value: '4K 60FPS', label: 'KINETIC IDENTITY', desc: 'Full broadcast motion sting and animated logo typography' },
-        { value: '100%', label: 'BILINGUAL HARMONY', desc: 'Custom Devanagari & Latin typographic synthesis' },
-      ];
-    }
-    return [
-      { value: '100%', label: 'PRODUCTION READY', desc: 'High-fidelity design and engineering implementation' },
-      { value: 'WCAG 2.2', label: 'ACCESSIBLE UX', desc: 'Inclusive design system with verified keyboard & screen-reader flows' },
-      { value: 'A+ CRAFT', label: 'SYSTEM ARCHITECTURE', desc: 'Engineered with precision typography, responsive grids & tokens' },
-    ];
-  };
 
   // Keyboard navigation: Escape closes lightbox or returns to portfolio index
   useEffect(() => {
@@ -733,53 +689,6 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
              </div>
           </div>
 
-          {/* Dual-Depth Reading Mode Switcher */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-white/15 pt-6 mt-8">
-            <div className="flex items-center gap-3">
-              <span className="font-mono text-[10px] text-white/50 uppercase tracking-widest">
-                Reading Depth:
-              </span>
-              <div 
-                role="tablist" 
-                aria-label="Case study reading depth"
-                className="inline-flex items-center p-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"
-              >
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={readingDepth === 'overview'}
-                  onClick={() => setReadingDepth('overview')}
-                  className={`px-4 py-1.5 rounded-full text-xs font-mono font-medium uppercase tracking-wider transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white ${
-                    readingDepth === 'overview'
-                      ? 'bg-white text-black font-bold shadow-[0_0_15px_rgba(255,255,255,0.3)]'
-                      : 'text-neutral-400 hover:text-white'
-                  }`}
-                >
-                  ⚡ Quick Overview (1-Min Scan)
-                </button>
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={readingDepth === 'deepdive'}
-                  onClick={() => setReadingDepth('deepdive')}
-                  className={`px-4 py-1.5 rounded-full text-xs font-mono font-medium uppercase tracking-wider transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white ${
-                    readingDepth === 'deepdive'
-                      ? 'bg-white text-black font-bold shadow-[0_0_15px_rgba(255,255,255,0.3)]'
-                      : 'text-neutral-400 hover:text-white'
-                  }`}
-                >
-                  📖 Deep Dive (Full Spec)
-                </button>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-              <span className="font-mono text-[10px] uppercase tracking-widest text-white/60">
-                {readingDepth === 'overview' ? 'Executive Mode • 60-Second Scan' : 'Comprehensive Mode • Full Process & Spec'}
-              </span>
-            </div>
-          </div>
         </div>
 
         {/* Full Width Hero Image Card (Visual Stage) */}
@@ -845,131 +754,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
           </div>
         )}
 
-        {/* Dual Reading Depths: Quick Overview (1-Minute Scan) vs Deep Dive (Full Spec) */}
-        {readingDepth === 'overview' ? (
-          <div className="space-y-12 md:space-y-16 mb-16 md:mb-24">
-            
-            {/* 1. Verified Impact & Quantifiable Outcomes */}
-            <section className="border-b border-white/10 pb-12">
-              <div className="flex items-center gap-2 mb-6">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-[#FF3B30] font-bold">
-                  Verified Quantifiable Outcomes
-                </span>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {getProjectMetrics(project.title).map((m, idx) => (
-                  <div key={idx} className="p-6 rounded-sm bg-neutral-900/60 border border-white/15 backdrop-blur-md hover:border-white/40 transition-colors">
-                    <span className="text-3xl sm:text-4xl md:text-5xl font-bold font-mono tracking-tight text-white block mb-2">
-                      {m.value}
-                    </span>
-                    <span className="font-mono text-[10px] uppercase tracking-widest text-[#FF3B30] font-bold block mb-1">
-                      {m.label}
-                    </span>
-                    <p className="text-xs text-neutral-300 leading-relaxed">
-                      {m.desc}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* 2. Challenge vs Implemented Solution */}
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-8 border-b border-white/10 pb-12">
-              <div className="p-6 sm:p-8 rounded-sm bg-neutral-900/40 border border-[#FF3B30]/30 backdrop-blur-sm">
-                <span className="font-mono text-[10px] uppercase tracking-widest text-[#FF3B30] font-bold block mb-3 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
-                  The Core Challenge & Friction Points
-                </span>
-                <h4 className="text-xl sm:text-2xl font-bold text-white mb-4 uppercase tracking-tight">
-                  {caseStudy.challenge ? caseStudy.challenge.slice(0, 80) + '...' : 'System Complexity & High-Friction User Workflows'}
-                </h4>
-                <p className="text-sm text-neutral-300 leading-relaxed mb-4">
-                  {caseStudy.challenge || caseStudy.overview}
-                </p>
-                {caseStudy.problemStatement && (
-                  <blockquote className="border-l-2 border-[#FF3B30] pl-4 py-1 text-xs text-neutral-300 italic bg-white/[0.02]">
-                    "{caseStudy.problemStatement}"
-                  </blockquote>
-                )}
-              </div>
-
-              <div className="p-6 sm:p-8 rounded-sm bg-neutral-900/40 border border-[#60A5FA]/30 backdrop-blur-sm">
-                <span className="font-mono text-[10px] uppercase tracking-widest text-[#60A5FA] font-bold block mb-3 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#60A5FA]"></span>
-                  Implemented Solution & System Architecture
-                </span>
-                <h4 className="text-xl sm:text-2xl font-bold text-white mb-4 uppercase tracking-tight">
-                  {caseStudy.solution ? caseStudy.solution.slice(0, 80) + '...' : 'Accessible, Cohesive Digital System'}
-                </h4>
-                <p className="text-sm text-neutral-300 leading-relaxed mb-4">
-                  {caseStudy.solution || caseStudy.overview}
-                </p>
-                <div className="flex flex-wrap gap-1.5 pt-2">
-                  {caseStudy.technologies.slice(0, 6).map((tech, i) => (
-                    <span key={i} className="text-[9px] font-mono uppercase px-2 py-0.5 bg-white/10 text-white border border-white/20 rounded">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            {/* 3. Deep Dive Callout Banner */}
-            <div className="p-8 sm:p-10 rounded-sm bg-gradient-to-r from-neutral-900 via-neutral-900/80 to-neutral-950 border border-white/20 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-2xl">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#60A5FA] animate-pulse"></span>
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-[#60A5FA] font-bold">
-                    Looking for Comprehensive Design Process & Simulators?
-                  </span>
-                </div>
-                <h4 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-white">
-                  Experience Journeys, Personas & Full Spec
-                </h4>
-                <p className="text-xs sm:text-sm text-neutral-400 max-w-xl leading-relaxed">
-                  Toggle to Deep Dive mode to inspect user journey maps, stage-by-stage friction analysis, target personas, interactive calculators, and full design tokens.
-                </p>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setReadingDepth('deepdive');
-                  setTimeout(() => {
-                    const el = document.getElementById('deep-dive-content');
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  }, 50);
-                }}
-                className="px-6 py-3.5 bg-white text-black font-mono text-xs font-bold uppercase tracking-widest rounded-full hover:bg-neutral-200 transition-all flex items-center gap-2 flex-shrink-0 shadow-lg active:scale-95"
-              >
-                <span>Switch to Deep Dive Mode</span>
-                <span aria-hidden="true">↓</span>
-              </button>
-            </div>
-
-          </div>
-        ) : (
-          <div id="deep-dive-content" className="contents">
-            {/* Quick Switcher back to Overview at top of Deep Dive */}
-            <div className="flex justify-between items-center bg-white/5 border border-white/10 px-4 sm:px-6 py-3 rounded-sm backdrop-blur-md mb-8">
-              <span className="font-mono text-[10px] sm:text-xs uppercase tracking-wider text-neutral-400">
-                📖 Deep Dive Mode Active — Full Technical & UX Spec
-              </span>
-              <button
-                type="button"
-                onClick={() => {
-                  setReadingDepth('overview');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className="font-mono text-[10px] sm:text-xs uppercase tracking-wider text-[#0055FF] hover:text-white transition-colors underline"
-              >
-                Switch to 1-Min Overview ↑
-              </button>
-            </div>
-
-            {/* Structured Modular Sections */}
-            <div className="space-y-12 md:space-y-16 mb-16 md:mb-24">
+        {/* Structured Modular Sections */}
+        <div className="space-y-12 md:space-y-16 mb-16 md:mb-24">
            
            {/* 1. Overview */}
            <section className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-10 lg:gap-12 pb-10 md:pb-14 border-b border-white/10">
@@ -2347,17 +2133,15 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
             )}
 
         </div> {/* End Modular Sections */}
-          </div>
-        )}
       </div> {/* End Container */}
 
       {/* IMMERSIVE USER JOURNEY SEQUENCES */}
-      {readingDepth === 'deepdive' && caseStudy.userJourneys && (
+      {caseStudy.userJourneys && (
         <ExperienceJourneysSection userJourneys={caseStudy.userJourneys} />
       )}
 
       {/* LIVE FIGMA INTERACTIVE PROTOTYPE WINDOW */}
-      {readingDepth === 'deepdive' && (caseStudy.figmaEmbedUrl || project.title === 'Nexus AI') && !caseStudy.isSecurityUX && (
+      {(caseStudy.figmaEmbedUrl || project.title === 'Nexus AI') && !caseStudy.isSecurityUX && (
         <section className="w-full bg-[#08080c] py-16 md:py-24 border-t border-white/10 relative overflow-hidden">
           {/* Subtle Background Blueprint Grid */}
           <div 
@@ -2411,7 +2195,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
       )}
 
       {/* MUMBAI 2028 INTERACTIVE LOGO GENERATOR & IDENTITY LAB */}
-      {readingDepth === 'deepdive' && caseStudy.isOlympicIdentity && (
+      {caseStudy.isOlympicIdentity && (
         <section className="w-full bg-[#08080c] py-16 md:py-24 border-t border-white/10 relative overflow-hidden">
           {/* Subtle Background Blueprint Grid */}
           <div 
@@ -2450,7 +2234,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
         </section>
       )}
 
-      {readingDepth === 'deepdive' && project.title === 'Kinetix Quant (Institutional AI)' && (
+      {project.title === 'Kinetix Quant (Institutional AI)' && (
         <div className="flex flex-col items-center justify-center py-20 px-4">
           <h3 className="text-2xl md:text-4xl font-mono text-white mb-6 tracking-tighter text-center">LIVE AI TERMINAL DEPLOYED</h3>
           <p className="text-white/50 text-center max-w-2xl mb-12 font-mono text-sm">The Deep Learning inference engine has been securely deployed to a standalone cloud server. Click below to launch the full-screen terminal.</p>

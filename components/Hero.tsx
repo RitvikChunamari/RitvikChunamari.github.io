@@ -361,66 +361,12 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
           }}
         />
 
-        {/* Professional Positioning & Manifesto Subtitle */}
+        {/* Manifesto Subtitle */}
         <div className="max-w-2xl hero-meta-reveal opacity-0">
-          <span className="font-mono text-xs sm:text-sm tracking-widest text-[#FF3B30] uppercase font-bold block mb-2">
-            Product Designer &amp; Creative Developer
-          </span>
-          <p className="text-base sm:text-lg md:text-xl font-light text-neutral-300 leading-relaxed tracking-tight">
-            I turn complex ideas into intuitive, accessible products and memorable digital experiences at the intersection of logic and human intuition.
+          <p className="text-base sm:text-lg md:text-2xl font-light text-neutral-300 leading-relaxed tracking-tight">
+            <span className="text-white font-medium shadow-glow">Creative Designer</span> and{' '}
+            <span className="text-white font-medium shadow-glow">Vibe Coder</span> crafting digital experiences at the intersection of logic and human intuition.
           </p>
-
-          {/* Direct Keyboard-Accessible Quick Navigation Action Pills */}
-          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3.5 mt-6 sm:mt-7">
-            <MagneticWrapper strength={0.2}>
-              <button
-                type="button"
-                onClick={() => onNavigate?.('work')}
-                className="group px-4 py-2 rounded-full border border-white/25 bg-white/5 hover:bg-white hover:text-black font-mono text-[10px] sm:text-xs uppercase tracking-widest transition-all duration-300 flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:outline-none shadow-sm cursor-pointer"
-                data-cursor-text="WORK"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] group-hover:bg-black transition-colors" />
-                <span>Selected Work</span>
-                <span className="text-[10px] opacity-60 group-hover:translate-y-0.5 transition-transform">↓</span>
-              </button>
-            </MagneticWrapper>
-
-            <MagneticWrapper strength={0.2}>
-              <button
-                type="button"
-                onClick={() => onNavigate?.('profile')}
-                className="px-4 py-2 rounded-full border border-white/15 bg-black/40 hover:border-white text-neutral-300 hover:text-white font-mono text-[10px] sm:text-xs uppercase tracking-widest transition-all duration-300 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none cursor-pointer"
-                data-cursor-text="ABOUT"
-              >
-                Profile &amp; About
-              </button>
-            </MagneticWrapper>
-
-            <MagneticWrapper strength={0.2}>
-              <a
-                href="./Ritvik_Chunamari_Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                download="Ritvik_Chunamari_Resume.pdf"
-                className="px-4 py-2 rounded-full border border-white/15 bg-black/40 hover:border-white text-neutral-300 hover:text-white font-mono text-[10px] sm:text-xs uppercase tracking-widest transition-all duration-300 inline-flex items-center gap-1.5 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none cursor-pointer"
-                data-cursor-text="RESUME"
-              >
-                <span>Résumé</span>
-                <span className="text-[9px] opacity-75">↗</span>
-              </a>
-            </MagneticWrapper>
-
-            <MagneticWrapper strength={0.2}>
-              <button
-                type="button"
-                onClick={() => onNavigate?.('contact')}
-                className="px-4 py-2 rounded-full border border-white/15 bg-black/40 hover:border-white text-neutral-300 hover:text-white font-mono text-[10px] sm:text-xs uppercase tracking-widest transition-all duration-300 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none cursor-pointer"
-                data-cursor-text="CONTACT"
-              >
-                Contact
-              </button>
-            </MagneticWrapper>
-          </div>
         </div>
       </div>
 
@@ -441,7 +387,7 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
             type="button"
             onClick={scrollToWork}
             aria-label="Scroll to selected works"
-            className="group flex items-center gap-3 font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-white/80 hover:text-white hover:tracking-[0.25em] transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-sm md:mr-32"
+            className="group flex items-center gap-3 font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-white/80 hover:text-white hover:tracking-[0.25em] transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-sm"
             data-cursor-text="SCROLL"
           >
             <span>Scroll to Explore</span>
@@ -459,7 +405,7 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
         <div className="w-px h-12 bg-gradient-to-b from-[#FF3B30] via-white/20 to-transparent" />
         <span className="font-mono text-[9px] tracking-[0.28em] uppercase text-white/50 mt-2 flex items-center gap-2">
           <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-          <span>02 // CHAPTER 02 • SELECTED WORK</span>
+          <span>01 / SELECTED WORKS</span>
         </span>
       </div>
 

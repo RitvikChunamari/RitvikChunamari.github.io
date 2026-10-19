@@ -55,8 +55,8 @@ const Footer: React.FC<FooterProps> = ({ personal }) => {
       <div className="border-t border-white/20 pt-8 mb-12 md:mb-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
          <div className="flex items-center gap-3">
             <span className="w-2 h-2 rounded-full bg-[#FF3B30] animate-pulse"></span>
-            <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-cinema-white/90">
-              <span className="text-[#FF3B30] font-bold">04 ///</span> CHAPTER 04 • TRANSMISSION & INQUIRY
+            <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-cinema-white/70">
+              Folio 2026 // Available for Opportunities
             </span>
          </div>
          <p className="text-sm md:text-base max-w-xs md:text-right text-neutral-300">
