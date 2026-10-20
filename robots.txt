@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://ritvikchunamari.github.io/sitemap.xml
