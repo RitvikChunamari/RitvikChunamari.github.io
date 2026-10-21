@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
 
 interface HeaderProps {
   onNavigate: (sectionId: string) => void;
@@ -18,19 +19,19 @@ const MagneticNavItem: React.FC<{
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!elemRef.current) return;
+    const isCoarse = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+    if (isCoarse) return;
+
     const { left, top, width, height } = elemRef.current.getBoundingClientRect();
+    const x = (e.clientX - (left + width / 2)) * 0.28;
+    const y = (e.clientY - (top + height / 2)) * 0.28;
     
-    // Calculate distance from center
-    const x = (e.clientX - (left + width / 2)) * 0.3; // 0.3 = magnetic strength
-    const y = (e.clientY - (top + height / 2)) * 0.3;
-    
-    // Apply transform directly for performance
-    elemRef.current.style.transform = `translate(${x}px, ${y}px)`;
+    gsap.to(elemRef.current, { x, y, duration: 0.15, ease: 'power1.out', overwrite: 'auto' });
   };
 
   const handleMouseLeave = () => {
     if (!elemRef.current) return;
-    elemRef.current.style.transform = '';
+    gsap.to(elemRef.current, { x: 0, y: 0, duration: 0.45, ease: 'power2.out', overwrite: 'auto' });
   };
 
   if (href) {
@@ -43,7 +44,7 @@ const MagneticNavItem: React.FC<{
         rel={rel}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className={`relative will-change-transform ${className}`}
+        className={`relative will-change-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] rounded-full ${className}`}
         data-cursor-text={cursorText || "OPEN"}
       >
         <span className="block pointer-events-none">
@@ -59,13 +60,13 @@ const MagneticNavItem: React.FC<{
       onClick={onClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`relative group transition-colors duration-200 ease-out will-change-transform ${className || 'text-[10px] md:text-xs font-bold uppercase tracking-widest hover:text-neutral-400'}`}
+      className={`relative group transition-colors duration-200 ease-out will-change-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] rounded-sm py-2 px-2 sm:py-1.5 sm:px-2 min-h-[40px] flex items-center justify-center active:scale-95 ${className || 'text-[10px] md:text-xs font-bold uppercase tracking-widest text-neutral-300 hover:text-white'}`}
       data-cursor-text={cursorText || "GO TO"}
     >
       <span className="block pointer-events-none">
         {children}
       </span>
-      {/* Underline only for nav items, maybe make optional? Keeping consistent for now */}
+      {/* Underline only for nav items */}
       <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full pointer-events-none"></span>
     </button>
   );
@@ -87,22 +88,42 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
 
   useEffect(() => {
     let ticking = false;
-    const handleScroll = () => {
+
+    const updateProgress = (customY?: number) => {
+      if (!progressBarRef.current) return;
+      const docHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const y = customY ?? ((window as any).__virtualScrollY ?? (window.scrollY || window.pageYOffset));
+      const progress = Math.min(1, Math.max(0, y / docHeight));
+      progressBarRef.current.style.transform = `scaleX(${progress})`;
+    };
+
+    const handleNativeScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
-          if (progressBarRef.current) {
-            const docHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-            const progress = Math.min(1, Math.max(0, (window.scrollY || window.pageYOffset) / docHeight));
-            progressBarRef.current.style.transform = `scaleX(${progress})`;
-          }
+          updateProgress();
           ticking = false;
         });
         ticking = true;
       }
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    const lenis = (window as any).__lenis;
+    const onLenisScroll = (e: any) => {
+      updateProgress(e?.scroll ?? lenis?.scroll);
+    };
+
+    if (lenis) {
+      lenis.on('scroll', onLenisScroll);
+    }
+    window.addEventListener('scroll', handleNativeScroll, { passive: true });
+    updateProgress();
+
+    return () => {
+      if (lenis) {
+        lenis.off('scroll', onLenisScroll);
+      }
+      window.removeEventListener('scroll', handleNativeScroll);
+    };
   }, []);
 
   return (
@@ -149,7 +170,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
             rel="noopener noreferrer"
             download="Ritvik_Chunamari_Resume.pdf"
             cursorText="RESUME"
-            className="border border-white/50 hover:border-white px-3 py-1 rounded-full text-[10px] md:text-xs font-mono font-bold tracking-widest text-white hover:bg-white hover:text-black transition-all duration-200 inline-flex items-center gap-1.5 shadow-sm active:scale-95"
+            className="border border-white/50 hover:border-white px-3.5 py-1.5 min-h-[36px] rounded-full text-[10px] md:text-xs font-mono font-bold tracking-widest text-white hover:bg-white hover:text-black transition-all duration-200 inline-flex items-center gap-1.5 shadow-sm active:scale-95"
           >
             <span>RESUME</span>
             <span className="text-[9px] opacity-75">↓</span>

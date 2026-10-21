@@ -424,26 +424,58 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
 
   useEffect(() => {
     let ticking = false;
-    const handleScroll = () => {
+    const updateProgress = (customY?: number) => {
+      if (!laserLineRef.current) return;
+      const docHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const y = customY ?? ((window as any).__virtualScrollY ?? (window.scrollY || window.pageYOffset));
+      const progress = Math.min(1, Math.max(0, y / docHeight));
+      laserLineRef.current.style.transform = `scaleX(${progress})`;
+    };
+
+    const handleNativeScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
-          if (laserLineRef.current) {
-            const docHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-            const progress = Math.min(1, Math.max(0, (window.scrollY || window.pageYOffset) / docHeight));
-            laserLineRef.current.style.transform = `scaleX(${progress})`;
-          }
+          updateProgress();
           ticking = false;
         });
         ticking = true;
       }
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    const lenis = (window as any).__lenis;
+    const onLenisScroll = (e: any) => {
+      updateProgress(e?.scroll ?? lenis?.scroll);
+    };
+
+    if (lenis) {
+      lenis.on('scroll', onLenisScroll);
+    }
+    window.addEventListener('scroll', handleNativeScroll, { passive: true });
+    updateProgress();
+
+    return () => {
+      if (lenis) {
+        lenis.off('scroll', onLenisScroll);
+      }
+      window.removeEventListener('scroll', handleNativeScroll);
+    };
   }, []);
 
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
+    const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (isReduced) {
+      gsap.set('.case-title-line', { y: '0%', opacity: 1 });
+      gsap.set('.case-meta-reveal', { y: 0, opacity: 1 });
+      if (heroImageRef.current && heroImageRef.current.parentElement) {
+        gsap.set(heroImageRef.current.parentElement, { clipPath: 'inset(0% 0% 0% 0%)' });
+        gsap.set(heroImageRef.current, { y: 0, scale: 1 });
+      }
+      gsap.set('.gsap-reveal', { y: 0, opacity: 1 });
+      gsap.set('.persona-card', { y: 0, opacity: 1, scale: 1 });
+      return;
+    }
 
     const ctx = gsap.context(() => {
       // Case Study Title & Meta Entrance
@@ -474,14 +506,14 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
         );
 
         gsap.to(heroImageRef.current, {
-          y: 40,
-          scale: 1.05,
+          y: 35,
+          scale: 1.04,
           ease: "none",
           scrollTrigger: {
             trigger: parent,
             start: "top bottom",
             end: "bottom top",
-            scrub: true
+            scrub: 0.6
           }
         });
       }
@@ -555,7 +587,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
             <MagneticWrapper strength={0.3}>
               <button 
                 onClick={onBack}
-                className="font-mono text-[11px] font-bold tracking-widest uppercase text-white/90 hover:text-white flex items-center gap-2 group cursor-pointer"
+                className="font-mono text-[11px] font-bold tracking-widest uppercase text-white/90 hover:text-white flex items-center gap-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#09090e] rounded-sm py-1 px-2"
                 data-cursor-text="INDEX"
               >
                 <span className="text-[#FF3B30] transition-transform duration-200 group-hover:-translate-x-1">←</span>
@@ -577,7 +609,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
             <MagneticWrapper strength={0.3}>
               <button 
                 onClick={onNext}
-                className="font-mono text-[11px] font-bold tracking-widest uppercase text-white/70 hover:text-white flex items-center gap-2 group cursor-pointer"
+                className="font-mono text-[11px] font-bold tracking-widest uppercase text-white/70 hover:text-white flex items-center gap-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#09090e] rounded-sm py-1 px-2"
                 data-cursor-text="NEXT"
               >
                 <span>NEXT PROJECT</span>

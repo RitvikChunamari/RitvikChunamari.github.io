@@ -307,13 +307,19 @@ const GlobalFluidCanvas: React.FC<GlobalFluidCanvasProps> = ({
 
     window.addEventListener('resize', handleResize);
 
-    // 6. Animation Loop
+    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // 6. Animation Loop with Tab Visibility Pausing (Zero GPU waste when tab is inactive)
     let animId: number;
+    let isPaused = false;
     let lastTime = performance.now();
     const startTime = performance.now();
 
     const animate = () => {
-      animId = requestAnimationFrame(animate);
+      if (isPaused) return;
+      if (!prefersReducedMotion) {
+        animId = requestAnimationFrame(animate);
+      }
 
       const currentTime = performance.now();
       const delta = Math.min((currentTime - lastTime) / 1000, 0.1);
@@ -342,7 +348,7 @@ const GlobalFluidCanvas: React.FC<GlobalFluidCanvasProps> = ({
       m.clickTime += delta;
 
       // Update shader uniforms
-      material.uniforms.uTime.value = elapsedTime;
+      material.uniforms.uTime.value = prefersReducedMotion ? 0 : elapsedTime;
       material.uniforms.uMouse.value.set(m.planeX, m.planeY);
       material.uniforms.uMouseVel.value.set(m.velX, m.velY);
       material.uniforms.uMouseSpeed.value = m.speed;
@@ -361,23 +367,50 @@ const GlobalFluidCanvas: React.FC<GlobalFluidCanvasProps> = ({
 
     animate();
 
-    // 7. Cleanup
-    const handleWindowScroll = () => {
-      const docHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      mouseRef.current.scrollProgress = window.scrollY / docHeight;
+    const handleVisibilityChange = () => {
+      isPaused = document.hidden;
+      if (!isPaused && !prefersReducedMotion) {
+        lastTime = performance.now();
+        animId = requestAnimationFrame(animate);
+      }
     };
-    window.addEventListener('scroll', handleWindowScroll, { passive: true });
-    handleWindowScroll();
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // 7. Lenis / Window Scroll Synchronization
+    const updateScrollProgress = (customY?: number) => {
+      const docHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const y = customY ?? ((window as any).__virtualScrollY ?? (window.scrollY || window.pageYOffset));
+      mouseRef.current.scrollProgress = Math.min(1, Math.max(0, y / docHeight));
+      if (prefersReducedMotion) {
+        renderer.render(scene, camera);
+      }
+    };
+
+    const lenis = (window as any).__lenis;
+    const onLenisScroll = (e: any) => {
+      updateScrollProgress(e?.scroll ?? lenis?.scroll);
+    };
+
+    if (lenis) {
+      lenis.on('scroll', onLenisScroll);
+    }
+    const handleNativeScroll = () => updateScrollProgress();
+    window.addEventListener('scroll', handleNativeScroll, { passive: true });
+    updateScrollProgress();
 
     return () => {
-      cancelAnimationFrame(animId);
+      if (animId) cancelAnimationFrame(animId);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (lenis) {
+        lenis.off('scroll', onLenisScroll);
+      }
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('touchstart', handleTouchMove);
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('click', handleClick);
-      window.removeEventListener('scroll', handleWindowScroll);
+      window.removeEventListener('scroll', handleNativeScroll);
 
       geometry.dispose();
       material.dispose();

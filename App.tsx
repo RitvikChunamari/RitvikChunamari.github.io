@@ -110,7 +110,20 @@ const App: React.FC = () => {
     if (typeof window === 'undefined') return;
 
     const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (isReduced) return;
+    if (isReduced) {
+      const onNativeScroll = () => {
+        const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        const progress = Math.min(1, Math.max(0, (window.scrollY || window.pageYOffset) / maxScroll));
+        if (progressCircleRef.current) {
+          progressCircleRef.current.style.strokeDashoffset = `${circumference - progress * circumference}`;
+        }
+        if (progressTextRef.current) {
+          progressTextRef.current.textContent = `${Math.round(progress * 100)}%`;
+        }
+      };
+      window.addEventListener('scroll', onNativeScroll, { passive: true });
+      return () => window.removeEventListener('scroll', onNativeScroll);
+    }
 
     const lenis = new Lenis({
       duration: 1.15,
@@ -124,11 +137,14 @@ const App: React.FC = () => {
 
     (window as any).__lenis = lenis;
 
-    const onScroll = () => {
-      (window as any).__virtualScrollY = lenis.scroll;
+    const onScroll = (e: any) => {
+      const currentScroll = e?.scroll ?? lenis.scroll;
+      (window as any).__virtualScrollY = currentScroll;
+      ScrollTrigger.update();
+
       // Direct DOM update for circular scroll progress indicator (Zero React re-render overhead)
       const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      const progress = Math.min(1, Math.max(0, lenis.scroll / maxScroll));
+      const progress = Math.min(1, Math.max(0, currentScroll / maxScroll));
       
       if (progressCircleRef.current) {
         progressCircleRef.current.style.strokeDashoffset = `${circumference - progress * circumference}`;
@@ -140,14 +156,16 @@ const App: React.FC = () => {
 
     lenis.on('scroll', onScroll);
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    const frameId = requestAnimationFrame(raf);
+    // Gold-standard GSAP ticker synchronization
+    const tickerCallback = (time: number) => {
+      lenis.raf(time * 1000);
+    };
+
+    gsap.ticker.add(tickerCallback);
+    gsap.ticker.lagSmoothing(0);
 
     return () => {
-      cancelAnimationFrame(frameId);
+      gsap.ticker.remove(tickerCallback);
       lenis.destroy();
       delete (window as any).__lenis;
     };
@@ -178,7 +196,14 @@ const App: React.FC = () => {
   useEffect(() => {
     const isTouchOrMobile = () => 
       typeof window !== 'undefined' && 
-      (window.innerWidth <= 1024 || 'ontouchstart' in window || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0));
+      (window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 1024 || 'ontouchstart' in window || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0));
+
+    // Disable custom cursor on touch/mobile devices to eliminate overhead and preserve native touch response
+    if (isTouchOrMobile()) {
+      if (cursorRef.current) cursorRef.current.style.display = 'none';
+      if (cursorDotRef.current) cursorDotRef.current.style.display = 'none';
+      return;
+    }
 
     const showCursor = (opacity = '1') => {
       if (cursorRef.current) cursorRef.current.style.opacity = opacity;
@@ -249,16 +274,16 @@ const App: React.FC = () => {
       if (cursorRef.current && cursorTextRef.current) {
         if (cursorTextAttr) {
           hasCursorText.current = true;
-          cursorRef.current.className = "fixed top-0 left-0 pointer-events-none z-[10000] rounded-full will-change-transform flex items-center justify-center backdrop-blur-md transition-[width,height,background-color,border-color,opacity] duration-300 ease-out px-4 py-1.5 w-auto h-auto min-h-[34px] border border-white/80 bg-black/85 shadow-[0_0_20px_rgba(255,255,255,0.18)]";
+          cursorRef.current.className = "fixed top-0 left-0 pointer-events-none z-[10000] rounded-full will-change-transform flex items-center justify-center backdrop-blur-md transition-[width,height,background-color,border-color,opacity] duration-250 ease-out px-3.5 py-1 min-h-[30px] border border-white/80 bg-[#050508]/90 shadow-[0_4px_20px_rgba(0,0,0,0.8),0_0_12px_rgba(255,255,255,0.12)]";
           cursorTextRef.current.textContent = cursorTextAttr;
           cursorTextRef.current.style.opacity = '1';
         } else if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('a') || target.closest('button')) {
           hasCursorText.current = false;
-          cursorRef.current.className = "fixed top-0 left-0 pointer-events-none z-[10000] rounded-full will-change-transform flex items-center justify-center backdrop-blur-[1px] transition-[width,height,background-color,border-color,opacity] duration-300 ease-out w-[52px] h-[52px] border border-white/90 bg-white/10 shadow-[0_0_15px_rgba(255,255,255,0.1)]";
+          cursorRef.current.className = "fixed top-0 left-0 pointer-events-none z-[10000] rounded-full will-change-transform flex items-center justify-center backdrop-blur-[1px] transition-[width,height,background-color,border-color,opacity] duration-250 ease-out w-[50px] h-[50px] border border-white/90 bg-white/10 shadow-[0_0_16px_rgba(255,255,255,0.15)]";
           cursorTextRef.current.style.opacity = '0';
         } else {
           hasCursorText.current = false;
-          cursorRef.current.className = "fixed top-0 left-0 pointer-events-none z-[10000] rounded-full will-change-transform flex items-center justify-center backdrop-blur-[1px] transition-[width,height,background-color,border-color,opacity] duration-300 ease-out w-[44px] h-[44px] border border-white/40 bg-white/[0.03]";
+          cursorRef.current.className = "fixed top-0 left-0 pointer-events-none z-[10000] rounded-full will-change-transform flex items-center justify-center backdrop-blur-[1px] transition-[width,height,background-color,border-color,opacity] duration-250 ease-out w-[42px] h-[42px] border border-white/40 bg-white/[0.03]";
           cursorTextRef.current.style.opacity = '0';
         }
       }
@@ -455,6 +480,14 @@ const App: React.FC = () => {
 
       <div className={`min-h-screen text-cinema-white antialiased transition-opacity duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${showContent ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         
+        {/* WCAG 2.2 AA Accessible Landmark Skip Link */}
+        <a 
+          href="#work"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100000] focus:px-4 focus:py-2 focus:bg-[#FF3B30] focus:text-white focus:font-mono focus:text-xs focus:font-bold focus:uppercase focus:tracking-widest focus:rounded-sm focus:shadow-2xl focus:outline-none focus:ring-2 focus:ring-white"
+        >
+          Skip to Exhibition /// [Enter]
+        </a>
+
         {/* Precision Micro Dot (Zero Latency) with Soft Fade */}
         <div 
           ref={cursorDotRef}
@@ -469,13 +502,13 @@ const App: React.FC = () => {
              boxShadow: '0 0 25px rgba(255,255,255,0.08)'
           }}
         >
-          <span ref={cursorTextRef} className="text-white text-[9px] font-mono font-bold uppercase tracking-widest opacity-0 transition-opacity duration-150"></span>
+          <span ref={cursorTextRef} className="text-white text-[9px] font-mono font-bold uppercase tracking-[0.22em] opacity-0 transition-opacity duration-150 select-none"></span>
         </div>
 
         {/* Circular Scroll Progress Indicator */}
         {currentView === 'home' && (
-          <div className="fixed bottom-8 right-8 z-[50] mix-blend-difference hidden md:block">
-            <svg width="50" height="50" className="transform -rotate-90">
+          <div className="fixed bottom-8 right-8 z-[50] hidden md:block bg-[#050508]/80 backdrop-blur-md p-1 rounded-full border border-white/10 shadow-2xl pointer-events-none">
+            <svg width="48" height="48" viewBox="0 0 50 50" className="transform -rotate-90">
               <circle 
                 cx="25" cy="25" r={radius} 
                 fill="transparent" 
@@ -494,7 +527,7 @@ const App: React.FC = () => {
               />
             </svg>
             <div className="absolute inset-0 flex items-center justify-center">
-              <span ref={progressTextRef} className="text-[9px] font-mono text-white/80">0%</span>
+              <span ref={progressTextRef} className="text-[9px] font-mono font-bold text-white tracking-tighter">0%</span>
             </div>
           </div>
         )}
@@ -503,7 +536,7 @@ const App: React.FC = () => {
         
         {/* VIEW ROUTER */}
         {currentView === 'home' ? (
-          <div className="relative w-full z-10">
+          <main id="main-content" className="relative w-full z-10">
             <Hero isLoaded={showContent} onNavigate={handleNavigate} />
             <ProjectList 
               projects={resumeData.projects} 
@@ -511,15 +544,17 @@ const App: React.FC = () => {
             />
             <About data={resumeData} />
             <Footer personal={resumeData.personal} />
-          </div>
+          </main>
         ) : (
-           <ErrorBoundary onReset={handleBackToHome}>
-             <ProjectDetail 
-                project={activeProject!} 
-                onBack={handleBackToHome} 
-                onNext={handleNextProject}
-             />
-           </ErrorBoundary>
+           <main id="main-content" className="relative w-full z-10">
+             <ErrorBoundary onReset={handleBackToHome}>
+               <ProjectDetail 
+                  project={activeProject!} 
+                  onBack={handleBackToHome} 
+                  onNext={handleNextProject}
+               />
+             </ErrorBoundary>
+           </main>
         )}
         
       </div>

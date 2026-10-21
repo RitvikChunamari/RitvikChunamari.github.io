@@ -7,67 +7,10 @@ interface HeroProps {
   onNavigate?: (sectionId: string) => void;
 }
 
-interface DynamicCharProps {
-  char: string;
-  mousePos: { clientX: number; clientY: number };
-  className?: string;
-}
-
-const DynamicChar: React.FC<DynamicCharProps> = React.memo(({ char, mousePos, className = '' }) => {
-  const charRef = useRef<HTMLSpanElement>(null);
-  const [elevation, setElevation] = useState({ y: 0, scale: 1, glow: 0 });
-
-  useEffect(() => {
-    const el = charRef.current;
-    if (!el || char === ' ') return;
-
-    const rect = el.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-
-    const dx = mousePos.clientX - centerX;
-    const dy = mousePos.clientY - centerY;
-    const dist = Math.hypot(dx, dy);
-    const radius = 170;
-
-    if (dist < radius && dist > 0) {
-      const proximity = Math.pow(1 - dist / radius, 2);
-      const liftY = -proximity * 12;
-      const scaleVal = 1 + proximity * 0.08;
-      const glowVal = proximity;
-      setElevation({ y: liftY, scale: scaleVal, glow: glowVal });
-    } else {
-      if (elevation.y !== 0 || elevation.scale !== 1) {
-        setElevation({ y: 0, scale: 1, glow: 0 });
-      }
-    }
-  }, [mousePos, char]);
-
-  if (char === ' ') {
-    return <span className="inline-block">&nbsp;</span>;
-  }
-
-  return (
-    <span
-      ref={charRef}
-      className={`inline-block will-change-transform transition-all duration-200 ease-out cursor-default select-none ${className}`}
-      style={{
-        transform: `translate3d(0, ${elevation.y}px, 0) scale(${elevation.scale})`,
-        color: elevation.glow > 0.08 ? '#ffffff' : undefined,
-        textShadow: elevation.glow > 0.08
-          ? `0 0 24px rgba(255, 255, 255, ${elevation.glow * 0.65}), 0 0 48px rgba(255, 59, 48, ${elevation.glow * 0.35})`
-          : 'none',
-      }}
-    >
-      {char}
-    </span>
-  );
-});
+const RITVIK_CHARS = ['R', 'i', 't', 'v', 'i', 'k'];
+const CHUNAMARI_CHARS = ['C', 'h', 'u', 'n', 'a', 'm', 'a', 'r', 'i'];
 
 const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [rawMousePos, setRawMousePos] = useState({ clientX: -2000, clientY: -2000 });
-  const [isHovered, setIsHovered] = useState(false);
   const [mobileFontSize, setMobileFontSize] = useState<string | null>(null);
   const heroRef = useRef<HTMLElement>(null);
   const titleContainerRef = useRef<HTMLDivElement>(null);
@@ -75,10 +18,25 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
   const line1Ref = useRef<HTMLDivElement>(null);
   const line2Ref = useRef<HTMLDivElement>(null);
   const redBarRef = useRef<HTMLDivElement>(null);
-  const mousePosRef = useRef({ x: 0, y: 0 });
+  const charRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
+  // Pointer state tracked in refs to eliminate 100% of React component re-renders during mouse movements
+  const mousePosRef = useRef({ clientX: -2000, clientY: -2000, normX: 0, normY: 0 });
+  const animFrameRef = useRef<number | null>(null);
+  const isHoveredRef = useRef(false);
+
+  // Initial GSAP Entrance Choreography
   useLayoutEffect(() => {
     if (!isLoaded) return;
+
+    const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isReduced) {
+      gsap.set('.hero-grid-h', { scaleX: 1 });
+      gsap.set('.hero-grid-v', { scaleY: 1 });
+      gsap.set('.hero-title-line', { y: '0%', opacity: 1, filter: 'blur(0px)' });
+      gsap.set('.hero-meta-reveal', { y: 0, opacity: 1 });
+      return;
+    }
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ delay: 0.1 });
@@ -114,39 +72,125 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
     return () => ctx.revert();
   }, [isLoaded]);
 
+  // Direct GPU Pointer Updates (Zero React re-renders)
+  const updatePointer = () => {
+    animFrameRef.current = null;
+    const isCoarse = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+    const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isCoarse || isReduced) return;
+
+    const { clientX, clientY, normX, normY } = mousePosRef.current;
+
+    // Perspective 3D tilt on title container
+    if (titleContainerRef.current) {
+      if (isHoveredRef.current && clientX > -1000) {
+        titleContainerRef.current.style.transform = `perspective(1000px) rotateX(${(-normY * 1.5).toFixed(2)}deg) rotateY(${(normX * 1.5).toFixed(2)}deg)`;
+      } else {
+        titleContainerRef.current.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+      }
+    }
+
+    // Proximity letter elevation
+    const radius = 160;
+    charRefs.current.forEach((el) => {
+      if (!el) return;
+      if (!isHoveredRef.current || clientX < -1000) {
+        el.style.transform = 'translate3d(0, 0, 0) scale(1)';
+        el.style.color = '';
+        el.style.textShadow = 'none';
+        return;
+      }
+
+      const rect = el.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const dx = clientX - centerX;
+      const dy = clientY - centerY;
+      const dist = Math.hypot(dx, dy);
+
+      if (dist < radius && dist > 0) {
+        const proximity = Math.pow(1 - dist / radius, 2);
+        const liftY = -proximity * 12;
+        const scaleVal = 1 + proximity * 0.08;
+        el.style.transform = `translate3d(0, ${liftY.toFixed(2)}px, 0) scale(${scaleVal.toFixed(3)})`;
+        if (proximity > 0.08) {
+          el.style.color = '#ffffff';
+          el.style.textShadow = `0 0 24px rgba(255, 255, 255, ${(proximity * 0.65).toFixed(2)}), 0 0 48px rgba(255, 59, 48, ${(proximity * 0.35).toFixed(2)})`;
+        } else {
+          el.style.color = '';
+          el.style.textShadow = 'none';
+        }
+      } else {
+        el.style.transform = 'translate3d(0, 0, 0) scale(1)';
+        el.style.color = '';
+        el.style.textShadow = 'none';
+      }
+    });
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const isCoarse = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+    if (isCoarse) return;
+
+    const { clientX, clientY } = e;
+    const { innerWidth, innerHeight } = window;
+    const normX = (clientX / innerWidth - 0.5) * 2;
+    const normY = (clientY / innerHeight - 0.5) * 2;
+    mousePosRef.current = { clientX, clientY, normX, normY };
+
+    if (!animFrameRef.current) {
+      animFrameRef.current = requestAnimationFrame(updatePointer);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    isHoveredRef.current = false;
+    mousePosRef.current = { clientX: -2000, clientY: -2000, normX: 0, normY: 0 };
+    if (!animFrameRef.current) {
+      animFrameRef.current = requestAnimationFrame(updatePointer);
+    }
+  };
+
+  // Kinetic Scroll Dispersal & Reverse Symmetrical Choreography
   useEffect(() => {
     let ticking = false;
-    const handleScroll = () => {
+
+    const handleScroll = (customY?: number) => {
       if (!heroRef.current) return;
       const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const y = (window as any).__virtualScrollY ?? (window.scrollY || window.pageYOffset);
+      const y = customY ?? ((window as any).__virtualScrollY ?? (window.scrollY || window.pageYOffset));
       const scrollFade = Math.max(0, 1 - y * 0.0012);
       const scrollParallax = -y * 0.22;
+      
       heroRef.current.style.opacity = `${scrollFade}`;
       heroRef.current.style.transform = `translate3d(0, ${scrollParallax.toFixed(2)}px, 0)`;
       heroRef.current.style.pointerEvents = scrollFade < 0.05 ? 'none' : 'auto';
 
       if (!isReduced) {
         const isMobile = window.innerWidth < 768;
-        const drift = isMobile ? 0.08 : 0.16;
+        const drift = isMobile ? 0.03 : 0.12;
+        const maxDrift = isMobile ? 12 : 46;
+        
         if (line1Ref.current) {
-          const x1 = (-y * drift) + (mousePosRef.current.x * 12);
-          const y1 = mousePosRef.current.y * 8;
-          line1Ref.current.style.transform = `translate3d(${x1.toFixed(2)}px, ${y1.toFixed(2)}px, 0)`;
+          const x1 = Math.max(-maxDrift, -y * drift);
+          line1Ref.current.style.transform = `translate3d(${x1.toFixed(2)}px, 0, 0)`;
         }
         if (line2Ref.current) {
-          const x2 = (y * drift) + (mousePosRef.current.x * 22);
-          const y2 = mousePosRef.current.y * 14;
-          line2Ref.current.style.transform = `translate3d(${x2.toFixed(2)}px, ${y2.toFixed(2)}px, 0)`;
+          const x2 = Math.min(maxDrift, y * drift);
+          line2Ref.current.style.transform = `translate3d(${x2.toFixed(2)}px, 0, 0)`;
         }
         if (redBarRef.current) {
-          const barScale = Math.min(2.5, 1 + y * 0.002);
+          const barScale = Math.min(2.2, 1 + y * 0.002);
           redBarRef.current.style.transform = `scaleX(${barScale.toFixed(2)})`;
         }
+      } else {
+        if (line1Ref.current) line1Ref.current.style.transform = 'translate3d(0, 0, 0)';
+        if (line2Ref.current) line2Ref.current.style.transform = 'translate3d(0, 0, 0)';
+        if (redBarRef.current) redBarRef.current.style.transform = 'scaleX(1)';
       }
     };
 
-    const onScroll = () => {
+    const onNativeScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
           handleScroll();
@@ -156,9 +200,24 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
       }
     };
 
-    window.addEventListener('scroll', onScroll, { passive: true });
+    const lenis = (window as any).__lenis;
+    const onLenisScroll = (e: any) => {
+      handleScroll(e?.scroll ?? lenis?.scroll);
+    };
+
+    if (lenis) {
+      lenis.on('scroll', onLenisScroll);
+    }
+    window.addEventListener('scroll', onNativeScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', onScroll);
+
+    return () => {
+      if (lenis) {
+        lenis.off('scroll', onLenisScroll);
+      }
+      window.removeEventListener('scroll', onNativeScroll);
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+    };
   }, []);
 
   // Dynamically calculate the maximum font size on mobile so Chunamari fills 98% of the margin
@@ -186,71 +245,6 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
     return () => window.removeEventListener('resize', adjustFontSize);
   }, [isLoaded]);
 
-  const touchFadeRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const resetInteractiveState = () => {
-    mousePosRef.current = { x: 0, y: 0 };
-    setMousePos({ x: 0, y: 0 });
-    setRawMousePos({ clientX: -2000, clientY: -2000 });
-  };
-
-  useEffect(() => {
-    return () => {
-      if (touchFadeRef.current) clearTimeout(touchFadeRef.current);
-    };
-  }, []);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const { clientX, clientY } = e;
-    const { innerWidth, innerHeight } = window;
-    const x = (clientX / innerWidth - 0.5) * 2;
-    const y = (clientY / innerHeight - 0.5) * 2;
-    mousePosRef.current = { x, y };
-    setMousePos({ x, y });
-    setRawMousePos({ clientX, clientY });
-  };
-
-  const handleMouseLeave = () => {
-    resetInteractiveState();
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (e.touches.length > 0) {
-      const t = e.touches[0];
-      const { clientX, clientY } = t;
-      const { innerWidth, innerHeight } = window;
-      const x = (clientX / innerWidth - 0.5) * 2;
-      const y = (clientY / innerHeight - 0.5) * 2;
-      mousePosRef.current = { x, y };
-      setMousePos({ x, y });
-      setRawMousePos({ clientX, clientY });
-
-      if (touchFadeRef.current) clearTimeout(touchFadeRef.current);
-      touchFadeRef.current = setTimeout(resetInteractiveState, 600);
-    }
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (e.touches.length > 0) {
-      const t = e.touches[0];
-      const { clientX, clientY } = t;
-      const { innerWidth, innerHeight } = window;
-      const x = (clientX / innerWidth - 0.5) * 2;
-      const y = (clientY / innerHeight - 0.5) * 2;
-      mousePosRef.current = { x, y };
-      setMousePos({ x, y });
-      setRawMousePos({ clientX, clientY });
-
-      if (touchFadeRef.current) clearTimeout(touchFadeRef.current);
-      touchFadeRef.current = setTimeout(resetInteractiveState, 450);
-    }
-  };
-
-  const handleTouchEnd = () => {
-    if (touchFadeRef.current) clearTimeout(touchFadeRef.current);
-    touchFadeRef.current = setTimeout(resetInteractiveState, 150);
-  };
-
   const scrollToWork = () => {
     if (onNavigate) {
       onNavigate('work');
@@ -263,30 +257,14 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
     }
   };
 
-  const renderDynamicText = (text: string) => {
-    return text.split('').map((char, i) => (
-      <DynamicChar
-        key={i}
-        char={char}
-        mousePos={rawMousePos}
-        className="transition-colors duration-200"
-      />
-    ));
-  };
-
   return (
     <section
       ref={heroRef}
       id="home"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      onTouchCancel={resetInteractiveState}
       className="min-h-screen w-full relative flex flex-col justify-between pt-24 pb-8 md:pt-32 md:pb-12 px-6 md:px-16 text-[#ededed] select-none will-change-[transform,opacity]"
     >
-
       {/* ─────────────────────────────────────────────────────────────
           2. SWISS ARCHITECTURAL HAIRLINE FRAMING
           ───────────────────────────────────────────────────────────── */}
@@ -331,22 +309,21 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
           ───────────────────────────────────────────────────────────── */}
       <div 
         ref={titleContainerRef}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        className="my-auto py-4 md:py-6 relative z-10 will-change-transform w-full pointer-events-auto transition-transform duration-300 ease-out"
-        style={{
-          transform: `perspective(1000px) rotateX(${-mousePos.y * 1.5}deg) rotateY(${mousePos.x * 1.5}deg)`,
+        onMouseEnter={() => {
+          isHoveredRef.current = true;
+          if (!animFrameRef.current) animFrameRef.current = requestAnimationFrame(updatePointer);
         }}
+        onMouseLeave={() => {
+          isHoveredRef.current = false;
+          if (!animFrameRef.current) animFrameRef.current = requestAnimationFrame(updatePointer);
+        }}
+        className="my-auto py-4 md:py-6 relative z-10 will-change-transform w-full pointer-events-auto transition-transform duration-300 ease-out"
       >
         {/* Monumental Display Name with Dual-Layer Differential Parallax */}
         <h1 
           className="text-[clamp(2.75rem,8.2vw,9.6rem)] md:text-[clamp(4.2rem,8.8vw,10.2rem)] font-extrabold uppercase tracking-[-0.045em] leading-[0.84] text-cinema-white select-none -ml-0.5 md:-ml-2 flex flex-col w-full"
           style={{
             fontSize: mobileFontSize || undefined,
-            textShadow: isHovered 
-              ? '2px 0 rgba(255, 59, 48, 0.4), -2px 0 rgba(0, 229, 255, 0.3)' 
-              : 'none',
-            transition: 'text-shadow 0.3s ease',
           }}
         >
           {/* Line 1: Ritvik with kinetic differential scroll dispersal */}
@@ -355,7 +332,15 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
             className="block overflow-hidden will-change-transform w-full"
           >
             <span className="inline-block hero-title-line whitespace-nowrap">
-              {renderDynamicText("Ritvik")}
+              {RITVIK_CHARS.map((char, idx) => (
+                <span
+                  key={idx}
+                  ref={(el) => { charRefs.current[idx] = el; }}
+                  className="inline-block hero-char will-change-transform cursor-default select-none transition-[color,text-shadow,transform] duration-200 ease-out"
+                >
+                  {char}
+                </span>
+              ))}
             </span>
           </div>
 
@@ -365,7 +350,15 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
             className="block overflow-hidden will-change-transform w-full"
           >
             <span ref={chunamariSpanRef} className="inline-block hero-title-line whitespace-nowrap">
-              {renderDynamicText("Chunamari")}
+              {CHUNAMARI_CHARS.map((char, idx) => (
+                <span
+                  key={idx + 6}
+                  ref={(el) => { charRefs.current[idx + 6] = el; }}
+                  className="inline-block hero-char will-change-transform cursor-default select-none transition-[color,text-shadow,transform] duration-200 ease-out"
+                >
+                  {char}
+                </span>
+              ))}
             </span>
           </div>
         </h1>
@@ -373,10 +366,7 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
         {/* Swiss Red Accent Bar with kinetic scroll expansion */}
         <div 
           ref={redBarRef}
-          className="w-14 h-[2px] bg-[#FF3B30] my-5 md:my-6 hero-meta-reveal opacity-0 will-change-transform"
-          style={{
-            transformOrigin: 'left',
-          }}
+          className="w-14 h-[2px] bg-[#FF3B30] my-5 md:my-6 hero-meta-reveal opacity-0 will-change-transform origin-left"
         />
 
         {/* Manifesto Subtitle */}
@@ -412,8 +402,9 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
         <MagneticWrapper strength={0.25}>
           <button
             onClick={scrollToWork}
-            className="group flex items-center gap-3 font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-white/70 hover:text-white hover:tracking-[0.25em] transition-all duration-300 cursor-pointer"
+            className="group flex items-center gap-3 font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-white/70 hover:text-white hover:tracking-[0.25em] transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-4 focus-visible:ring-offset-[#050507] rounded-sm py-2 px-3 min-h-[44px] active:scale-95"
             data-cursor-text="SCROLL"
+            aria-label="Scroll to Explore Selected Works"
           >
             <span>Scroll to Explore</span>
             <span className="w-4 h-4 rounded-full border border-white/30 flex items-center justify-center group-hover:border-white group-hover:scale-110 transition-all duration-300">
@@ -428,10 +419,6 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
           ───────────────────────────────────────────────────────────── */}
       <div className="relative z-10 w-full flex flex-col items-center justify-center pt-8 pb-2 pointer-events-none hero-meta-reveal opacity-0">
         <div className="w-px h-12 bg-gradient-to-b from-[#FF3B30] via-white/20 to-transparent" />
-        <span className="font-mono text-[9px] tracking-[0.28em] uppercase text-white/40 mt-2 flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-          <span>01 / SELECTED WORKS</span>
-        </span>
       </div>
 
     </section>

@@ -12,6 +12,26 @@ const ExperienceList: React.FC<ExperienceProps> = ({ experiences }) => {
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
+    const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (isReduced) {
+      itemRefs.current.forEach((item) => {
+        if (item) {
+          item.classList.add('opacity-100', 'translate-y-0');
+          item.classList.remove('opacity-0', 'translate-y-8');
+        }
+      });
+      if (beamRef.current) beamRef.current.style.transform = 'scaleY(1)';
+      nodeRefs.current.forEach((node) => {
+        if (node) {
+          node.style.backgroundColor = '#FF3B30';
+          node.style.borderColor = '#FFFFFF';
+          node.style.transform = 'scale(1.2)';
+        }
+      });
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -28,26 +48,11 @@ const ExperienceList: React.FC<ExperienceProps> = ({ experiences }) => {
       if (item) observer.observe(item);
     });
 
-    // Throttled Scroll Laser Guide Rail & Node Ignition
+    // Lenis-Synchronized Scroll Laser Guide Rail & Node Ignition
     let ticking = false;
-    const updateLaser = () => {
-      if (!containerRef.current || !beamRef.current) {
-        ticking = false;
-        return;
-      }
-      const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (isReduced) {
-        beamRef.current.style.transform = 'scaleY(1)';
-        nodeRefs.current.forEach((node) => {
-          if (node) {
-            node.style.backgroundColor = '#FF3B30';
-            node.style.borderColor = '#FFFFFF';
-            node.style.transform = 'scale(1.2)';
-          }
-        });
-        ticking = false;
-        return;
-      }
+
+    const updateLaser = (customY?: number) => {
+      if (!containerRef.current || !beamRef.current) return;
 
       const rect = containerRef.current.getBoundingClientRect();
       const vh = window.innerHeight;
@@ -64,35 +69,54 @@ const ExperienceList: React.FC<ExperienceProps> = ({ experiences }) => {
         if (!item || !node) return;
 
         const itemRect = item.getBoundingClientRect();
+        const durationEl = item.querySelector('.exp-duration') as HTMLElement | null;
+        const companyEl = item.querySelector('.exp-company') as HTMLElement | null;
+
         if (itemRect.top <= readingLine) {
           node.style.backgroundColor = '#FF3B30';
           node.style.borderColor = '#FFFFFF';
           node.style.transform = 'scale(1.35)';
-          node.style.boxShadow = '0 0 14px rgba(255, 59, 48, 0.8)';
+          node.style.boxShadow = '0 0 16px rgba(255, 59, 48, 0.85), 0 0 4px #FFFFFF';
+          if (durationEl) durationEl.style.color = '#EDEDED';
+          if (companyEl) companyEl.style.color = '#FFFFFF';
         } else {
           node.style.backgroundColor = '#262626';
           node.style.borderColor = 'rgba(255, 255, 255, 0.3)';
           node.style.transform = 'scale(1)';
           node.style.boxShadow = 'none';
+          if (durationEl) durationEl.style.color = '';
+          if (companyEl) companyEl.style.color = '';
         }
       });
-
-      ticking = false;
     };
 
-    const handleScroll = () => {
+    const handleNativeScroll = () => {
       if (!ticking) {
-        requestAnimationFrame(updateLaser);
+        requestAnimationFrame(() => {
+          updateLaser();
+          ticking = false;
+        });
         ticking = true;
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    requestAnimationFrame(updateLaser);
+    const lenis = (window as any).__lenis;
+    const onLenisScroll = (e: any) => {
+      updateLaser(e?.scroll ?? lenis?.scroll);
+    };
+
+    if (lenis) {
+      lenis.on('scroll', onLenisScroll);
+    }
+    window.addEventListener('scroll', handleNativeScroll, { passive: true });
+    updateLaser();
 
     return () => {
       observer.disconnect();
-      window.removeEventListener('scroll', handleScroll);
+      if (lenis) {
+        lenis.off('scroll', onLenisScroll);
+      }
+      window.removeEventListener('scroll', handleNativeScroll);
     };
   }, [experiences]);
 
@@ -102,8 +126,11 @@ const ExperienceList: React.FC<ExperienceProps> = ({ experiences }) => {
       <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-white/[0.06] pointer-events-none hidden md:block">
         <div 
           ref={beamRef}
-          className="w-full h-full bg-gradient-to-b from-white/30 via-[#FF3B30] to-[#FF3B30] origin-top scale-y-0 will-change-transform shadow-[0_0_8px_rgba(255,59,48,0.5)]"
-        />
+          className="w-full h-full bg-gradient-to-b from-white/30 via-[#FF3B30] to-[#FF3B30] origin-top scale-y-0 will-change-transform shadow-[0_0_10px_rgba(255,59,48,0.7)] relative"
+        >
+          {/* Luminous Laser Tip Micro-Glow */}
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#FF3B30] shadow-[0_0_12px_rgba(255,59,48,0.9),0_0_24px_rgba(255,59,48,0.5)]" />
+        </div>
       </div>
 
       {experiences.map((exp, index) => (
@@ -120,13 +147,13 @@ const ExperienceList: React.FC<ExperienceProps> = ({ experiences }) => {
           />
 
           <div className="md:col-span-3 pl-2 border-l-2 border-transparent group-hover:border-[#FF3B30] transition-colors duration-300">
-             <span className="font-mono text-[10px] uppercase tracking-widest text-white/40 block mb-2">{exp.duration}</span>
-             <h4 className="text-lg font-bold uppercase tracking-tight text-white group-hover:text-white transition-colors">{exp.company}</h4>
+             <span className="exp-duration font-mono text-[10px] uppercase tracking-widest text-white/60 block mb-2 transition-colors duration-300">{exp.duration}</span>
+             <h4 className="exp-company text-lg font-bold uppercase tracking-tight text-white/85 group-hover:text-white transition-colors duration-300">{exp.company}</h4>
           </div>
 
           <div className="md:col-span-3">
              <span className="text-sm font-semibold uppercase tracking-wide text-neutral-300 block mb-1">{exp.role}</span>
-             <span className="text-xs text-white/40 font-mono">{exp.location}</span>
+             <span className="text-xs text-white/60 font-mono">{exp.location}</span>
           </div>
 
           <div className="md:col-span-6 md:pl-8">

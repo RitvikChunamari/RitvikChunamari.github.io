@@ -443,8 +443,9 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
           {/* Interactive Skip Button */}
           <button 
             onClick={handleSkip}
-            className="group flex items-center space-x-2 text-neutral-500 hover:text-white transition-colors duration-200 cursor-pointer"
+            className="group flex items-center space-x-2 text-neutral-500 hover:text-white transition-colors duration-200 cursor-pointer py-2 px-3 min-h-[44px] rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] active:scale-95"
             title="Skip loading animation"
+            aria-label="Skip loading animation"
           >
             <span className="text-neutral-600 group-hover:text-[#FF3B30] transition-colors">⚡</span>
             <span className="border-b border-transparent group-hover:border-white transition-all">SKIP INTRO</span>
