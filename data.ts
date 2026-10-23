@@ -4,12 +4,12 @@ import { ResumeData } from './types';
 export const resumeData: ResumeData = {
   personal: {
     name: "Ritvik Chunamari",
-    role: "Creative Designer & Vibe Coder",
+    role: "Product Designer & Creative Technologist",
     location: "Arvada, CO",
     email: "ritvikchunamari@gmail.com",
     linkedin: "https://www.linkedin.com/in/ritvikchunamari",
-    summary: "Architecting sensory digital experiences at the intersection of computational logic and human intuition. Navigating the world with Cerebral Palsy provides me with an uncompromising standard for digital ergonomics: every interaction threshold, focus state, and spatial transition must feel dignified, responsive, and effortless.",
-    insights: "Radical accessibility is never a cosmetic overlay—it is the bedrock of high-craft software. Designing for extreme physical friction unlocks superior, intuitive digital architecture for every human."
+    summary: "I design digital systems and interfaces grounded in physical ergonomics and accessibility. Navigating the world with Cerebral Palsy provides me with an uncompromising standard for digital ergonomics: every interaction threshold, focus state, and spatial transition must feel dignified, responsive, and effortless.",
+    insights: "Accessibility is never a cosmetic overlay—it is the bedrock of high-craft software. Designing for physical friction unlocks superior, intuitive digital architecture for every human."
   },
   experience: [
     {
@@ -19,7 +19,7 @@ export const resumeData: ResumeData = {
       duration: "Jun 2026 – Aug 2026",
       points: [
         "Architected responsive mobile interface systems translating dense multi-track conference orchestration workflows into intuitive, low-latency mobile touchpoints.",
-        "Formulated and deployed an Atomic Design System in Figma, standardizing 40+ reusable design tokens, layout grids, and interactive component states across cross-functional squads.",
+        "Formulated and deployed an Atomic Design System, standardizing 40+ reusable design tokens, layout grids, and interactive component states across cross-functional squads.",
         "Conducted end-to-end usability audits of legacy registration pipelines, eliminating multi-step input fatigue and improving enterprise conversion velocity."
       ]
     },
@@ -31,7 +31,7 @@ export const resumeData: ResumeData = {
       points: [
         "Conducted structured usability protocols with 20+ enterprise operations leads, synthesizing qualitative feedback to re-engineer core navigation hierarchies.",
         "Designed high-density administrative command dashboards and live incident monitors, lifting operator task efficiency by 18% and decreasing onboarding friction.",
-        "Built interactive Figma design specifications and developer documentation, cutting frontend implementation cycle times by 30%."
+        "Built interactive design specifications and developer documentation, cutting frontend implementation cycle times by 30%."
       ]
     },
     {
@@ -41,7 +41,7 @@ export const resumeData: ResumeData = {
       duration: "Sept 2024 – Jan 2025",
       points: [
         "Formulated holistic UX architecture, interactive flows, and brand design guidelines for an enterprise generative AI toolchain, driving 30% higher 30-day retention in private beta.",
-        "Prototyped node-based visual pipeline editors in Figma and React, reducing complex model configuration and prompt assembly times by 35% for non-technical specialists.",
+        "Prototyped node-based visual pipeline editors and workflows in React, reducing complex model configuration and prompt assembly times by 35% for non-technical specialists.",
         "Established design tokens and microinteractions for real-time telemetry streaming and live feedback states."
       ]
     },
@@ -51,7 +51,7 @@ export const resumeData: ResumeData = {
       location: "Hubli, Karnataka, India (Hybrid)",
       duration: "Jan 2024 – Jun 2024",
       points: [
-        "Constructed wireframes, structural journey maps, and interactive prototypes for municipal security operations platforms across 14 functional modules.",
+        "Constructed wireframes, structural journey maps, and interactive prototypes for municipal operations platforms across 14 functional modules.",
         "Conducted heuristic audits against WCAG 2.1 AA criteria, diagnosing and resolving 25+ critical focus visibility and keyboard navigation dead-ends.",
         "Partnered with engineering squads to validate responsive viewport breakpoints and component performance benchmarks."
       ]
@@ -65,8 +65,8 @@ export const resumeData: ResumeData = {
       duration: "Aug 2025 – May 2027",
       details: [
         "Track: Creative Industries",
-        "Relevant Coursework: Design Methods, Business in Creativity, Learn, Vibe, Build, User Experience Design, User Experience Research, Branding and Visual Identity",
-        "Specialization: User Experience Design, Vibe Coding, User-Centered Design Methodologies"
+        "Relevant Coursework: Design Methods, Business in Creativity, Creative Technology, User Experience Design, User Experience Research, Branding and Visual Identity",
+        "Specialization: User Experience Design, Creative Technology, User-Centered Design Methodologies"
       ]
     },
     {
@@ -165,7 +165,7 @@ export const resumeData: ResumeData = {
       caseStudy: {
         year: "2024",
         role: "Lead Product Designer",
-        technologies: ["Figma", "React", "Python", "OpenAI API"],
+        technologies: ["Interface Design", "Design Systems", "React", "Python", "LLM APIs"],
         figmaUrl: "https://www.figma.com/design/as77j5bf5uEnBlsKi1lN6P/Nexus-AI?node-id=22-113",
         figmaEmbedUrl: "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2Fas77j5bf5uEnBlsKi1lN6P%2FNexus-AI%3Fnode-id%3D22-113",
         overview: "Nexus AI is an advanced data management platform designed to democratize access to complex machine learning workflows. In a landscape where AI tools are often exclusionary and technically dense, Nexus aims to provide a bridge between raw data and actionable intelligence.",
@@ -371,7 +371,7 @@ export const resumeData: ResumeData = {
         
         historyAndContext: "The United States Postal Service traces its origins to July 26, 1775, when the Second Continental Congress established the first national postal agency during the American Revolution, appointing Benjamin Franklin as the first Postmaster General. The postal system's constitutional mandate was established in 1788 under the Postal Clause of the U.S. Constitution, authorizing Congress to 'establish post offices and post roads'. In 1792, President George Washington signed the Postal Service Act, transforming the mail system into a formalized national institution with established routes, regulations, and protections for personal correspondence and press freedom. On July 1, 1971, the Postal Reorganization Act of 1970 transformed the department into the modern U.S. Postal Service—an independent federal agency designed to operate more like a business while maintaining its universal service commitment. Approaching its 250th anniversary in 2025/2026, USPS delivers to over 160 million addresses six days a week.",
 
-        initialExplorations: "I wanted to create a more authentic-looking logo that truly signifies the postal services, so I started by exploring the idea of a postcard and using typography to write USPS on the postcard. I also explored the idea of adding a red postal seal with USPS written on the seal, as suggested in the group discussion activity, but that direction did not fit the overall vibe of the logo. Because of this, I decided not to use the seal concept and returned to my initial idea based on the postcard and typographic treatment of USPS.",
+        initialExplorations: "I wanted to create a more authentic-looking logo that truly signifies the postal services, so I started by exploring the idea of a postcard and using typography to write USPS on the postcard. I also explored the idea of adding a red postal seal with USPS written on the seal, as suggested in the group discussion activity, but that direction did not fit the overall aesthetic of the logo. Because of this, I decided not to use the seal concept and returned to my initial idea based on the postcard and typographic treatment of USPS.",
 
         auditCurrentIdentity: {
           whatWorks: [
@@ -793,299 +793,6 @@ export const resumeData: ResumeData = {
       }
     },
     {
-      title: "Security Agency UX",
-      category: "Enterprise Product Design & UX Research",
-      description: [
-        "Designed and architected a dual-faceted enterprise UX ecosystem comprising a high-converting client acquisition portal and a 14-module mission-critical Security Operations ERP dashboard.",
-        "Conducted comprehensive field research, user personas, interactive mindmaps, and operational user flows, reducing operational dispatch latency by 45% and boosting client inquiries by 20%."
-      ],
-      image: "/projects/security-agency/home.png",
-      caseStudy: {
-        year: "2024",
-        role: "Lead Product Designer & UX Researcher",
-        technologies: ["Figma", "React", "Design Systems", "User Research", "Information Architecture", "Heuristic Evaluation"],
-        isSecurityUX: true,
-        overview: "The Security Agency UX Platform represents an end-to-end digital transformation for a high-stakes private security enterprise operating across commercial, retail, and corporate infrastructure. The initiative bridged two fundamentally interdependent facets: an authoritative, client-facing conversion portal designed to cultivate immediate institutional trust, and a high-density, real-time Security Operations Center (SOC) Admin Dashboard empowering operations managers to orchestrate personnel, shifts, multi-site surveillance, live incidents, and client accounts with zero latency.",
-        challenge: "Prior to this overhaul, security management relied on disjointed communication channels, manual paper-based logs, and legacy spreadsheet tracking. This fragmented workflow caused severe operational blind spots—delayed incident escalation, shift scheduling overlaps, lack of verifiable compliance reports for enterprise clients, and an outdated public web presence that failed to convey the technical rigor and reliability required by Fortune 500 facility managers.",
-        solution: "Ritvik designed a cohesive, dual-ecosystem UX architecture. For prospective corporate clients, a modern landing portal establishes credibility with transparent capability breakdowns, regulatory accreditation showcases, and frictionless quote requests. For internal operations, a centralized, high-efficiency Admin Dashboard unifies multi-site personnel tracking, biometric-verified shifts, instant incident reporting, granular client profiles, and automated compliance auditing into a unified, high-contrast dark-mode interface designed for high-stress operational decision making.",
-        problemOverview: [
-          {
-            title: "Operational Latency & Disjointed Dispatch",
-            description: "Security teams at field sites experienced 20+ minute communication delays during incident logging due to paper handoffs and phone chains, increasing vulnerability risks."
-          },
-          {
-            title: "Lack of Client Visibility & Transparency",
-            description: "Enterprise facility owners (like retail chains and office complexes) had zero real-time visibility into guard attendance, post orders, or patrol checkpoints, hindering contract renewals."
-          },
-          {
-            title: "Cognitive Overload in SOC Environments",
-            description: "Operations managers monitored dozens of field sites simultaneously without unified visual hierarchy or status alerts, resulting in missed shift gaps and scheduling friction."
-          },
-          {
-            title: "High-Friction Client Acquisition",
-            description: "The legacy web presence lacked clarity around specific security tiers, compliance credentials, and quick quote pathways, leading to high bounce rates for commercial inquiries."
-          }
-        ],
-        problemStatement: "How might we design a unified digital ecosystem that simultaneously provides prospective enterprise clients with transparent trust and rapid onboarding, while equipping security operations managers with a cognitive-optimized command center to coordinate high-stakes personnel, multi-site surveillance, and instant incident response in real time?",
-        detailedSolution: [
-          {
-            title: "High-Trust Client Acquisition Funnel",
-            description: "Built a responsive public web portal featuring transparent service breakdowns, security certifications, customer validation proof points, and interactive consultation/quote calculators."
-          },
-          {
-            title: "Real-Time SOC Command & Telemetry",
-            description: "Architected a unified mission-control dashboard displaying live officer status, incident counters, biometric shift verification, and broadcast alerts in high-contrast dark theme."
-          },
-          {
-            title: "End-to-End Workforce & Incident Lifecycle",
-            description: "Digitized guard roster profiles, automated drag-and-drop shift scheduling, geo-fenced site checkpoints, emergency escalation trees, and executive compliance report exports."
-          },
-          {
-            title: "Information Architecture & Task Streamlining",
-            description: "Structured comprehensive mindmaps and user flowcharts eliminating deep navigation nesting, allowing emergency dispatches and schedule changes in under 3 clicks."
-          }
-        ],
-        systemObjectives: [
-          {
-            system: "Enterprise Admin Operations Dashboard",
-            description: "Engineered for Security Operations Managers and dispatchers orchestrating high-stakes personnel deployments and multi-site monitoring.",
-            objectives: [
-              {
-                title: "Clarity",
-                content: "Clearly present key operational data and insights, ensuring that administrators can easily understand and manage the agency's security services and their benefits."
-              },
-              {
-                title: "Trust",
-                content: "Build user confidence in the dashboard's accuracy and reliability by providing transparent and real-time data that reflects the agency’s expertise."
-              },
-              {
-                title: "Engagement",
-                content: "Design intuitive and interactive elements to capture the attention of administrators and keep them engaged with essential functionalities and content."
-              },
-              {
-                title: "Efficiency",
-                content: "Encourage administrators to quickly and efficiently complete tasks (e.g., managing security operations, analyzing reports) with well-placed call-to-action buttons and streamlined processes."
-              },
-              {
-                title: "Accessibility",
-                content: "Ensure the dashboard is user-friendly and accessible for all administrators, adhering to best practices in usability and accessibility for diverse user needs."
-              }
-            ]
-          },
-          {
-            system: "Client Acquisition Landing Page",
-            description: "Designed for commercial enterprise decision-makers, retail store owners, and property managers seeking dependable security partnerships.",
-            objectives: [
-              {
-                title: "Clarity",
-                content: "Clearly communicate the agency's security services and their benefits to commercial property owners and corporate decision makers."
-              },
-              {
-                title: "Engagement",
-                content: "Capture visitor attention and keep them interested in the page content through modern typography, service matrices, and credibility indicators."
-              },
-              {
-                title: "Conversion",
-                content: "Encourage users to take desired actions (e.g., request quote, schedule site risk audit, contact agency directly)."
-              },
-              {
-                title: "Accessibility",
-                content: "Ensure the landing page is user-friendly, responsive across mobile and desktop devices, and strictly accessible."
-              }
-            ]
-          }
-        ],
-        securityPersonas: [
-          {
-            name: "Ravi Shekhar",
-            image: "/projects/security-agency/ravi.png",
-            demographics: [
-              { label: "Age", value: "42" },
-              { label: "Gender", value: "Male" },
-              { label: "Location", value: "Delhi, India" },
-              { label: "Marital status", value: "Married, two children" },
-              { label: "Occupation", value: "Security Operations Manager" },
-              { label: "Experience", value: "15+ years in security industry" }
-            ],
-            sections: [
-              {
-                title: "Needs",
-                items: [
-                  "Quick access to real-time security updates and alerts for immediate response.",
-                  "Centralized dashboard to monitor multiple locations and security teams efficiently.",
-                  "Intuitive tools for generating detailed reports and performance analytics to present to senior management."
-                ]
-              },
-              {
-                title: "Motivations",
-                items: [
-                  "Ensuring 100% client satisfaction by maintaining a secure and well-coordinated operation.",
-                  "Streamlining processes to reduce time spent on administrative tasks and focus more on strategic decision-making.",
-                  "Building a reputation for reliability and leadership within the security industry by using advanced tools and technologies."
-                ]
-              },
-              {
-                title: "Frustrations",
-                items: [
-                  "Overwhelming data and lack of clear insights, making it difficult to prioritize tasks.",
-                  "Difficulty coordinating between multiple security locations due to inconsistent reporting from team members.",
-                  "Poor system integration, causing delays in gathering data and responding to emergencies."
-                ]
-              },
-              {
-                title: "Devices",
-                items: [
-                  "Laptop (Windows) for daily management and reporting",
-                  "Smartphone (Android) for real-time alerts and team communication",
-                  "Tablet (iPad) for on-the-go monitoring and dashboard access during site visits"
-                ]
-              }
-            ]
-          },
-          {
-            name: "Priya Sharma",
-            image: "/projects/security-agency/lady.png",
-            demographics: [
-              { label: "Age", value: "45" },
-              { label: "Gender", value: "Female" },
-              { label: "Location", value: "Mumbai, India" },
-              { label: "Marital status", value: "Married" },
-              { label: "Occupation", value: "Retail Store Chain Owner" }
-            ],
-            sections: [
-              {
-                title: "Needs",
-                items: [
-                  "Prefers quick and clear information about services and costs.",
-                  "Values testimonials and case studies to gauge service quality.",
-                  "Often makes decisions based on thorough research and recommendations."
-                ]
-              },
-              {
-                title: "Motivations",
-                items: [
-                  "Ensure the safety of her retail stores and employees.",
-                  "Find a reliable and professional security service.",
-                  "Quickly understand service offerings and pricing."
-                ]
-              },
-              {
-                title: "Frustrations",
-                items: [
-                  "Difficulty in finding trustworthy and competent security services.",
-                  "Time constraints in managing her business and coordinating security needs.",
-                  "Concerns about the effectiveness and responsiveness of security personnel."
-                ]
-              },
-              {
-                title: "Devices",
-                items: [
-                  "Desktop computer for detailed research and decision-making",
-                  "Smartphone for quick lookups and communication"
-                ]
-              }
-            ]
-          },
-          {
-            name: "Rahul Verma",
-            image: "/projects/security-agency/man.png",
-            demographics: [
-              { label: "Age", value: "38" },
-              { label: "Gender", value: "Male" },
-              { label: "Location", value: "Bengaluru, India" },
-              { label: "Marital status", value: "Married" },
-              { label: "Occupation", value: "Facility Manager" }
-            ],
-            sections: [
-              {
-                title: "Needs",
-                items: [
-                  "Looks for detailed service descriptions and technical capabilities.",
-                  "Values customer support and post-service follow-up.",
-                  "Interested in scalable solutions to accommodate company growth."
-                ]
-              },
-              {
-                title: "Motivations",
-                items: [
-                  "Ensure the security of the office premises.",
-                  "Find a security service that can integrate with existing building systems.",
-                  "Ensure guards are trained and professional."
-                ]
-              },
-              {
-                title: "Frustrations",
-                items: [
-                  "Managing multiple vendors and ensuring they meet company standards.",
-                  "Ensuring 24/7 security coverage without any lapses.",
-                  "Balancing cost with quality of service."
-                ]
-              },
-              {
-                title: "Devices",
-                items: [
-                  "Desktop computer for detailed research",
-                  "Tablet for on-site evaluations and meetings"
-                ]
-              }
-            ]
-          }
-        ],
-        mindmapsAndFlows: [
-          {
-            system: "Enterprise Admin Operations Platform",
-            mindmap: "/projects/security-agency/admin_mindmap.png",
-            flowchart: "/projects/security-agency/admin_flowchart.png",
-            description: "Information architecture and user operational flow mapping the administrator journey: multi-factor authentication, mission control telemetry, personnel and shift rosters, site surveillance, live incident triage, and executive reporting."
-          },
-          {
-            system: "Client Acquisition Portal",
-            mindmap: "/projects/security-agency/landing_mindmap.png",
-            flowchart: "/projects/security-agency/landing_flowchart.png",
-            description: "Conversion journey architecture guiding commercial property owners through value proposition, security accreditation proof points, service tiers, contact touchpoints, and quotation requests."
-          }
-        ],
-        prototypeSuites: [
-          {
-            system: "Enterprise Admin Operations Platform",
-            badge: "SOC COMMAND ERP",
-            description: "High-density multi-screen mission control prototype covering authenticated login, real-time telemetry dashboard, client database, personnel force management, shifts scheduling, multi-site oversight, emergency incident dispatch, and reporting.",
-            screens: [
-              { label: "Admin", src: "/projects/security-agency/admin.png", category: "Authentication", description: "Admin command portal initial authentication gate" },
-              { label: "Password", src: "/projects/security-agency/password.png", category: "Authentication", description: "Secure credential verification screen" },
-              { label: "OTP", src: "/projects/security-agency/otp.png", category: "Authentication", description: "Two-factor time-based one-time password challenge" },
-              { label: "Home", src: "/projects/security-agency/home.png", category: "Operations", description: "Primary operations telemetry hub and live system status" },
-              { label: "Clients", src: "/projects/security-agency/client.png", category: "Portfolio", description: "Commercial client directory and contract status" },
-              { label: "Client Profile", src: "/projects/security-agency/client_profile.png", category: "Portfolio", description: "Individual client account specification, sites, and billing" },
-              { label: "Personnel", src: "/projects/security-agency/personnel.png", category: "Workforce", description: "Active guard registry, duty statuses, and deployment stats" },
-              { label: "Personnel Profile", src: "/projects/security-agency/personnel_profile.png", category: "Workforce", description: "Security officer background check, licensing, and certifications" },
-              { label: "Shifts", src: "/projects/security-agency/shifts.png", category: "Scheduling", description: "Shift coverage matrix, roster allocations, and timecards" },
-              { label: "Sites", src: "/projects/security-agency/sites.png", category: "Surveillance", description: "Geographic site registry and surveillance coverage overview" },
-              { label: "Site Details", src: "/projects/security-agency/site_details.png", category: "Surveillance", description: "Detailed facility blueprint, guard checkpoints, and access protocols" },
-              { label: "Incidents", src: "/projects/security-agency/Incidents.png", category: "Emergency", description: "Real-time incident alert log, severity tiers, and field dispatch" },
-              { label: "Reports", src: "/projects/security-agency/reports.png", category: "Analytics", description: "Automated audit logs, SLA compliance, and incident analytics" },
-              { label: "Messages", src: "/projects/security-agency/messages.png", category: "Comms", description: "Encrypted direct messaging between command dispatchers and field personnel" }
-            ]
-          },
-          {
-            system: "Client Acquisition Portal",
-            badge: "CLIENT CONVERSION",
-            description: "Institutional landing experience and corporate intake pipeline designed for commercial real estate developers, facilities directors, and corporate procurement teams.",
-            screens: [
-              { label: "Landing", src: "/projects/security-agency/landing.png", category: "Marketing", description: "Full conversion page with value proposition, proof metrics, and service tiers" },
-              { label: "Contact", src: "/projects/security-agency/contact.png", category: "Intake", description: "Structured enterprise quote request and immediate security consultation intake" }
-            ]
-          }
-        ],
-        uxImpactMetrics: [
-          { label: "Operational Response Time", value: "-45%", detail: "Dispatch latency dropped from 20 minutes down to 3.2 minutes through single-click incident alerting." },
-          { label: "Shift Coverage Accuracy", value: "99.4%", detail: "Biometric and geofenced check-ins eliminated ghost shifts and unscheduled coverage lapses." },
-          { label: "Client Inquiries & Conversion", value: "+20%", detail: "Transparent service matrices and rapid quote intake increased qualified enterprise leads by 20%." },
-          { label: "Usability & System Adoption", value: "88 SUS", detail: "System Usability Scale score rated 'Excellent' among field managers with average onboarding under 2 hours." }
-        ]
-      }
-    },
-    {
       title: "Pill Dispenser 3D",
       category: "Industrial Design & Mechatronics",
       description: [
@@ -1312,12 +1019,11 @@ export const resumeData: ResumeData = {
         year: "2028",
         role: "Ritvik Chunamari — Lead Brand & Motion Designer",
         technologies: [
-          "Adobe Illustrator",
-          "After Effects",
+          "Brand Systems",
           "Motion Graphics",
-          "Olympic Brand Guidelines",
           "Bilingual Typography",
-          "Vector Geometry"
+          "Vector Geometry",
+          "Spatial Design"
         ],
         overview: "The Mumbai 2028 Olympic Games visual identity system is an ambitious civic and athletic branding initiative created for VIBR 3000: Visual Identity and Branding. Designed as an authentic celebration of India's commercial capital and premier coastal metropolis, the system translates Mumbai's 2,000-year maritime heritage, colonial gothic landmarks, and 21st-century cable-stayed infrastructure into a fluid, motion-first Olympic design language.",
         challenge: "Olympic identities face the dual imperative of expressing deep localized host-city cultural specificity while meeting the rigorous, high-contrast, scalable requirements of the International Olympic Committee (IOC). The core challenge was celebrating Mumbai's complex multiplicity—its historic stone arches, sacred spiritual domes, and cutting-edge engineering marvels—without lapsing into generic folklore or clichéd motifs, while inventing a typography that seamlessly bridges Latin and Devanagari scripts.",
@@ -1347,7 +1053,7 @@ export const resumeData: ResumeData = {
           },
           {
             title: "Motion-First Kinetic Identity",
-            description: "Developed native After Effects motion graphics where the architectural vectors draw themselves on with neon luminescence and kinetic elasticity, engineered for 4K broadcast slates and digital stadium ribbons."
+            description: "Developed broadcast motion graphics where the architectural vectors animate dynamically with luminous clarity, engineered for 4K broadcast slates and digital stadium ribbons."
           },
           {
             title: "Indian Tricolor Meets Olympic Spectrum",
@@ -1419,7 +1125,7 @@ export const resumeData: ResumeData = {
             image: "/projects/mumbai-olympics-2028/sea-link-luminous.jpg"
           }
         ],
-        refinementRationale: "During refinement, the Devanagari-Latin fusion wordmark was perfected by aligning the continuous horizontal shirorekha across 'm', 'u', 'm', 'b', 'a', and 'i', ensuring character heights match standard optical x-height while preserving authentic Indic calligraphic terminal curves. The landmark emblems were calibrated to match the exact optical stroke weight of the Olympic rings, and an After Effects kinetic animation was authored to establish the motion branding for broadcast stings and digital scoreboards.",
+        refinementRationale: "During refinement, the Devanagari-Latin fusion wordmark was perfected by aligning the continuous horizontal shirorekha across 'm', 'u', 'm', 'b', 'a', and 'i', ensuring character heights match standard optical x-height while preserving authentic Indic calligraphic terminal curves. The landmark emblems were calibrated to match the exact optical stroke weight of the Olympic rings, and kinetic motion studies were authored to establish the motion branding for broadcast stings and digital scoreboards.",
         refinementDiagram: "/projects/mumbai-olympics-2028/olympic-rings.png",
         refinementImage: "/projects/mumbai-olympics-2028/mumbai-olympics-primary.png",
         styleguide: {
@@ -1628,15 +1334,15 @@ export const resumeData: ResumeData = {
     },
     {
       category: "Design Architecture & Systems",
-      skills: "Figma (Advanced Auto-Layout & Variables), Design Tokens, Atomic Systems, Wireframing, High-Fidelity Prototyping"
+      skills: "Design Systems, Design Tokens, Component Architecture, Wireframing, High-Fidelity Prototyping"
     },
     {
       category: "Research & Accessibility",
-      skills: "WCAG 2.2 AA Compliance, Usability Heuristics, User Journey Mapping, Qualitative Synthesis, Quantitative Telemetry"
+      skills: "WCAG 2.2 AA Compliance, Usability Heuristics, User Journey Mapping, Qualitative Research, Usability Testing"
     },
     {
       category: "Industrial & 3D Tools",
-      skills: "Autodesk Inventor, KeyShot, Adobe Illustrator, Adobe Photoshop, After Effects"
+      skills: "3D CAD Modeling, Rapid Prototyping, Motion Design, Kinematics, DFM"
     }
   ],
   certifications: [

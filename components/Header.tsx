@@ -1,5 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface HeaderProps {
   onNavigate: (sectionId: string) => void;
@@ -16,22 +21,33 @@ const MagneticNavItem: React.FC<{
   rel?: string;
 }> = ({ children, onClick, className, cursorText, href, download, target, rel }) => {
   const elemRef = useRef<any>(null);
+  const rectRef = useRef<DOMRect | null>(null);
+
+  const handleMouseEnter = () => {
+    if (elemRef.current) rectRef.current = elemRef.current.getBoundingClientRect();
+  };
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!elemRef.current) return;
     const isCoarse = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
     if (isCoarse) return;
 
-    const { left, top, width, height } = elemRef.current.getBoundingClientRect();
-    const x = (e.clientX - (left + width / 2)) * 0.28;
-    const y = (e.clientY - (top + height / 2)) * 0.28;
+    let rect = rectRef.current;
+    if (!rect) {
+      rect = elemRef.current.getBoundingClientRect();
+      rectRef.current = rect;
+    }
+
+    const x = (e.clientX - (rect.left + rect.width / 2)) * 0.28;
+    const y = (e.clientY - (rect.top + rect.height / 2)) * 0.28;
     
-    gsap.to(elemRef.current, { x, y, duration: 0.15, ease: 'power1.out', overwrite: 'auto' });
+    gsap.to(elemRef.current, { transform: `translate3d(${x}px, ${y}px, 0)`, duration: 0.2, ease: 'power2.out', overwrite: 'auto' });
   };
 
   const handleMouseLeave = () => {
+    rectRef.current = null;
     if (!elemRef.current) return;
-    gsap.to(elemRef.current, { x: 0, y: 0, duration: 0.45, ease: 'power2.out', overwrite: 'auto' });
+    gsap.to(elemRef.current, { transform: 'translate3d(0, 0, 0)', duration: 0.42, ease: 'power3.out', overwrite: 'auto' });
   };
 
   if (href) {
@@ -42,9 +58,10 @@ const MagneticNavItem: React.FC<{
         download={download}
         target={target}
         rel={rel}
+        onMouseEnter={handleMouseEnter}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className={`relative will-change-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] rounded-full ${className}`}
+        className={`relative will-change-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] rounded-none ${className}`}
         data-cursor-text={cursorText || "OPEN"}
       >
         <span className="block pointer-events-none">
@@ -58,6 +75,7 @@ const MagneticNavItem: React.FC<{
     <button 
       ref={elemRef}
       onClick={onClick}
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={`relative group transition-colors duration-200 ease-out will-change-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] rounded-sm py-2 px-2 sm:py-1.5 sm:px-2 min-h-[40px] flex items-center justify-center active:scale-95 ${className || 'text-[10px] md:text-xs font-bold uppercase tracking-widest text-neutral-300 hover:text-white'}`}
@@ -67,7 +85,7 @@ const MagneticNavItem: React.FC<{
         {children}
       </span>
       {/* Underline only for nav items */}
-      <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full pointer-events-none"></span>
+      <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-white transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-x-100 pointer-events-none"></span>
     </button>
   );
 };
@@ -86,44 +104,28 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    let ticking = false;
-
-    const updateProgress = (customY?: number) => {
-      if (!progressBarRef.current) return;
-      const docHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      const y = customY ?? ((window as any).__virtualScrollY ?? (window.scrollY || window.pageYOffset));
-      const progress = Math.min(1, Math.max(0, y / docHeight));
-      progressBarRef.current.style.transform = `scaleX(${progress})`;
-    };
-
-    const handleNativeScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          updateProgress();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    const lenis = (window as any).__lenis;
-    const onLenisScroll = (e: any) => {
-      updateProgress(e?.scroll ?? lenis?.scroll);
-    };
-
-    if (lenis) {
-      lenis.on('scroll', onLenisScroll);
+  useLayoutEffect(() => {
+    if (!progressBarRef.current) return;
+    const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isReduced) {
+      gsap.set(progressBarRef.current, { scaleX: 1 });
+      return;
     }
-    window.addEventListener('scroll', handleNativeScroll, { passive: true });
-    updateProgress();
 
-    return () => {
-      if (lenis) {
-        lenis.off('scroll', onLenisScroll);
-      }
-      window.removeEventListener('scroll', handleNativeScroll);
-    };
+    const ctx = gsap.context(() => {
+      gsap.to(progressBarRef.current, {
+        scaleX: 1,
+        ease: 'none',
+        scrollTrigger: {
+          start: 'top top',
+          end: 'max',
+          scrub: 0.1,
+          invalidateOnRefresh: true,
+        }
+      });
+    });
+
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -139,7 +141,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
         <div className="w-auto md:w-1/4">
           <MagneticNavItem 
             onClick={() => onNavigate('home')}
-            className="cursor-pointer font-bold text-sm tracking-tight uppercase"
+            className="cursor-pointer font-bold text-sm tracking-tight uppercase text-white hover:text-[#FF3B30] transition-colors"
             cursorText="HOME"
           >
             RC
@@ -148,18 +150,24 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
 
         {/* Center Info - Monospace Data */}
         <div className="hidden md:flex w-2/4 justify-center items-center space-x-12">
-          <span className="font-mono text-[10px] tracking-widest text-white/70 uppercase">Arvada, CO</span>
-          <span className="font-mono text-[10px] tracking-widest text-white/70 uppercase">{time} MST</span>
+          <span className="font-mono text-[10px] tracking-[0.25em] text-white/70 uppercase">Arvada, CO</span>
+          <span className="font-mono text-[10px] tracking-[0.25em] text-white/70 uppercase">{time} MST</span>
         </div>
 
         {/* Navigation - Right Aligned Grid */}
         <nav className="w-auto md:w-auto flex items-center justify-end space-x-5 sm:space-x-7 md:space-x-8">
-          {['Work', 'Profile', 'Contact'].map((item) => (
+          {[
+            { label: 'WORKS', id: 'work' },
+            { label: 'PROFILE', id: 'profile' },
+            { label: 'CONTACT', id: 'contact' },
+          ].map((item) => (
             <MagneticNavItem 
-              key={item}
-              onClick={() => onNavigate(item.toLowerCase())}
+              key={item.id}
+              onClick={() => onNavigate(item.id)}
+              cursorText={item.label}
+              className="text-[10px] md:text-xs font-mono font-semibold uppercase tracking-[0.2em] text-neutral-300 hover:text-white"
             >
-              {item}
+              {item.label}
             </MagneticNavItem>
           ))}
 
@@ -170,7 +178,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
             rel="noopener noreferrer"
             download="Ritvik_Chunamari_Resume.pdf"
             cursorText="RESUME"
-            className="border border-white/50 hover:border-white px-3.5 py-1.5 min-h-[36px] rounded-full text-[10px] md:text-xs font-mono font-bold tracking-widest text-white hover:bg-white hover:text-black transition-all duration-200 inline-flex items-center gap-1.5 shadow-sm active:scale-95"
+            className="border border-white/50 hover:border-white px-3.5 py-1.5 min-h-[36px] rounded-none text-[10px] md:text-xs font-mono font-bold tracking-widest text-white hover:bg-white hover:text-black transition-all duration-200 inline-flex items-center gap-1.5 shadow-sm active:scale-95"
           >
             <span>RESUME</span>
             <span className="text-[9px] opacity-75">↓</span>

@@ -239,26 +239,30 @@ const GlobalFluidCanvas: React.FC<GlobalFluidCanvasProps> = ({
     planeMesh.rotation.x = -Math.PI * 0.26;
     scene.add(planeMesh);
 
-    // 4. Global Raycasting & Mouse Events
-    const handleMouseMove = (e: MouseEvent) => {
-      ndcMouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-      ndcMouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    // 4. Global High-Performance Mathematical Raycasting (0ms CPU overhead, no 44k polygon test)
+    const mathPlane = new THREE.Plane();
+    const planeNormal = new THREE.Vector3(0, 0, 1).applyEuler(new THREE.Euler(-Math.PI * 0.26, 0, 0));
+    mathPlane.setFromNormalAndCoplanarPoint(planeNormal, new THREE.Vector3(0, 0, 0));
+    const hitPoint = new THREE.Vector3();
+    const inverseEuler = new THREE.Euler(Math.PI * 0.26, 0, 0);
+
+    const updatePlaneIntersection = (clientX: number, clientY: number) => {
+      ndcMouse.x = (clientX / window.innerWidth) * 2 - 1;
+      ndcMouse.y = -(clientY / window.innerHeight) * 2 + 1;
 
       raycaster.setFromCamera(ndcMouse, camera);
-      const intersects = raycaster.intersectObject(planeMesh);
-
-      if (intersects.length > 0) {
-        const uv = intersects[0].uv;
-        if (uv) {
-          const pX = (uv.x - 0.5) * 18;
-          const pY = (uv.y - 0.5) * 13;
-          mouseRef.current.targetPlaneX = pX;
-          mouseRef.current.targetPlaneY = pY;
-        }
+      if (raycaster.ray.intersectPlane(mathPlane, hitPoint)) {
+        const localHit = hitPoint.clone().applyEuler(inverseEuler);
+        mouseRef.current.targetPlaneX = Math.max(-9, Math.min(9, localHit.x));
+        mouseRef.current.targetPlaneY = Math.max(-6.5, Math.min(6.5, localHit.y));
       } else {
         mouseRef.current.targetPlaneX = ndcMouse.x * 7.0;
         mouseRef.current.targetPlaneY = ndcMouse.y * 5.0;
       }
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      updatePlaneIntersection(e.clientX, e.clientY);
     };
 
     const handleClick = () => {
@@ -268,21 +272,7 @@ const GlobalFluidCanvas: React.FC<GlobalFluidCanvasProps> = ({
 
     const handleTouchMove = (e: TouchEvent) => {
       if (e.touches.length > 0) {
-        const t = e.touches[0];
-        ndcMouse.x = (t.clientX / window.innerWidth) * 2 - 1;
-        ndcMouse.y = -(t.clientY / window.innerHeight) * 2 + 1;
-
-        raycaster.setFromCamera(ndcMouse, camera);
-        const intersects = raycaster.intersectObject(planeMesh);
-
-        if (intersects.length > 0 && intersects[0].uv) {
-          const uv = intersects[0].uv;
-          mouseRef.current.targetPlaneX = (uv.x - 0.5) * 18;
-          mouseRef.current.targetPlaneY = (uv.y - 0.5) * 13;
-        } else {
-          mouseRef.current.targetPlaneX = ndcMouse.x * 7.0;
-          mouseRef.current.targetPlaneY = ndcMouse.y * 5.0;
-        }
+        updatePlaneIntersection(e.touches[0].clientX, e.touches[0].clientY);
       }
     };
 
@@ -347,6 +337,15 @@ const GlobalFluidCanvas: React.FC<GlobalFluidCanvasProps> = ({
       // Update click shockwave
       m.clickTime += delta;
 
+      // Synchronize live scroll velocity & progress from Lenis with smooth dampening
+      const lenisInstance = (window as any).__lenis;
+      if (lenisInstance) {
+        const rawVel = lenisInstance.velocity || 0;
+        m.scrollVel += (rawVel - m.scrollVel) * 0.16;
+        const docHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        m.scrollProgress = Math.min(1, Math.max(0, (lenisInstance.scroll || 0) / docHeight));
+      }
+
       // Update shader uniforms
       material.uniforms.uTime.value = prefersReducedMotion ? 0 : elapsedTime;
       material.uniforms.uMouse.value.set(m.planeX, m.planeY);
@@ -389,6 +388,7 @@ const GlobalFluidCanvas: React.FC<GlobalFluidCanvasProps> = ({
     const lenis = (window as any).__lenis;
     const onLenisScroll = (e: any) => {
       updateScrollProgress(e?.scroll ?? lenis?.scroll);
+      mouseRef.current.scrollVel = e?.velocity ?? lenis?.velocity ?? 0;
     };
 
     if (lenis) {

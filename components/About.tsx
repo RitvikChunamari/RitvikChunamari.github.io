@@ -3,6 +3,7 @@ import { ResumeData } from '../types';
 import ExperienceList from './Experience';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { scrambleText } from '../utils/scrambleText';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -14,18 +15,20 @@ interface AboutProps {
 
 const About: React.FC<AboutProps> = ({ data }) => {
   const sectionRef = useRef<HTMLElement>(null);
+  const sectionTitleRef = useRef<HTMLHeadingElement>(null);
   const laserLineRef = useRef<HTMLDivElement>(null);
   const bioContainerRef = useRef<HTMLDivElement>(null);
   const insightRef = useRef<HTMLDivElement>(null);
   const wordRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const words = data.personal.summary.split(' ');
 
-  // 1. Section Header Architectural Laser Line Reveal
+  // 1. Section Header Architectural Laser Line & Lenis-Synchronized Word Illumination
   useLayoutEffect(() => {
     const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
+      // Architectural Laser Line Reveal & Cryptographic Scramble
       if (laserLineRef.current) {
         if (isReduced) {
           gsap.set(laserLineRef.current, { scaleX: 1 });
@@ -40,113 +43,72 @@ const About: React.FC<AboutProps> = ({ data }) => {
                 trigger: sectionRef.current,
                 start: 'top 82%',
                 toggleActions: 'play none none reverse',
+                onEnter: () => {
+                  if (sectionTitleRef.current) {
+                    scrambleText(sectionTitleRef.current, '02 /// PROFILE & PHILOSOPHY', { duration: 600 });
+                  }
+                }
               }
             }
           );
         }
       }
-    }, sectionRef);
 
-    return () => ctx.revert();
-  }, []);
-
-  // 2. Continuous Lenis-Synchronized Word Illumination & Reading Progress
-  useEffect(() => {
-    let ticking = false;
-    const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    const updateWords = (customY?: number) => {
       if (isReduced) {
         wordRefs.current.forEach((el) => {
-          if (el) {
-            el.style.opacity = '1';
-            el.style.color = '#FFFFFF';
-            el.style.transform = 'translate3d(0, 0, 0)';
-          }
+          if (el) gsap.set(el, { opacity: 1, color: '#EDEDED' });
         });
-        if (insightRef.current) {
-          insightRef.current.style.transform = 'translate3d(0, 0, 0)';
-          insightRef.current.style.opacity = '1';
-        }
+        if (insightRef.current) gsap.set(insightRef.current, { y: 0, opacity: 1 });
         return;
       }
 
-      if (!bioContainerRef.current) return;
-
-      const rect = bioContainerRef.current.getBoundingClientRect();
-      const vh = window.innerHeight;
-
-      // Start illuminating when top of bio enters lower 82% of viewport, finish near 35%
-      const startTrigger = vh * 0.82;
-      const endTrigger = vh * 0.35;
-      const totalSpan = (startTrigger - endTrigger) + rect.height;
-      const rawProgress = (startTrigger - rect.top) / totalSpan;
-      const progress = Math.min(1, Math.max(0, rawProgress));
-
-      const total = wordRefs.current.length;
-      const activeFloat = progress * total;
-
-      wordRefs.current.forEach((el, idx) => {
-        if (!el) return;
-        if (idx < Math.floor(activeFloat)) {
-          // Preceding read words settle into crisp #EDEDED (AAA contrast ratio on obsidian #050508)
-          el.style.opacity = '1';
-          el.style.color = '#EDEDED';
-          el.style.transform = 'translate3d(0, 0, 0)';
-        } else if (idx === Math.floor(activeFloat)) {
-          // Active reading word has micro-lift and radiant white glow
-          const frac = activeFloat - Math.floor(activeFloat);
-          const op = 0.28 + 0.72 * frac;
-          el.style.opacity = op.toFixed(3);
-          el.style.color = frac > 0.4 ? '#FFFFFF' : 'rgba(255, 255, 255, 0.55)';
-          const liftY = (1 - frac) * -1.5;
-          el.style.transform = `translate3d(0, ${liftY.toFixed(1)}px, 0)`;
-        } else {
-          // Upcoming unread words maintain subtle contrast
-          el.style.opacity = '0.28';
-          el.style.color = 'rgba(255, 255, 255, 0.32)';
-          el.style.transform = 'translate3d(0, 0, 0)';
-        }
-      });
-
-      // Insight card smooth elevation
-      if (insightRef.current) {
-        const insightRect = insightRef.current.getBoundingClientRect();
-        if (insightRect.top < vh && insightRect.bottom > 0) {
-          const inProgress = Math.min(1, Math.max(0, (vh - insightRect.top) / (vh * 0.5)));
-          insightRef.current.style.transform = `translate3d(0, ${((1 - inProgress) * 12).toFixed(1)}px, 0)`;
-          insightRef.current.style.opacity = `${Math.min(1, 0.35 + inProgress * 0.65).toFixed(3)}`;
-        }
-      }
-    };
-
-    const handleNativeScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          updateWords();
-          ticking = false;
+      // Continuous Lenis-Synchronized Word Illumination (Zero getBoundingClientRect layout thrashing)
+      const validWords = wordRefs.current.filter(Boolean);
+      if (bioContainerRef.current && validWords.length > 0) {
+        const wordsTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: bioContainerRef.current,
+            start: 'top 82%',
+            end: 'bottom 40%',
+            scrub: 0.35,
+            invalidateOnRefresh: true,
+          }
         });
-        ticking = true;
+
+        wordsTl.fromTo(validWords,
+          { opacity: 0.45, color: '#737373' },
+          {
+            opacity: 1,
+            color: '#EDEDED',
+            stagger: {
+              each: 0.025,
+              ease: 'none',
+            },
+            ease: 'none',
+          }
+        );
       }
-    };
 
-    const lenis = (window as any).__lenis;
-    const onLenisScroll = (e: any) => {
-      updateWords(e?.scroll ?? lenis?.scroll);
-    };
-
-    if (lenis) {
-      lenis.on('scroll', onLenisScroll);
-    }
-    window.addEventListener('scroll', handleNativeScroll, { passive: true });
-    updateWords();
-
-    return () => {
-      if (lenis) {
-        lenis.off('scroll', onLenisScroll);
+      // Insight Card Elevation
+      if (insightRef.current) {
+        gsap.fromTo(insightRef.current,
+          { y: 24, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.85,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: insightRef.current,
+              start: 'top 88%',
+              toggleActions: 'play none none reverse',
+            }
+          }
+        );
       }
-      window.removeEventListener('scroll', handleNativeScroll);
-    };
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, [data.personal.summary]);
 
   const renderSplitWords = () => {
@@ -155,7 +117,7 @@ const About: React.FC<AboutProps> = ({ data }) => {
         <span 
           ref={(el) => { if (el) wordRefs.current[index] = el; }}
           className="inline-block transition-[opacity,color,transform] duration-200 ease-out will-change-[opacity,color,transform]"
-          style={{ opacity: 0.22, color: 'rgba(255, 255, 255, 0.3)' }}
+          style={{ opacity: 0.75, color: '#B0B0B0' }}
         >
           {word}
         </span>
@@ -173,25 +135,25 @@ const About: React.FC<AboutProps> = ({ data }) => {
       <div id="about" className="absolute -top-24 left-0 pointer-events-none" />
       <div className="container mx-auto px-6 md:px-12 relative z-10">
         
-        {/* Section Header Synchronized with Swiss Telemetry */}
+        {/* Section Header */}
         <div className="grid grid-cols-1 md:grid-cols-12 mb-16 md:mb-24 border-b border-white/10 pb-6 items-end relative">
           {/* Architectural Laser Line that draws across on entry */}
           <div 
             ref={laserLineRef}
             className="absolute bottom-0 left-0 w-full h-[1.5px] bg-gradient-to-r from-[#FF3B30] via-white/50 to-transparent origin-left scale-x-0 will-change-transform pointer-events-none" 
           />
-          <div className="md:col-span-4 flex items-center gap-3">
+          <div className="md:col-span-8 flex items-center gap-3">
             <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-            <h2 className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.25em] text-white/80 font-medium">
-              02 /// PROFILE &amp; PHILOSOPHY
+            <h2 
+              ref={sectionTitleRef}
+              className="text-xs font-mono uppercase tracking-[0.25em] text-white font-medium"
+            >
+              02 /// Profile &amp; Philosophy
             </h2>
           </div>
-          <div className="md:col-span-8 flex justify-between md:justify-end items-center gap-6">
-            <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-white/60">
-              THEORY &amp; CRAFT
-            </span>
+          <div className="md:col-span-4 flex justify-end items-center gap-6">
             <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/50 hidden sm:inline-block">
-              ATLAS INSTITUTE // CU BOULDER
+              ATLAS INSTITUTE · CU BOULDER
             </span>
           </div>
         </div>
@@ -199,19 +161,16 @@ const About: React.FC<AboutProps> = ({ data }) => {
         {/* Intro Bio & Philosophy Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-28 relative">
           
-          {/* Left Column: Monospace Metadata & Coordinates */}
+          {/* Left Column: Location & Context */}
           <div className="md:col-span-4">
-            <div className="sticky top-28 self-start space-y-6">
-              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/60 block">
-                ● CORE PERSPECTIVE
+            <div className="sticky top-28 self-start space-y-4">
+              <span className="font-mono text-xs uppercase tracking-wider text-neutral-400 block font-medium">
+                Location &amp; Domain
               </span>
-              <div className="space-y-2 text-xs font-mono text-white/70">
-                <div className="flex items-center gap-2">
-                  <span className="text-[#FF3B30]">■</span>
-                  <span>LAT: 40.0076° N, LON: 105.2659° W</span>
-                </div>
-                <div>BOULDER, COLORADO</div>
-                <div>CREATIVE TECHNOLOGY &amp; DESIGN</div>
+              <div className="space-y-1.5 text-xs font-mono text-neutral-400">
+                <div className="text-white">Boulder, Colorado</div>
+                <div>Creative Technology &amp; Design</div>
+                <div className="text-neutral-400">ATLAS Institute, CU Boulder</div>
               </div>
             </div>
           </div>
@@ -228,11 +187,12 @@ const About: React.FC<AboutProps> = ({ data }) => {
             {/* Architectural Philosophy Card */}
             <div 
               ref={insightRef} 
-              className="border-l-2 border-[#FF3B30] pl-6 md:pl-8 py-5 bg-white/[0.02] border-y border-r border-white/[0.05] rounded-r-sm will-change-transform backdrop-blur-sm"
+              className="border-l-2 border-[#FF3B30] pl-6 md:pl-8 py-5 bg-white/[0.02] border-y border-r border-white/[0.05] rounded-none will-change-transform backdrop-blur-sm"
             >
               <div className="flex items-center gap-2 mb-2">
-                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#FF3B30] font-semibold">
-                  MANDATE // RADICAL ACCESSIBILITY
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
+                <span className="font-mono text-[10px] uppercase tracking-wider text-white font-semibold">
+                  Accessibility &amp; Ergonomics
                 </span>
               </div>
               <p className="text-base sm:text-lg text-neutral-200 font-light leading-relaxed">
@@ -246,8 +206,8 @@ const About: React.FC<AboutProps> = ({ data }) => {
         <div className="mb-28 pt-12 border-t border-white/10">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12 items-end">
             <div className="md:col-span-4">
-               <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/60 block">
-                 ● APPLIED LEADERSHIP
+               <span className="font-mono text-xs uppercase tracking-wider text-neutral-400 block font-medium">
+                 Experience
                </span>
             </div>
             <div className="md:col-span-8 flex items-center justify-between border-b border-white/10 pb-6">
@@ -259,7 +219,7 @@ const About: React.FC<AboutProps> = ({ data }) => {
                   download="Ritvik_Chunamari_Resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2 px-4 py-2 border border-white/30 rounded-full font-mono text-[10px] md:text-xs uppercase tracking-wider text-white hover:bg-white hover:text-black transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] active:scale-95"
+                  className="group inline-flex items-center gap-2 px-4 py-2 border border-white/30 rounded-none font-mono text-[10px] md:text-xs uppercase tracking-wider text-white hover:bg-white hover:text-black transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] active:scale-95"
                   data-cursor-text="DOWNLOAD"
                 >
                   <span>Resume PDF</span>
@@ -281,8 +241,8 @@ const About: React.FC<AboutProps> = ({ data }) => {
             <div className="lg:col-span-5 space-y-12">
               <div className="border-b border-white/10 pb-4 flex items-center gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
-                <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/70 font-semibold">
-                  03 / ACADEMIC FOUNDATION
+                <span className="font-mono text-xs uppercase tracking-wider text-white font-medium">
+                  Education
                 </span>
               </div>
 
@@ -316,8 +276,8 @@ const About: React.FC<AboutProps> = ({ data }) => {
               <div>
                 <div className="border-b border-white/10 pb-4 mb-6 flex items-center gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
-                  <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/70 font-semibold">
-                    04 / STUDIO DISCIPLINES
+                  <span className="font-mono text-xs uppercase tracking-wider text-white font-medium">
+                    Skills &amp; Capabilities
                   </span>
                 </div>
 
@@ -346,8 +306,8 @@ const About: React.FC<AboutProps> = ({ data }) => {
               <div>
                 <div className="border-b border-white/10 pb-4 mb-6 flex items-center gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
-                  <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/70 font-semibold">
-                    05 / VERIFIED CREDENTIALS
+                  <span className="font-mono text-xs uppercase tracking-wider text-white font-medium">
+                    Certifications
                   </span>
                 </div>
 

@@ -43,7 +43,7 @@ const HeroMarqueeEcho: React.FC<HeroMarqueeEchoProps> = ({ offset = 0 }) => {
     top: [
       'CREATIVE DESIGNER',
       '✦',
-      'VIBE CODER',
+      'DESIGN ENGINEER',
       '✦',
       'UX ARCHITECT',
       '✦',
@@ -66,17 +66,17 @@ const HeroMarqueeEcho: React.FC<HeroMarqueeEchoProps> = ({ offset = 0 }) => {
     ],
     technicalMono: [
       '[ ARCHITECTURE ]',
-      '///',
+      '·',
       '[ ACCESSIBILITY FIRST ]',
-      '///',
+      '·',
       '[ RADICAL EMPATHY ]',
-      '///',
+      '·',
       '[ PROTOTYPING AT SPEED ]',
-      '///',
+      '·',
       '[ CODE AS A MEDIUM ]',
-      '///',
+      '·',
       '[ SWISS PRECISION ]',
-      '///',
+      '·',
     ],
     bottom: [
       'INTERACTIVE EXPERIENCES',
@@ -191,7 +191,7 @@ const HeroMarqueeEcho: React.FC<HeroMarqueeEchoProps> = ({ offset = 0 }) => {
                 <span
                   key={i}
                   className={`text-[10px] md:text-xs font-mono uppercase tracking-[0.3em] ${
-                    item === '///'
+                    item === '·'
                       ? 'text-[#FF3B30]/40'
                       : 'text-white/10'
                   }`}

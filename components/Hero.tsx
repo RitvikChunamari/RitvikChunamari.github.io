@@ -1,6 +1,12 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MagneticWrapper from './MagneticWrapper';
+import { scrambleText } from '../utils/scrambleText';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface HeroProps {
   isLoaded?: boolean;
@@ -18,16 +24,35 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
   const line1Ref = useRef<HTMLDivElement>(null);
   const line2Ref = useRef<HTMLDivElement>(null);
   const redBarRef = useRef<HTMLDivElement>(null);
+  const affiliationRef = useRef<HTMLSpanElement>(null);
   const charRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
   // Pointer state tracked in refs to eliminate 100% of React component re-renders during mouse movements
   const mousePosRef = useRef({ clientX: -2000, clientY: -2000, normX: 0, normY: 0 });
   const animFrameRef = useRef<number | null>(null);
   const isHoveredRef = useRef(false);
+  const charCentersRef = useRef<{ x: number; y: number }[]>([]);
 
-  // Initial GSAP Entrance Choreography
+  // Cache character positions to eliminate 15 getBoundingClientRect reflows per mouse frame
+  const measureCharCenters = () => {
+    charCentersRef.current = charRefs.current.map((el) => {
+      if (!el) return { x: 0, y: 0 };
+      const rect = el.getBoundingClientRect();
+      return {
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2,
+      };
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', measureCharCenters, { passive: true });
+    return () => window.removeEventListener('resize', measureCharCenters);
+  }, []);
+
+  // Initial GSAP Entrance Choreography & Lenis-Synchronized Typographic Scrub
   useLayoutEffect(() => {
-    if (!isLoaded) return;
+    if (!isLoaded || !heroRef.current) return;
 
     const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (isReduced) {
@@ -39,10 +64,18 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
     }
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ delay: 0.1 });
+      // 1. Initial Hero Entrance Sequence (noth.in Parisian luxury curve)
+      const entranceTl = gsap.timeline({ 
+        delay: 0.12,
+        onComplete: () => {
+          if (affiliationRef.current) {
+            scrambleText(affiliationRef.current, 'ATLAS INSTITUTE · CU BOULDER', { duration: 650 });
+          }
+        }
+      });
 
-      // 1. Hairline Grid scale in
-      tl.to('.hero-grid-h', {
+      // Hairline Grid scale in
+      entranceTl.to('.hero-grid-h', {
         scaleX: 1,
         duration: 1.1,
         ease: 'power3.out',
@@ -53,19 +86,112 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
         ease: 'power3.out',
       }, 0.1);
 
-      // 2. Monumental Typography Mask Reveal
-      tl.fromTo('.hero-title-line',
-        { y: '110%', filter: 'blur(8px)', opacity: 0 },
-        { y: '0%', filter: 'blur(0px)', opacity: 1, stagger: 0.1, duration: 1.2, ease: 'power4.out' },
-        0.3
+      // Monumental Typography Mask Reveal
+      entranceTl.fromTo('.hero-title-line',
+        { yPercent: 105, opacity: 0 },
+        { yPercent: 0, opacity: 1, stagger: 0.1, duration: 1.2, ease: 'power3.out' },
+        0.25
       );
 
-      // 3. Accent Line & Manifesto Reveal
-      tl.fromTo('.hero-meta-reveal',
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.08, duration: 0.9, ease: 'power2.out' },
-        0.65
+      // Masked Manifesto Reveal
+      entranceTl.fromTo('.hero-manifesto-line',
+        { yPercent: 105, opacity: 0 },
+        { yPercent: 0, opacity: 1, stagger: 0.08, duration: 0.9, ease: 'power3.out' },
+        0.55
       );
+
+      // Accent Line & Telemetry Reveal
+      entranceTl.fromTo('.hero-meta-reveal',
+        { y: 16, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.06, duration: 0.85, ease: 'power2.out' },
+        0.75
+      );
+
+      // 2. Continuous Awwwards Typographic Scrub Timeline (Lenis-synchronized, unpinned)
+      const mm = gsap.matchMedia();
+
+      mm.add({
+        isDesktop: "(min-width: 769px) and (prefers-reduced-motion: no-preference)",
+        isMobile: "(max-width: 768px) and (prefers-reduced-motion: no-preference)",
+        isReduced: "(prefers-reduced-motion: reduce)",
+      }, (context) => {
+        const { isDesktop, isMobile, isReduced } = context.conditions as { 
+          isDesktop: boolean; 
+          isMobile: boolean; 
+          isReduced: boolean; 
+        };
+
+        if (isReduced) {
+          if (line1Ref.current) gsap.set(line1Ref.current, { xPercent: 0, yPercent: 0, opacity: 1 });
+          if (line2Ref.current) gsap.set(line2Ref.current, { xPercent: 0, yPercent: 0, opacity: 1 });
+          if (redBarRef.current) gsap.set(redBarRef.current, { scaleX: 1, transformOrigin: 'left center' });
+          gsap.set('.hero-meta-reveal', { opacity: 1, y: 0 });
+          return;
+        }
+
+        const scrubTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 0.6,
+            invalidateOnRefresh: true,
+          }
+        });
+
+        if (isDesktop) {
+          // 1. Elegant fade for secondary subtitles & telemetry (fades cleanly without shifting vertically into typography)
+          scrubTl.to('.hero-meta-reveal', {
+            opacity: 0,
+            duration: 0.35,
+            ease: 'power2.out',
+          }, 0)
+          // 2. Symmetrical horizontal typographic drift (pure horizontal motion; zero downward collision with subtitle)
+          .to(line1Ref.current, {
+            xPercent: -8,
+            opacity: 0.2,
+            ease: 'power1.inOut',
+          }, 0)
+          .to(line2Ref.current, {
+            xPercent: 8,
+            opacity: 0.2,
+            ease: 'power1.inOut',
+          }, 0)
+          // 3. Swiss Red Accent Line Drafting Expansion
+          .to(redBarRef.current, {
+            scaleX: 2.2,
+            transformOrigin: 'left center',
+            ease: 'power2.out',
+          }, 0)
+          // 4. Hairline Grid Boundary Softening
+          .to('.hero-grid-h, .hero-grid-v', {
+            opacity: 0.20,
+            ease: 'power1.out',
+          }, 0);
+        } else if (isMobile) {
+          // Subtle Mobile Drift (0 horizontal overflow, 0 vertical collision)
+          scrubTl.to(line1Ref.current, {
+            xPercent: -4,
+            opacity: 0.25,
+            ease: 'power1.inOut',
+          }, 0)
+          .to(line2Ref.current, {
+            xPercent: 4,
+            opacity: 0.25,
+            ease: 'power1.inOut',
+          }, 0)
+          .to(redBarRef.current, {
+            scaleX: 1.8,
+            transformOrigin: 'left center',
+            ease: 'power2.out',
+          }, 0)
+          .to('.hero-meta-reveal', {
+            opacity: 0,
+            duration: 0.35,
+            ease: 'power1.in',
+          }, 0);
+        }
+      });
 
     }, heroRef);
 
@@ -90,9 +216,10 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
       }
     }
 
-    // Proximity letter elevation
+    // Proximity letter elevation using pre-cached character centers (0 reflows)
     const radius = 160;
-    charRefs.current.forEach((el) => {
+    const centers = charCentersRef.current;
+    charRefs.current.forEach((el, idx) => {
       if (!el) return;
       if (!isHoveredRef.current || clientX < -1000) {
         el.style.transform = 'translate3d(0, 0, 0) scale(1)';
@@ -101,11 +228,11 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
         return;
       }
 
-      const rect = el.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      const dx = clientX - centerX;
-      const dy = clientY - centerY;
+      const center = centers[idx];
+      if (!center || (center.x === 0 && center.y === 0)) return;
+
+      const dx = clientX - center.x;
+      const dy = clientY - center.y;
       const dist = Math.hypot(dx, dy);
 
       if (dist < radius && dist > 0) {
@@ -151,109 +278,20 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
     }
   };
 
-  // Kinetic Scroll Dispersal & Reverse Symmetrical Choreography
-  useEffect(() => {
-    let ticking = false;
-
-    const handleScroll = (customY?: number) => {
-      if (!heroRef.current) return;
-      const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const y = customY ?? ((window as any).__virtualScrollY ?? (window.scrollY || window.pageYOffset));
-      const scrollFade = Math.max(0, 1 - y * 0.0012);
-      const scrollParallax = -y * 0.22;
-      
-      heroRef.current.style.opacity = `${scrollFade}`;
-      heroRef.current.style.transform = `translate3d(0, ${scrollParallax.toFixed(2)}px, 0)`;
-      heroRef.current.style.pointerEvents = scrollFade < 0.05 ? 'none' : 'auto';
-
-      if (!isReduced) {
-        const isMobile = window.innerWidth < 768;
-        const drift = isMobile ? 0.03 : 0.12;
-        const maxDrift = isMobile ? 12 : 46;
-        
-        if (line1Ref.current) {
-          const x1 = Math.max(-maxDrift, -y * drift);
-          line1Ref.current.style.transform = `translate3d(${x1.toFixed(2)}px, 0, 0)`;
-        }
-        if (line2Ref.current) {
-          const x2 = Math.min(maxDrift, y * drift);
-          line2Ref.current.style.transform = `translate3d(${x2.toFixed(2)}px, 0, 0)`;
-        }
-        if (redBarRef.current) {
-          const barScale = Math.min(2.2, 1 + y * 0.002);
-          redBarRef.current.style.transform = `scaleX(${barScale.toFixed(2)})`;
-        }
-      } else {
-        if (line1Ref.current) line1Ref.current.style.transform = 'translate3d(0, 0, 0)';
-        if (line2Ref.current) line2Ref.current.style.transform = 'translate3d(0, 0, 0)';
-        if (redBarRef.current) redBarRef.current.style.transform = 'scaleX(1)';
-      }
-    };
-
-    const onNativeScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    const lenis = (window as any).__lenis;
-    const onLenisScroll = (e: any) => {
-      handleScroll(e?.scroll ?? lenis?.scroll);
-    };
-
-    if (lenis) {
-      lenis.on('scroll', onLenisScroll);
-    }
-    window.addEventListener('scroll', onNativeScroll, { passive: true });
-    handleScroll();
-
-    return () => {
-      if (lenis) {
-        lenis.off('scroll', onLenisScroll);
-      }
-      window.removeEventListener('scroll', onNativeScroll);
-      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
-    };
-  }, []);
-
-  // Dynamically calculate the maximum font size on mobile so Chunamari fills 98% of the margin
-  useEffect(() => {
-    const adjustFontSize = () => {
-      if (window.innerWidth >= 768) {
-        setMobileFontSize(null);
-        return;
-      }
-      if (!chunamariSpanRef.current || !titleContainerRef.current) return;
-
-      const containerWidth = titleContainerRef.current.clientWidth;
-      const textWidth = chunamariSpanRef.current.offsetWidth;
-      const currentSize = parseFloat(window.getComputedStyle(chunamariSpanRef.current).fontSize);
-
-      if (textWidth > 0 && containerWidth > 0 && currentSize > 0) {
-        // Target: fill 98% of the allotted margin (edge to edge with 1% micro-cushion)
-        const idealSize = (containerWidth * 0.98) / (textWidth / currentSize);
-        setMobileFontSize(`${idealSize.toFixed(2)}px`);
-      }
-    };
-
-    adjustFontSize();
-    window.addEventListener('resize', adjustFontSize);
-    return () => window.removeEventListener('resize', adjustFontSize);
-  }, [isLoaded]);
-
   const scrollToWork = () => {
     if (onNavigate) {
       onNavigate('work');
       return;
     }
+    const lenis = (window as any).__lenis;
     const workSection = document.getElementById('work');
     if (workSection) {
-      const top = workSection.offsetTop || (workSection.getBoundingClientRect().top + window.scrollY);
-      window.scrollTo({ top, behavior: 'smooth' });
+      if (lenis) {
+        lenis.scrollTo(workSection, { offset: -30, duration: 1.2 });
+      } else {
+        const top = workSection.offsetTop || (workSection.getBoundingClientRect().top + window.scrollY);
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
     }
   };
 
@@ -263,7 +301,7 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
       id="home"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="min-h-screen w-full relative flex flex-col justify-between pt-24 pb-8 md:pt-32 md:pb-12 px-6 md:px-16 text-[#ededed] select-none will-change-[transform,opacity]"
+      className="min-h-screen w-full relative flex flex-col justify-between pt-24 pb-12 md:pt-28 md:pb-16 px-6 md:px-16 text-[#ededed] select-none will-change-[transform,opacity]"
     >
       {/* ─────────────────────────────────────────────────────────────
           2. SWISS ARCHITECTURAL HAIRLINE FRAMING
@@ -276,29 +314,26 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
         {/* Vertical Hairlines */}
         <div className="hero-grid-v absolute top-0 bottom-0 left-6 md:left-16 w-px bg-white/[0.07] origin-top scale-y-0" />
         <div className="hero-grid-v absolute top-0 bottom-0 right-6 md:right-16 w-px bg-white/[0.07] origin-top scale-y-0" />
-
-        {/* Architectural Crosshairs (+) */}
-        <div className="absolute top-24 md:top-28 left-6 md:left-16 -translate-x-1/2 -translate-y-1/2 text-white/25 font-mono text-xs">+</div>
-        <div className="absolute top-24 md:top-28 right-6 md:right-16 translate-x-1/2 -translate-y-1/2 text-white/25 font-mono text-xs">+</div>
-        <div className="absolute bottom-16 md:bottom-20 left-6 md:left-16 -translate-x-1/2 translate-y-1/2 text-white/25 font-mono text-xs">+</div>
-        <div className="absolute bottom-16 md:bottom-20 right-6 md:right-16 translate-x-1/2 translate-y-1/2 text-white/25 font-mono text-xs">+</div>
       </div>
 
       {/* ─────────────────────────────────────────────────────────────
-          3. TOP EDITORIAL TELEMETRY BAR
+          3. TOP EDITORIAL BAR
           ───────────────────────────────────────────────────────────── */}
       <div className="relative z-10 w-full flex items-center justify-between pointer-events-none hero-meta-reveal opacity-0">
-        {/* Left: Designer Folio Identity */}
+        {/* Left: Designer Identity */}
         <div className="flex items-center gap-3">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-          <span className="font-mono text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.25em] text-white/70 uppercase font-medium">
-            RITVIK CHUNAMARI <span className="text-white/20">///</span> FOLIO 2026
+          <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
+          <span className="font-mono text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.25em] text-white/80 uppercase font-medium">
+            RITVIK CHUNAMARI
           </span>
         </div>
 
         {/* Right: Location & Affiliation */}
         <div className="flex items-center text-right gap-3">
-          <span className="font-mono text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.25em] text-white/50 uppercase font-medium">
+          <span 
+            ref={affiliationRef}
+            className="font-mono text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.25em] text-white/50 uppercase font-medium"
+          >
             ATLAS INSTITUTE · CU BOULDER
           </span>
         </div>
@@ -311,17 +346,18 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
         ref={titleContainerRef}
         onMouseEnter={() => {
           isHoveredRef.current = true;
+          measureCharCenters();
           if (!animFrameRef.current) animFrameRef.current = requestAnimationFrame(updatePointer);
         }}
         onMouseLeave={() => {
           isHoveredRef.current = false;
           if (!animFrameRef.current) animFrameRef.current = requestAnimationFrame(updatePointer);
         }}
-        className="my-auto py-4 md:py-6 relative z-10 will-change-transform w-full pointer-events-auto transition-transform duration-300 ease-out"
+        className="my-auto py-2 md:py-4 relative z-10 will-change-transform w-full pointer-events-auto transition-transform duration-300 ease-out flex flex-col items-start text-left"
       >
         {/* Monumental Display Name with Dual-Layer Differential Parallax */}
         <h1 
-          className="text-[clamp(2.75rem,8.2vw,9.6rem)] md:text-[clamp(4.2rem,8.8vw,10.2rem)] font-extrabold uppercase tracking-[-0.045em] leading-[0.84] text-cinema-white select-none -ml-0.5 md:-ml-2 flex flex-col w-full"
+          className="text-[clamp(2.75rem,8.2vw,9.6rem)] md:text-[clamp(4.2rem,8.8vw,10.2rem)] font-extrabold uppercase tracking-[-0.045em] leading-[0.84] text-cinema-white select-none -ml-0.5 md:-ml-2 flex flex-col w-full text-left"
           style={{
             fontSize: mobileFontSize || undefined,
           }}
@@ -329,14 +365,14 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
           {/* Line 1: Ritvik with kinetic differential scroll dispersal */}
           <div 
             ref={line1Ref}
-            className="block overflow-hidden will-change-transform w-full"
+            className="block overflow-hidden will-change-transform w-full text-left"
           >
-            <span className="inline-block hero-title-line whitespace-nowrap">
+            <span className="inline-block hero-title-line whitespace-nowrap text-left will-change-transform">
               {RITVIK_CHARS.map((char, idx) => (
                 <span
                   key={idx}
                   ref={(el) => { charRefs.current[idx] = el; }}
-                  className="inline-block hero-char will-change-transform cursor-default select-none transition-[color,text-shadow,transform] duration-200 ease-out"
+                  className="inline-block hero-char will-change-transform cursor-default select-none transition-[color,text-shadow] duration-200 ease-out"
                 >
                   {char}
                 </span>
@@ -347,14 +383,14 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
           {/* Line 2: Chunamari with deeper kinetic differential scroll dispersal */}
           <div 
             ref={line2Ref}
-            className="block overflow-hidden will-change-transform w-full"
+            className="block overflow-hidden will-change-transform w-full text-left"
           >
-            <span ref={chunamariSpanRef} className="inline-block hero-title-line whitespace-nowrap">
+            <span ref={chunamariSpanRef} className="inline-block hero-title-line whitespace-nowrap text-left will-change-transform">
               {CHUNAMARI_CHARS.map((char, idx) => (
                 <span
                   key={idx + 6}
                   ref={(el) => { charRefs.current[idx + 6] = el; }}
-                  className="inline-block hero-char will-change-transform cursor-default select-none transition-[color,text-shadow,transform] duration-200 ease-out"
+                  className="inline-block hero-char will-change-transform cursor-default select-none transition-[color,text-shadow] duration-200 ease-out"
                 >
                   {char}
                 </span>
@@ -369,20 +405,18 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
           className="w-14 h-[2px] bg-[#FF3B30] my-5 md:my-6 hero-meta-reveal opacity-0 will-change-transform origin-left"
         />
 
-        {/* Manifesto Subtitle */}
-        <div className="max-w-2xl hero-meta-reveal opacity-0">
-          <p className="text-base sm:text-lg md:text-xl font-light text-neutral-300 leading-relaxed tracking-tight">
-            <span className="text-white font-medium">Creative Designer</span> and{' '}
-            <span className="text-white font-medium">Vibe Coder</span> crafting sensory digital interfaces at the intersection of computational logic and human intuition.
-          </p>
-          {/* Disciplines Index (Swiss Typographic Hierarchy — Zero AI Slop Boxes) */}
-          <div className="mt-6 pt-5 border-t border-white/[0.08] flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-white/60">
-            <span className="text-[#FF3B30] font-bold">// DISCIPLINES:</span>
-            <span className="hover:text-white transition-colors"><strong className="text-white font-mono mr-1">01</strong> INTERACTION ARCHITECTURE</span>
-            <span className="text-white/20">/</span>
-            <span className="hover:text-white transition-colors"><strong className="text-white font-mono mr-1">02</strong> CREATIVE COMPUTING</span>
-            <span className="text-white/20">/</span>
-            <span className="hover:text-white transition-colors"><strong className="text-white font-mono mr-1">03</strong> RADICAL ACCESSIBILITY</span>
+        {/* Subtitle / Manifesto with Masked Reveal */}
+        <div className="max-w-2xl text-left overflow-hidden">
+          <div className="overflow-hidden">
+            <p className="hero-manifesto-line text-base sm:text-lg md:text-xl font-light text-neutral-300 leading-snug tracking-tight text-left will-change-transform">
+              <span className="text-white font-medium">Product Designer</span> and{' '}
+              <span className="text-white font-medium">Creative Developer</span> crafting accessible
+            </p>
+          </div>
+          <div className="overflow-hidden mt-1">
+            <p className="hero-manifesto-line text-base sm:text-lg md:text-xl font-light text-neutral-300 leading-snug tracking-tight text-left will-change-transform">
+              digital interfaces and computational systems.
+            </p>
           </div>
         </div>
       </div>
@@ -417,8 +451,8 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
       {/* ─────────────────────────────────────────────────────────────
           6. EDITORIAL CONTINUITY BRIDGE (HERO -> SELECTED WORKS)
           ───────────────────────────────────────────────────────────── */}
-      <div className="relative z-10 w-full flex flex-col items-center justify-center pt-8 pb-2 pointer-events-none hero-meta-reveal opacity-0">
-        <div className="w-px h-12 bg-gradient-to-b from-[#FF3B30] via-white/20 to-transparent" />
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex flex-col items-center justify-center pointer-events-none hero-meta-reveal opacity-0 z-10">
+        <div className="w-px h-10 bg-gradient-to-b from-[#FF3B30] via-white/20 to-transparent" />
       </div>
 
     </section>

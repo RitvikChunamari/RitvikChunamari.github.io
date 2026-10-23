@@ -82,6 +82,16 @@ const App: React.FC = () => {
   const [showContent, setShowContent] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   
+  // Shared-Element Morphing Transition State
+  const [morphOrigin, setMorphOrigin] = useState<{
+    rect: { top: number; left: number; width: number; height: number };
+    image: string;
+    title: string;
+    category: string;
+  } | null>(null);
+  const savedScrollY = useRef<number>(0);
+  const morphCloneRef = useRef<HTMLDivElement>(null);
+  
   // Navigation State
   const [currentView, setCurrentView] = useState<'home' | 'project'>('home');
   const [activeProject, setActiveProject] = useState<Project | null>(null);
@@ -104,6 +114,7 @@ const App: React.FC = () => {
   const cursorFadeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isMouseDown = useRef(false);
   const hasCursorText = useRef(false);
+  const cursorAngle = useRef(0);
 
   // Setup Lenis Smooth Momentum Scroll (Standard for Awwwards portfolios)
   useEffect(() => {
@@ -308,7 +319,7 @@ const App: React.FC = () => {
         cursorDotRef.current.style.transform = `translate3d(${mouse.current.x}px, ${mouse.current.y}px, 0) translate(-50%, -50%)`;
       }
 
-      // 2. Fluid Elastic Cursor Ring with Velocity Squash & Stretch
+      // 2. Fluid Elastic Cursor Ring with Velocity Squash & Stretch (Jitter-free angle damping)
       const dx = mouse.current.x - cursor.current.x;
       const dy = mouse.current.y - cursor.current.y;
       
@@ -316,17 +327,20 @@ const App: React.FC = () => {
       cursor.current.y += dy * 0.18;
 
       const speed = Math.hypot(dx, dy);
-      const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+      if (speed > 1.4) {
+        cursorAngle.current = Math.atan2(dy, dx) * (180 / Math.PI);
+      }
+      const angle = cursorAngle.current;
       const clickFactor = isMouseDown.current ? 0.78 : 1.0;
-      const stretch = Math.min(1.4, 1 + speed * 0.0028) * clickFactor;
-      const squash = Math.max(0.72, 1 - speed * 0.0018) * clickFactor;
+      const stretch = Math.min(1.35, 1 + speed * 0.0024) * clickFactor;
+      const squash = Math.max(0.75, 1 - speed * 0.0016) * clickFactor;
 
       if (cursorRef.current) {
         if (hasCursorText.current) {
           // Keep cursor pill upright and stable for crystal-clear readability
           cursorRef.current.style.transform = `translate3d(${cursor.current.x}px, ${cursor.current.y}px, 0) translate(-50%, -50%) rotate(0deg) scale(${clickFactor})`;
         } else {
-          cursorRef.current.style.transform = `translate3d(${cursor.current.x}px, ${cursor.current.y}px, 0) translate(-50%, -50%) rotate(${angle}deg) scale(${stretch}, ${squash})`;
+          cursorRef.current.style.transform = `translate3d(${cursor.current.x}px, ${cursor.current.y}px, 0) translate(-50%, -50%) rotate(${angle.toFixed(1)}deg) scale(${stretch.toFixed(3)}, ${squash.toFixed(3)})`;
         }
       }
 
@@ -398,19 +412,82 @@ const App: React.FC = () => {
     scrollToSection(targetId);
   };
 
-  const handleProjectClick = (project: Project) => {
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setActiveProject(project);
-      setCurrentView('project');
-      window.scrollTo(0, 0);
-      const lenis = (window as any).__lenis;
-      if (lenis) lenis.scrollTo(0, { immediate: true });
+  const handleProjectClick = (project: Project, cardEl?: HTMLElement) => {
+    const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    savedScrollY.current = (window as any).__virtualScrollY ?? (window.scrollY || window.pageYOffset);
+
+    if (cardEl && !isReduced) {
+      const rect = cardEl.getBoundingClientRect();
+      const originData = {
+        rect: {
+          top: rect.top,
+          left: rect.left,
+          width: rect.width,
+          height: rect.height,
+        },
+        image: project.image,
+        title: project.title,
+        category: project.category,
+      };
+      setMorphOrigin(originData);
+      setIsTransitioning(true);
+
+      // Hardware-accelerated FLIP expansion from card bounds to case hero
+      requestAnimationFrame(() => {
+        if (morphCloneRef.current) {
+          gsap.fromTo(morphCloneRef.current,
+            {
+              top: rect.top,
+              left: rect.left,
+              width: rect.width,
+              height: rect.height,
+              borderRadius: '0px',
+              opacity: 1,
+            },
+            {
+              top: 0,
+              left: 0,
+              width: window.innerWidth,
+              height: window.innerHeight * 0.72,
+              borderRadius: '0px',
+              duration: 0.62,
+              ease: 'expo.inOut',
+              onComplete: () => {
+                setActiveProject(project);
+                setCurrentView('project');
+                window.scrollTo(0, 0);
+                const lenis = (window as any).__lenis;
+                if (lenis) lenis.scrollTo(0, { immediate: true });
+
+                gsap.to(morphCloneRef.current, {
+                  opacity: 0,
+                  duration: 0.28,
+                  ease: 'power2.out',
+                  onComplete: () => {
+                    setMorphOrigin(null);
+                    setIsTransitioning(false);
+                    ScrollTrigger.refresh();
+                  }
+                });
+              }
+            }
+          );
+        }
+      });
+    } else {
+      setIsTransitioning(true);
       setTimeout(() => {
-        setIsTransitioning(false);
-        ScrollTrigger.refresh();
-      }, 100);
-    }, 500);
+        setActiveProject(project);
+        setCurrentView('project');
+        window.scrollTo(0, 0);
+        const lenis = (window as any).__lenis;
+        if (lenis) lenis.scrollTo(0, { immediate: true });
+        setTimeout(() => {
+          setIsTransitioning(false);
+          ScrollTrigger.refresh();
+        }, 100);
+      }, 400);
+    }
   };
 
   const handleBackToHome = () => {
@@ -418,14 +495,17 @@ const App: React.FC = () => {
     setTimeout(() => {
       setCurrentView('home');
       setActiveProject(null);
-      window.scrollTo(0, 0);
+      const targetY = savedScrollY.current;
+      window.scrollTo(0, targetY);
       const lenis = (window as any).__lenis;
-      if (lenis) lenis.scrollTo(0, { immediate: true });
+      if (lenis) {
+        lenis.scrollTo(targetY, { immediate: true });
+      }
       setTimeout(() => {
         setIsTransitioning(false);
         ScrollTrigger.refresh();
       }, 100);
-    }, 500);
+    }, 450);
   };
   
   const handleNextProject = () => {
@@ -449,19 +529,46 @@ const App: React.FC = () => {
     <>
       {/* Minimal Studio Ident Preloader */}
       {!isLoaded && <MinimalLoader onComplete={handleLoaderComplete} />}
-      
-      {/* Global Corner Registration Marks */}
-      <div className="fixed inset-0 pointer-events-none z-[8000] mix-blend-difference p-6 md:p-12 opacity-40">
-         <div className="absolute top-6 left-6 w-2.5 h-2.5 border-t border-l border-white"></div>
-         <div className="absolute top-6 right-6 w-2.5 h-2.5 border-t border-r border-white"></div>
-         <div className="absolute bottom-6 left-6 w-2.5 h-2.5 border-b border-l border-white"></div>
-         <div className="absolute bottom-6 right-6 w-2.5 h-2.5 border-b border-r border-white"></div>
-      </div>
 
-      {/* Page Transition Overlay */}
+      {/* Shared-Element Morphing Portal (Thumbnail -> Case Hero) */}
+      {morphOrigin && (
+        <div 
+          ref={morphCloneRef}
+          className="fixed z-[9900] pointer-events-none overflow-hidden bg-[#09090e]/95 backdrop-blur-xl border border-white/20 shadow-[0_25px_80px_rgba(0,0,0,0.85)] flex items-center justify-center will-change-transform"
+          style={{
+            top: morphOrigin.rect.top,
+            left: morphOrigin.rect.left,
+            width: morphOrigin.rect.width,
+            height: morphOrigin.rect.height,
+            borderRadius: '0px',
+          }}
+        >
+          <img 
+            src={morphOrigin.image} 
+            alt={morphOrigin.title} 
+            className="max-w-[85%] max-h-[80%] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+          />
+          <div className="absolute top-6 left-6 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#FF3B30] animate-pulse"></span>
+            <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/70 font-semibold">
+              CASE STUDY · {morphOrigin.category}
+            </span>
+          </div>
+          <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between border-t border-white/10 pt-3">
+            <span className="text-white font-bold uppercase text-lg sm:text-2xl tracking-tight truncate max-w-[70%]">
+              {morphOrigin.title}
+            </span>
+            <span className="font-mono text-[10px] uppercase tracking-widest text-[#FF3B30] font-semibold">
+              OPENING CASE →
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* Page Transition Overlay (Fallback / Next Project Curtain) */}
       <div 
         className={`fixed inset-0 bg-[#050507] z-[9000] pointer-events-none transition-transform duration-600 ease-[cubic-bezier(0.85,0,0.15,1)] ${
-          isTransitioning ? 'translate-y-0' : 'translate-y-full'
+          isTransitioning && !morphOrigin ? 'translate-y-0' : 'translate-y-full'
         }`}
         style={{ transformOrigin: 'bottom' }}
       ></div>
@@ -485,7 +592,7 @@ const App: React.FC = () => {
           href="#work"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100000] focus:px-4 focus:py-2 focus:bg-[#FF3B30] focus:text-white focus:font-mono focus:text-xs focus:font-bold focus:uppercase focus:tracking-widest focus:rounded-sm focus:shadow-2xl focus:outline-none focus:ring-2 focus:ring-white"
         >
-          Skip to Exhibition /// [Enter]
+          Skip to Selected Works [Enter]
         </a>
 
         {/* Precision Micro Dot (Zero Latency) with Soft Fade */}
@@ -507,7 +614,7 @@ const App: React.FC = () => {
 
         {/* Circular Scroll Progress Indicator */}
         {currentView === 'home' && (
-          <div className="fixed bottom-8 right-8 z-[50] hidden md:block bg-[#050508]/80 backdrop-blur-md p-1 rounded-full border border-white/10 shadow-2xl pointer-events-none">
+          <div aria-hidden="true" className="fixed bottom-8 right-8 z-[50] hidden md:block bg-[#050508]/80 backdrop-blur-md p-1 rounded-full border border-white/10 shadow-2xl pointer-events-none">
             <svg width="48" height="48" viewBox="0 0 50 50" className="transform -rotate-90">
               <circle 
                 cx="25" cy="25" r={radius} 

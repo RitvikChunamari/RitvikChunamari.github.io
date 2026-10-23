@@ -15,7 +15,7 @@ interface FigmaViewerWindowProps {
 const FigmaViewerWindow: React.FC<FigmaViewerWindowProps> = ({
   embedUrl,
   directUrl,
-  title = "Interactive Figma Prototype",
+  title = "Interactive Prototype",
   fileName = "Nexus-AI.fig",
   nodeId = "22-113",
   pages,
@@ -93,35 +93,44 @@ const FigmaViewerWindow: React.FC<FigmaViewerWindowProps> = ({
         <div className="h-11 bg-[#0c0c12] border-b border-white/10 px-3.5 sm:px-4 flex items-center justify-between select-none z-20">
           
           {/* Left: macOS Traffic Lights */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-0.5">
             <button
               onClick={() => {
                 if (isFullscreen) setIsFullscreen(false);
                 else toggleCollapse();
               }}
               title={isFullscreen ? "Exit Fullscreen" : "Minimize"}
-              className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E] hover:opacity-80 transition-opacity flex items-center justify-center group cursor-pointer"
+              aria-label={isFullscreen ? "Exit Fullscreen" : "Minimize Window"}
+              className="w-6 h-6 flex items-center justify-center group cursor-pointer rounded-full focus:outline-none focus-visible:ring-1 focus-visible:ring-white"
             >
-              <span className="opacity-0 group-hover:opacity-100 text-[8px] text-black/80 font-bold leading-none">
-                ×
+              <span className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E] group-hover:opacity-80 transition-opacity flex items-center justify-center">
+                <span className="opacity-0 group-hover:opacity-100 text-[8px] text-black/80 font-bold leading-none">
+                  ×
+                </span>
               </span>
             </button>
             <button
               onClick={toggleCollapse}
               title="Minimize / Expand Window"
-              className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123] hover:opacity-80 transition-opacity flex items-center justify-center group cursor-pointer"
+              aria-label="Minimize or Expand Window"
+              className="w-6 h-6 flex items-center justify-center group cursor-pointer rounded-full focus:outline-none focus-visible:ring-1 focus-visible:ring-white"
             >
-              <span className="opacity-0 group-hover:opacity-100 text-[8px] text-black/80 font-bold leading-none">
-                –
+              <span className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123] group-hover:opacity-80 transition-opacity flex items-center justify-center">
+                <span className="opacity-0 group-hover:opacity-100 text-[8px] text-black/80 font-bold leading-none">
+                  –
+                </span>
               </span>
             </button>
             <button
               onClick={toggleFullscreen}
               title={isFullscreen ? "Restore Window" : "Fullscreen View"}
-              className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29] hover:opacity-80 transition-opacity flex items-center justify-center group cursor-pointer"
+              aria-label={isFullscreen ? "Restore Window" : "Fullscreen View"}
+              className="w-6 h-6 flex items-center justify-center group cursor-pointer rounded-full focus:outline-none focus-visible:ring-1 focus-visible:ring-white"
             >
-              <span className="opacity-0 group-hover:opacity-100 text-[7px] text-black/80 font-bold leading-none">
-                {isFullscreen ? '⤦' : '⤢'}
+              <span className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29] group-hover:opacity-80 transition-opacity flex items-center justify-center">
+                <span className="opacity-0 group-hover:opacity-100 text-[7px] text-black/80 font-bold leading-none">
+                  {isFullscreen ? '⤦' : '⤢'}
+                </span>
               </span>
             </button>
           </div>
@@ -139,7 +148,7 @@ const FigmaViewerWindow: React.FC<FigmaViewerWindowProps> = ({
             <span className="font-mono text-[10px] sm:text-xs text-white/90 truncate font-medium">
               {currentFileName}
             </span>
-            <span className="hidden sm:inline-block font-mono text-[9px] text-white/40 border-l border-white/10 pl-2">
+            <span className="hidden sm:inline-block font-mono text-[9px] text-white/60 border-l border-white/10 pl-2">
               NODE: {currentNodeId}
             </span>
           </div>
@@ -148,14 +157,14 @@ const FigmaViewerWindow: React.FC<FigmaViewerWindowProps> = ({
           <div className="flex items-center gap-2">
             {/* Live Indicator */}
             <div className="hidden lg:flex items-center gap-1.5 px-2 py-0.5 rounded-sm bg-white/5 border border-white/10 text-white/80 font-mono text-[9px] tracking-wider uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-              <span>LIVE FIGMA</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
+              <span>LIVE PROTOTYPE</span>
             </div>
 
             {/* Reload Canvas */}
             <button
               onClick={handleReload}
-              title="Reload Figma Canvas"
+              title="Reload Prototype Canvas"
               className="w-7 h-7 rounded-sm flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
             >
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -183,14 +192,14 @@ const FigmaViewerWindow: React.FC<FigmaViewerWindowProps> = ({
               )}
             </button>
 
-            {/* Direct Open in Figma Link */}
+            {/* Direct Open Link */}
             <a
               href={currentDirectUrl}
               target="_blank"
               rel="noopener noreferrer"
-              title="Open active page on Figma.com"
+              title="Open active page in new window"
               className="flex items-center gap-1.5 px-2.5 py-1 rounded-sm bg-white/10 hover:bg-white hover:text-black text-white font-mono text-[10px] tracking-wider uppercase transition-all duration-200"
-              data-cursor-text="FIGMA"
+              data-cursor-text="OPEN"
             >
               <span className="hidden sm:inline">Open</span>
               <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -259,15 +268,15 @@ const FigmaViewerWindow: React.FC<FigmaViewerWindowProps> = ({
                   </div>
                 </div>
                 <p className="font-mono text-xs uppercase tracking-widest text-white/70">
-                  Connecting to Figma Prototype Canvas...
+                  Loading Prototype Canvas...
                 </p>
-                <span className="font-mono text-[10px] text-white/40 mt-1">
-                  File: {currentFileName} • Node: {currentNodeId}
+                <span className="font-mono text-[10px] text-white/60 mt-1">
+                  {currentFileName}
                 </span>
               </div>
             )}
 
-            {/* Embedded Figma Canvas */}
+            {/* Embedded Canvas */}
             <iframe
               key={`${iframeKey}-${activeTab}`}
               src={currentEmbedUrl}
@@ -280,20 +289,20 @@ const FigmaViewerWindow: React.FC<FigmaViewerWindowProps> = ({
           </div>
         )}
 
-        {/* Bottom Editorial Telemetry Bar */}
+        {/* Bottom Bar */}
         {!isCollapsed && (
-          <div className="h-8 bg-[#0c0c12] border-t border-white/10 px-4 flex items-center justify-between text-[9px] sm:text-[10px] font-mono text-white/45 select-none z-20">
+          <div className="h-8 bg-[#0c0c12] border-t border-white/10 px-4 flex items-center justify-between text-[9px] sm:text-[10px] font-mono text-white/60 select-none z-20">
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
-              <span className="uppercase tracking-wider">FIGMA EMBED // NODE: {currentNodeId}</span>
+              <span className="uppercase tracking-wider">INTERACTIVE CANVAS</span>
             </div>
 
-            <div className="hidden md:flex items-center gap-3 tracking-widest uppercase text-white/35">
+            <div className="hidden md:flex items-center gap-3 tracking-widest uppercase text-white/60">
               <span>DRAG TO PAN</span>
               <span>•</span>
               <span>PINCH / SCROLL TO ZOOM</span>
               <span>•</span>
-              <span>CLICK FRAMES TO INSPECT</span>
+              <span>CLICK TO INTERACT</span>
             </div>
 
             <div className="flex items-center gap-1.5">

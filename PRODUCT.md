@@ -30,13 +30,12 @@ Evaluated in modern web browsers across high-resolution desktop viewports, lapto
 
 ## Capabilities and Constraints
 
-- **6 Authentic Projects:**
+- **5 Authentic Projects:**
   1. *Kinetix Quant (Institutional AI)* — Machine learning & algorithmic trading platform
   2. *Nexus AI* — Generative AI UX/UI design & node canvas
   3. *USPS Organization Rebrand* — Comprehensive identity system & fleet livery
-  4. *Security Agency UX* — Dual-faceted command & control platform and client funnel
-  5. *Pill Dispenser 3D* — Industrial mechatronics & automated medication dispenser
-  6. *Mumbai Olympics 2028* — Cultural Olympic bid visual identity & motion system
+  4. *Pill Dispenser 3D* — Industrial mechatronics & automated medication dispenser
+  5. *Mumbai Olympics 2028* — Cultural Olympic bid visual identity & motion system
 - **Interactive Framework:** Single-page application architecture with smooth section navigation (`Work`, `Profile`, `Contact`), dedicated project deep-dive views, and direct resume download.
 - **Strict Zero-Audio Discipline:** Complete silence—no sound triggers or background audio. Feedback is conveyed through tactile motion and visual state changes.
 - **Ergonomics & Accessibility:** Magnetic cursor follower on fine-pointer desktop viewports; clean fallback to native OS cursor on touch and reduced-motion environments. Minimum 44×44px touch targets.
@@ -44,9 +43,9 @@ Evaluated in modern web browsers across high-resolution desktop viewports, lapto
 ## Brand Commitments
 
 - **Name:** Ritvik Chunamari
-- **Title:** Creative Designer & Vibe Coder
+- **Title:** Product Designer & Creative Technologist
 - **Academic Focus:** M.S. Creative Technology & Design, ATLAS Institute, University of Colorado Boulder
-- **Location:** Arvada, CO
+- **Location:** Boulder, CO
 - **Disciplines:** UI/UX Architecture · Creative Computing · Design Systems · Tactile Interfaces
 
 ## Evidence on Hand

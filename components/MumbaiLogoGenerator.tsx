@@ -379,6 +379,7 @@ export default function MumbaiLogoGenerator() {
                 </div>
                 <input 
                   type="range" min="0.6" max="1.4" step="0.05" 
+                  aria-label="Font scale multiplier"
                   value={fontSizeScale} 
                   onChange={(e) => setFontSizeScale(parseFloat(e.target.value))}
                   className="w-full accent-[#FF9933] cursor-pointer"
@@ -392,6 +393,7 @@ export default function MumbaiLogoGenerator() {
                 </div>
                 <input 
                   type="range" min="0.6" max="1.8" step="0.05" 
+                  aria-label="Line spacing multiplier"
                   value={lineSpaceScale} 
                   onChange={(e) => setLineSpaceScale(parseFloat(e.target.value))}
                   className="w-full accent-[#FF9933] cursor-pointer"
@@ -453,6 +455,7 @@ export default function MumbaiLogoGenerator() {
                 <input
                   type="color"
                   value={color}
+                  aria-label="Custom 16M Color Picker"
                   onChange={(e) => { setColor(e.target.value); setGradient(null); }}
                   className="absolute inset-0 w-[200%] h-[200%] -top-[50%] -left-[50%] cursor-pointer opacity-0"
                   title="Custom 16M Color Picker"

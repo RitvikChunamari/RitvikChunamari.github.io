@@ -40,8 +40,8 @@ const CinematicBackground: React.FC = () => {
     let dots: Dot[] = [];
     const ripples: Ripple[] = [];
 
-    // Dense, delicate micro-grid spacing
-    const getSpacing = () => (window.innerWidth < 768 ? 20 : 25);
+    // Dense, delicate micro-grid spacing (balanced for high-DPI desktop & mobile GPU battery conservation)
+    const getSpacing = () => (window.innerWidth < 768 ? 30 : 26);
 
     const initDots = () => {
       dots = [];

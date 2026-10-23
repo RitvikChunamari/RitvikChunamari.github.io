@@ -1,5 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import { Experience } from '../types';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { scrambleText } from '../utils/scrambleText';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface ExperienceProps {
   experiences: Experience[];
@@ -7,11 +14,13 @@ interface ExperienceProps {
 
 const ExperienceList: React.FC<ExperienceProps> = ({ experiences }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const expTitleRef = useRef<HTMLHeadingElement>(null);
   const beamRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    if (!containerRef.current) return;
     const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (isReduced) {
@@ -32,92 +41,93 @@ const ExperienceList: React.FC<ExperienceProps> = ({ experiences }) => {
       return;
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('opacity-100', 'translate-y-0');
-            entry.target.classList.remove('opacity-0', 'translate-y-8');
+    const ctx = gsap.context(() => {
+      // 0. Header Cryptographic Scramble
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: 'top 82%',
+        onEnter: () => {
+          if (expTitleRef.current) {
+            scrambleText(expTitleRef.current, '03 /// EXPERIENCE & LEADERSHIP', { duration: 600 });
           }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    itemRefs.current.forEach((item) => {
-      if (item) observer.observe(item);
-    });
-
-    // Lenis-Synchronized Scroll Laser Guide Rail & Node Ignition
-    let ticking = false;
-
-    const updateLaser = (customY?: number) => {
-      if (!containerRef.current || !beamRef.current) return;
-
-      const rect = containerRef.current.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const readingLine = vh * 0.65;
-
-      const totalDist = rect.height;
-      const currentDist = readingLine - rect.top;
-      const progress = Math.min(1, Math.max(0, currentDist / totalDist));
-
-      beamRef.current.style.transform = `scaleY(${progress.toFixed(3)})`;
-
-      itemRefs.current.forEach((item, idx) => {
-        const node = nodeRefs.current[idx];
-        if (!item || !node) return;
-
-        const itemRect = item.getBoundingClientRect();
-        const durationEl = item.querySelector('.exp-duration') as HTMLElement | null;
-        const companyEl = item.querySelector('.exp-company') as HTMLElement | null;
-
-        if (itemRect.top <= readingLine) {
-          node.style.backgroundColor = '#FF3B30';
-          node.style.borderColor = '#FFFFFF';
-          node.style.transform = 'scale(1.35)';
-          node.style.boxShadow = '0 0 16px rgba(255, 59, 48, 0.85), 0 0 4px #FFFFFF';
-          if (durationEl) durationEl.style.color = '#EDEDED';
-          if (companyEl) companyEl.style.color = '#FFFFFF';
-        } else {
-          node.style.backgroundColor = '#262626';
-          node.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-          node.style.transform = 'scale(1)';
-          node.style.boxShadow = 'none';
-          if (durationEl) durationEl.style.color = '';
-          if (companyEl) companyEl.style.color = '';
         }
       });
-    };
-
-    const handleNativeScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          updateLaser();
-          ticking = false;
-        });
-        ticking = true;
+      // 1. Continuous Laser Guide Rail Progression (Scrubbed smoothly with Lenis)
+      if (beamRef.current) {
+        gsap.fromTo(beamRef.current,
+          { scaleY: 0 },
+          {
+            scaleY: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: 'top 70%',
+              end: 'bottom 60%',
+              scrub: 0.2,
+              invalidateOnRefresh: true,
+            }
+          }
+        );
       }
-    };
 
-    const lenis = (window as any).__lenis;
-    const onLenisScroll = (e: any) => {
-      updateLaser(e?.scroll ?? lenis?.scroll);
-    };
+      // 2. Experience Items Staggered Reveals & Node Ignition
+      itemRefs.current.forEach((item, idx) => {
+        if (!item) return;
+        const node = nodeRefs.current[idx];
+        const durationEl = item.querySelector('.exp-duration');
+        const companyEl = item.querySelector('.exp-company');
 
-    if (lenis) {
-      lenis.on('scroll', onLenisScroll);
-    }
-    window.addEventListener('scroll', handleNativeScroll, { passive: true });
-    updateLaser();
+        // Reveal animation
+        gsap.fromTo(item,
+          { y: 24, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.7,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: item,
+              start: 'top 88%',
+              toggleActions: 'play none none reverse',
+            }
+          }
+        );
 
-    return () => {
-      observer.disconnect();
-      if (lenis) {
-        lenis.off('scroll', onLenisScroll);
-      }
-      window.removeEventListener('scroll', handleNativeScroll);
-    };
+        // Active Reading Plane Node Ignition
+        if (node) {
+          ScrollTrigger.create({
+            trigger: item,
+            start: 'top 65%',
+            onEnter: () => {
+              gsap.to(node, {
+                backgroundColor: '#FF3B30',
+                borderColor: '#FFFFFF',
+                scale: 1.35,
+                boxShadow: '0 0 16px rgba(255, 59, 48, 0.85), 0 0 4px #FFFFFF',
+                duration: 0.25,
+                ease: 'power2.out',
+              });
+              if (durationEl) gsap.to(durationEl, { color: '#EDEDED', duration: 0.25 });
+              if (companyEl) gsap.to(companyEl, { color: '#FFFFFF', duration: 0.25 });
+            },
+            onLeaveBack: () => {
+              gsap.to(node, {
+                backgroundColor: '#262626',
+                borderColor: 'rgba(255, 255, 255, 0.3)',
+                scale: 1,
+                boxShadow: 'none',
+                duration: 0.25,
+                ease: 'power2.out',
+              });
+              if (durationEl) gsap.to(durationEl, { color: '', duration: 0.25 });
+              if (companyEl) gsap.to(companyEl, { color: '', duration: 0.25 });
+            }
+          });
+        }
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
   }, [experiences]);
 
   return (
@@ -131,6 +141,14 @@ const ExperienceList: React.FC<ExperienceProps> = ({ experiences }) => {
           {/* Luminous Laser Tip Micro-Glow */}
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#FF3B30] shadow-[0_0_12px_rgba(255,59,48,0.9),0_0_24px_rgba(255,59,48,0.5)]" />
         </div>
+      </div>
+
+      {/* Experience Sub-Header */}
+      <div className="flex items-center gap-3 pt-12 pb-6 md:pl-8">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
+        <h3 ref={expTitleRef} className="text-xs font-mono uppercase tracking-[0.25em] text-white font-medium">
+          03 /// Experience &amp; Leadership
+        </h3>
       </div>
 
       {experiences.map((exp, index) => (

@@ -16,22 +16,22 @@ const TRIAD_STEPS: TriadItem[] = [
   {
     step: '01',
     word: 'Think.',
-    descriptor: 'COGNITIVE ARCHITECTURE',
-    subtext: 'Problem space deconstruction, human empathy & strategic inquiry.',
+    descriptor: 'RESEARCH & ARCHITECTURE',
+    subtext: 'Problem definition, user inquiry & ergonomics.',
     tag: 'LOGIC'
   },
   {
     step: '02',
     word: 'Design.',
-    descriptor: 'SENSORY HARMONY',
-    subtext: 'Swiss spatial systems, radical accessibility & typographic precision.',
+    descriptor: 'INTERACTION & ACCESSIBILITY',
+    subtext: 'Design systems, inclusive interfaces & typography.',
     tag: 'CRAFT'
   },
   {
     step: '03',
     word: 'Create.',
-    descriptor: 'INTERACTIVE REALITY',
-    subtext: 'Vibe coding, generative WebGL & living digital experiences.',
+    descriptor: 'FRONTEND & MOTION',
+    subtext: 'Interactive engineering, web systems & motion design.',
     tag: 'CODE'
   }
 ];
@@ -44,7 +44,6 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
   const [isWordsMounted, setIsWordsMounted] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
 
-  const lastProgressTick = useRef(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Mount animation for typography rows
@@ -68,7 +67,7 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
     }
   }, [progress]);
 
-  // Track mouse for ambient Awwwards spotlight
+  // Track mouse for ambient spotlight
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
@@ -79,6 +78,11 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
 
   // Main Counter Interpolation
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      onComplete();
+      return;
+    }
+
     let animFrame: number;
     const startTime = Date.now();
     const duration = 1600; // 1.6s snappy, cinematic pacing
@@ -144,7 +148,7 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
       onMouseMove={handleMouseMove}
       className="fixed inset-0 z-[10000] pointer-events-auto select-none overflow-hidden bg-[#070707] text-[#ededed]"
     >
-      {/* 5-Pillar Architectural Shutter Panels (Awwwards Staggered Curtain Reveal) */}
+      {/* 5-Pillar Architectural Shutter Panels (Staggered Curtain Reveal) */}
       <div className="absolute inset-0 z-10 pointer-events-none flex">
         {[0, 1, 2, 3, 4].map((col) => (
           <div
@@ -158,7 +162,7 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
         ))}
       </div>
 
-      {/* Interactive Mouse Spotlight (Subtle ambient sheen across typography) */}
+      {/* Interactive Mouse Spotlight */}
       <div 
         className="absolute inset-0 pointer-events-none z-15 opacity-60 transition-opacity duration-700"
         style={{
@@ -175,18 +179,18 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
         }`}
       />
 
-      {/* Fine Swiss Architectural Crop Marks & Coordinates */}
+      {/* Corner Registration Marks */}
       <div className="absolute inset-0 pointer-events-none z-20 p-6 md:p-12 flex flex-col justify-between opacity-35 font-mono text-[10px] text-neutral-500">
         <div className="flex justify-between items-start">
           <div className="flex items-center space-x-3">
             <span className="w-2 h-2 border-t border-l border-white/60"></span>
-            <span>SYSTEM_INIT // 2026</span>
+            <span>PORTFOLIO // 2026</span>
           </div>
           <div className="hidden sm:block">
-            <span>FOLIO // DIGITAL ARCHIVE</span>
+            <span>ATLAS INSTITUTE · CU BOULDER</span>
           </div>
           <div className="flex items-center space-x-3">
-            <span>[ 60 FPS ]</span>
+            <span>RITVIK CHUNAMARI</span>
             <span className="w-2 h-2 border-t border-r border-white/60"></span>
           </div>
         </div>
@@ -194,13 +198,13 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
         <div className="flex justify-between items-end">
           <div className="flex items-center space-x-3">
             <span className="w-2 h-2 border-b border-l border-white/60"></span>
-            <span>LAT 39.8028° N, LON 105.0875° W</span>
+            <span>BOULDER &amp; ARVADA, COLORADO</span>
           </div>
           <div className="hidden md:block">
-            <span>ARVADA &amp; BOULDER, COLORADO</span>
+            <span>PRODUCT DESIGN &amp; CREATIVE TECHNOLOGY</span>
           </div>
           <div className="flex items-center space-x-3">
-            <span>STUDIO // ONLINE</span>
+            <span>DESIGN &amp; ENGINEERING</span>
             <span className="w-2 h-2 border-b border-r border-white/60"></span>
           </div>
         </div>
@@ -228,7 +232,7 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
           {/* Center Manifesto Tag */}
           <div className="hidden sm:flex items-center space-x-3 text-neutral-500 font-mono text-[10px]">
             <span className="text-[#FF3B30]">●</span>
-            <span className="tracking-[0.3em]">THE CREATIVE TRIAD</span>
+            <span className="tracking-[0.3em]">DESIGN ENGINEERING</span>
           </div>
 
           {/* Rolling Odometer Counter (Top Right) */}
@@ -285,20 +289,19 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
           {/* Micro Category Lead */}
           <div className="mb-4 sm:mb-6 flex items-center space-x-3 text-[10px] sm:text-xs font-mono tracking-[0.3em] uppercase text-neutral-500">
             <span className="text-[#FF3B30]">//</span>
-            <span>PHILOSOPHY &amp; DISCIPLINE</span>
+            <span>DISCIPLINE &amp; CRAFT</span>
             <span className="hidden sm:inline text-neutral-700">|</span>
             <span className="hidden sm:inline text-neutral-400">
-              {activeStep === 0 && 'PHASE 01: COGNITION & ARCHITECTURE'}
-              {activeStep === 1 && 'PHASE 02: SPATIAL INTERFACES & ACCESSIBILITY'}
-              {activeStep === 2 && 'PHASE 03: VIBE CODING & FUNCTIONAL REALITY'}
-              {activeStep === 3 && 'SYNTHESIS COMPLETE: READY FOR IMMERSION'}
+              {activeStep === 0 && 'PHASE 01: RESEARCH & ARCHITECTURE'}
+              {activeStep === 1 && 'PHASE 02: INTERACTION & ACCESSIBILITY'}
+              {activeStep === 2 && 'PHASE 03: FRONTEND & MOTION'}
+              {activeStep === 3 && 'READY'}
             </span>
           </div>
 
           {/* Staggered Giant Word Rows */}
           <div className="w-full flex flex-col space-y-1 sm:space-y-2 md:space-y-3">
             {TRIAD_STEPS.map((item, index) => {
-              // Determine if this specific item is active or if all 3 are ignited at 96%+
               const isCurrent = activeStep === index;
               const isAllLit = activeStep === 3;
               const isHighlighted = isCurrent || isAllLit;
@@ -354,7 +357,7 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
 
                     </div>
 
-                    {/* Right: Technical Descriptor & Context */}
+                    {/* Right: Descriptor & Context */}
                     <div className="mt-2 md:mt-0 flex items-center space-x-4 pl-8 md:pl-0">
                       
                       <div 
@@ -364,7 +367,7 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
                       >
                         <div className="flex items-center md:justify-end space-x-2">
                           <span 
-                            className={`px-2 py-0.5 rounded-sm font-mono text-[9px] uppercase tracking-widest ${
+                            className={`px-2 py-0.5 rounded-none font-mono text-[9px] uppercase tracking-widest ${
                               isHighlighted 
                                 ? 'bg-white/10 text-[#FF3B30] border border-[#FF3B30]/30' 
                                 : 'bg-transparent text-neutral-600 border border-transparent'
@@ -400,7 +403,7 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
 
           {/* High-Precision Progress Scrubber Track */}
           <div className="w-full mt-8 sm:mt-12">
-            <div className="w-full h-[2px] bg-neutral-900 overflow-hidden relative rounded-full">
+            <div className="w-full h-[2px] bg-neutral-900 overflow-hidden relative rounded-none">
               <div 
                 className="h-full bg-gradient-to-r from-neutral-700 via-[#FF3B30] to-white transition-all duration-150 ease-out shadow-[0_0_12px_rgba(255,59,48,0.7)]"
                 style={{ width: `${progress}%` }}
@@ -431,19 +434,19 @@ export const MinimalLoader: React.FC<MinimalLoaderProps> = ({ onComplete }) => {
           
           <div className="flex items-center space-x-3">
             <span className="text-neutral-600">[ IDENT ]</span>
-            <span className="text-neutral-300">UX ARCHITECT &amp; VIBE CODER</span>
+            <span className="text-neutral-300">PRODUCT DESIGNER &amp; CREATIVE TECHNOLOGIST</span>
           </div>
 
           <div className="hidden md:flex items-center space-x-6 text-neutral-600">
-            <span>SWISS MINIMALISM</span>
-            <span>RADICAL ACCESSIBILITY</span>
-            <span>THREE.JS &amp; REACT</span>
+            <span>DESIGN SYSTEMS</span>
+            <span>ACCESSIBLE INTERFACES</span>
+            <span>REACT &amp; MOTION</span>
           </div>
 
           {/* Interactive Skip Button */}
           <button 
             onClick={handleSkip}
-            className="group flex items-center space-x-2 text-neutral-500 hover:text-white transition-colors duration-200 cursor-pointer py-2 px-3 min-h-[44px] rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] active:scale-95"
+            className="group flex items-center space-x-2 text-neutral-500 hover:text-white transition-colors duration-200 cursor-pointer py-2 px-3 min-h-[44px] rounded-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] active:scale-95"
             title="Skip loading animation"
             aria-label="Skip loading animation"
           >

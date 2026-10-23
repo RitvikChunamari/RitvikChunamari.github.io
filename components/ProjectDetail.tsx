@@ -5,7 +5,6 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MagneticWrapper from './MagneticWrapper';
 import FigmaViewerWindow from './FigmaViewerWindow';
-import SecurityUXSection from './SecurityUXSection';
 import MumbaiLogoGenerator from './MumbaiLogoGenerator';
 import CryptoSimulator from './CryptoSimulator';
 
@@ -57,23 +56,23 @@ const ExperienceJourneysSection: React.FC<{ userJourneys: UserJourney[] }> = ({ 
   return (
     <section className="w-full bg-[#09090e] text-white py-16 md:py-24 border-t border-white/10 relative overflow-hidden select-none">
       {/* Subtle Background Blueprint Grid */}
-      <div 
-        className="absolute inset-0 z-0 opacity-10 pointer-events-none" 
-        style={{ 
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)', 
-          backgroundSize: '40px 40px' 
+      <div
+        className="absolute inset-0 z-0 opacity-10 pointer-events-none"
+        style={{
+          backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
+          backgroundSize: '40px 40px'
         }}
       ></div>
 
       <div className="container mx-auto px-4 sm:px-6 md:px-12 relative z-10">
-        
+
         {/* Section Header & Controls */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 pb-6 border-b border-white/10">
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
               <span className="font-mono text-[10px] sm:text-xs text-white/60 uppercase tracking-[0.25em] font-semibold">
-                UX TELEMETRY // JOURNEY ENGINE
+                Interaction Architecture
               </span>
             </div>
             <h3 className="text-2xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tight text-white">
@@ -87,8 +86,8 @@ const ExperienceJourneysSection: React.FC<{ userJourneys: UserJourney[] }> = ({ 
               <button
                 onClick={() => setViewMode('timeline')}
                 className={`px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider rounded-sm transition-all duration-200 cursor-pointer border ${
-                  viewMode === 'timeline' 
-                    ? 'bg-white text-black font-bold border-white shadow-sm' 
+                  viewMode === 'timeline'
+                    ? 'bg-white text-black font-bold border-white shadow-sm'
                     : 'text-neutral-400 hover:text-white border-transparent'
                 }`}
               >
@@ -97,8 +96,8 @@ const ExperienceJourneysSection: React.FC<{ userJourneys: UserJourney[] }> = ({ 
               <button
                 onClick={() => setViewMode('matrix')}
                 className={`px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider rounded-sm transition-all duration-200 cursor-pointer border ${
-                  viewMode === 'matrix' 
-                    ? 'bg-white text-black font-bold border-white shadow-sm' 
+                  viewMode === 'matrix'
+                    ? 'bg-white text-black font-bold border-white shadow-sm'
                     : 'text-neutral-400 hover:text-white border-transparent'
                 }`}
               >
@@ -109,7 +108,7 @@ const ExperienceJourneysSection: React.FC<{ userJourneys: UserJourney[] }> = ({ 
             {/* Prev / Next buttons for Timeline mode */}
             {viewMode === 'timeline' && (
               <div className="flex items-center gap-2">
-                <button 
+                <button
                   onClick={handlePrev}
                   className="w-8 h-8 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/20 text-white transition-all disabled:opacity-20 disabled:cursor-not-allowed cursor-pointer font-mono text-xs"
                   title="Previous Stage"
@@ -117,7 +116,7 @@ const ExperienceJourneysSection: React.FC<{ userJourneys: UserJourney[] }> = ({ 
                 >
                   ←
                 </button>
-                <button 
+                <button
                   onClick={handleNext}
                   className="w-8 h-8 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/20 text-white transition-all disabled:opacity-20 disabled:cursor-not-allowed cursor-pointer font-mono text-xs"
                   title="Next Stage"
@@ -144,8 +143,8 @@ const ExperienceJourneysSection: React.FC<{ userJourneys: UserJourney[] }> = ({ 
                     if (trackRef.current) trackRef.current.scrollTo({ left: 0, behavior: 'smooth' });
                   }}
                   className={`p-4 rounded-sm border text-left transition-all duration-200 flex items-center gap-3.5 cursor-pointer ${
-                    isSelected 
-                      ? 'bg-white/10 border-white text-white shadow-sm' 
+                    isSelected
+                      ? 'bg-white/10 border-white text-white shadow-sm'
                       : 'bg-white/5 border-white/10 text-neutral-400 hover:bg-white/10 hover:text-neutral-200'
                   }`}
                 >
@@ -181,7 +180,7 @@ const ExperienceJourneysSection: React.FC<{ userJourneys: UserJourney[] }> = ({ 
                 <span className="text-xs sm:text-sm font-normal text-neutral-400 font-mono">/ {activeJourney.role}</span>
               </h4>
             </div>
-            
+
             {/* Stage Counter */}
             <div className="font-mono text-xs bg-white/5 border border-white/10 px-3 py-1.5 rounded-sm self-start sm:self-auto text-neutral-300">
               STAGE <span className="text-white font-bold font-mono">0{activeStageIdx + 1}</span> / <span className="text-neutral-500 font-mono">0{activeJourney.stages.length}</span>
@@ -192,13 +191,13 @@ const ExperienceJourneysSection: React.FC<{ userJourneys: UserJourney[] }> = ({ 
           <div className="relative pt-2 pb-2">
             {/* Background Line */}
             <div className="absolute top-1/2 left-0 w-full h-[1.5px] bg-white/10 -translate-y-1/2 z-0"></div>
-            
+
             {/* Active Highlight Line */}
-            <div 
+            <div
               className="absolute top-1/2 left-0 h-[1.5px] bg-[#FF3B30] -translate-y-1/2 z-0 transition-all duration-500"
               style={{
-                width: activeJourney.stages.length > 1 
-                  ? `${(activeStageIdx / (activeJourney.stages.length - 1)) * 100}%` 
+                width: activeJourney.stages.length > 1
+                  ? `${(activeStageIdx / (activeJourney.stages.length - 1)) * 100}%`
                   : '100%'
               }}
             ></div>
@@ -240,7 +239,7 @@ const ExperienceJourneysSection: React.FC<{ userJourneys: UserJourney[] }> = ({ 
         {viewMode === 'timeline' && (
           <div className="relative">
             {/* Scrollable Track */}
-            <div 
+            <div
               ref={trackRef}
               className="flex items-stretch gap-5 sm:gap-6 overflow-x-auto pb-6 snap-x snap-mandatory custom-scrollbar scroll-smooth"
             >
@@ -260,7 +259,7 @@ const ExperienceJourneysSection: React.FC<{ userJourneys: UserJourney[] }> = ({ 
                 const isSelected = i === activeStageIdx;
 
                 return (
-                  <div 
+                  <div
                     key={i}
                     onClick={() => setActiveStageIdx(i)}
                     className={`stage-timeline-card shrink-0 w-[85vw] sm:w-[55vw] md:w-[400px] lg:w-[440px] bg-[#09090e]/95 border ${
@@ -358,7 +357,7 @@ const ExperienceJourneysSection: React.FC<{ userJourneys: UserJourney[] }> = ({ 
         {viewMode === 'matrix' && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {activeJourney.stages.map((stage, i) => (
-              <div 
+              <div
                 key={i}
                 className="bg-[#09090e]/95 border border-white/10 border-t-2 border-t-white/30 p-5 sm:p-6 rounded-sm backdrop-blur-md flex flex-col justify-between hover:border-white/30 transition-colors"
               >
@@ -417,55 +416,19 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
   const heroImageRef = useRef<HTMLImageElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const laserLineRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
   const [activeLightbox, setActiveLightbox] = React.useState<{ image: string; title: string; subtitle?: string } | null>(null);
 
   const currentProjectIndex = resumeData.projects.findIndex(p => p.title === project.title);
   const nextProject = resumeData.projects[(currentProjectIndex + 1) % resumeData.projects.length];
 
-  useEffect(() => {
-    let ticking = false;
-    const updateProgress = (customY?: number) => {
-      if (!laserLineRef.current) return;
-      const docHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      const y = customY ?? ((window as any).__virtualScrollY ?? (window.scrollY || window.pageYOffset));
-      const progress = Math.min(1, Math.max(0, y / docHeight));
-      laserLineRef.current.style.transform = `scaleX(${progress})`;
-    };
-
-    const handleNativeScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          updateProgress();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    const lenis = (window as any).__lenis;
-    const onLenisScroll = (e: any) => {
-      updateProgress(e?.scroll ?? lenis?.scroll);
-    };
-
-    if (lenis) {
-      lenis.on('scroll', onLenisScroll);
-    }
-    window.addEventListener('scroll', handleNativeScroll, { passive: true });
-    updateProgress();
-
-    return () => {
-      if (lenis) {
-        lenis.off('scroll', onLenisScroll);
-      }
-      window.removeEventListener('scroll', handleNativeScroll);
-    };
-  }, []);
-
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
+    requestAnimationFrame(() => titleRef.current?.focus({ preventScroll: true }));
     const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (isReduced) {
+      if (laserLineRef.current) gsap.set(laserLineRef.current, { scaleX: 1 });
       gsap.set('.case-title-line', { y: '0%', opacity: 1 });
       gsap.set('.case-meta-reveal', { y: 0, opacity: 1 });
       if (heroImageRef.current && heroImageRef.current.parentElement) {
@@ -473,11 +436,26 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
         gsap.set(heroImageRef.current, { y: 0, scale: 1 });
       }
       gsap.set('.gsap-reveal', { y: 0, opacity: 1 });
-      gsap.set('.persona-card', { y: 0, opacity: 1, scale: 1 });
+       const personas = containerRef.current?.querySelectorAll('.persona-card');
+       if (personas?.length) gsap.set(personas, { y: 0, opacity: 1, scale: 1 });
       return;
     }
 
     const ctx = gsap.context(() => {
+      // Header Laser Progress Line (GSAP ScrollTrigger, zero reflows)
+      if (laserLineRef.current) {
+        gsap.to(laserLineRef.current, {
+          scaleX: 1,
+          ease: 'none',
+          scrollTrigger: {
+            start: 'top top',
+            end: 'max',
+            scrub: 0.1,
+            invalidateOnRefresh: true,
+          }
+        });
+      }
+
       // Case Study Title & Meta Entrance
       gsap.fromTo('.case-title-line',
         { y: '100%', opacity: 0 },
@@ -491,12 +469,12 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
       // Hero Image Parallax & Reveal
       if (heroImageRef.current && heroImageRef.current.parentElement) {
         const parent = heroImageRef.current.parentElement;
-        
+
         gsap.fromTo(parent,
           { clipPath: 'inset(100% 0% 0% 0%)' },
-          { 
-            clipPath: 'inset(0% 0% 0% 0%)', 
-            duration: 1.1, 
+          {
+            clipPath: 'inset(0% 0% 0% 0%)',
+            duration: 1.1,
             ease: "expo.inOut",
             scrollTrigger: {
               trigger: parent,
@@ -521,7 +499,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
       // General Reveals
       const revealElements = gsap.utils.toArray('.gsap-reveal');
       revealElements.forEach((el: any) => {
-        gsap.fromTo(el, 
+        gsap.fromTo(el,
           { y: 35, opacity: 0 },
           {
             y: 0,
@@ -531,6 +509,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
             scrollTrigger: {
               trigger: el,
               start: "top 88%",
+              toggleActions: 'play none none reverse',
             }
           }
         );
@@ -539,14 +518,14 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
       // Staggered Cards (Personas)
       const personas = gsap.utils.toArray('.persona-card');
       if (personas.length > 0) {
-        gsap.fromTo(personas, 
+        gsap.fromTo(personas,
           { y: 40, opacity: 0, scale: 0.98 },
           {
-            y: 0, 
-            opacity: 1, 
+            y: 0,
+            opacity: 1,
             scale: 1,
-            duration: 0.9, 
-            stagger: 0.12, 
+            duration: 0.9,
+            stagger: 0.12,
             ease: "expo.out",
             scrollTrigger: {
               trigger: personas[0] as Element,
@@ -564,7 +543,20 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
     return () => ctx.revert();
   }, [project]);
 
-  const renderRevealHeading = (text: string) => {
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      if (activeLightbox) {
+        setActiveLightbox(null);
+      } else {
+        onBack();
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [activeLightbox, onBack]);
+
+  const renderRevealHeading = (text: string, _delay?: number) => {
      return <span>{text}</span>;
   };
 
@@ -572,12 +564,12 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
 
   return (
     <div ref={containerRef} className="min-h-screen bg-[#09090e] text-cinema-white relative z-20 pt-24 md:pt-32 pb-16 md:pb-24">
-      
+
       {/* Fixed Architectural Swiss Navigation Header */}
       <header className="fixed top-0 left-0 w-full z-50 text-white select-none">
         <div className="bg-[#09090e]/85 backdrop-blur-md border-b border-white/10 w-full px-6 md:px-12 py-3.5 flex items-center justify-between relative">
           {/* Laser Scroll Progress Micro-Line */}
-          <div 
+          <div
             ref={laserLineRef}
             className="absolute bottom-0 left-0 h-[1.5px] w-full bg-gradient-to-r from-[#FF3B30] via-white/80 to-[#FF3B30] origin-left scale-x-0 will-change-transform opacity-80 pointer-events-none"
           />
@@ -585,21 +577,21 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
           {/* Left: Magnetic Return to Index */}
           <div className="flex items-center gap-3">
             <MagneticWrapper strength={0.3}>
-              <button 
+              <button
                 onClick={onBack}
-                className="font-mono text-[11px] font-bold tracking-widest uppercase text-white/90 hover:text-white flex items-center gap-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#09090e] rounded-sm py-1 px-2"
-                data-cursor-text="INDEX"
+                className="font-mono text-[11px] font-bold tracking-widest uppercase text-white/90 hover:text-white flex min-h-11 items-center gap-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#09090e] rounded-sm py-1 px-2"
+                data-cursor-text="BACK"
               >
                 <span className="text-[#FF3B30] transition-transform duration-200 group-hover:-translate-x-1">←</span>
-                <span>RETURN TO INDEX</span>
+                <span>BACK TO WORKS</span>
               </button>
             </MagneticWrapper>
           </div>
 
-          {/* Center: Live Telemetry Metadata */}
+          {/* Center: Case Study Metadata */}
           <div className="hidden md:flex items-center gap-3 font-mono text-[10px] tracking-widest text-white/60 uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-            <span>FOLIO 2026 // CASE STUDY</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
+            <span>CASE STUDY</span>
             <span className="text-white/20">•</span>
             <span className="text-white font-medium">{project.title.toUpperCase()}</span>
           </div>
@@ -607,9 +599,9 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
           {/* Right: Next Project Quick Jump */}
           <div className="flex items-center gap-4">
             <MagneticWrapper strength={0.3}>
-              <button 
+              <button
                 onClick={onNext}
-                className="font-mono text-[11px] font-bold tracking-widest uppercase text-white/70 hover:text-white flex items-center gap-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#09090e] rounded-sm py-1 px-2"
+                className="font-mono text-[11px] font-bold tracking-widest uppercase text-white/70 hover:text-white flex min-h-11 items-center gap-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#09090e] rounded-sm py-1 px-2"
                 data-cursor-text="NEXT"
               >
                 <span>NEXT PROJECT</span>
@@ -621,21 +613,21 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
       </header>
 
       <div className="container mx-auto px-4 sm:px-6 md:px-12">
-        
+
         {/* Project Hero */}
         <div className="min-h-[35vh] sm:min-h-[40vh] md:min-h-[44vh] flex flex-col justify-center mb-12 md:mb-16 relative">
           <div className="flex items-center gap-2 mb-3 case-meta-reveal">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-            <span className="font-mono text-[10px] sm:text-xs text-white/60 uppercase tracking-[0.25em] font-semibold">
-              CASE STUDY /// {project.category}
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
+            <span className="font-mono text-xs text-neutral-400 uppercase tracking-wider font-medium">
+              Case Study — {project.category}
             </span>
           </div>
 
           <div className="space-y-4 mb-6">
             {project.logo && !caseStudy?.isBrandIdentity && (
               <div className="mb-2 case-meta-reveal">
-                <img 
-                  src={project.logo} 
+                <img
+                  src={project.logo}
                   alt={`${project.title} Logo`}
                   className="max-h-12 sm:max-h-14 object-contain object-left"
                 />
@@ -643,7 +635,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
             )}
 
             <div className="overflow-hidden py-1">
-              <h1 className="case-title-line text-[clamp(2.5rem,6.8vw,6.5rem)] leading-[0.92] font-black uppercase tracking-[-0.035em] text-white">
+              <h1 ref={titleRef} tabIndex={-1} className="case-title-line text-[clamp(2.5rem,6.8vw,6.5rem)] leading-[0.92] font-black uppercase tracking-[-0.035em] text-white outline-none">
                 {project.title}
               </h1>
             </div>
@@ -658,14 +650,6 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                 </span>
               </div>
             )}
-            {caseStudy?.isSecurityUX && (
-              <div className="inline-flex items-center gap-2.5 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-sm backdrop-blur-md case-meta-reveal">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                <span className="font-mono text-[11px] uppercase tracking-wider text-neutral-300 font-medium">
-                  Enterprise UX Project • Operations ERP &amp; Client Acquisition Portal
-                </span>
-              </div>
-            )}
             {caseStudy?.isOlympicIdentity && (
               <div className="inline-flex items-center gap-2.5 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-sm backdrop-blur-md case-meta-reveal">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#FF9933] animate-pulse"></span>
@@ -675,18 +659,18 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
               </div>
             )}
           </div>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 border-t border-white/10 pt-6 mt-6 md:mt-8 case-meta-reveal">
              <div>
-               <span className="block font-mono text-[9px] sm:text-[10px] text-neutral-500 uppercase tracking-widest mb-1">Role</span>
+               <span className="block font-mono text-[9px] sm:text-[10px] text-white/60 uppercase tracking-widest mb-1">Role</span>
                <span className="text-xs sm:text-sm font-medium text-white">{caseStudy.role}</span>
              </div>
              <div>
-               <span className="block font-mono text-[9px] sm:text-[10px] text-neutral-500 uppercase tracking-widest mb-1">Year</span>
+               <span className="block font-mono text-[9px] sm:text-[10px] text-white/60 uppercase tracking-widest mb-1">Year</span>
                <span className="text-xs sm:text-sm font-medium text-white">{caseStudy.year}</span>
              </div>
              <div className="col-span-2">
-               <span className="block font-mono text-[9px] sm:text-[10px] text-neutral-500 uppercase tracking-widest mb-1.5">Tech Stack</span>
+               <span className="block font-mono text-[9px] sm:text-[10px] text-white/60 uppercase tracking-widest mb-1.5">Tech Stack</span>
                <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10px] uppercase tracking-wider text-neutral-300">
                  {caseStudy.technologies.map((tech, i) => (
                    <React.Fragment key={i}>
@@ -702,37 +686,20 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
         {/* Full Width Hero Image Card (Visual Stage) */}
         {(project.image || caseStudy.videoUrl) && (
           <div className={`w-full ${caseStudy?.isOlympicIdentity ? 'h-[44vh] sm:h-[56vh] md:h-[68vh] lg:h-[76vh]' : 'h-[32vh] sm:h-[42vh] md:h-[55vh] lg:h-[60vh]'} mb-12 md:mb-16 relative overflow-hidden group rounded-sm gsap-reveal opacity-0 translate-y-8 bg-[#09090e]/85 backdrop-blur-md flex items-center justify-center p-6 sm:p-10 md:p-14 border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.8)]`}>
-             {/* Swiss Corner Registration Brackets */}
-             <div className="corner-brackets absolute inset-0 pointer-events-none z-20 flex flex-col justify-between p-6 opacity-40 group-hover:opacity-80 transition-opacity duration-300">
-               <div className="flex justify-between items-start">
-                 <span className="w-2.5 h-2.5 border-t border-l border-white/60"></span>
-                 <span className="font-mono text-[8px] tracking-widest text-white/40 uppercase">
-                   EXHIBIT // HERO_STILL_01
-                 </span>
-                 <span className="w-2.5 h-2.5 border-t border-r border-white/60"></span>
-               </div>
-               <div className="flex justify-between items-end">
-                 <span className="w-2.5 h-2.5 border-b border-l border-white/60"></span>
-                 <span className="font-mono text-[8px] tracking-widest text-white/40 uppercase">
-                   SYSTEM-LATENCY // 0.04MS
-                 </span>
-                 <span className="w-2.5 h-2.5 border-b border-r border-white/60"></span>
-               </div>
-             </div>
 
              {caseStudy?.isOlympicIdentity ? (
-               <div 
+               <div
                  className="relative z-10 w-full h-full flex flex-col items-center justify-center cursor-pointer group"
-                 onClick={() => setActiveLightbox({ 
-                   image: "/projects/mumbai-olympics-2028/gateway-of-india.jpg", 
-                   title: "Primary Gateway of India Master Lockup", 
-                   subtitle: "Architectural Silhouette + Custom Wordmark + Olympic Rings" 
+                 onClick={() => setActiveLightbox({
+                   image: "/projects/mumbai-olympics-2028/gateway-of-india.jpg",
+                   title: "Primary Gateway of India Master Lockup",
+                   subtitle: "Architectural Silhouette + Custom Wordmark + Olympic Rings"
                  })}
                >
-                 <img 
+                 <img
                    ref={heroImageRef}
-                   src="/projects/mumbai-olympics-2028/gateway-of-india.jpg" 
-                   alt="Primary Gateway of India Master Lockup" 
+                   src="/projects/mumbai-olympics-2028/gateway-of-india.jpg"
+                   alt="Primary Gateway of India Master Lockup"
                    className="max-w-[90%] max-h-[86%] object-contain relative z-10 transition-all duration-[2s] ease-expo drop-shadow-[0_0_40px_rgba(255,153,51,0.25)] rounded-sm"
                  />
                  <div className="flex items-center gap-2 mt-3 sm:mt-4 z-20">
@@ -747,7 +714,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                </div>
              ) : caseStudy?.videoUrl ? (
                <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
-                 <video 
+                 <video
                    src={caseStudy.videoUrl}
                    autoPlay
                    loop
@@ -761,17 +728,17 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                  </span>
                </div>
              ) : project.image?.endsWith('.png') || project.image?.endsWith('.svg') ? (
-               <img 
+               <img
                  ref={heroImageRef}
-                 src={project.image} 
-                 alt={project.title} 
+                 src={project.image}
+                 alt={project.title}
                  className="max-w-[85%] max-h-[85%] object-contain relative z-10 transition-all duration-[2s] ease-expo drop-shadow-[0_0_40px_rgba(255,255,255,0.18)]"
                />
              ) : (
-               <img 
+               <img
                  ref={heroImageRef}
-                 src={project.image} 
-                 alt={project.title} 
+                 src={project.image}
+                 alt={project.title}
                  className="w-full h-[120%] object-cover absolute top-0 left-0 transition-all duration-[2s] ease-expo"
                  style={{ clipPath: 'inset(0% 0% 0% 0%)' }}
                />
@@ -781,14 +748,14 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
 
         {/* Structured Modular Sections */}
         <div className="space-y-12 md:space-y-16 mb-16 md:mb-24">
-           
+
            {/* 1. Overview */}
            <section className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 lg:gap-12 pb-12 md:pb-16 border-b border-white/10">
               <div className="md:col-span-4 gsap-reveal">
                  <div className="md:sticky md:top-28">
                    <div className="flex items-center gap-2 mb-2">
-                     <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                     <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">01 /// OVERVIEW</span>
+                     <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
+                     <span className="font-mono text-xs uppercase tracking-wider text-neutral-400 font-medium">Overview</span>
                    </div>
                    <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                      {renderRevealHeading("Overview", 0.2)}
@@ -808,8 +775,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                 <div className="md:col-span-4 gsap-reveal">
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
-                       <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">02 /// PROBLEM LANDSCAPE</span>
+                       <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
+                       <span className="font-mono text-xs uppercase tracking-wider text-neutral-400 font-medium">Problem</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("Problem Overview", 0.2)}
@@ -820,8 +787,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                    <ul className="space-y-4 md:space-y-5">
                      {caseStudy.problemOverview.map((item, idx) => (
                        <li key={idx} className="bg-white/[0.02] border border-white/10 border-l-2 border-l-[#FF3B30] p-4 sm:p-5 rounded-sm hover:border-white/20 transition-all duration-300">
-                         <span className="block font-mono text-[10px] uppercase tracking-wider text-[#FF3B30] mb-1">
-                           CHALLENGE 0{idx + 1}
+                         <span className="block font-mono text-xs uppercase tracking-wider text-[#FF3B30] mb-1 font-semibold">
+                           0{idx + 1}
                          </span>
                          <h4 className="text-sm sm:text-base font-bold uppercase tracking-tight text-white mb-1.5">
                            {item.title}
@@ -840,8 +807,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                 <div className="md:col-span-4 gsap-reveal">
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
-                       <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">03 /// CORE MANDATE</span>
+                       <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
+                       <span className="font-mono text-xs uppercase tracking-wider text-neutral-400 font-medium">Problem Statement</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("Problem Statement", 0.2)}
@@ -862,8 +829,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                 <div className="md:col-span-4 gsap-reveal">
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
-                       <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">04 /// ARCHITECTURE</span>
+                       <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
+                       <span className="font-mono text-xs uppercase tracking-wider text-neutral-400 font-medium">Solution</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("Proposed Solution", 0.2)}
@@ -874,7 +841,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                       {caseStudy.detailedSolution.map((sol, idx) => (
                         <div key={idx} className="bg-white/[0.02] p-5 md:p-6 backdrop-blur-md rounded-sm border border-white/10 hover:border-[#FF3B30]/60 hover:bg-[#FF3B30]/5 transition-all duration-300 group">
-                           <span className="font-mono text-[10px] text-[#FF3B30] mb-2 block font-bold uppercase tracking-widest">SYSTEM SPEC // 0{idx + 1}</span>
+                           <span className="font-mono text-xs text-[#FF3B30] mb-2 block font-bold uppercase tracking-wider">0{idx + 1}</span>
                            <h4 className="text-base sm:text-lg font-bold uppercase tracking-tight text-white mb-2 group-hover:text-[#FF3B30] transition-colors">{sol.title}</h4>
                            <p className="text-xs sm:text-sm text-white/60 leading-relaxed">{sol.description}</p>
                         </div>
@@ -890,8 +857,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                 <div className="md:col-span-4 gsap-reveal">
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
-                       <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">05 /// CONTEXT</span>
+                       <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
+                       <span className="font-mono text-xs uppercase tracking-wider text-neutral-400 font-medium">Context</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("Historical Context", 0.2)}
@@ -912,8 +879,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                 <div className="md:col-span-4 gsap-reveal">
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
-                       <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">06 /// DISCOVERY</span>
+                       <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
+                       <span className="font-mono text-xs uppercase tracking-wider text-neutral-400 font-medium">Discovery</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-1 md:mb-2">
                        {renderRevealHeading("Initial Explorations", 0.2)}
@@ -937,8 +904,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                 <div className="md:col-span-4 gsap-reveal">
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
-                       <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">07 /// AUDIT</span>
+                       <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
+                       <span className="font-mono text-xs uppercase tracking-wider text-neutral-400 font-medium">Audit</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("Brand Audit", 0.2)}
@@ -983,8 +950,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                 <div className="md:col-span-4 gsap-reveal">
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
-                       <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">08 /// CORE ATTRIBUTES</span>
+                       <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
+                       <span className="font-mono text-xs uppercase tracking-wider text-neutral-400 font-medium">Attributes</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("Brand Attributes", 0.2)}
@@ -997,7 +964,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                        <div key={idx} className="bg-white/[0.02] p-5 sm:p-6 border border-white/10 rounded-sm hover:border-white/30 transition-colors">
                          <div className="flex items-center justify-between mb-2">
                            <h4 className="text-base sm:text-lg font-bold uppercase tracking-tight text-white">{attr.title}</h4>
-                           <span className="font-mono text-[9px] uppercase tracking-widest text-[#FF3B30]">ATTRIBUTE // 0{idx + 1}</span>
+                           <span className="font-mono text-xs uppercase tracking-wider text-[#FF3B30] font-semibold">0{idx + 1}</span>
                          </div>
                          <p className="text-xs sm:text-sm text-white/60 mb-3 italic">"{attr.rationale}"</p>
                          <div className="text-xs text-white/80 bg-white/5 p-3 rounded-sm border-l-2 border-[#FF3B30]">
@@ -1017,8 +984,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                 <div className="md:col-span-4 gsap-reveal">
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
-                       <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">09 /// CONCEPT DIRECTIONS</span>
+                       <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
+                       <span className="font-mono text-xs uppercase tracking-wider text-neutral-400 font-medium">Concepts</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("Concept Directions", 0.2)}
@@ -1033,8 +1000,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                      {caseStudy.conceptDirections.map((concept, idx) => {
                        const isDarkConcept = concept.image?.includes('mumbai') || concept.image?.includes('gateway') || concept.image?.includes('sea-link') || concept.image?.includes('basilica') || concept.image?.includes('pagoda');
                        return (
-                         <div 
-                           key={idx} 
+                         <div
+                           key={idx}
                            onClick={() => concept.image && setActiveLightbox({ image: concept.image, title: concept.title, subtitle: concept.badge })}
                            className="bg-[#09090e] border border-white/10 rounded-sm overflow-hidden hover:border-white/30 transition-all flex flex-col group cursor-pointer"
                          >
@@ -1072,7 +1039,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">10 /// REFINEMENT</span>
+                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">Refinement</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("Refinement & Direction", 0.2)}
@@ -1093,7 +1060,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                    {(caseStudy.refinementDiagram || caseStudy.refinementImage) && (
                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 pt-2">
                        {caseStudy.refinementDiagram && (
-                         <div 
+                         <div
                            onClick={() => setActiveLightbox({ image: caseStudy.refinementDiagram!, title: "Geometric Construction & Vector Conversion Grid", subtitle: "USPS Vector Conversion" })}
                            className="bg-[#09090e] border border-white/10 rounded-sm overflow-hidden group cursor-pointer hover:border-white/30 transition-all"
                          >
@@ -1114,7 +1081,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                        )}
 
                        {caseStudy.refinementImage && (
-                         <div 
+                         <div
                            onClick={() => setActiveLightbox({ image: caseStudy.refinementImage!, title: "Refined Final Mark Artboard", subtitle: "Production Artboard" })}
                            className="bg-[#09090e] border border-white/10 rounded-sm overflow-hidden group cursor-pointer hover:border-white/30 transition-all"
                          >
@@ -1146,7 +1113,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">11 /// STYLEGUIDE</span>
+                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">Design System</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("Brand Styleguide", 0.2)}
@@ -1166,8 +1133,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                        </h4>
                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                          {caseStudy.styleguide.colorPalette.map((color, idx) => (
-                           <div 
-                             key={idx} 
+                           <div
+                             key={idx}
                              onClick={() => color.image && setActiveLightbox({ image: color.image, title: `${color.name} Swatch Card`, subtitle: color.hex })}
                              className="bg-[#09090e] border border-white/10 rounded-sm overflow-hidden flex flex-col group hover:border-white/30 transition-all cursor-pointer"
                            >
@@ -1206,7 +1173,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
 
                    {/* Clear Space Diagram */}
                    {caseStudy.styleguide.clearSpaceDiagram && (
-                     <div 
+                     <div
                        onClick={() => setActiveLightbox({ image: caseStudy.styleguide!.clearSpaceDiagram!, title: "Clear Space & Minimum Size Specifications", subtitle: "Official Brand Architecture" })}
                        className="bg-white/[0.02] p-4 sm:p-6 border border-white/10 rounded-sm overflow-hidden group cursor-pointer hover:border-white/30 transition-all"
                      >
@@ -1236,7 +1203,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                        </div>
 
                        {caseStudy.styleguide.primaryTypeface?.image ? (
-                         <div 
+                         <div
                            onClick={() => setActiveLightbox({ image: caseStudy.styleguide!.primaryTypeface!.image!, title: `${caseStudy.styleguide.primaryTypeface?.name || 'Primary Typeface'} Specimen`, subtitle: "Primary Typographic Specimen" })}
                            className="bg-white p-4 rounded-sm mt-3 cursor-pointer group hover:opacity-95 transition-opacity"
                          >
@@ -1264,7 +1231,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
 
                        {caseStudy.styleguide.secondaryTypeface?.image ? (
                          <div className="space-y-2 mt-3">
-                           <div 
+                           <div
                              onClick={() => setActiveLightbox({ image: caseStudy.styleguide!.secondaryTypeface!.image!, title: "Secondary Typeface — 1-Line Lockup", subtitle: "Horizontal Typography" })}
                              className="bg-white p-3 rounded-sm cursor-pointer group hover:opacity-95 transition-opacity"
                            >
@@ -1273,7 +1240,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                            {caseStudy.styleguide.secondaryTypeface.additionalImages && (
                              <div className="grid grid-cols-2 gap-2">
                                {caseStudy.styleguide.secondaryTypeface.additionalImages.map((addImg, aIdx) => (
-                                 <div 
+                                 <div
                                    key={aIdx}
                                    onClick={() => setActiveLightbox({ image: addImg, title: `Secondary Typographic Hierarchy — Variant 0${aIdx + 1}`, subtitle: "Stacked Formats" })}
                                    className="bg-white p-2.5 rounded-sm cursor-pointer group hover:opacity-95 transition-opacity flex items-center justify-center h-20"
@@ -1321,7 +1288,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">12 /// LOCKUP SYSTEM</span>
+                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">Lockup System</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("Logo Lockups System", 0.2)}
@@ -1337,8 +1304,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                        const isDarkBlue = lockup.variant === 'reverse-blue' || lockup.variant === 'dark';
                        const isBlack = lockup.variant === 'reverse-black';
                        return (
-                         <div 
-                           key={idx} 
+                         <div
+                           key={idx}
                            onClick={() => lockup.image && setActiveLightbox({ image: lockup.image, title: lockup.title, subtitle: lockup.subtitle })}
                            className="bg-[#09090e] border border-white/10 rounded-sm overflow-hidden flex flex-col group hover:border-white/30 transition-all cursor-pointer"
                          >
@@ -1346,15 +1313,15 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                              isDarkBlue ? 'bg-[#1A2754]' : isBlack ? 'bg-black' : 'bg-white'
                            }`}>
                              {lockup.image && (
-                               <img 
-                                 src={lockup.image} 
-                                 alt={lockup.title} 
-                                 className="max-h-28 sm:max-h-32 max-w-full object-contain group-hover:scale-105 transition-transform duration-300" 
+                               <img
+                                 src={lockup.image}
+                                 alt={lockup.title}
+                                 className="max-h-28 sm:max-h-32 max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
                                />
                              )}
                              <span className={`absolute top-2.5 right-2.5 font-mono text-[8px] sm:text-[9px] uppercase font-bold px-2 py-0.5 rounded-sm border ${
-                               isDarkBlue || isBlack 
-                                 ? 'text-white bg-white/10 border-white/20' 
+                               isDarkBlue || isBlack
+                                 ? 'text-white bg-white/10 border-white/20'
                                  : 'text-white bg-black/80 border-white/20'
                              }`}>
                                {lockup.tag}
@@ -1383,7 +1350,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">13 /// APPLICATION MOCKUPS</span>
+                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">Application Mockups</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("Application Mockups", 0.2)}
@@ -1395,14 +1362,14 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                 </div>
                 <div className="md:col-span-8 gsap-reveal space-y-6 sm:space-y-8">
                    {caseStudy.mockups.map((mockup, idx) => (
-                     <div 
-                        key={idx} 
+                     <div
+                        key={idx}
                         onClick={() => !mockup.videoUrl && setActiveLightbox({ image: mockup.image, title: mockup.title, subtitle: mockup.category })}
                         className={`group bg-[#09090e] border border-white/10 rounded-sm overflow-hidden hover:border-white/30 transition-all duration-300 shadow-2xl ${mockup.videoUrl ? '' : 'cursor-pointer'}`}
                       >
                         <div className="relative w-full h-[36vh] sm:h-[48vh] md:h-[56vh] overflow-hidden bg-black flex items-center justify-center p-2 sm:p-4">
                           {mockup.videoUrl ? (
-                            <video 
+                            <video
                               src={mockup.videoUrl}
                               autoPlay
                               loop
@@ -1412,9 +1379,9 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                               className="w-full h-full object-contain rounded-sm shadow-2xl"
                             />
                           ) : (
-                            <img 
-                              src={mockup.image} 
-                              alt={mockup.title} 
+                            <img
+                              src={mockup.image}
+                              alt={mockup.title}
                               className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 ease-out"
                             />
                           )}
@@ -1447,7 +1414,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">14 /// ARCHIVAL GALLERY</span>
+                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">Visual Gallery</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("Applications & Gallery", 0.2)}
@@ -1460,15 +1427,15 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                 <div className="md:col-span-8 gsap-reveal">
                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                      {caseStudy.gallery.map((item, idx) => (
-                       <div 
-                         key={idx} 
+                       <div
+                         key={idx}
                          onClick={() => setActiveLightbox({ image: item.image, title: item.title, subtitle: item.category })}
                          className="group bg-[#09090e] border border-white/10 rounded-sm overflow-hidden hover:border-white/30 transition-all duration-300 flex flex-col cursor-pointer"
                        >
                          <div className="relative h-52 sm:h-60 md:h-68 overflow-hidden bg-black flex items-center justify-center p-3">
-                           <img 
-                             src={item.image} 
-                             alt={item.title} 
+                           <img
+                             src={item.image}
+                             alt={item.title}
                              className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 ease-out"
                            />
                            <span className="absolute top-3 left-3 font-mono text-[8px] sm:text-[9px] uppercase font-bold text-white bg-black/80 backdrop-blur-md px-2 py-0.5 rounded-sm border border-white/10">
@@ -1500,7 +1467,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">15 /// HARDWARE TELEMETRY</span>
+                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">Hardware Specifications</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("Engineering Specs", 0.2)}
@@ -1537,7 +1504,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">16 /// BENCHMARK MATRIX</span>
+                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">Benchmark Matrix</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("Prior Art & Benchmark", 0.2)}
@@ -1554,10 +1521,10 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                            <p className="text-xs text-white/60 leading-relaxed mb-4">{sol.description}</p>
                          </div>
                          {sol.link && (
-                           <a 
-                             href={sol.link} 
-                             target="_blank" 
-                             rel="noopener noreferrer" 
+                           <a
+                             href={sol.link}
+                             target="_blank"
+                             rel="noopener noreferrer"
                              className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase font-bold text-[#FF3B30] hover:underline mt-auto"
                            >
                              External Reference →
@@ -1577,7 +1544,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">17 /// MORPHOLOGICAL CHART</span>
+                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">Morphological Analysis</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("Morphological Chart", 0.2)}
@@ -1627,7 +1594,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">18 /// PUGH MATRIX</span>
+                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">Pugh Decision Matrix</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("PUGH Decision Matrix", 0.2)}
@@ -1679,7 +1646,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">19 /// SUBSYSTEM CAD</span>
+                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">Subsystem CAD</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("Subsystem Architecture", 0.2)}
@@ -1688,10 +1655,10 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                        Modular mechatronic architecture dividing physical actuation, optoelectronic sensing, embedded UI, and structural casing into decoupled sub-assemblies.
                      </p>
                      {caseStudy.cadAttachmentUrl && (
-                       <a 
-                         href={caseStudy.cadAttachmentUrl} 
-                         target="_blank" 
-                         rel="noopener noreferrer" 
+                       <a
+                         href={caseStudy.cadAttachmentUrl}
+                         target="_blank"
+                         rel="noopener noreferrer"
                          className="inline-flex items-center gap-2 px-4 py-2.5 bg-white/5 border border-white/20 rounded-sm text-white font-mono text-xs font-bold uppercase hover:bg-white hover:text-black transition-all shadow-sm"
                        >
                          Download 3D CAD Assembly (.zip) ↓
@@ -1709,7 +1676,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                          </span>
                        </div>
                        <p className="text-xs sm:text-sm text-white/60 leading-relaxed mb-5">{sub.description}</p>
-                       
+
                        {/* Parts Grid */}
                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
                          {sub.parts.map((p, pIdx) => (
@@ -1755,7 +1722,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">20 /// PHYSICS &amp; POWER</span>
+                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">Physics &amp; Power</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("Physics & Power Sizing", 0.2)}
@@ -1822,7 +1789,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">21 /// SPECIFICATION BOM</span>
+                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">Bill of Materials</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("Bill of Materials (BOM)", 0.2)}
@@ -1833,7 +1800,12 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                    </div>
                 </div>
                 <div className="md:col-span-8 gsap-reveal">
-                   <div className="overflow-x-auto rounded-sm border border-white/10 bg-[#09090e]/60 backdrop-blur-md max-h-[500px]">
+                   <div
+                     tabIndex={0}
+                     role="region"
+                     aria-label="Manufacturing and procurement specification table"
+                     className="overflow-x-auto rounded-sm border border-white/10 bg-[#09090e]/60 backdrop-blur-md max-h-[500px] focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF3B30]"
+                   >
                      <table className="w-full text-left text-xs border-collapse">
                        <thead className="sticky top-0 bg-[#0c0c12] z-10">
                          <tr className="border-b border-white/10">
@@ -1870,7 +1842,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">22 /// ENGINEERING CREDITS</span>
+                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">Project Credits</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("Project Team", 0.2)}
@@ -1900,7 +1872,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">23 /// COMPETITIVE MATRIX</span>
+                       <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">Competitive Landscape</span>
                      </div>
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("Competitor Analysis", 0.2)}
@@ -1923,7 +1895,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                                 <span className="font-mono text-[9px] sm:text-[10px] uppercase text-[#FF3B30] tracking-widest">Deficits &amp; Vulnerabilities</span>
                              </div>
                           </div>
-                          
+
                           {/* Data Rows */}
                           {caseStudy.competitorAnalysis.map((comp, idx) => (
                              <div key={idx} className="border-b last:border-0 border-white/10 grid grid-cols-12 hover:bg-white/5 transition-colors">
@@ -1988,7 +1960,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                     <div className="md:sticky md:top-28">
                       <div className="flex items-center gap-2 mb-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                        <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">24 /// STRATEGIC MOATS</span>
+                        <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">Strategic Differentiators</span>
                       </div>
                       <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                         {renderRevealHeading("Differentiation", 0.2)}
@@ -2020,7 +1992,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                     <div className="md:sticky md:top-28">
                       <div className="flex items-center gap-2 mb-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                        <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">25 /// STRATEGIC GUARDRAILS</span>
+                        <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">Design Guardrails</span>
                       </div>
                       <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                         {renderRevealHeading("Strategic Guardrails", 0.2)}
@@ -2050,7 +2022,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                     <div className="md:sticky md:top-28">
                       <div className="flex items-center gap-2 mb-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
-                        <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">26 /// AUDIENCE MATRIX</span>
+                        <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-white/60">Audience Segmentation</span>
                       </div>
                       <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                         {renderRevealHeading("Audience Matrix", 0.2)}
@@ -2085,14 +2057,14 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
               </section>
             )}
 
-           {/* 27 /// USER PERSONAS */}
+           {/* USER PERSONAS */}
            {caseStudy.userPersonas && (
              <section className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12 pb-12 md:pb-16 border-b border-white/10">
                 <div className="md:col-span-4 gsap-reveal">
                    <div className="md:sticky md:top-28">
                      <div className="flex items-center gap-2 mb-2">
                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
-                       <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#FF3B30] font-semibold">27 /// ARCHETYPES</span>
+                       <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#FF3B30] font-semibold">User Archetypes</span>
                      </div>
                      <h3 className="font-sans text-xl sm:text-2xl font-bold uppercase tracking-[-0.03em] text-white">
                        {renderRevealHeading("User Personas", 0.2)}
@@ -2106,19 +2078,14 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                    <div className="space-y-8 sm:space-y-10">
                      {caseStudy.userPersonas.map((persona, idx) => (
                        <div key={idx} className="persona-card border border-white/10 p-6 sm:p-8 md:p-10 bg-[#09090e]/85 backdrop-blur-md rounded-sm hover:border-[#FF3B30]/50 transition-all duration-300 group relative">
-                           {/* Corner registration brackets */}
-                           <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/30 group-hover:border-[#FF3B30] transition-colors pointer-events-none"></div>
-                           <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-white/30 group-hover:border-[#FF3B30] transition-colors pointer-events-none"></div>
-                           <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-white/30 group-hover:border-[#FF3B30] transition-colors pointer-events-none"></div>
-                           <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-white/30 group-hover:border-[#FF3B30] transition-colors pointer-events-none"></div>
-                           
+
                            {/* Persona Header with Age/Education/Goals */}
                            <div className="mb-6 sm:mb-8 border-b border-white/10 pb-6 flex flex-col sm:flex-row gap-6 justify-between relative z-10">
                              <div className="flex-1">
-                               <span className="block font-mono text-[10px] uppercase tracking-[0.25em] text-[#FF3B30] font-semibold mb-1">COHORT 0{idx + 1} // PRIMARY</span>
+                               <span className="block font-mono text-[10px] uppercase tracking-[0.25em] text-[#FF3B30] font-semibold mb-1">Cohort 0{idx + 1}</span>
                                <h4 className="text-2xl sm:text-3xl font-bold uppercase tracking-[-0.03em] text-white mb-1 group-hover:text-white transition-colors">{persona.name}</h4>
                                <span className="font-mono text-xs text-white/60 tracking-wider uppercase block mb-3">{persona.role}</span>
-                               
+
                                <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-white/50 font-mono">
                                  {persona.age && <span>AGE: <strong className="text-white font-mono">{persona.age}</strong></span>}
                                  {persona.education && <span>EDU: <strong className="text-white">{persona.education}</strong></span>}
@@ -2151,7 +2118,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                            {/* Empathy Map */}
                            {persona.empathyMap && (
                              <div className="mb-6 sm:mb-8 border-b border-white/10 pb-6">
-                                 <h5 className="font-mono text-[10px] uppercase text-white/40 mb-3 tracking-[0.2em] font-semibold">Cognitive &amp; Empathy Mapping</h5>
+                                 <h5 className="font-mono text-[10px] uppercase text-white/40 mb-3 tracking-[0.2em] font-semibold">Empathy Mapping &amp; User Research</h5>
                                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                                    <div className="bg-black/40 p-4 rounded-sm border border-white/10">
                                        <div className="flex items-center gap-2 mb-2">
@@ -2183,7 +2150,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                                  </div>
                              </div>
                            )}
-                           
+
                            {/* Details Grid */}
                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 sm:gap-x-8 gap-y-6">
                              {/* Awareness */}
@@ -2230,7 +2197,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                                      </div>
                                  </div>
                              </div>
-                             
+
                              {/* Design Preferences */}
                              <div>
                                  <h5 className="font-mono text-[10px] uppercase text-white/40 mb-2 tracking-[0.2em] font-semibold">Design Preferences</h5>
@@ -2252,14 +2219,14 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
               </section>
             )}
 
-            {/* 28 /// RESEARCH CITATIONS */}
+            {/* RESEARCH CITATIONS */}
             {caseStudy.referencesList && (
               <section className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12 pb-12 md:pb-16 border-b border-white/10">
                  <div className="md:col-span-4 gsap-reveal">
                     <div className="md:sticky md:top-28">
                       <div className="flex items-center gap-2 mb-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
-                        <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#FF3B30] font-semibold">28 /// CITATIONS</span>
+                        <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#FF3B30] font-semibold">Research Citations</span>
                       </div>
                       <h3 className="font-sans text-xl sm:text-2xl font-bold uppercase tracking-[-0.03em] text-white">
                         {renderRevealHeading("Research Citations", 0.2)}
@@ -2289,11 +2256,6 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
               </section>
             )}
 
-            {/* Enterprise Security UX Deep-Dive */}
-            {caseStudy.isSecurityUX && (
-              <SecurityUXSection caseStudy={caseStudy} />
-            )}
-
         </div> {/* End Modular Sections */}
       </div> {/* End Container */}
 
@@ -2303,14 +2265,14 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
       )}
 
       {/* LIVE FIGMA INTERACTIVE PROTOTYPE WINDOW */}
-      {(caseStudy.figmaEmbedUrl || project.title === 'Nexus AI') && !caseStudy.isSecurityUX && (
+      {(caseStudy.figmaEmbedUrl || project.title === 'Nexus AI') && (
         <section className="w-full bg-[#08080c] py-16 md:py-24 border-t border-white/10 relative overflow-hidden">
           {/* Subtle Background Blueprint Grid */}
-          <div 
-            className="absolute inset-0 z-0 opacity-10 pointer-events-none" 
-            style={{ 
-              backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)', 
-              backgroundSize: '40px 40px' 
+          <div
+            className="absolute inset-0 z-0 opacity-10 pointer-events-none"
+            style={{
+              backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
+              backgroundSize: '40px 40px'
             }}
           ></div>
 
@@ -2321,11 +2283,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                 <div className="flex items-center gap-2 mb-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-pulse"></span>
                   <span className="font-mono text-[10px] sm:text-xs text-[#FF3B30] uppercase tracking-widest font-medium">
-                    Interactive Design Artifact // Live Embed
+                    Interactive Prototype
                   </span>
                 </div>
                 <h3 className="text-2xl sm:text-4xl md:text-5xl font-bold uppercase tracking-tight text-white">
-                  Figma Prototype
+                  Interactive Prototype
                 </h3>
               </div>
 
@@ -2335,7 +2297,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-sm border border-white/20 bg-white/5 hover:bg-white hover:text-black font-mono text-xs uppercase tracking-wider text-white transition-all duration-300 shadow-sm"
-                  data-cursor-text="FIGMA"
+                  data-cursor-text="OPEN"
                 >
                   <span>Open Full Canvas</span>
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2346,10 +2308,10 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
             </div>
 
             {/* Figma Window Viewer */}
-            <FigmaViewerWindow 
+            <FigmaViewerWindow
               embedUrl={caseStudy.figmaEmbedUrl || "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2Fas77j5bf5uEnBlsKi1lN6P%2FNexus-AI%3Fnode-id%3D22-113"}
               directUrl={caseStudy.figmaUrl || "https://www.figma.com/design/as77j5bf5uEnBlsKi1lN6P/Nexus-AI?node-id=22-113"}
-              title={`${project.title} — Interactive Figma Prototype`}
+              title={`${project.title} — Interactive Prototype`}
               nodeId="22-113"
             />
           </div>
@@ -2360,11 +2322,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
       {caseStudy.isOlympicIdentity && (
         <section className="w-full bg-[#08080c] py-16 md:py-24 border-t border-white/10 relative overflow-hidden">
           {/* Subtle Background Blueprint Grid */}
-          <div 
-            className="absolute inset-0 z-0 opacity-10 pointer-events-none" 
-            style={{ 
-              backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)', 
-              backgroundSize: '40px 40px' 
+          <div
+            className="absolute inset-0 z-0 opacity-10 pointer-events-none"
+            style={{
+              backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
+              backgroundSize: '40px 40px'
             }}
           ></div>
 
@@ -2397,74 +2359,95 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
       )}
 
       {project.title === 'Kinetix Quant (Institutional AI)' && (
-        <div className="flex flex-col items-center justify-center py-20 px-4 border-t border-white/10 bg-[#07070a]">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] animate-pulse"></span>
-            <span className="font-mono text-[10px] text-[#00E5FF] uppercase tracking-[0.25em] font-semibold">
-              LIVE INFERENCE CLUSTER // STANDALONE RUNTIME
-            </span>
+        <section className="w-full py-16 md:py-24 border-t border-white/10 bg-[#060609] relative overflow-hidden">
+          <div className="container mx-auto px-4 sm:px-6 md:px-12 relative z-10">
+            {/* Live Interactive Quant Inference Terminal */}
+            <div className="mb-12">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] animate-pulse"></span>
+                <span className="font-mono text-[10px] text-[#00E5FF] uppercase tracking-[0.25em] font-semibold">
+                  INTERACTIVE LAB // REAL-TIME INFERENCE TERMINAL
+                </span>
+              </div>
+              <h3 className="text-2xl md:text-4xl font-bold font-sans text-white mb-2 tracking-[-0.03em] uppercase">
+                Interactive Model Simulator
+              </h3>
+              <p className="text-white/60 max-w-2xl mb-8 font-mono text-xs uppercase tracking-wider">
+                Query the live TensorFlow hybrid neural network or run backtesting simulations across major cryptocurrency pairs.
+              </p>
+              <CryptoSimulator />
+            </div>
+
+            <div className="flex flex-col items-center justify-center pt-8 border-t border-white/10">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] animate-pulse"></span>
+                <span className="font-mono text-[10px] text-[#00E5FF] uppercase tracking-[0.25em] font-semibold">
+                  CLOUD DEPLOYMENT // DEDICATED RUNTIME
+                </span>
+              </div>
+              <h4 className="text-xl md:text-2xl font-bold font-sans text-white mb-3 tracking-[-0.03em] uppercase text-center">
+                Dedicated Standalone Web Terminal
+              </h4>
+              <p className="text-white/60 text-center max-w-2xl mb-8 font-mono text-xs uppercase tracking-wider">
+                In addition to the embedded simulator above, the deep learning inference engine is deployed as a standalone full-viewport terminal on Render and GitHub Pages.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a
+                  href="https://ritvikchunamari.github.io/crypto-terminal.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative px-7 py-3.5 border border-[#00E5FF]/40 bg-[#00E5FF]/5 font-mono text-xs tracking-[0.2em] uppercase rounded-sm overflow-hidden cursor-pointer transition-all hover:border-[#00E5FF] hover:shadow-[0_0_25px_rgba(0,229,255,0.25)] text-center flex items-center justify-center gap-2"
+                >
+                  <span className="relative z-10 font-bold text-[#00E5FF] transition-colors duration-300 group-hover:text-black">LAUNCH STANDALONE TERMINAL</span>
+                  <span className="relative z-10 text-[#00E5FF] group-hover:text-black transition-colors">↗</span>
+                  <div className="absolute inset-0 h-full w-0 bg-[#00E5FF] transition-all duration-300 ease-out group-hover:w-full z-0"></div>
+                </a>
+
+                <a
+                  href={project.link || "https://github.com/RitvikChunamari/Crypto-AI-Predictor"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative px-7 py-3.5 border border-white/20 bg-white/5 font-mono text-xs tracking-[0.2em] uppercase rounded-sm overflow-hidden cursor-pointer transition-all hover:border-white hover:bg-white text-center flex items-center justify-center gap-2"
+                >
+                  <span className="relative z-10 font-bold text-white transition-colors duration-300 group-hover:text-black">VIEW SOURCE ON GITHUB</span>
+                  <span className="relative z-10 text-white group-hover:text-black transition-colors">↗</span>
+                  <div className="absolute inset-0 h-full w-0 bg-white transition-all duration-300 ease-out group-hover:w-full z-0"></div>
+                </a>
+              </div>
+            </div>
           </div>
-          <h3 className="text-2xl md:text-4xl font-bold font-sans text-white mb-4 tracking-[-0.03em] uppercase text-center">
-            Live AI Terminal Deployed
-          </h3>
-          <p className="text-white/60 text-center max-w-2xl mb-10 font-mono text-xs uppercase tracking-wider">
-            The Deep Learning inference engine has been deployed to a dedicated high-throughput cloud runtime. Launch the full-screen terminal below.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-5">
-            <a 
-              href="https://ritvikchunamari.github.io/crypto-terminal.html" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="group relative px-8 py-4 border border-[#00E5FF]/40 bg-[#00E5FF]/5 font-mono text-xs tracking-[0.2em] uppercase rounded-sm overflow-hidden cursor-pointer transition-all hover:border-[#00E5FF] hover:shadow-[0_0_25px_rgba(0,229,255,0.25)] text-center flex items-center justify-center gap-2"
-            >
-              <span className="relative z-10 font-bold text-[#00E5FF] transition-colors duration-300 group-hover:text-black">TEST LIVE APP</span>
-              <span className="relative z-10 text-[#00E5FF] group-hover:text-black transition-colors">↗</span>
-              <div className="absolute inset-0 h-full w-0 bg-[#00E5FF] transition-all duration-300 ease-out group-hover:w-full z-0"></div>
-            </a>
-            
-            <a 
-              href={project.link || "https://github.com/RitvikChunamari/Crypto-AI-Predictor"} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="group relative px-8 py-4 border border-white/20 bg-white/5 font-mono text-xs tracking-[0.2em] uppercase rounded-sm overflow-hidden cursor-pointer transition-all hover:border-white hover:bg-white text-center flex items-center justify-center gap-2"
-            >
-              <span className="relative z-10 font-bold text-white transition-colors duration-300 group-hover:text-black">VIEW SOURCE ON GITHUB</span>
-              <span className="relative z-10 text-white group-hover:text-black transition-colors">↗</span>
-              <div className="absolute inset-0 h-full w-0 bg-white transition-all duration-300 ease-out group-hover:w-full z-0"></div>
-            </a>
-          </div>
-        </div>
+        </section>
       )}
 
       {/* MONUMENTAL NEXT PROJECT CURTAIN */}
       <section className="w-full border-t border-white/10 bg-[#060609] py-24 md:py-36 relative overflow-hidden">
         {/* Subtle background blueprint grid */}
-        <div 
-          className="absolute inset-0 z-0 opacity-10 pointer-events-none" 
-          style={{ 
-            backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)', 
-            backgroundSize: '40px 40px' 
+        <div
+          className="absolute inset-0 z-0 opacity-10 pointer-events-none"
+          style={{
+            backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
+            backgroundSize: '40px 40px'
           }}
         />
 
         <div className="container mx-auto px-4 sm:px-6 md:px-12 relative z-10">
           <div className="max-w-5xl mx-auto flex flex-col items-center text-center">
             <MagneticWrapper strength={0.15}>
-              <button 
+              <button
                 onClick={onNext}
-                className="group relative flex flex-col items-center w-full focus:outline-none cursor-pointer"
+                className="group gsap-reveal relative flex w-full cursor-pointer flex-col items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-8 focus-visible:ring-offset-[#060609]"
                 data-cursor-text="NEXT CASE"
               >
                 {/* Telemetry Indicator */}
                 <div className="flex items-center gap-2 mb-4 px-3 py-1 rounded-sm border border-white/10 bg-white/[0.03] backdrop-blur-md">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30] animate-ping"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
                   <span className="font-mono text-[10px] text-white/60 uppercase tracking-[0.25em]">
-                    TRANSITION // 0{((currentProjectIndex + 1) % resumeData.projects.length) + 1} OF 0{resumeData.projects.length}
+                    0{((currentProjectIndex + 1) % resumeData.projects.length) + 1} of 0{resumeData.projects.length}
                   </span>
                 </div>
 
                 <span className="font-mono text-xs sm:text-sm text-white/50 uppercase tracking-[0.3em] mb-3 group-hover:text-[#FF3B30] transition-colors duration-300">
-                  NEXT CASE STUDY /// {nextProject.category || "ENGINEERING & DESIGN"}
+                  NEXT CASE STUDY — {nextProject.category || "ENGINEERING & DESIGN"}
                 </span>
 
                 {/* Monumental Display Title */}
@@ -2476,7 +2459,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                 <div className="w-24 group-hover:w-full max-w-xl h-[2px] bg-[#FF3B30] mt-6 transition-all duration-500 ease-out"></div>
 
                 <div className="flex items-center gap-3 mt-6 text-white/50 group-hover:text-white font-mono text-xs uppercase tracking-widest transition-colors duration-300">
-                  <span>LAUNCH DEEP DIVE</span>
+                  <span>Read Case Study</span>
                   <span className="transform group-hover:translate-x-2 transition-transform duration-300 text-[#FF3B30]">→</span>
                 </div>
               </button>
@@ -2487,11 +2470,14 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
 
       {/* High-Resolution Lightbox Modal */}
       {activeLightbox && (
-        <div 
+        <div
           className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center p-4 sm:p-8 animate-fadeIn"
           onClick={() => setActiveLightbox(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="lightbox-title"
         >
-          <div 
+          <div
             className="relative max-w-6xl w-full max-h-[92vh] flex flex-col bg-[#09090e] border border-white/15 rounded-sm overflow-hidden shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
@@ -2503,7 +2489,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                     {activeLightbox.subtitle}
                   </span>
                 )}
-                <h4 className="text-base sm:text-lg font-bold text-white uppercase tracking-[-0.02em]">
+                <h4 id="lightbox-title" className="text-base sm:text-lg font-bold text-white uppercase tracking-[-0.02em]">
                   {activeLightbox.title}
                 </h4>
               </div>
@@ -2511,6 +2497,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                 onClick={() => setActiveLightbox(null)}
                 className="w-8 h-8 rounded-sm border border-white/15 bg-white/5 hover:bg-white hover:text-black text-white flex items-center justify-center transition-colors font-mono text-xs cursor-pointer"
                 aria-label="Close Preview"
+                autoFocus
               >
                 ✕
               </button>
@@ -2518,9 +2505,9 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
 
             {/* Image Preview */}
             <div className="flex-1 overflow-auto p-4 sm:p-8 flex items-center justify-center bg-black/60">
-              <img 
-                src={activeLightbox.image} 
-                alt={activeLightbox.title} 
+              <img
+                src={activeLightbox.image}
+                alt={activeLightbox.title}
                 className="max-h-[74vh] max-w-full object-contain rounded-sm drop-shadow-2xl"
               />
             </div>

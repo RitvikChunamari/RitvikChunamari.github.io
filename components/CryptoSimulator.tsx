@@ -178,7 +178,10 @@ const CryptoSimulator: React.FC = () => {
             {loading ? (
               <div className="w-full h-full flex flex-col items-center justify-center">
                 <div className="w-10 h-10 border-2 border-white/10 border-t-[#00E5FF] rounded-full animate-spin mb-6"></div>
-                <div className="text-[#00E5FF] font-mono text-xs animate-pulse tracking-[0.3em] uppercase">Pinging Cloud API...</div>
+                <div className="text-[#38BDF8] font-mono text-xs tracking-[0.3em] uppercase flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] animate-pulse"></span>
+                  <span>Pinging Cloud API...</span>
+                </div>
               </div>
             ) : (
               <div className="relative w-full h-full">
@@ -234,7 +237,7 @@ const CryptoSimulator: React.FC = () => {
              <div className="absolute top-0 left-0 w-full h-full bg-[#00E5FF]/5 opacity-50"></div>
              <span className="font-mono text-[10px] text-white/50 uppercase tracking-[0.2em] mb-2 z-10">AI PREDICTION SIGNAL</span>
              {loading || !prediction ? (
-                <span className="text-xl font-mono text-white/30 z-10">AWAITING...</span>
+                <span className="text-xl font-mono text-white/60 z-10">AWAITING...</span>
              ) : (
                 <span className={`text-2xl md:text-3xl font-bold font-mono tracking-tight z-10 ${prediction.action.includes('BUY') ? 'text-green-400 drop-shadow-[0_0_10px_rgba(74,222,128,0.5)]' : 'text-red-400 drop-shadow-[0_0_10px_rgba(248,113,113,0.5)]'}`}>
                   {prediction.action}
