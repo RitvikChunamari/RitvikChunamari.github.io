@@ -183,7 +183,51 @@
         box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 0.3), inset 1px 0 0 0 rgba(255, 255, 255, 0.3);
       }
       .s-border-br {
-        box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 0.3), inset -1px 0 0 0 rgba(255, 255, 255, 0.3);
+        box-shadow: inset -1px 0 0 0 rgba(255, 255, 255, 0.3), inset 0 -1px 0 0 rgba(255, 255, 255, 0.3);
+      }
+
+      /* StringTune Core & Kinetic Word-Mask Scroll Reveal */
+      @property --progress {
+        syntax: '<number>';
+        inherits: true;
+        initial-value: 0;
+      }
+
+      .-splitted {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .-s-line {
+        display: flex;
+        width: 100%;
+        will-change: contents;
+      }
+      .-s-word {
+        display: inline-flex;
+        will-change: contents;
+      }
+      .-s-char {
+        display: inline-flex;
+        will-change: contents;
+      }
+
+      /* Kinetic Word-Mask Reveal in Profile Section */
+      .profile-string-progress .-s-word {
+        --word-turn: calc( (var(--word-index) / var(--word-global-total)) * 0.82 );
+        --word-step: 0.15;
+        --word-progress: clamp( 0, calc( (var(--progress) - var(--word-turn)) / var(--word-step) ), 1 );
+
+        transform: translate3d(0, calc(100% - var(--word-progress) * 100%), 0);
+        clip-path: inset(-15% 0 calc( 115% - var(--word-progress) * 130% ) 0);
+        opacity: calc( 0.25 + var(--word-progress) * 0.75 );
+        will-change: transform, clip-path, opacity;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .profile-string-progress .-s-word {
+          transform: none !important;
+          clip-path: none !important;
+        }
       }
     </style>
 
@@ -200,7 +244,7 @@
   }
 }
 </script>
-  <script type="module" crossorigin src="./assets/index-D6NXemU5.js"></script>
+  <script type="module" crossorigin src="./assets/index-De2LgDRv.js"></script>
 </head>
   <body>
     <div id="root"></div>
