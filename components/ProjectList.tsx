@@ -25,6 +25,9 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
   const laserLineRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const cardInnerRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const titleRefs = useRef<(HTMLHeadingElement | null)[]>([]);
+  const cardEdgeRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useLayoutEffect(() => {
     if (!sectionRef.current) return;
@@ -54,14 +57,18 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
 
       const mm = gsap.matchMedia();
 
-      // DESKTOP: 3D Spatial Stacking Deck (Lenis-synchronized, pinned stage)
+      // DESKTOP: 3D Multi-Plane Parallax Stacking Deck (Lenis-synchronized, pinned stage)
       mm.add("(min-width: 769px) and (prefers-reduced-motion: no-preference)", () => {
         const totalCards = projects.length;
         if (!deckWrapperRef.current || totalCards === 0) return;
 
-        // Set Initial Stacking Context & 3D Plate Transforms (Solid Opaque Physical Plates)
+        // Set Initial Stacking Context & Multi-Plane Parallax Starting States
         cardRefs.current.forEach((card, idx) => {
           if (!card) return;
+          const imgWrapper = imageRefs.current[idx];
+          const title = titleRefs.current[idx];
+          const edge = cardEdgeRefs.current[idx];
+
           if (idx === 0) {
             gsap.set(card, {
               y: 0,
@@ -72,27 +79,46 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
               zIndex: 10,
               pointerEvents: 'auto',
             });
+            if (imgWrapper) {
+              gsap.set(imgWrapper, { yPercent: 0, scale: 1.0, filter: 'brightness(1)' });
+            }
+            if (title) {
+              gsap.set(title, { y: 0, opacity: 1 });
+            }
+            if (edge) {
+              gsap.set(edge, { scaleX: 1, opacity: 1 });
+            }
           } else {
+            // Incoming cards start with spatial depth, perspective pitch, and internal counter-offset
             gsap.set(card, {
               y: window.innerHeight * 1.15,
-              z: 0,
-              rotateX: 0,
-              scale: 1,
-              opacity: 1,
+              z: -80,
+              rotateX: -4.5,
+              scale: 0.94,
+              opacity: 0.85,
               zIndex: 10 + idx * 10,
               pointerEvents: 'none',
             });
+            if (imgWrapper) {
+              gsap.set(imgWrapper, { yPercent: -22, scale: 1.16, filter: 'brightness(0.95)' });
+            }
+            if (title) {
+              gsap.set(title, { y: 36, opacity: 0.35 });
+            }
+            if (edge) {
+              gsap.set(edge, { scaleX: 0, opacity: 0 });
+            }
           }
         });
 
-        // Continuous Master Stacking Timeline (60/120fps hardware accelerated)
+        // Continuous Master Parallax Timeline (60/120fps hardware accelerated)
         const deckTl = gsap.timeline({
           scrollTrigger: {
             trigger: deckWrapperRef.current,
             start: 'top top',
-            end: `+=${(totalCards - 1) * 75}%`,
+            end: `+=${(totalCards - 1) * 85}%`,
             pin: true,
-            scrub: 0.35,
+            scrub: 0.45,
             anticipatePin: 1,
             invalidateOnRefresh: true,
             onUpdate: (self) => {
@@ -113,37 +139,64 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
           }
         });
 
-        // Build sequential plate stacking choreographies with stepped tab offsets
+        // Build sequential multi-plane parallax stacking choreographies
         for (let i = 0; i < totalCards - 1; i++) {
           const outgoingCard = cardRefs.current[i];
+          const outgoingImg = imageRefs.current[i];
+          const outgoingEdge = cardEdgeRefs.current[i];
+
           const incomingCard = cardRefs.current[i + 1];
+          const incomingImg = imageRefs.current[i + 1];
+          const incomingTitle = titleRefs.current[i + 1];
+          const incomingEdge = cardEdgeRefs.current[i + 1];
+
           const segmentStart = i;
 
           if (outgoingCard) {
-            // Outgoing card lifts back into depth with stepped tab offset (-44px)
+            // Outgoing card lifts back into depth with stepped tab offset (-50px)
             deckTl.to(outgoingCard, {
-              z: -120,
-              y: -44,
-              rotateX: 3.5,
-              scale: 0.94,
-              opacity: 0.65,
+              z: -140,
+              y: -50,
+              rotateX: 4.2,
+              scale: 0.93,
+              opacity: 0.58,
               ease: 'power1.inOut',
               duration: 1,
             }, segmentStart);
 
-            // Previous cards in the stack step further back (-80px, -112px...)
+            // Outgoing artwork sinks with subtle depth parallax and dimming
+            if (outgoingImg) {
+              deckTl.to(outgoingImg, {
+                yPercent: 14,
+                scale: 0.93,
+                filter: 'brightness(0.65)',
+                ease: 'power1.inOut',
+                duration: 1,
+              }, segmentStart);
+            }
+
+            if (outgoingEdge) {
+              deckTl.to(outgoingEdge, {
+                scaleX: 0,
+                opacity: 0,
+                duration: 0.4,
+                ease: 'power1.in',
+              }, segmentStart);
+            }
+
+            // Previous cards in the stack step further back into deep perspective
             for (let k = 0; k < i; k++) {
               const previousCard = cardRefs.current[k];
               if (previousCard) {
                 const step = i - k + 1;
-                const tabOffset = -44 - (step - 1) * 32;
-                const depthOffset = -120 - (step - 1) * 80;
+                const tabOffset = -50 - (step - 1) * 28;
+                const depthOffset = -140 - (step - 1) * 85;
                 deckTl.to(previousCard, {
                   z: depthOffset,
                   y: tabOffset,
-                  rotateX: 3.5 + (step - 1) * 1.5,
-                  scale: Math.max(0.82, 0.94 - (step - 1) * 0.04),
-                  opacity: Math.max(0.22, 0.65 - (step - 1) * 0.14),
+                  rotateX: 4.2 + (step - 1) * 1.2,
+                  scale: Math.max(0.78, 0.93 - (step - 1) * 0.035),
+                  opacity: Math.max(0.18, 0.58 - (step - 1) * 0.14),
                   ease: 'power1.inOut',
                   duration: 1,
                 }, segmentStart);
@@ -152,7 +205,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
           }
 
           if (incomingCard) {
-            // Incoming card slides up smoothly from below to cover the card behind it
+            // Incoming card glides up in 3D perspective to focal plane
             deckTl.to(incomingCard, {
               y: 0,
               z: 0,
@@ -162,14 +215,48 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
               ease: 'power1.out',
               duration: 1,
             }, segmentStart);
+
+            // Incoming artwork counter-parallax down into centered position
+            if (incomingImg) {
+              deckTl.to(incomingImg, {
+                yPercent: 0,
+                scale: 1.0,
+                filter: 'brightness(1)',
+                ease: 'power1.out',
+                duration: 1,
+              }, segmentStart);
+            }
+
+            // Staggered title float reveal with slight trailing lag
+            if (incomingTitle) {
+              deckTl.to(incomingTitle, {
+                y: 0,
+                opacity: 1,
+                ease: 'power2.out',
+                duration: 0.75,
+              }, segmentStart + 0.18);
+            }
+
+            // Specular laser edge sweep as card locks in
+            if (incomingEdge) {
+              deckTl.to(incomingEdge, {
+                scaleX: 1,
+                opacity: 1,
+                duration: 0.5,
+                ease: 'power2.out',
+              }, segmentStart + 0.45);
+            }
           }
         }
       });
 
-      // MOBILE: Tactile Unpinned Vertical Stream (0% scroll trapping, natural touch inertia)
+      // MOBILE: Tactile Unpinned Vertical Stream with Scroll-Scrubbed Parallax
       mm.add("(max-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
-        cardRefs.current.forEach((card) => {
+        cardRefs.current.forEach((card, idx) => {
           if (!card) return;
+          const imgWrapper = imageRefs.current[idx];
+          const title = titleRefs.current[idx];
+
           gsap.set(card, {
             y: 0,
             z: 0,
@@ -180,27 +267,63 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
             pointerEvents: 'auto',
           });
 
-          // Subtle focal scaling as card scrolls through mobile viewport center
+          // Card focal entrance scaling & opacity
           gsap.fromTo(card,
-            { scale: 0.95, opacity: 0.8 },
+            { scale: 0.94, opacity: 0.7 },
             {
               scale: 1,
               opacity: 1,
               ease: 'power1.out',
               scrollTrigger: {
                 trigger: card,
-                start: 'top 85%',
-                end: 'center center',
-                scrub: 0.6,
+                start: 'top 92%',
+                end: 'top 35%',
+                scrub: 0.5,
               }
             }
           );
+
+          // Continuous vertical image parallax inside mobile card
+          if (imgWrapper) {
+            gsap.fromTo(imgWrapper,
+              { yPercent: -14, scale: 1.08 },
+              {
+                yPercent: 14,
+                scale: 1.0,
+                ease: 'none',
+                scrollTrigger: {
+                  trigger: card,
+                  start: 'top bottom',
+                  end: 'bottom top',
+                  scrub: true,
+                }
+              }
+            );
+          }
+
+          // Subtle title parallax float
+          if (title) {
+            gsap.fromTo(title,
+              { y: 18, opacity: 0.7 },
+              {
+                y: 0,
+                opacity: 1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                  trigger: card,
+                  start: 'top 85%',
+                  end: 'top 50%',
+                  scrub: 0.4,
+                }
+              }
+            );
+          }
         });
       });
 
       // REDUCED MOTION: Static Clean Accessibility Fallback
       mm.add("(prefers-reduced-motion: reduce)", () => {
-        cardRefs.current.forEach((card) => {
+        cardRefs.current.forEach((card, idx) => {
           if (!card) return;
           gsap.set(card, {
             y: 0,
@@ -211,6 +334,18 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
             filter: 'blur(0px)',
             pointerEvents: 'auto',
           });
+          const imgWrapper = imageRefs.current[idx];
+          if (imgWrapper) {
+            gsap.set(imgWrapper, { yPercent: 0, scale: 1, filter: 'none' });
+          }
+          const title = titleRefs.current[idx];
+          if (title) {
+            gsap.set(title, { y: 0, opacity: 1 });
+          }
+          const edge = cardEdgeRefs.current[idx];
+          if (edge) {
+            gsap.set(edge, { scaleX: 1, opacity: 1 });
+          }
         });
       });
 
@@ -219,7 +354,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
     return () => ctx.revert();
   }, [projects]);
 
-  // Reactive Cursor Spotlight & Damped 3D Elastic Card Tilt
+  // Reactive Cursor Spotlight & Damped 3D Dual-Plane Elastic Tilt Parallax
   const handleCardMouseMove = (e: React.MouseEvent<HTMLDivElement>, index: number) => {
     const isTouchOrMobile = typeof window !== 'undefined' && 
       (window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768);
@@ -242,15 +377,27 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
     card.style.setProperty('--mouse-y', `${y}px`);
 
     // Damped 3D tilt interaction with natural easing
-    const rotateY = ((x / rect.width) - 0.5) * 4.5;
-    const rotateX = (0.5 - (y / rect.height)) * 4.5;
+    const rotateY = ((x / rect.width) - 0.5) * 5;
+    const rotateX = (0.5 - (y / rect.height)) * 5;
     const inner = cardInnerRefs.current[index];
     if (inner) {
       gsap.to(inner, {
         rotateX,
         rotateY,
-        scale: 1.006,
+        scale: 1.008,
         duration: 0.35,
+        ease: 'power2.out',
+        overwrite: 'auto',
+      });
+    }
+
+    // Dual-layer counter parallax on the artwork inside the card
+    const imgWrapper = imageRefs.current[index];
+    if (imgWrapper) {
+      gsap.to(imgWrapper, {
+        x: -rotateY * 3.5,
+        y: -rotateX * 3.5,
+        duration: 0.45,
         ease: 'power2.out',
         overwrite: 'auto',
       });
@@ -274,7 +421,17 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
         rotateX: 0,
         rotateY: 0,
         scale: 1.0,
-        duration: 0.55,
+        duration: 0.6,
+        ease: 'power2.out',
+        overwrite: 'auto',
+      });
+    }
+    const imgWrapper = imageRefs.current[index];
+    if (imgWrapper) {
+      gsap.to(imgWrapper, {
+        x: 0,
+        y: 0,
+        duration: 0.6,
         ease: 'power2.out',
         overwrite: 'auto',
       });
@@ -359,6 +516,12 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
                         : 'border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.7)]'
                     }`}
                   >
+                    {/* Specular Edge Laser Accent Sweep */}
+                    <div 
+                      ref={(el) => { if (el) cardEdgeRefs.current[index] = el; }}
+                      className="absolute top-0 left-0 w-full h-[1.5px] bg-gradient-to-r from-transparent via-[#FF3B30] to-transparent origin-center scale-x-0 will-change-transform pointer-events-none z-30" 
+                    />
+
                     {/* Reactive Specular Spotlight Sheen */}
                     <div 
                       className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-none z-20"
@@ -390,11 +553,16 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
 
                       {/* Project Image with drop shadow and hover scaling */}
                       {project.image ? (
-                        <img 
-                          src={project.image} 
-                          alt={project.title} 
-                          className="max-w-[90%] max-h-[82%] object-contain relative z-10 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/art:scale-105 will-change-transform drop-shadow-[0_20px_50px_rgba(0,0,0,0.85)]"
-                        />
+                        <div 
+                          ref={(el) => { if (el) imageRefs.current[index] = el; }}
+                          className="w-full h-full flex items-center justify-center will-change-transform"
+                        >
+                          <img 
+                            src={project.image} 
+                            alt={project.title} 
+                            className="max-w-[90%] max-h-[82%] object-contain relative z-10 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/art:scale-105 will-change-transform drop-shadow-[0_20px_50px_rgba(0,0,0,0.85)]"
+                          />
+                        </div>
                       ) : (
                         <div className="font-mono text-xs text-white/30 uppercase tracking-widest">
                           [ CASE STUDY ]
@@ -406,7 +574,10 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
                     <div className="flex justify-between items-end z-10 pt-4 border-t border-white/[0.08]">
                       <div>
                         <div className="overflow-hidden">
-                          <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase tracking-tight text-white leading-none will-change-transform transition-transform duration-500 ease-out group-hover:translate-x-1">
+                          <h3 
+                            ref={(el) => { if (el) titleRefs.current[index] = el; }}
+                            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase tracking-tight text-white leading-none will-change-transform transition-transform duration-500 ease-out group-hover:translate-x-1"
+                          >
                             {project.title}
                           </h3>
                         </div>

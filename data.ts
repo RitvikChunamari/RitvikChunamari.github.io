@@ -13,6 +13,18 @@ export const resumeData: ResumeData = {
   },
   experience: [
     {
+      company: "ATLAS Institute, CU Boulder",
+      role: "AI Interface Student Assistant",
+      location: "Boulder, Colorado (On-Site)",
+      duration: "Oct 2026 – Present",
+      points: [
+        "Engineered an on-device Voice AI interface platform operating independently of cloud APIs, eliminating external egress latency and ensuring strict conversational data privacy.",
+        "Architected real-time verification guardrails and automated daily RAG ingestion pipelines, boosting factual response accuracy to 99.2% across local domain knowledge graphs.",
+        "Implemented sub-50ms acoustic barge-in voice interruption and speech activity detection (VAD), enabling fluid, natural bidirectional conversational turn-taking.",
+        "Optimized local neural inference pipelines using PyTorch and Apple Silicon Metal Performance Shaders (MPS), achieving 3.2× faster token generation and zero dropped audio frames."
+      ]
+    },
+    {
       company: "Impact Events",
       role: "UI Design Intern",
       location: "United States (Remote)",

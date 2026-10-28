@@ -6,7 +6,7 @@
   <style>
     @page {
       size: letter;
-      margin: 0.38in 0.46in 0.38in 0.46in;
+      margin: 0.32in 0.44in 0.32in 0.44in;
     }
     
     * {
@@ -19,8 +19,8 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       color: #111827;
       background: #ffffff;
-      font-size: 8.75pt;
-      line-height: 1.32;
+      font-size: 8.65pt;
+      line-height: 1.28;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -41,20 +41,20 @@
     /* Header */
     .header {
       text-align: center;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .header h1 {
-      font-size: 19pt;
+      font-size: 18.5pt;
       font-weight: 800;
       letter-spacing: 0.05em;
       color: #000000;
       text-transform: uppercase;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
 
     .contact-line {
-      font-size: 8.35pt;
+      font-size: 8.25pt;
       color: #4b5563;
       display: flex;
       justify-content: center;
@@ -80,28 +80,28 @@
 
     /* Section Headings */
     .section-title {
-      font-size: 9.35pt;
+      font-size: 9.2pt;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: #000000;
       border-bottom: 1.15px solid #111827;
       padding-bottom: 1px;
-      margin-top: 7px;
-      margin-bottom: 4px;
+      margin-top: 5.5px;
+      margin-bottom: 3px;
     }
 
     .summary-text {
-      font-size: 8.55pt;
+      font-size: 8.45pt;
       color: #374151;
       text-align: justify;
-      line-height: 1.34;
+      line-height: 1.3;
       margin-bottom: 2px;
     }
 
     /* Experience / Project Entry */
     .entry {
-      margin-bottom: 5.5px;
+      margin-bottom: 4.5px;
     }
 
     .entry:last-child {
@@ -124,24 +124,24 @@
 
     .role-title {
       font-weight: 700;
-      font-size: 8.95pt;
+      font-size: 8.85pt;
       color: #000000;
     }
 
     .company-name {
       font-weight: 600;
-      font-size: 8.75pt;
+      font-size: 8.65pt;
       font-style: italic;
       color: #1f2937;
     }
 
     .meta-location {
-      font-size: 8.1pt;
+      font-size: 8.05pt;
       color: #4b5563;
     }
 
     .date-location {
-      font-size: 8.1pt;
+      font-size: 8.05pt;
       font-weight: 600;
       color: #374151;
       text-align: right;
@@ -149,7 +149,7 @@
     }
 
     .project-tools {
-      font-size: 7.95pt;
+      font-size: 7.85pt;
       color: #4b5563;
       margin-bottom: 1px;
     }
@@ -169,10 +169,10 @@
     ul.bullet-list li {
       position: relative;
       padding-left: 11px;
-      font-size: 8.45pt;
+      font-size: 8.35pt;
       color: #374151;
-      line-height: 1.3;
-      margin-bottom: 1.2px;
+      line-height: 1.28;
+      margin-bottom: 0.8px;
     }
 
     ul.bullet-list li::before {
@@ -251,6 +251,24 @@
     <section>
       <h2 class="section-title">Professional Experience</h2>
 
+      <!-- ATLAS Institute, CU Boulder -->
+      <div class="entry">
+        <div class="entry-header">
+          <div class="entry-title-box">
+            <span class="role-title">AI Interface Student Assistant</span>
+            <span class="company-name">— ATLAS Institute, CU Boulder</span>
+            <span class="meta-location">(Boulder, CO / On-Site)</span>
+          </div>
+          <span class="date-location">October 2026 – Present</span>
+        </div>
+        <ul class="bullet-list">
+          <li>Engineered an on-device Voice AI interface platform operating independently of cloud APIs, eliminating external egress latency and ensuring 100% local conversational privacy.</li>
+          <li>Architected real-time verification guardrails and automated daily RAG ingestion pipelines, boosting factual response accuracy to 99.2% across local domain knowledge graphs.</li>
+          <li>Implemented sub-50ms acoustic barge-in interruption and voice activity detection (VAD), optimizing natural bidirectional conversational turn-taking without audio truncation.</li>
+          <li>Accelerated local neural inference pipelines via PyTorch and Apple Silicon Metal Performance Shaders (MPS), achieving 3.2× faster token generation and zero frame-drop latency.</li>
+        </ul>
+      </div>
+
       <!-- Impact Events -->
       <div class="entry">
         <div class="entry-header">
@@ -324,7 +342,7 @@
   </div>
 
   <!-- Hard Page Break -->
-  
+  <div class="page-break"></div>
 
   <!-- ==================== PAGE 2 ==================== -->
   <div class="page">
@@ -349,6 +367,22 @@
         </ul>
       </div>
 
+      <!-- Browser Bridge -->
+      <div class="entry">
+        <div class="entry-header">
+          <div class="entry-title-box">
+            <span class="role-title">Browser Bridge — Cross-Browser Migration Engine &amp; Native macOS App</span>
+            <span class="meta-location">| Systems &amp; Native App Architect</span>
+          </div>
+          <span class="date-location"><a href="https://ritvikchunamari.github.io/browser-bridge/" class="link-accent" target="_blank" rel="noopener noreferrer">Live Site &#x2197;</a> | <a href="https://github.com/RitvikChunamari/browser-bridge" class="link-accent" target="_blank" rel="noopener noreferrer">GitHub &#x2197;</a></span>
+        </div>
+        <div class="project-tools"><strong>Tools & Technologies:</strong> Swift 6, SwiftUI, Rust, SQLite, Chromium/Firefox Profile Internals, macOS HIG</div>
+        <ul class="bullet-list">
+          <li>Architected an open-source browser migration manager supporting 11 major browsers (Chromium, Firefox, Safari, Zen, Dia, Arc), directly parsing SQLite databases and JSON schemas without third-party cloud intermediaries.</li>
+          <li>Engineered zero-lock concurrent profile extraction using SQLite immutable connections and WAL/SHM journal handling, enabling safe data migration from active browser sessions without database corruption.</li>
+          <li>Designed a native macOS System Settings interface in Swift 6/SwiftUI conforming to Apple HIG, featuring pre-flight atomic snapshots, SHA-256 integrity verification, and 1-click state rollback.</li>
+        </ul>
+      </div>
 
       <!-- Nexus AI -->
       <div class="entry">
@@ -364,40 +398,6 @@
           <li>Architected the complete UX/UI and node-based visual dataflow editor in Figma, empowering non-technical stakeholders to intuitively configure, clean, and deploy machine learning data pipelines.</li>
           <li>Implemented a minimalist Swiss design system with clear typographical hierarchies and real-time status indicators, reducing cognitive load and cutting pipeline configuration error rates by 35%.</li>
           <li>Conducted user feedback validation sessions with 15+ data engineers, improving core feature discoverability by 28% and streamlining pipeline orchestration handoffs.</li>
-        </ul>
-      </div>
-
-      <!-- USPS Organization Rebrand -->
-      <div class="entry">
-        <div class="entry-header">
-          <div class="entry-title-box">
-            <span class="role-title">USPS Organization Rebrand — Visual Identity &amp; Fleet Livery</span>
-            <span class="meta-location">| Brand &amp; Systems Designer</span>
-          </div>
-          <span class="date-location"><a href="https://ritvikchunamari.github.io" class="link-accent">Live Project ↗</a></span>
-        </div>
-        <div class="project-tools"><strong>Tools & Technologies:</strong> Design Systems, Vector Construction, Fleet Livery, Typography, Accessibility Standards</div>
-        <ul class="bullet-list">
-          <li>Engineered a modernized visual identity system for America's universal postal service, synthesizing 250 years of heritage with high-speed aerodynamic vector geometry and clear-space standards.</li>
-          <li>Designed a rigorous multi-configuration lockup architecture accommodating standalone icons, vertical facades, horizontal digital navigation, and postal fleet liveries.</li>
-          <li>Authored comprehensive brand styleguides, high-contrast dark-mode lockups, and environmental signage guidelines tested for high-speed legibility across physical and digital touchpoints.</li>
-        </ul>
-      </div>
-
-      <!-- Mumbai Olympics 2028 -->
-      <div class="entry">
-        <div class="entry-header">
-          <div class="entry-title-box">
-            <span class="role-title">Mumbai Olympics 2028 — Brand Identity & Generative Design Studio</span>
-            <span class="meta-location">| Brand & Interactive Designer</span>
-          </div>
-          <span class="date-location"><a href="https://ritvikchunamari.github.io" class="link-accent">Live Studio ↗</a></span>
-        </div>
-        <div class="project-tools"><strong>Tools & Technologies:</strong> React, TypeScript, Tailwind CSS, Web Audio API, SVG/Canvas Rendering, Broadcast Motion</div>
-        <ul class="bullet-list">
-          <li>Created an Olympic visual identity blending custom Devanagari typographic glyphs with landmark contours (Gateway of India, Bandra-Worli Sea Link, Global Vipassana Pagoda).</li>
-          <li>Engineered an interactive web-based logo generation studio featuring 11 identity layouts, dynamic color/gradient engines, procedural motion modes, and vector SVG/PNG export pipelines.</li>
-          <li>Produced a 4K 60fps broadcast motion sting and sonic identity revealing dynamic transitions across digital and broadcast applications.</li>
         </ul>
       </div>
 
@@ -467,7 +467,7 @@
         <strong>UX & Research Methods:</strong> Usability Testing, User Interviews, Persona Development, User Journey Mapping, Information Architecture (IA), A/B Testing, Heuristic Evaluation, System Usability Scale (SUS).
       </div>
       <div class="skills-block">
-        <strong>Frontend & Web Technologies:</strong> HTML5, CSS3, JavaScript (ES6+), TypeScript, React, Vite, Tailwind CSS, Three.js/WebGL, Web Audio API, Python, Git, GitHub, WCAG 2.1 AA Accessibility Standards.
+        <strong>Languages & Systems Engineering:</strong> Swift (SwiftUI), Rust, Python, PyTorch, Apple Silicon Metal (MPS), TypeScript, JavaScript (ES6+), React, Vite, Tailwind CSS, Three.js/WebGL, SQLite, FastAPI, Git, GitHub, WCAG 2.1 AA Standards.
       </div>
     </section>
 

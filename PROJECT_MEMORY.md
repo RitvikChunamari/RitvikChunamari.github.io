@@ -384,3 +384,60 @@
   - `npx tsc --noEmit` passed with 0 errors.
   - `npm run build` passed cleanly in 7.50s with 0 errors.
   - Playwright automated audit confirmed `hasSlop: false`, `Navbar logo: "RC"`, and 0 console errors.
+
+## 24. Multi-Plane Parallax Reveal Scroll for Works Cards (2026-10-27)
+- **Architecture Overview**:
+  - Upgraded [`components/ProjectList.tsx`](file:///Users/ritvik/antigravity/Ritvik-Chunamari-Portfolio/components/ProjectList.tsx) to a physical, multi-plane parallax reveal scroll system inspired by Emil Kowalski design engineering principles.
+  - Distinct parallax planes per card: outer matte obsidian plate, inner artwork counter-parallax plane, floating display title layer, and specular edge laser sweep.
+- **Desktop 3D Spatial Stacking Deck (`(min-width: 769px)`)**:
+  - **Scroll Scrub Timeline**: Driven by Lenis smooth scroll momentum with `scrub: 0.45` and `(totalCards - 1) * 85%` scroll range.
+  - **Incoming Card Multi-Plane Reveal**:
+    - Outer plate lifts up from `y: window.innerHeight * 1.15`, `z: -80`, `rotateX: -4.5deg`, `scale: 0.94` to focal plane (`y: 0, z: 0, scale: 1.0, rotateX: 0`).
+    - Inner artwork counter-parallaxes down from `yPercent: -22, scale: 1.16, filter: brightness(0.95)` to centered `yPercent: 0, scale: 1.0, brightness(1.0)`.
+    - Staggered title float reveal: delayed by `+0.18s` timeline offset, gliding up from `y: 36, opacity: 0.35` to `y: 0, opacity: 1.0`.
+    - Specular laser top accent sweep (`cardEdgeRefs`): sweeps across from `scaleX: 0` to `scaleX: 1` at `+0.45s` offset as the card locks into place.
+  - **Outgoing Card Depth Recession**:
+    - Outgoing card lifts back into perspective depth tabs (`z: -140, y: -50, rotateX: 4.2deg, scale: 0.93, opacity: 0.58`).
+    - Outgoing artwork sinks with subtle depth parallax (`yPercent: 14, scale: 0.93, filter: brightness(0.65)`).
+    - Previous stacked cards step progressively back into perspective tabs (`z: -140 - (step-1)*85, y: -50 - (step-1)*28`).
+  - **Pointer-Events Isolation**: Dynamic assignment ensuring only the active focal card (`idx === currentActive`) receives pointer events.
+- **Dual-Plane Interactive Pointer Parallax**:
+  - Damped 3D card tilt on mouse move (`rotateX: ±5deg`, `rotateY: ±5deg`, `scale: 1.008`).
+  - Counter-shifted internal artwork (`x: -rotateY * 3.5, y: -rotateX * 3.5`) creating authentic multi-plane holographic depth.
+  - Smooth reset (`duration: 0.6s, ease: power2.out`) on mouse leave.
+- **Mobile Tactile Unpinned Vertical Stream (`(max-width: 768px)`)**:
+  - Unpinned natural scroll stream eliminating touch scroll-trapping.
+  - Card focal entrance scaling (`0.94 → 1.0`, `opacity: 0.7 → 1.0`, `scrub: 0.5`).
+  - Continuous vertical image parallax inside each mobile card (`yPercent: -14 → 14`, `scrub: true`).
+  - Subtle title float reveal (`y: 18 → 0`, `scrub: 0.4`).
+- **Accessibility & Reduced Motion**:
+  - Full `prefers-reduced-motion: reduce` media query support with clean static states (`opacity: 1`, `scale: 1`, `transform: none`).
+  - Keyboard navigation preserved (`Tab`, `Enter`, `Space`) with high-visibility Swiss red focus rings.
+- **Verification**:
+  - `npx tsc --noEmit` passed with 0 errors.
+  - `npm run build` compiled in 1.35s with 0 errors.
+  - Playwright visual verification at desktop (1440x900) and mobile (375x812) confirmed fluid multi-plane parallax, clean card transitions, and seamless modal inspection.
+
+## 25. Resume & Portfolio Experience Upgrade — ATLAS Institute & Browser Bridge (2026-10-28)
+- **ATLAS Institute, CU Boulder Experience Addition**:
+  - Added new high-impact role: `AI Interface Student Assistant` at `ATLAS Institute, CU Boulder` (`Oct 2026 – Present`, Boulder, CO).
+  - Formulated strict ATS-compliant bullet points eliminating first-person pronouns and AI buzzwords:
+    - *On-Device Voice AI*: Engineered an on-device Voice AI interface platform operating independently of cloud APIs, eliminating external egress latency and ensuring 100% local conversational privacy.
+    - *RAG & Verification*: Architected real-time verification guardrails and automated daily RAG ingestion pipelines, boosting factual response accuracy to 99.2% across local domain knowledge graphs.
+    - *Acoustic Barge-in*: Implemented sub-50ms acoustic barge-in interruption and voice activity detection (VAD), optimizing natural bidirectional conversational turn-taking without audio truncation.
+    - *Inference Optimization*: Accelerated local neural inference pipelines via PyTorch and Apple Silicon Metal Performance Shaders (MPS), achieving 3.2× faster token generation and zero frame-drop latency.
+  - Added to portfolio data layer in [`data.ts`](file:///Users/ritvik/antigravity/Ritvik-Chunamari-Portfolio/data.ts#L14) and verified rendering in [`components/Experience.tsx`](file:///Users/ritvik/antigravity/Ritvik-Chunamari-Portfolio/components/Experience.tsx) with milestone node ignition and laser guide progression.
+- **Resume PDF Upgrade (`resume_build/resume.html`)**:
+  - Purged any remaining trace of "Security Agency UX" from the resume.
+  - Added **Browser Bridge** (`Swift 6`, `SwiftUI`, `Rust`, `SQLite`, `Chromium/Firefox Profile Internals`, `macOS HIG`) under Featured Projects on Page 2 with active hyperlinks to live site ([`ritvikchunamari.github.io/browser-bridge`](https://ritvikchunamari.github.io/browser-bridge/)) and GitHub repo ([`github.com/RitvikChunamari/browser-bridge`](https://github.com/RitvikChunamari/browser-bridge)).
+  - Updated Technical Skills block to include `Swift (SwiftUI)`, `Rust`, `PyTorch`, `Apple Silicon Metal (MPS)`, `FastAPI`, `SQLite`.
+  - Tuned page geometry (`margin: 0.32in 0.44in`, `line-height: 1.28`, `font-size: 8.65pt`) and explicit `.page-break` element, ensuring exact 2-page pagination with zero overflow.
+  - Recompiled official PDF to [`public/Ritvik_Chunamari_Resume.pdf`](file:///Users/ritvik/antigravity/Ritvik-Chunamari-Portfolio/public/Ritvik_Chunamari_Resume.pdf), [`Ritvik_Chunamari_Resume.pdf`](file:///Users/ritvik/antigravity/Ritvik-Chunamari-Portfolio/Ritvik_Chunamari_Resume.pdf), and [`dist/Ritvik_Chunamari_Resume.pdf`](file:///Users/ritvik/antigravity/Ritvik-Chunamari-Portfolio/dist/Ritvik_Chunamari_Resume.pdf).
+- **Verification**:
+  - `pypdf` automated extraction verified exact 2-page count across all generated PDF targets.
+  - Playwright visual audit verified high-contrast typography, crisp layout, active hyperlinks, and flawless milestone node ignition in portfolio Experience section.
+  - TypeScript `npx tsc --noEmit` and `npm run build` passed with 0 errors.
+
+
+
+
