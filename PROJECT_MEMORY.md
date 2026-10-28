@@ -453,10 +453,38 @@
   - Playwright visual audit verified 0 dock elements, 0 string-dev elements, and clean high-contrast text rendering.
   - `npx tsc --noEmit` passed with 0 errors.
   - `npm run build` compiled in 1.14s with 0 errors.
+
+## 27. Resume 6-Project Restoration, Nexus AI Homepage UX Re-framing & Monumental Card Expansion (2026-10-28)
+- **Resume PDF 6-Project Restoration (`resume_build/resume.html`)**:
+  - Restored both **USPS Organization Rebrand** and **Mumbai Olympics 2028** to Featured Projects on Page 2 alongside **Kinetix Quant**, **Browser Bridge**, **Nexus AI**, and **Smart Assistive Pill Dispenser 3D**.
+  - Engineered high-density, ATS-optimized 2-bullet structure per project covering technical architecture, metrics, and systems craft.
+  - Calibrated page typography and margins (`@page margin: 0.28in 0.42in`, `font-size: 8.45pt`, `line-height: 1.25`) to guarantee strict 2-page pagination with 0 page spillover.
+  - Recompiled official vector PDF to `public/Ritvik_Chunamari_Resume.pdf`, `dist/Ritvik_Chunamari_Resume.pdf`, and root `Ritvik_Chunamari_Resume.pdf`.
+  - Automated `pypdf` extraction verified `TOTAL_PAGES: 2`.
+- **Nexus AI Re-framing (Strict Homepage UX Design)**:
+  - **Portfolio (`data.ts`)**:
+    - Categorized as `Homepage UX Design` (previously generic UX/UI).
+    - Updated description: *"Designed the homepage UX/UI, information architecture, and responsive web prototype in Figma for an enterprise AI research and development company."*
+    - Case study overview, challenge, solution, problem statement, and citations updated to focus strictly on landing page architecture, value proposition hierarchy, and responsive Figma prototypes (purged all mentions of node editors and data pipelines).
+  - **Resume (`resume_build/resume.html`)**:
+    - Role title: `Nexus AI — Enterprise AI Homepage UX & Web Design` (`Lead UI/UX Designer`).
+    - Bullets focused on Figma responsive layouts, information architecture, Swiss typography, and conversion pathways.
+- **Monumental Works Card Expansion (`components/ProjectList.tsx`)**:
+  - Expanded stage wrapper from `md:h-[88vh]` to `md:h-[92vh]` with enhanced 3D perspective (`1400px`).
+  - Expanded card container width from `max-w-5xl` (1024px) to `max-w-6xl xl:max-w-7xl` (1280px+ wide).
+  - Expanded card height from `md:h-[72vh] max-h-[640px]` to `md:h-[80vh] max-h-[760px] min-h-[540px]`.
+  - Scaled internal artwork container (`my-4 md:my-6`), artwork image scaling (`max-w-[92%] max-h-[86%]`), and project titles (`xl:text-6xl`).
+  - Preserved fluid hardware-accelerated 3D parallax scroll stacking and unpinned mobile layout.
 - **Verification**:
-  - `pypdf` automated extraction verified exact 2-page count across all generated PDF targets.
-  - Playwright visual audit verified high-contrast typography, crisp layout, active hyperlinks, and flawless milestone node ignition in portfolio Experience section.
-  - TypeScript `npx tsc --noEmit` and `npm run build` passed with 0 errors.
+  - `npx tsc --noEmit` passed with 0 errors.
+  - `npm run build` compiled clean in 1.02s.
+  - Playwright automated audit verified:
+    - Card 0 dimensions: 1280×720px on desktop.
+    - Card 1 correctly displays `02 // HOMEPAGE UX DESIGN`.
+    - Nexus AI case study modal opens and verifies Homepage UX Design tech stack.
+    - Mobile 375px viewport has 0px horizontal overflow.
+    - 0 browser console errors.
+
 
 
 

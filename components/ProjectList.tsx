@@ -440,7 +440,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
 
   return (
     <section ref={sectionRef} id="work" className="relative py-20 md:py-28 min-h-screen z-20">
-      <div className="container mx-auto px-6 md:px-12 relative z-10">
+      <div className="w-full max-w-[1380px] mx-auto px-4 sm:px-6 md:px-10 lg:px-12 relative z-10">
         
         {/* Section Header */}
         <div className="grid grid-cols-1 md:grid-cols-12 mb-10 md:mb-14 border-b border-white/10 pb-5 items-end relative">
@@ -470,13 +470,13 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
             ───────────────────────────────────────────────────────────── */}
         <div 
           ref={deckWrapperRef} 
-          className="relative w-full md:h-[88vh] flex items-center justify-center overflow-visible"
+          className="relative w-full md:h-[92vh] flex items-center justify-center overflow-visible"
           style={{
-            perspective: '1200px',
+            perspective: '1400px',
             perspectiveOrigin: 'center center',
           }}
         >
-          <div className="relative w-full max-w-5xl h-full flex flex-col md:block items-center justify-center">
+          <div className="relative w-full max-w-6xl xl:max-w-7xl h-full flex flex-col md:block items-center justify-center">
             {projects.map((project, index) => {
               const isActive = index === activeDeckIndex;
               return (
@@ -502,7 +502,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
                   onMouseLeave={() => handleCardMouseLeave(index)}
                   onMouseMove={(e) => handleCardMouseMove(e, index)}
                   data-cursor-text="VIEW CASE"
-                  className="w-full md:absolute md:inset-0 md:m-auto h-auto md:h-[72vh] max-h-[640px] mb-12 md:mb-0 cursor-pointer will-change-[transform,opacity] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-8 focus-visible:ring-offset-[#050507] rounded-none select-none group"
+                  className="w-full md:absolute md:inset-0 md:m-auto h-auto md:h-[80vh] max-h-[760px] min-h-[540px] mb-12 md:mb-0 cursor-pointer will-change-[transform,opacity] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-8 focus-visible:ring-offset-[#050507] rounded-none select-none group"
                   style={{
                     transformStyle: 'preserve-3d',
                   }}
@@ -510,7 +510,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
                   {/* Outer Matte Obsidian Plate Frame */}
                   <div 
                     ref={(el) => { if (el) cardInnerRefs.current[index] = el; }}
-                    className={`w-full h-full p-6 sm:p-8 md:p-10 rounded-none bg-[#09090f] border transition-[border-color,box-shadow] duration-500 flex flex-col justify-between relative overflow-hidden ${
+                    className={`w-full h-full p-6 sm:p-8 md:p-10 lg:p-12 rounded-none bg-[#09090f] border transition-[border-color,box-shadow] duration-500 flex flex-col justify-between relative overflow-hidden ${
                       isActive 
                         ? 'border-white/25 shadow-[0_30px_90px_rgba(0,0,0,0.95),0_0_35px_rgba(255,59,48,0.12)]' 
                         : 'border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.7)]'
@@ -547,7 +547,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
                     </div>
 
                     {/* Central Artwork Canvas Frame */}
-                    <div className="relative flex-1 w-full my-4 md:my-5 flex items-center justify-center overflow-hidden rounded-none bg-[#050508] border border-white/[0.06] group/art">
+                    <div className="relative flex-1 w-full my-4 md:my-6 flex items-center justify-center overflow-hidden rounded-none bg-[#050508] border border-white/[0.06] group/art">
                       {/* Subtle ambient lighting vignette */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30 pointer-events-none z-10" />
 
@@ -560,7 +560,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
                           <img 
                             src={project.image} 
                             alt={project.title} 
-                            className="max-w-[90%] max-h-[82%] object-contain relative z-10 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/art:scale-105 will-change-transform drop-shadow-[0_20px_50px_rgba(0,0,0,0.85)]"
+                            className="max-w-[92%] max-h-[86%] object-contain relative z-10 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/art:scale-105 will-change-transform drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
                           />
                         </div>
                       ) : (
@@ -571,12 +571,12 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
                     </div>
 
                     {/* Bottom Content & Navigation Bar */}
-                    <div className="flex justify-between items-end z-10 pt-4 border-t border-white/[0.08]">
+                    <div className="flex justify-between items-end z-10 pt-4 md:pt-5 border-t border-white/[0.08]">
                       <div>
                         <div className="overflow-hidden">
                           <h3 
                             ref={(el) => { if (el) titleRefs.current[index] = el; }}
-                            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase tracking-tight text-white leading-none will-change-transform transition-transform duration-500 ease-out group-hover:translate-x-1"
+                            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold uppercase tracking-tight text-white leading-none will-change-transform transition-transform duration-500 ease-out group-hover:translate-x-1"
                           >
                             {project.title}
                           </h3>
@@ -584,12 +584,12 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
                         <div className={`h-[2px] bg-[#FF3B30] mt-3 origin-left transition-all duration-500 ${isActive ? 'w-16 scale-x-100' : 'w-8 scale-x-75'}`} />
                       </div>
 
-                      <div className="flex items-center gap-3">
-                        <span className="text-xs uppercase tracking-wider text-neutral-400 hidden sm:inline-block font-mono">
+                      <div className="flex items-center gap-3.5">
+                        <span className="text-xs sm:text-sm uppercase tracking-wider text-neutral-400 hidden sm:inline-block font-mono">
                           ( Explore Case )
                         </span>
-                        <div className="w-10 h-10 rounded-none border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 active:scale-95 flex-shrink-0 text-white">
-                          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="transform hover:rotate-45 transition-transform duration-300">
+                        <div className="w-11 h-11 rounded-none border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 active:scale-95 flex-shrink-0 text-white">
+                          <svg width="13" height="13" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="transform hover:rotate-45 transition-transform duration-300">
                             <path d="M1 11L11 1M11 1H1M11 1V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
                           </svg>
                         </div>

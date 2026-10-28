@@ -168,21 +168,21 @@ export const resumeData: ResumeData = {
       },
     {
       title: "Nexus AI",
-      category: "UX/UI Design",
+      category: "Homepage UX Design",
       description: [
-        "Designed the user experience (UX/UI), creating Information Architecture and high-fidelity prototypes for an AI-powered data management platform."
+        "Designed the homepage UX/UI, information architecture, and responsive web prototype in Figma for an enterprise AI research and development company."
       ],
       logo: "/nexus-logo.png",
       image: "/nexus-logo.png",
       caseStudy: {
         year: "2024",
-        role: "Lead Product Designer",
-        technologies: ["Interface Design", "Design Systems", "React", "Python", "LLM APIs"],
+        role: "Lead UI/UX Designer",
+        technologies: ["Homepage UX Design", "Information Architecture", "Figma", "Design Systems", "Responsive Web Design"],
         figmaUrl: "https://www.figma.com/design/as77j5bf5uEnBlsKi1lN6P/Nexus-AI?node-id=22-113",
         figmaEmbedUrl: "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2Fas77j5bf5uEnBlsKi1lN6P%2FNexus-AI%3Fnode-id%3D22-113",
-        overview: "Nexus AI is an advanced data management platform designed to democratize access to complex machine learning workflows. In a landscape where AI tools are often exclusionary and technically dense, Nexus aims to provide a bridge between raw data and actionable intelligence.",
-        challenge: "The primary challenge was translating complex backend processes—data cleaning, model training, and deployment—into a visual language that non-technical stakeholders could understand and manipulate.",
-        solution: "I designed a node-based visual editor that allows users to construct AI pipelines via drag-and-drop. By using a minimalist Swiss design system, I reduced cognitive load, allowing users to focus on the logic of their data rather than the syntax of the code.",
+        overview: "Nexus AI is a homepage UX design project created in Figma for an enterprise artificial intelligence research firm. The design focuses on presenting complex algorithmic capabilities, research initiatives, and developer tools through an accessible, highly structured landing page architecture.",
+        challenge: "The primary challenge was organizing multi-layered enterprise AI capabilities, technical documentation, and customer entry points into a cohesive homepage layout that serves developers, enterprise leaders, and researchers without cognitive overload.",
+        solution: "I designed a responsive, modular homepage experience in Figma with a clear hierarchy of information, interactive capability showcases, and streamlined navigation pathways, grounded in clean Swiss typography and accessible visual contrast.",
         problemOverview: [
           { title: "Complex Information", description: "AI concepts can be intricate and challenging to convey to a broad audience." },
           { title: "Technical Barriers", description: "Non-technical users may struggle to understand advanced AI terminology." },
@@ -198,9 +198,9 @@ export const resumeData: ResumeData = {
         ],
         
           referencesList: [
-            { citationNumber: 1, text: "Long Short-Term Memory (LSTM) Networks in Quantitative Finance.", url: "https://arxiv.org/abs/1909.09586" },
-            { citationNumber: 2, text: "Axiomatic Attribution for Deep Networks (Integrated Gradients).", url: "https://arxiv.org/abs/1703.01365" },
-            { citationNumber: 3, text: "The impact of US Dollar Index (DXY) on Cryptocurrency Volatility.", url: "https://ssrn.com/abstract=3911560" }
+            { citationNumber: 1, text: "Information Architecture and Cognitive Load on Landing Pages (Nielsen Norman Group).", url: "https://www.nngroup.com/articles/ia-study-guide/" },
+            { citationNumber: 2, text: "Web Content Accessibility Guidelines (WCAG) 2.1 AA Standards.", url: "https://www.w3.org/TR/WCAG21/" },
+            { citationNumber: 3, text: "Grid Systems and Typographic Hierarchy in Digital Product Design.", url: "https://en.wikipedia.org/wiki/Grid_(graphic_design)" }
           ]
 ,
           competitorAnalysis: [
