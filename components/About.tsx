@@ -4,7 +4,6 @@ import ExperienceList from './Experience';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { scrambleText } from '../utils/scrambleText';
-import StringTune from '../utils/stringTune';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -19,25 +18,11 @@ const About: React.FC<AboutProps> = ({ data }) => {
   const sectionTitleRef = useRef<HTMLHeadingElement>(null);
   const laserLineRef = useRef<HTMLDivElement>(null);
   const bioContainerRef = useRef<HTMLDivElement>(null);
-  const splitTargetRef = useRef<HTMLDivElement>(null);
   const insightRef = useRef<HTMLDivElement>(null);
+  const wordRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const words = data.personal.summary.split(' ');
 
-  // StringTune Split & Progress Lifecycle Registration
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const stringTune = (window as any).stringTune || StringTune.getInstance();
-    if (stringTune) {
-      if (bioContainerRef.current) {
-        stringTune.objectManager?.add(bioContainerRef.current);
-      }
-      if (splitTargetRef.current) {
-        stringTune.objectManager?.add(splitTargetRef.current);
-      }
-      stringTune.onResize?.();
-    }
-  }, [data.personal.summary]);
-
-  // Section Header Architectural Laser Line & Insight Elevation
+  // Section Header Architectural Laser Line & Lenis-Synchronized Word Illumination
   useLayoutEffect(() => {
     const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!sectionRef.current) return;
@@ -70,8 +55,38 @@ const About: React.FC<AboutProps> = ({ data }) => {
       }
 
       if (isReduced) {
+        wordRefs.current.forEach((el) => {
+          if (el) gsap.set(el, { opacity: 1, color: '#EDEDED' });
+        });
         if (insightRef.current) gsap.set(insightRef.current, { y: 0, opacity: 1 });
         return;
+      }
+
+      // Continuous Lenis-Synchronized Word Illumination
+      const validWords = wordRefs.current.filter(Boolean);
+      if (bioContainerRef.current && validWords.length > 0) {
+        const wordsTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: bioContainerRef.current,
+            start: 'top 82%',
+            end: 'bottom 40%',
+            scrub: 0.35,
+            invalidateOnRefresh: true,
+          }
+        });
+
+        wordsTl.fromTo(validWords,
+          { opacity: 0.35, color: '#666666' },
+          {
+            opacity: 1,
+            color: '#EDEDED',
+            stagger: {
+              each: 0.025,
+              ease: 'none',
+            },
+            ease: 'none',
+          }
+        );
       }
 
       // Insight Card Elevation
@@ -95,6 +110,21 @@ const About: React.FC<AboutProps> = ({ data }) => {
 
     return () => ctx.revert();
   }, [data.personal.summary]);
+
+  const renderSplitWords = () => {
+    return words.map((word, index) => (
+      <React.Fragment key={index}>
+        <span 
+          ref={(el) => { if (el) wordRefs.current[index] = el; }}
+          className="inline-block transition-[opacity,color,transform] duration-200 ease-out will-change-[opacity,color,transform]"
+          style={{ opacity: 0.35, color: '#666666' }}
+        >
+          {word}
+        </span>
+        {' '}
+      </React.Fragment>
+    ));
+  };
 
   return (
     <section 
@@ -145,32 +175,13 @@ const About: React.FC<AboutProps> = ({ data }) => {
             </div>
           </div>
 
-          {/* Right Column: Monumental Scrubbed Bio with StringTune Kinetic Word-Mask Reveal */}
+          {/* Right Column: Monumental Scrubbed Bio */}
           <div className="md:col-span-8" data-cursor-text="READ">
             <div 
               ref={bioContainerRef} 
-              string="progress"
-              data-string="progress"
-              string-enter-el="top"
-              data-string-enter-el="top"
-              string-enter-vp="bottom"
-              data-string-enter-vp="bottom"
-              string-exit-el="top"
-              data-string-exit-el="top"
-              string-exit-vp="top"
-              data-string-exit-vp="top"
-              className="profile-string-progress text-2xl sm:text-4xl md:text-5xl font-sans font-medium leading-[1.3] tracking-tight mb-12 text-white py-1 select-text"
+              className="text-2xl sm:text-4xl md:text-5xl font-sans font-medium leading-[1.3] tracking-tight mb-12 text-white py-1 select-text"
             >
-              <div
-                ref={splitTargetRef}
-                string="split"
-                data-string="split"
-                string-split="word"
-                data-string-split="word"
-                className="profile-string-split"
-              >
-                {data.personal.summary}
-              </div>
+              {renderSplitWords()}
             </div>
 
             {/* Architectural Philosophy Card */}

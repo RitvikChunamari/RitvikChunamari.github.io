@@ -438,6 +438,26 @@
   - Playwright visual audit verified high-contrast typography, crisp layout, active hyperlinks, and flawless milestone node ignition in portfolio Experience section.
   - TypeScript `npx tsc --noEmit` and `npm run build` passed with 0 errors.
 
+## 26. StringTune DevTools & Debug Overlays Purge (2026-10-28)
+- **Problem**:
+  - The `@fiddle-digital/string-tune` devtool access token activated StringTune's internal inspection HUD, rendering visual artifacts:
+    - Inview / progress debugging badges (`.profile-string-progress`, `.inview`), bounding box strokes, and floating eye inspection buttons over the profile bio text.
+    - Floating developer dock / pill at the bottom-left with ruler, grid, overlay, and 60 FPS inspector tools.
+- **Resolution**:
+  - Completely purged `@fiddle-digital/string-tune` from the project.
+  - Deleted [`utils/stringTune.ts`](file:///Users/ritvik/antigravity/Ritvik-Chunamari-Portfolio/utils/stringTune.ts) and removed its import from [`index.tsx`](file:///Users/ritvik/antigravity/Ritvik-Chunamari-Portfolio/index.tsx).
+  - Uninstalled `@fiddle-digital/string-tune` package from `package.json` / `package-lock.json`, shrinking client production bundle by >410 kB.
+  - Stripped StringTune CSS variables (`@property --progress`), `.-splitted`, and kinetic word-mask classes from [`index.html`](file:///Users/ritvik/antigravity/Ritvik-Chunamari-Portfolio/index.html).
+  - Restored clean, high-performance GSAP/Lenis scrubbed word illumination in [`components/About.tsx`](file:///Users/ritvik/antigravity/Ritvik-Chunamari-Portfolio/components/About.tsx), free of all debug tags and experimental wrappers.
+- **Verification**:
+  - Playwright visual audit verified 0 dock elements, 0 string-dev elements, and clean high-contrast text rendering.
+  - `npx tsc --noEmit` passed with 0 errors.
+  - `npm run build` compiled in 1.14s with 0 errors.
+- **Verification**:
+  - `pypdf` automated extraction verified exact 2-page count across all generated PDF targets.
+  - Playwright visual audit verified high-contrast typography, crisp layout, active hyperlinks, and flawless milestone node ignition in portfolio Experience section.
+  - TypeScript `npx tsc --noEmit` and `npm run build` passed with 0 errors.
+
 
 
 
