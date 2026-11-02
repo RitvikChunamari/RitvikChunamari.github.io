@@ -485,6 +485,55 @@
     - Mobile 375px viewport has 0px horizontal overflow.
     - 0 browser console errors.
 
+## 28. Full-Site Craft & Interaction Refinement (2026-11-02)
+- **Settled Design Tree via /grill-me Interview**:
+  - Full-Site Craft & Interaction Refinement across all sections.
+  - Emil Kowalski / Apple Damped Spring Physics (`elastic.out(1, 0.42)`) on magnetic buttons and cards.
+  - Deep Obsidian atmosphere (`#050507`) with specular micro-reflections and 7:1 AAA reading contrast.
+  - Tactile Native-Feel Mobile Tuning ($\ge 44 \times 44\text{px}$ targets, unpinned vertical momentum, zero horizontal slip).
+  - 100% preservation of cinematic B&W aesthetic, red accents (`#FF3B30`), 5 curated works, all text and case studies.
+- **Magnetic Controls & Elastic Snap (`components/MagneticWrapper.tsx`, `components/Header.tsx`)**:
+  - Replaced cubic easing with Emil Kowalski damped spring physics (`ease: 'elastic.out(1, 0.42)'`, `duration: 0.52s-0.54s`).
+  - Added uniform active press states (`active:scale-[0.985]`).
+  - Guaranteed $\ge 44 \times 44\text{px}$ touch target sizes on mobile navigation items.
+- **Selected Works 3D Card Stacking Deck (`components/ProjectList.tsx`)**:
+  - Upgraded card mouse-leave tilt and internal artwork counter-parallax recovery to `elastic.out(1, 0.45)` spring physics.
+  - Added subtle active press feedback (`active:scale-[0.985]`) to active focal plates.
+  - Calibrated circular arrow CTA to $\ge 44 \times 44\text{px}$ touch target dimensions.
+- **Hero & Content Polish (`components/Hero.tsx`, `components/About.tsx`, `components/Footer.tsx`, `components/ProjectDetail.tsx`)**:
+  - Hero scroll button refined with `active:scale-[0.985]` tactile response and `rounded-none` Swiss geometry.
+  - About section resume download and skills/certifications refined with tactile hover/press states and 44px touch targets.
+  - Footer kinetic slot-machine letter roll wave calibrated to $22\text{ms}$ stagger with `active:scale-[0.985]` on email copy and links.
+  - ProjectDetail navigation buttons enhanced with active press states and smooth return transitions.
+- **Multi-Axis Verification**:
+  - `npx tsc --noEmit`: 0 errors.
+  - `npm run build`: Production bundle compiled clean in 1.03s.
+  - Playwright headless browser audit (desktop 1440×900 and mobile 375×812): 0 console errors, 0px horizontal overflow, all 5 project cards verified, case study modal open/close cycle verified, mobile tap targets $\ge 44\text{px}$.
+
+## 29. Individual Project Pages Refinement & Interactive Studio Architecture (2026-11-02)
+- **Settled Design Tree via /grill-me Interview**:
+  - Scope: Holistic Case Study Craft & Interaction Polish across all 5 projects (*Kinetix Quant*, *Nexus AI*, *USPS Organization Rebrand*, *Pill Dispenser 3D*, *Mumbai Olympics 2028*).
+  - Tool Framing: Swiss Architectural Studio Framing (razor-sharp `rounded-none`, obsidian `#09090e` backdrop, hairline `border-white/10`, monospace status telemetry, tactile tab buttons with red active indicator).
+  - Navigation & Transitions: Monumental Magnetic Transition Curtain with real-time laser progress line and expanding `#FF3B30` laser sweep.
+  - Data Grids & Technical Tables: Swiss Architectural Data Grid (square cells, high-contrast monospace column headers, alternating row tinting, keyboard-scrollable `tabIndex={0}`).
+  - Quality Gates: Comprehensive multi-axis verification (TypeScript, build, Playwright end-to-end testing across all 5 case studies).
+- **Interactive Studios & Technical Hardware Polish**:
+  - [`components/FigmaViewerWindow.tsx`](file:///Users/ritvik/Projects/RitvikChunamari.github.io/components/FigmaViewerWindow.tsx): Converted container frame to `rounded-none`, added tactile active states (`active:scale-[0.985]`) to reload, fullscreen, and direct open buttons; updated page tab pills to `rounded-none active:scale-[0.985] min-h-[32px]`.
+  - [`components/CryptoSimulator.tsx`](file:///Users/ritvik/Projects/RitvikChunamari.github.io/components/CryptoSimulator.tsx): Converted all cards (`rounded-xl` -> `rounded-none`), chart container, and metrics sidebar to Swiss square architectural geometry; added `min-h-[44px] active:scale-[0.985]` to coin selection and execution buttons.
+  - [`components/MumbaiLogoGenerator.tsx`](file:///Users/ritvik/Projects/RitvikChunamari.github.io/components/MumbaiLogoGenerator.tsx): Window container and studio chrome converted to `rounded-none`; buttons updated with `active:scale-[0.985] min-h-[36px]`; removed broken Wikimedia Commons audio element and dead cdnfonts `@font-face`; integrated Google Font `Yatra One` for authentic Indian typography.
+  - [`components/ProjectDetail.tsx`](file:///Users/ritvik/Projects/RitvikChunamari.github.io/components/ProjectDetail.tsx): Updated technical hardware specifications, morphological chart, and Pugh matrix to `rounded-none`; added `tabIndex={0}` and focus rings to table scroll wrappers; updated Next Project transition curtain button with `active:scale-[0.985] transition-transform` and lightbox modal to `rounded-none`.
+- **Asset & Network Integrity**:
+  - Purged dead cdnfonts link for Samarkan from `index.html` and substituted authentic Google Font `Yatra One`.
+  - Eliminated dead Wikimedia Commons audio file request, preserving strict zero-sound / zero audio-context constraint.
+- **Multi-Axis Verification**:
+  - `npx tsc --noEmit`: Passed with 0 errors.
+  - `npm run build`: Production bundle compiled clean in 890ms.
+  - Playwright automated multi-case-study verification run across all 5 project pages on Desktop (1440x900) and Mobile (375x812):
+    - 0 browser console errors.
+    - 0px horizontal overflow across all 5 case studies.
+    - 0 Web Audio contexts initialized (strict acoustic silence).
+    - Header active, case study transition router, and return-to-home cycle verified.
+
 
 
 

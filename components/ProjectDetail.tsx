@@ -579,7 +579,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
             <MagneticWrapper strength={0.3}>
               <button
                 onClick={onBack}
-                className="font-mono text-[11px] font-bold tracking-widest uppercase text-white/90 hover:text-white flex min-h-11 items-center gap-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#09090e] rounded-sm py-1 px-2"
+                className="font-mono text-[11px] font-bold tracking-widest uppercase text-white/90 hover:text-white flex min-h-11 items-center gap-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#09090e] rounded-sm py-1 px-2 active:scale-[0.985]"
                 data-cursor-text="BACK"
               >
                 <span className="text-[#FF3B30] transition-transform duration-200 group-hover:-translate-x-1">←</span>
@@ -601,7 +601,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
             <MagneticWrapper strength={0.3}>
               <button
                 onClick={onNext}
-                className="font-mono text-[11px] font-bold tracking-widest uppercase text-white/70 hover:text-white flex min-h-11 items-center gap-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#09090e] rounded-sm py-1 px-2"
+                className="font-mono text-[11px] font-bold tracking-widest uppercase text-white/70 hover:text-white flex min-h-11 items-center gap-2 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#09090e] rounded-sm py-1 px-2 active:scale-[0.985]"
                 data-cursor-text="NEXT"
               >
                 <span>NEXT PROJECT</span>
@@ -1473,7 +1473,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                        {renderRevealHeading("Engineering Specs", 0.2)}
                      </h3>
                      {caseStudy.needStatement && (
-                       <div className="p-4 bg-white/[0.02] border border-white/10 rounded-sm mt-4">
+                       <div className="p-4 bg-white/[0.02] border border-white/10 rounded-none mt-4">
                          <span className="font-mono text-[9px] uppercase tracking-widest text-[#FF3B30] block mb-1 font-bold">Need Statement</span>
                          <p className="text-xs text-white/60 leading-relaxed">{caseStudy.needStatement}</p>
                        </div>
@@ -1483,7 +1483,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                 <div className="md:col-span-8 gsap-reveal">
                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                      {caseStudy.hardwareSpecs.map((spec, idx) => (
-                       <div key={idx} className="p-4 sm:p-5 bg-white/[0.02] border border-white/10 rounded-sm hover:border-white/30 hover:bg-white/[0.04] transition-all duration-300 group">
+                       <div key={idx} className="p-4 sm:p-5 bg-white/[0.02] border border-white/10 rounded-none hover:border-white/30 hover:bg-white/[0.04] transition-all duration-300 group">
                          <span className="font-mono text-[9px] sm:text-[10px] uppercase font-bold text-white/40 tracking-wider block mb-1 group-hover:text-[#FF3B30] transition-colors">
                            {spec.label}
                          </span>
@@ -1514,7 +1514,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                 <div className="md:col-span-8 gsap-reveal">
                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                      {caseStudy.existingSolutions.map((sol, idx) => (
-                       <div key={idx} className="p-5 bg-[#09090e] border border-white/10 rounded-sm hover:border-white/30 transition-all flex flex-col justify-between">
+                       <div key={idx} className="p-5 bg-[#09090e] border border-white/10 rounded-none hover:border-white/30 transition-all flex flex-col justify-between">
                          <div>
                            <span className="font-mono text-[9px] text-[#FF3B30] font-bold block mb-1 tracking-wider">REFERENCE 0{idx + 1}</span>
                            <h4 className="text-base font-bold uppercase tracking-tight text-white mb-2">{sol.name}</h4>
@@ -1555,7 +1555,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                    </div>
                 </div>
                 <div className="md:col-span-8 gsap-reveal">
-                   <div className="overflow-x-auto rounded-sm border border-white/10 bg-[#09090e]/60 backdrop-blur-md">
+                   <div className="overflow-x-auto rounded-none border border-white/10 bg-[#09090e]/60 backdrop-blur-md focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF3B30]" tabIndex={0} aria-label="Morphological Chart Table">
                      <table className="w-full text-left text-xs border-collapse">
                        <thead>
                          <tr className="border-b border-white/10 bg-white/5">
@@ -1599,14 +1599,14 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
                      <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 md:mb-4">
                        {renderRevealHeading("PUGH Decision Matrix", 0.2)}
                      </h3>
-                     <div className="p-3.5 bg-white/[0.02] border border-[#FF3B30]/40 rounded-sm mt-3">
+                     <div className="p-3.5 bg-white/[0.02] border border-[#FF3B30]/40 rounded-none mt-3">
                        <span className="font-mono text-[9px] uppercase font-bold text-[#FF3B30] block mb-1">Selected Design</span>
                        <p className="text-xs text-white/90 font-medium">Concept 1 ranked highest (+33 score) for reliability, hygiene, and low jamming risk.</p>
                      </div>
                    </div>
                 </div>
                 <div className="md:col-span-8 gsap-reveal">
-                   <div className="overflow-x-auto rounded-sm border border-white/10 bg-[#09090e]/60 backdrop-blur-md">
+                   <div className="overflow-x-auto rounded-none border border-white/10 bg-[#09090e]/60 backdrop-blur-md focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF3B30]" tabIndex={0} aria-label="Morphological Chart Table">
                      <table className="w-full text-left text-xs border-collapse">
                        <thead>
                          <tr className="border-b border-white/10 bg-white/5">
@@ -2435,11 +2435,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
             <MagneticWrapper strength={0.15}>
               <button
                 onClick={onNext}
-                className="group gsap-reveal relative flex w-full cursor-pointer flex-col items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-8 focus-visible:ring-offset-[#060609]"
+                className="group gsap-reveal relative flex w-full cursor-pointer flex-col items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-8 focus-visible:ring-offset-[#060609] active:scale-[0.985] transition-transform duration-200"
                 data-cursor-text="NEXT CASE"
               >
                 {/* Telemetry Indicator */}
-                <div className="flex items-center gap-2 mb-4 px-3 py-1 rounded-sm border border-white/10 bg-white/[0.03] backdrop-blur-md">
+                <div className="flex items-center gap-2 mb-4 px-3 py-1 rounded-none border border-white/10 bg-white/[0.03] backdrop-blur-md">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
                   <span className="font-mono text-[10px] text-white/60 uppercase tracking-[0.25em]">
                     0{((currentProjectIndex + 1) % resumeData.projects.length) + 1} of 0{resumeData.projects.length}
@@ -2478,7 +2478,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
           aria-labelledby="lightbox-title"
         >
           <div
-            className="relative max-w-6xl w-full max-h-[92vh] flex flex-col bg-[#09090e] border border-white/15 rounded-sm overflow-hidden shadow-2xl"
+            className="relative max-w-6xl w-full max-h-[92vh] flex flex-col bg-[#09090e] border border-white/15 rounded-none overflow-hidden shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
@@ -2495,7 +2495,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
               </div>
               <button
                 onClick={() => setActiveLightbox(null)}
-                className="w-8 h-8 rounded-sm border border-white/15 bg-white/5 hover:bg-white hover:text-black text-white flex items-center justify-center transition-colors font-mono text-xs cursor-pointer"
+                className="w-9 h-9 min-w-[36px] min-h-[36px] rounded-none border border-white/15 bg-white/5 hover:bg-white hover:text-black text-white flex items-center justify-center transition-all font-mono text-xs cursor-pointer active:scale-[0.985]"
                 aria-label="Close Preview"
                 autoFocus
               >

@@ -219,7 +219,7 @@ const About: React.FC<AboutProps> = ({ data }) => {
                   download="Ritvik_Chunamari_Resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2 px-4 py-2 border border-white/30 rounded-none font-mono text-[10px] md:text-xs uppercase tracking-wider text-white hover:bg-white hover:text-black transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] active:scale-95"
+                  className="group inline-flex items-center gap-2 px-4 py-2 min-h-[44px] border border-white/30 rounded-none font-mono text-[10px] md:text-xs uppercase tracking-wider text-white hover:bg-white hover:text-black transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] active:scale-[0.985]"
                   data-cursor-text="DOWNLOAD"
                 >
                   <span>Resume PDF</span>
@@ -291,7 +291,7 @@ const About: React.FC<AboutProps> = ({ data }) => {
                         {cat.skills.split(', ').map((skill, sIdx) => (
                           <span 
                             key={sIdx} 
-                            className="px-3 py-1 border border-white/10 bg-white/[0.03] rounded-sm text-xs font-mono uppercase tracking-wider text-neutral-300 transition-all duration-300 cursor-default hover:bg-white hover:text-black hover:border-white"
+                            className="px-3 py-1.5 border border-white/10 bg-white/[0.03] rounded-none text-xs font-mono uppercase tracking-wider text-neutral-300 transition-all duration-200 cursor-default hover:bg-white hover:text-black hover:border-white active:scale-[0.985]"
                           >
                             {skill}
                           </span>
@@ -315,7 +315,7 @@ const About: React.FC<AboutProps> = ({ data }) => {
                   {data.certifications.map((c, i) => (
                     <div 
                       key={i} 
-                      className="group relative py-3.5 border-b border-white/[0.07] flex items-center justify-between transition-all duration-300 hover:bg-white/[0.02] hover:pl-3" 
+                      className="group relative py-3.5 min-h-[44px] border-b border-white/[0.07] flex items-center justify-between transition-all duration-300 hover:bg-white/[0.02] hover:pl-3 active:scale-[0.99]" 
                       data-cursor-text="CREDENTIAL"
                     >
                        <span className="text-xs sm:text-sm font-medium text-neutral-300 group-hover:text-white transition-colors">

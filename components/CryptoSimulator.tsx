@@ -162,7 +162,7 @@ const CryptoSimulator: React.FC = () => {
             <button 
               key={coin}
               onClick={() => setSymbol(coin)}
-              className={`px-6 py-3 font-mono text-xs tracking-widest transition-all duration-300 ${symbol === coin ? 'bg-[#00E5FF] text-black shadow-[0_0_15px_rgba(0,229,255,0.4)]' : 'bg-transparent text-white/50 border border-white/20 hover:border-[#00E5FF] hover:text-[#00E5FF] cursor-pointer'}`}
+              className={`px-6 py-3 font-mono text-xs tracking-widest transition-all duration-300 rounded-none min-h-[44px] active:scale-[0.985] ${symbol === coin ? 'bg-[#00E5FF] text-black shadow-[0_0_15px_rgba(0,229,255,0.4)]' : 'bg-transparent text-white/50 border border-white/20 hover:border-[#00E5FF] hover:text-[#00E5FF] cursor-pointer'}`}
             >
               {coin}
             </button>
@@ -174,7 +174,7 @@ const CryptoSimulator: React.FC = () => {
         
         {/* CHART SECTION */}
         <div className="flex-1">
-          <div className="relative w-full h-[400px] md:h-[500px] border border-white/10 rounded-xl bg-black mb-8 p-4 overflow-hidden">
+          <div className="relative w-full h-[400px] md:h-[500px] border border-white/10 rounded-none bg-black mb-8 p-4 overflow-hidden">
             {loading ? (
               <div className="w-full h-full flex flex-col items-center justify-center">
                 <div className="w-10 h-10 border-2 border-white/10 border-t-[#00E5FF] rounded-full animate-spin mb-6"></div>
@@ -233,7 +233,7 @@ const CryptoSimulator: React.FC = () => {
 
         {/* METRICS SIDEBAR */}
         <div className="lg:w-[350px] flex flex-col gap-6">
-          <div className="bg-black border border-white/10 rounded-xl p-6 flex flex-col items-center justify-center text-center relative overflow-hidden">
+          <div className="bg-black border border-white/10 rounded-none p-6 flex flex-col items-center justify-center text-center relative overflow-hidden">
              <div className="absolute top-0 left-0 w-full h-full bg-[#00E5FF]/5 opacity-50"></div>
              <span className="font-mono text-[10px] text-white/50 uppercase tracking-[0.2em] mb-2 z-10">AI PREDICTION SIGNAL</span>
              {loading || !prediction ? (
@@ -246,21 +246,21 @@ const CryptoSimulator: React.FC = () => {
           </div>
           
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-black border border-white/10 rounded-xl p-5 flex flex-col justify-center">
+            <div className="bg-black border border-white/10 rounded-none p-5 flex flex-col justify-center">
                <span className="font-mono text-[9px] text-white/50 uppercase tracking-widest mb-2">Confidence</span>
                <span className="text-xl font-mono text-white">{loading || !prediction ? '--' : `${prediction.confidence}%`}</span>
             </div>
-            <div className="bg-black border border-white/10 rounded-xl p-5 flex flex-col justify-center">
+            <div className="bg-black border border-white/10 rounded-none p-5 flex flex-col justify-center">
                <span className="font-mono text-[9px] text-white/50 uppercase tracking-widest mb-2">Est. Move</span>
                <span className={`text-xl font-mono ${prediction && prediction.pct_change > 0 ? 'text-green-400' : 'text-red-400'}`}>
                  {loading || !prediction ? '--' : `${prediction.pct_change > 0 ? '+' : ''}${prediction.pct_change.toFixed(2)}%`}
                </span>
             </div>
-            <div className="bg-black border border-white/10 rounded-xl p-5 flex flex-col justify-center">
+            <div className="bg-black border border-white/10 rounded-none p-5 flex flex-col justify-center">
                <span className="font-mono text-[9px] text-white/50 uppercase tracking-widest mb-2">Current</span>
                <span className="text-xl font-mono text-white/80">{loading || !prediction ? '--' : `$${prediction.current_price.toLocaleString(undefined, {maximumFractionDigits:2})}`}</span>
             </div>
-            <div className="bg-black border border-white/10 rounded-xl p-5 flex flex-col justify-center">
+            <div className="bg-black border border-white/10 rounded-none p-5 flex flex-col justify-center">
                <span className="font-mono text-[9px] text-white/50 uppercase tracking-widest mb-2">Target</span>
                <span className="text-xl font-mono text-white">{loading || !prediction ? '--' : `$${prediction.predicted_price.toLocaleString(undefined, {maximumFractionDigits:2})}`}</span>
             </div>
@@ -269,7 +269,7 @@ const CryptoSimulator: React.FC = () => {
           <button 
             onClick={runSimulation}
             disabled={loading || inferenceLoading || !prediction}
-            className={`mt-auto w-full group relative px-8 py-5 bg-transparent border border-[#00E5FF]/30 font-mono text-xs tracking-[0.2em] uppercase overflow-hidden cursor-pointer transition-all hover:border-[#00E5FF] ${inferenceLoading ? 'opacity-50' : ''}`}
+            className={`mt-auto w-full group relative px-8 py-5 bg-transparent border border-[#00E5FF]/30 font-mono text-xs tracking-[0.2em] uppercase overflow-hidden cursor-pointer transition-all hover:border-[#00E5FF] rounded-none active:scale-[0.985] min-h-[44px] ${inferenceLoading ? 'opacity-50' : ''}`}
           >
             <span className="relative z-10 font-bold text-[#00E5FF] transition-colors duration-300 group-hover:text-black">
               {inferenceLoading ? 'ANALYZING NEURAL NET...' : 'EXECUTE INFERENCE ANIMATION'}

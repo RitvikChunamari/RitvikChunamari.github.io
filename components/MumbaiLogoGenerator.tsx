@@ -33,7 +33,7 @@ const GRADIENTS = [
 ];
 
 const FONTS = [
-  { id: 'samarkan', name: 'Samarkan', family: '"Samarkan", "Yatra One", cursive' },
+  { id: 'samarkan', name: 'Samarkan / Yatra', family: '"Yatra One", "Samarkan", cursive' },
   { id: 'playfair', name: 'Playfair Display', family: '"Playfair Display", serif' },
   { id: 'montserrat', name: 'Montserrat', family: '"Montserrat", sans-serif' },
   { id: 'bebas', name: 'Bebas Neue', family: '"Bebas Neue", sans-serif' },
@@ -85,19 +85,8 @@ export default function MumbaiLogoGenerator() {
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   
   const previewRef = useRef<HTMLDivElement>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [exportMessage, setExportMessage] = useState<{type: 'error' | 'info' | 'success', text: string} | null>(null);
-
-  useEffect(() => {
-    if (!audioRef.current) return;
-    
-    if (musicEnabled) {
-      audioRef.current.play().catch(e => console.log('Audio playback prevented by browser:', e));
-    } else {
-      audioRef.current.pause();
-    }
-  }, [musicEnabled]);
 
   const cycleTheme = () => {
     const currentIndex = THEMES.indexOf(theme);
@@ -224,7 +213,7 @@ export default function MumbaiLogoGenerator() {
 
   return (
     <div 
-      className={`w-full rounded-lg border transition-all duration-300 overflow-hidden shadow-2xl relative ${
+      className={`w-full rounded-none border transition-all duration-300 overflow-hidden shadow-2xl relative ${
         isFullscreen ? 'fixed inset-0 z-[9999] rounded-none m-0' : 'my-12'
       }`}
       style={{
@@ -263,7 +252,7 @@ export default function MumbaiLogoGenerator() {
           {/* Theme Switcher Button */}
           <button
             onClick={cycleTheme}
-            className="px-2.5 py-1 rounded text-[10px] font-mono uppercase tracking-wider border flex items-center gap-1.5 hover:opacity-80 transition-opacity"
+            className="px-3 py-1.5 rounded-none text-[10px] font-mono uppercase tracking-wider border flex items-center gap-1.5 hover:opacity-80 transition-opacity active:scale-[0.985] min-h-[36px]"
             style={{ borderColor: themeBorder, backgroundColor: themeBg, color: themeInk }}
             title={`Cycle Theme (Current: ${theme.toUpperCase()})`}
           >
@@ -274,7 +263,7 @@ export default function MumbaiLogoGenerator() {
           {/* Expand / Minimize Window */}
           <button
             onClick={() => setIsFullscreen(!isFullscreen)}
-            className="px-2.5 py-1 rounded text-[10px] font-mono uppercase tracking-wider border hover:opacity-80 transition-opacity hidden md:inline-block"
+            className="px-3 py-1.5 rounded-none text-[10px] font-mono uppercase tracking-wider border hover:opacity-80 transition-opacity hidden md:inline-block active:scale-[0.985] min-h-[36px]"
             style={{ borderColor: themeBorder, backgroundColor: themeBg, color: themeInk }}
           >
             {isFullscreen ? 'Exit Fullscreen' : 'Expand'}
@@ -578,32 +567,21 @@ export default function MumbaiLogoGenerator() {
 
             <button
               onClick={() => setMusicEnabled(!musicEnabled)}
-              className="w-full p-2.5 border text-[10px] font-mono uppercase tracking-wider rounded flex items-center justify-between transition-all"
+              className="w-full p-2.5 border text-[10px] font-mono uppercase tracking-wider rounded-none min-h-[36px] active:scale-[0.985] flex items-center justify-between transition-all"
               style={{
                 backgroundColor: musicEnabled ? themeInk : 'transparent',
                 color: musicEnabled ? themeBg : themeInk,
                 borderColor: musicEnabled ? themeInk : themeBorder
               }}
             >
-              <span>Indian Sitar Scoring</span>
-              <span className="font-bold">{musicEnabled ? 'ACTIVE' : 'OFF'}</span>
+              <span>Ambient Soundscape</span>
+              <span className="font-bold">{musicEnabled ? 'ACTIVE (MUTED)' : 'OFF'}</span>
             </button>
           </section>
         </aside>
 
         {/* Right Main Stage / Live Preview */}
         <main className="flex-1 flex flex-col relative overflow-hidden" style={{ backgroundColor: themeBg }}>
-          
-          {/* Audio stream for sitar ambience */}
-          <audio 
-            ref={audioRef} 
-            src="https://upload.wikimedia.org/wikipedia/commons/4/41/Raga_Yaman_Kalyan_on_Sitar.ogg" 
-            loop 
-            autoPlay={false}
-            className="hidden"
-            crossOrigin="anonymous"
-          />
-
           {/* Top Stage Header & Export Actions */}
           <div 
             className="px-6 py-3 border-b flex flex-wrap items-center justify-between gap-3 z-10 font-mono text-xs"

@@ -421,8 +421,8 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
         rotateX: 0,
         rotateY: 0,
         scale: 1.0,
-        duration: 0.6,
-        ease: 'power2.out',
+        duration: 0.65,
+        ease: 'elastic.out(1, 0.45)',
         overwrite: 'auto',
       });
     }
@@ -431,8 +431,8 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
       gsap.to(imgWrapper, {
         x: 0,
         y: 0,
-        duration: 0.6,
-        ease: 'power2.out',
+        duration: 0.65,
+        ease: 'elastic.out(1, 0.45)',
         overwrite: 'auto',
       });
     }
@@ -502,7 +502,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
                   onMouseLeave={() => handleCardMouseLeave(index)}
                   onMouseMove={(e) => handleCardMouseMove(e, index)}
                   data-cursor-text="VIEW CASE"
-                  className="w-full md:absolute md:inset-0 md:m-auto h-auto md:h-[80vh] max-h-[760px] min-h-[540px] mb-12 md:mb-0 cursor-pointer will-change-[transform,opacity] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-8 focus-visible:ring-offset-[#050507] rounded-none select-none group"
+                  className="w-full md:absolute md:inset-0 md:m-auto h-auto md:h-[80vh] max-h-[760px] min-h-[540px] mb-12 md:mb-0 cursor-pointer will-change-[transform,opacity] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-8 focus-visible:ring-offset-[#050507] rounded-none select-none group active:scale-[0.985] transition-transform duration-200"
                   style={{
                     transformStyle: 'preserve-3d',
                   }}
@@ -588,7 +588,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects, onProjectClick }) =
                         <span className="text-xs sm:text-sm uppercase tracking-wider text-neutral-400 hidden sm:inline-block font-mono">
                           ( Explore Case )
                         </span>
-                        <div className="w-11 h-11 rounded-none border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 active:scale-95 flex-shrink-0 text-white">
+                        <div className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-none border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 active:scale-[0.985] flex-shrink-0 text-white">
                           <svg width="13" height="13" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="transform hover:rotate-45 transition-transform duration-300">
                             <path d="M1 11L11 1M11 1H1M11 1V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square"/>
                           </svg>

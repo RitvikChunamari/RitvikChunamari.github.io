@@ -37,7 +37,12 @@ const MagneticWrapper: React.FC<MagneticWrapperProps> = ({ children, className =
   const handleMouseLeave = () => {
     rectRef.current = null;
     if (!ref.current) return;
-    gsap.to(ref.current, { transform: 'translate3d(0, 0, 0)', duration: 0.42, ease: 'power3.out', overwrite: 'auto' });
+    gsap.to(ref.current, { 
+      transform: 'translate3d(0, 0, 0)', 
+      duration: 0.54, 
+      ease: 'elastic.out(1, 0.42)', 
+      overwrite: 'auto' 
+    });
   };
 
   return (

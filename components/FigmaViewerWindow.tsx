@@ -85,8 +85,8 @@ const FigmaViewerWindow: React.FC<FigmaViewerWindowProps> = ({
       <div 
         className={`transition-all duration-300 ease-out flex flex-col ${
           isFullscreen
-            ? 'fixed inset-2 sm:inset-6 md:inset-10 z-[99999] rounded-sm overflow-hidden border border-white/20 bg-[#09090e] shadow-[0_30px_100px_rgba(0,0,0,0.95)]'
-            : 'w-full rounded-sm overflow-hidden border border-white/10 bg-[#09090e] shadow-[0_25px_80px_rgba(0,0,0,0.85)]'
+            ? 'fixed inset-2 sm:inset-6 md:inset-10 z-[99999] rounded-none overflow-hidden border border-white/20 bg-[#09090e] shadow-[0_30px_100px_rgba(0,0,0,0.95)]'
+            : 'w-full rounded-none overflow-hidden border border-white/10 bg-[#09090e] shadow-[0_25px_80px_rgba(0,0,0,0.85)]'
         }`}
       >
         {/* Window Chrome Title Bar */}
@@ -136,7 +136,7 @@ const FigmaViewerWindow: React.FC<FigmaViewerWindowProps> = ({
           </div>
 
           {/* Center: File Title & Figma Identity */}
-          <div className="flex items-center gap-2 bg-white/[0.03] border border-white/10 px-3 py-1 rounded-sm max-w-[50%] sm:max-w-[60%]">
+          <div className="flex items-center gap-2 bg-white/[0.03] border border-white/10 px-3 py-1 rounded-none max-w-[50%] sm:max-w-[60%]">
             {/* Figma Icon */}
             <svg width="12" height="18" viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
               <path d="M19 28.5C19 23.2533 23.2533 19 28.5 19C33.7467 19 38 23.2533 38 28.5C38 33.7467 33.7467 38 28.5 38C23.2533 38 19 33.7467 19 28.5Z" fill="#1ABCFE"/>
@@ -156,7 +156,7 @@ const FigmaViewerWindow: React.FC<FigmaViewerWindowProps> = ({
           {/* Right: Window Controls */}
           <div className="flex items-center gap-2">
             {/* Live Indicator */}
-            <div className="hidden lg:flex items-center gap-1.5 px-2 py-0.5 rounded-sm bg-white/5 border border-white/10 text-white/80 font-mono text-[9px] tracking-wider uppercase">
+            <div className="hidden lg:flex items-center gap-1.5 px-2 py-0.5 rounded-none bg-white/5 border border-white/10 text-white/80 font-mono text-[9px] tracking-wider uppercase">
               <span className="w-1.5 h-1.5 rounded-full bg-[#FF3B30]"></span>
               <span>LIVE PROTOTYPE</span>
             </div>
@@ -165,7 +165,7 @@ const FigmaViewerWindow: React.FC<FigmaViewerWindowProps> = ({
             <button
               onClick={handleReload}
               title="Reload Prototype Canvas"
-              className="w-7 h-7 rounded-sm flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              className="w-8 h-8 rounded-none flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all cursor-pointer active:scale-[0.985]"
             >
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
@@ -179,7 +179,7 @@ const FigmaViewerWindow: React.FC<FigmaViewerWindowProps> = ({
             <button
               onClick={toggleFullscreen}
               title={isFullscreen ? "Exit Fullscreen (Esc)" : "Expand to Fullscreen"}
-              className="w-7 h-7 rounded-sm flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              className="w-8 h-8 rounded-none flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all cursor-pointer active:scale-[0.985]"
             >
               {isFullscreen ? (
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -198,7 +198,7 @@ const FigmaViewerWindow: React.FC<FigmaViewerWindowProps> = ({
               target="_blank"
               rel="noopener noreferrer"
               title="Open active page in new window"
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-sm bg-white/10 hover:bg-white hover:text-black text-white font-mono text-[10px] tracking-wider uppercase transition-all duration-200"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-none bg-white/10 hover:bg-white hover:text-black text-white font-mono text-[10px] tracking-wider uppercase transition-all duration-200 active:scale-[0.985] min-h-[32px]"
               data-cursor-text="OPEN"
             >
               <span className="hidden sm:inline">Open</span>
@@ -227,7 +227,7 @@ const FigmaViewerWindow: React.FC<FigmaViewerWindowProps> = ({
                   <button
                     key={pIdx}
                     onClick={() => handleTabClick(pIdx)}
-                    className={`flex items-center gap-2 px-3 py-1 rounded-sm text-xs font-mono uppercase tracking-wider transition-all duration-200 shrink-0 cursor-pointer border ${
+                    className={`flex items-center gap-2 px-3 py-1 rounded-none text-xs font-mono uppercase tracking-wider transition-all duration-200 shrink-0 cursor-pointer border active:scale-[0.985] min-h-[32px] ${
                       isActive
                         ? 'bg-white text-black font-bold border-white'
                         : 'bg-white/5 text-neutral-400 hover:text-white hover:bg-white/10 border-white/10'

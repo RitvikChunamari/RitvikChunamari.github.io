@@ -590,7 +590,7 @@ const App: React.FC = () => {
         {/* WCAG 2.2 AA Accessible Landmark Skip Link */}
         <a 
           href="#work"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100000] focus:px-4 focus:py-2 focus:bg-[#FF3B30] focus:text-white focus:font-mono focus:text-xs focus:font-bold focus:uppercase focus:tracking-widest focus:rounded-sm focus:shadow-2xl focus:outline-none focus:ring-2 focus:ring-white"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100000] focus:px-4 focus:py-2 focus:bg-[#FF3B30] focus:text-white focus:font-mono focus:text-xs focus:font-bold focus:uppercase focus:tracking-widest focus:rounded-none focus:shadow-2xl focus:outline-none focus:ring-2 focus:ring-white"
         >
           Skip to Selected Works [Enter]
         </a>

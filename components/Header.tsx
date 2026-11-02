@@ -47,7 +47,12 @@ const MagneticNavItem: React.FC<{
   const handleMouseLeave = () => {
     rectRef.current = null;
     if (!elemRef.current) return;
-    gsap.to(elemRef.current, { transform: 'translate3d(0, 0, 0)', duration: 0.42, ease: 'power3.out', overwrite: 'auto' });
+    gsap.to(elemRef.current, { 
+      transform: 'translate3d(0, 0, 0)', 
+      duration: 0.52, 
+      ease: 'elastic.out(1, 0.42)', 
+      overwrite: 'auto' 
+    });
   };
 
   if (href) {
@@ -61,7 +66,7 @@ const MagneticNavItem: React.FC<{
         onMouseEnter={handleMouseEnter}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className={`relative will-change-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] rounded-none ${className}`}
+        className={`relative will-change-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] rounded-none inline-flex items-center justify-center active:scale-[0.985] ${className}`}
         data-cursor-text={cursorText || "OPEN"}
       >
         <span className="block pointer-events-none">
@@ -78,7 +83,7 @@ const MagneticNavItem: React.FC<{
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`relative group transition-colors duration-200 ease-out will-change-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] rounded-sm py-2 px-2 sm:py-1.5 sm:px-2 min-h-[40px] flex items-center justify-center active:scale-95 ${className || 'text-[10px] md:text-xs font-bold uppercase tracking-widest text-neutral-300 hover:text-white'}`}
+      className={`relative group transition-colors duration-200 ease-out will-change-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] rounded-none py-2 px-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center active:scale-[0.985] ${className || 'text-[10px] md:text-xs font-bold uppercase tracking-widest text-neutral-300 hover:text-white'}`}
       data-cursor-text={cursorText || "GO TO"}
     >
       <span className="block pointer-events-none">
@@ -178,7 +183,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
             rel="noopener noreferrer"
             download="Ritvik_Chunamari_Resume.pdf"
             cursorText="RESUME"
-            className="border border-white/50 hover:border-white px-3.5 py-1.5 min-h-[36px] rounded-none text-[10px] md:text-xs font-mono font-bold tracking-widest text-white hover:bg-white hover:text-black transition-all duration-200 inline-flex items-center gap-1.5 shadow-sm active:scale-95"
+            className="border border-white/50 hover:border-white px-4 py-2 min-h-[44px] rounded-none text-[10px] md:text-xs font-mono font-bold tracking-widest text-white hover:bg-white hover:text-black transition-all duration-200 inline-flex items-center gap-1.5 shadow-sm active:scale-[0.985]"
           >
             <span>RESUME</span>
             <span className="text-[9px] opacity-75">↓</span>

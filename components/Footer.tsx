@@ -203,14 +203,14 @@ const Footer: React.FC<FooterProps> = ({ personal }) => {
                     {/* Primary Letter (rolls up on hover) */}
                     <span 
                       className="block transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-full will-change-transform"
-                      style={{ transitionDelay: `${i * 24}ms` }}
+                      style={{ transitionDelay: `${i * 22}ms` }}
                     >
                       {char}
                     </span>
                     {/* Duplicate Clone (rolls in from below with Crimson accent) */}
                     <span 
                       className="absolute inset-0 block text-[#FF3B30] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] translate-y-full group-hover:translate-y-0 will-change-transform"
-                      style={{ transitionDelay: `${i * 24}ms` }}
+                      style={{ transitionDelay: `${i * 22}ms` }}
                       aria-hidden="true"
                     >
                       {char}
@@ -226,14 +226,14 @@ const Footer: React.FC<FooterProps> = ({ personal }) => {
                     {/* Primary Letter */}
                     <span 
                       className="block transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-full will-change-transform"
-                      style={{ transitionDelay: `${(i + 5) * 24}ms` }}
+                      style={{ transitionDelay: `${(i + 5) * 22}ms` }}
                     >
                       {char}
                     </span>
                     {/* Duplicate Clone */}
                     <span 
                       className="absolute inset-0 block text-[#FF3B30] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] translate-y-full group-hover:translate-y-0 will-change-transform"
-                      style={{ transitionDelay: `${(i + 5) * 24}ms` }}
+                      style={{ transitionDelay: `${(i + 5) * 22}ms` }}
                       aria-hidden="true"
                     >
                       {char}
@@ -269,7 +269,7 @@ const Footer: React.FC<FooterProps> = ({ personal }) => {
            <button 
              ref={copyBtnRef}
              onClick={handleCopyEmail}
-             className="group flex flex-col items-start text-left cursor-pointer transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] rounded-none py-1.5 px-2 -ml-2 hover:bg-white/[0.03] border border-transparent hover:border-white/10"
+             className="group flex flex-col items-start text-left cursor-pointer transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] rounded-none py-1.5 px-2 -ml-2 hover:bg-white/[0.03] border border-transparent hover:border-white/10 active:scale-[0.985]"
              title="Click to copy email address"
              data-cursor-text="COPY EMAIL"
              aria-live="polite"
@@ -298,7 +298,7 @@ const Footer: React.FC<FooterProps> = ({ personal }) => {
                href={personal.linkedin.startsWith('http') ? personal.linkedin : `https://${personal.linkedin}`} 
                target="_blank" 
                rel="noreferrer" 
-               className="hover:text-white transition-colors uppercase tracking-wider flex items-center gap-1.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] rounded-none py-2 px-1 min-h-[40px] active:scale-95"
+               className="hover:text-white transition-colors uppercase tracking-wider flex items-center gap-1.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] rounded-none py-2 px-1 min-h-[44px] active:scale-[0.985]"
                data-cursor-text="LINKEDIN"
              >
                <span>LinkedIn</span>
@@ -309,7 +309,7 @@ const Footer: React.FC<FooterProps> = ({ personal }) => {
                href="https://github.com/RitvikChunamari" 
                target="_blank" 
                rel="noreferrer" 
-               className="hover:text-white transition-colors uppercase tracking-wider flex items-center gap-1.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] rounded-none py-2 px-1 min-h-[40px] active:scale-95"
+               className="hover:text-white transition-colors uppercase tracking-wider flex items-center gap-1.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] rounded-none py-2 px-1 min-h-[44px] active:scale-[0.985]"
                data-cursor-text="GITHUB"
              >
                <span>GitHub</span>
@@ -321,7 +321,7 @@ const Footer: React.FC<FooterProps> = ({ personal }) => {
                download="Ritvik_Chunamari_Resume.pdf"
                target="_blank" 
                rel="noreferrer" 
-               className="hover:text-white transition-colors uppercase tracking-wider flex items-center gap-1.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] rounded-none py-2 px-1 min-h-[40px] active:scale-95"
+               className="hover:text-white transition-colors uppercase tracking-wider flex items-center gap-1.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] rounded-none py-2 px-1 min-h-[44px] active:scale-[0.985]"
                data-cursor-text="RESUME"
              >
                <span>Resume PDF</span>
@@ -346,7 +346,7 @@ const Footer: React.FC<FooterProps> = ({ personal }) => {
            <MagneticWrapper strength={0.3}>
              <button 
                onClick={scrollToTop}
-               className="text-[10px] font-mono uppercase tracking-[0.25em] text-white/60 hover:text-white transition-all cursor-pointer group inline-flex items-center gap-2.5 border border-white/10 hover:border-white/40 px-4 py-2.5 min-h-[44px] rounded-none bg-white/[0.02] hover:bg-white/[0.06] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] active:scale-95"
+               className="text-[10px] font-mono uppercase tracking-[0.25em] text-white/60 hover:text-white transition-all cursor-pointer group inline-flex items-center gap-2.5 border border-white/10 hover:border-white/40 px-4 py-2.5 min-h-[44px] rounded-none bg-white/[0.02] hover:bg-white/[0.06] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050508] active:scale-[0.985]"
                data-cursor-text="TOP"
              >
                <span>Return to Top</span>

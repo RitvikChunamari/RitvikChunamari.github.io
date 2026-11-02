@@ -436,7 +436,7 @@ const Hero: React.FC<HeroProps> = ({ isLoaded = true, onNavigate }) => {
         <MagneticWrapper strength={0.25}>
           <button
             onClick={scrollToWork}
-            className="group flex items-center gap-3 font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-white/70 hover:text-white hover:tracking-[0.25em] transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-4 focus-visible:ring-offset-[#050507] rounded-sm py-2 px-3 min-h-[44px] active:scale-95"
+            className="group flex items-center gap-3 font-mono text-[10px] md:text-xs tracking-[0.22em] uppercase text-white/70 hover:text-white hover:tracking-[0.25em] transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF3B30] focus-visible:ring-offset-4 focus-visible:ring-offset-[#050507] rounded-none py-2 px-3 min-h-[44px] active:scale-[0.985]"
             data-cursor-text="SCROLL"
             aria-label="Scroll to Explore Selected Works"
           >
