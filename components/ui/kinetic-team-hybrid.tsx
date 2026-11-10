@@ -30,7 +30,7 @@ export default function KineticProjectList({ projects, onProjectClick }: Props) 
   const springY = useSpring(y, { damping: 25, stiffness: 220, mass: 0.5 });
 
   useEffect(() => {
-    const query = window.matchMedia('(min-width: 900px) and (hover: hover) and (pointer: fine)');
+    const query = window.matchMedia('(any-hover: hover) and (any-pointer: fine)');
     const update = () => { setCanHover(query.matches); setHovered(null); setExpanded(null); };
     update();
     query.addEventListener('change', update);
@@ -46,9 +46,8 @@ export default function KineticProjectList({ projects, onProjectClick }: Props) 
 
   useEffect(() => {
     const dismiss = () => setHovered(null);
-    window.addEventListener('scroll', dismiss, { passive: true });
     window.addEventListener('blur', dismiss);
-    return () => { window.removeEventListener('scroll', dismiss); window.removeEventListener('blur', dismiss); };
+    return () => window.removeEventListener('blur', dismiss);
   }, []);
 
   const movePreview = (event: React.PointerEvent) => {
@@ -79,7 +78,7 @@ export default function KineticProjectList({ projects, onProjectClick }: Props) 
                   onPointerEnter={(event) => {
                     if (canHover && event.pointerType === 'mouse') { movePreview(event); setHovered(index); }
                   }}
-                  onPointerMove={(event) => { if (canHover && event.pointerType === 'mouse') movePreview(event); }}
+                  onPointerMove={(event) => { if (canHover && event.pointerType === 'mouse') { movePreview(event); setHovered(index); } }}
                   onPointerLeave={() => setHovered(null)}>
                   <h3>
                     <button type="button" className="kinetic-trigger" aria-expanded={canHover ? undefined : isOpen}
@@ -109,12 +108,12 @@ export default function KineticProjectList({ projects, onProjectClick }: Props) 
           </ol>
         )}
       </div>
-      {canHover && !reducedMotion && createPortal(
-        <motion.div aria-hidden="true" className="kinetic-floating" style={{ x: springX, y: springY }}>
+      {canHover && createPortal(
+        <motion.div aria-hidden="true" className="kinetic-floating" style={{ x: reducedMotion ? x : springX, y: reducedMotion ? y : springY }}>
           <AnimatePresence mode="wait">
             {activeProject && <motion.div key={activeProject.title} className="kinetic-preview"
-              initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.97 }} transition={{ duration: 0.18 }}>
+              initial={reducedMotion ? false : { opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: reducedMotion ? 1 : 0.97 }} transition={{ duration: reducedMotion ? 0 : 0.18 }}>
               <div className="kinetic-preview-art"><ProjectArtwork project={activeProject} /></div>
               <div className="kinetic-preview-caption">View case study <ArrowUpRight size={16} /></div>
             </motion.div>}
