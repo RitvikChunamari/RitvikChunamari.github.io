@@ -94,78 +94,105 @@ export const resumeData: ResumeData = {
   ],
   projects: [
     {
-        title: "Kinetix Quant (Institutional AI)",
-        image: "/kinetix_thumbnail.svg",
-        category: "AI & Quantitative Finance",
-        description: [
-          "Developed an advanced algorithmic trading pipeline using a Hybrid 1D CNN + GRU Neural Network to predict cryptocurrency prices.",
-          "Integrated a native TensorFlow Integrated Gradients engine for AI explainability and a rigorous backtesting simulator."
+      "title": "VeloMesh",
+      "image": "/projects/velomesh/logo.svg",
+      "category": "AI Developer Tools & Orchestration",
+      "description": [
+        "An open-source orchestration layer that connects AI coding agents with task-aware model routing, reusable skills, and MCP capabilities.",
+        "Designed to turn a clear product brief into a coordinated workflow across interface design, backend engineering, data, and verification."
+      ],
+      "link": "https://github.com/RitvikChunamari/velomesh",
+      "website": "https://ritvikchunamari.github.io/velomesh/",
+      "caseStudy": {
+        "year": "2026",
+        "role": "Product Design & Development",
+        "technologies": [
+          "Python",
+          "Node.js",
+          "Model Context Protocol",
+          "Model Routing",
+          "CLI Integrations",
+          "Playwright",
+          "GitHub Actions"
         ],
-        link: "https://github.com/RitvikChunamari/Crypto-AI-Predictor",
-        caseStudy: {
-          year: "2026",
-          role: "AI / Data Engineer",
-          technologies: ["Python", "FastAPI", "TensorFlow", "Keras", "Render", "GitHub Actions (Cron)", "Binance WebSockets", "TradingView Advanced API", "Yahoo Finance (yfinance)", "CoinCap API"],
-          overview: "An advanced deep learning model that analyzes 12 dimensions of data—including Nasdaq and US Dollar Index (DXY) correlations—to predict future cryptocurrency prices and protect against bear markets.",
-          challenge: "Standard technical analysis bots rely solely on lagging indicators and ignore global macro-economic health, leading to inaccurate predictions during market crashes. Furthermore, institutional investors reject 'black-box' deep learning models due to a lack of explainability.",
-          solution: "Built a 12-dimensional Neural Network with a Backtester. During a simulated 300-day bear market where 'Buy & Hold' lost -7.83%, the AI strategy generated a positive profit of +0.97%. Integrated native TensorFlow Integrated Gradients to provide mathematical proof of feature importance for every prediction.",
-          problemStatement: "How might we design a predictive trading algorithm that not only forecasts cryptocurrency prices using macroeconomic indicators, but also provides transparent, mathematically proven explainability so institutional investors can trust its decisions during high-volatility market crashes?",
-          problemOverview: [
-            { title: "Lagging Indicator Dependency", description: "Traditional crypto trading bots rely on lagging technical indicators (like Moving Averages and RSI) which react to past price movements rather than predicting future trends, causing severe drawdowns during sudden market crashes." },
-            { title: "Macro-Economic Blind Spots", description: "Standard models train in a vacuum, ignoring the massive correlation between global equities (Nasdaq) and fiat currency strength (US Dollar Index), leading to high false-positive buy signals." },
-            { title: "The 'Black-Box' Trust Issue", description: "Advanced Deep Learning models often output predictions with zero transparency, making it impossible for institutional investors to trust the AI with real capital during high-volatility events." },
-            { title: "Multi-Timeframe Latency", description: "Fetching and processing massive datasets for high-frequency trading (HFT) scalping often introduces latency or requires expensive premium API keys." }
-          ],
-          detailedSolution: [
-            { title: "Macro-Economic Feature Engineering (Why Nasdaq & DXY?)", description: "The model does NOT predict the Nasdaq or the US Dollar. Instead, it uses Nasdaq (Tech Equity correlation) and DXY (Dollar strength inverse-correlation) strictly as input features to help the AI understand the global economic environment before making a crypto prediction." },
-            { title: "Zero-Cold-Start Serverless Architecture", description: "Instead of relying on a lagging cloud server, the frontend is deployed as a static Single Page Application (SPA) on GitHub Pages CDN for 0ms load times. The backend is a Render FastAPI server kept alive 24/7 via a GitHub Actions Cron Job that pings it every 10 minutes." },
-            { title: "APIs & Core Services", description: "Utilizes Binance WebSockets for tick-by-tick live pricing, TradingView Widget API for interactive charting, yfinance for historical OHLCV & Macro data, and TensorFlow.keras for the CNN+GRU inference engine." },
-            { title: "12-Dimensional Metrics", description: "Calculates 12 metrics dynamically for every timeframe: Open, High, Low, Close, Volume, Simple Moving Average (20/50), Exponential Moving Average (20), RSI, MACD, Average True Range (ATR), Bollinger Bands, and Macro Equities." },
-            { title: "TensorFlow Integrated Gradients", description: "Implemented a native mathematical explainability engine. By calculating the exact derivative of the model's activations, the system proves exactly which features drove the prediction, eliminating the black-box effect." }
-          ],
-          uxImpactMetrics: [
-            { label: "Net Profit (Bear Market)", value: "+0.97%", detail: "Generated positive returns during a 300-day bear market simulation, outperforming standard strategies." },
-            { label: "Avoided Loss (Baseline)", value: "-7.83%", detail: "The standard Buy & Hold loss that the AI actively dodged by moving to cash during downturns." },
-            { label: "Data Dimensionality", value: "12 Features", detail: "Incorporated advanced technicals (MACD, RSI, ATR) alongside Macro metrics (Nasdaq, DXY)." }
-          ],
-          systemObjectives: [
-            {
-              system: "Multi-Timeframe Data Ingestion Engine",
-              description: "A robust data pipeline that fetches raw financial data and engineers it into a clean 3D tensor format for the neural network.",
-              objectives: [
-                { title: "Yahoo Finance API (yfinance)", content: "Pulls 5 years of daily data or 730 days of hourly data for macro-economic features." },
-                { title: "Binance Public REST API", content: "Fetches up to 50,000 minute-by-minute historical Klines directly from Binance for HFT scalping." },
-                { title: "Dynamic Feature Engineering", content: "Computes 10 technical indicators dynamically including SMA_20, SMA_50, EMA_20, RSI, MACD, ATR, and Bollinger Bands." }
-              ]
-            },
-            {
-              system: "Hybrid Neural Network (TensorFlow/Keras)",
-              description: "The core predictive model that ingests a 3D sequence [samples, timesteps, features] to forecast closing prices.",
-              objectives: [
-                { title: "1D Convolutional Neural Network (CNN)", content: "Uses 64 filters to perform spatial extraction across the 12 features, identifying local patterns between volume spikes and price drops." },
-                { title: "Gated Recurrent Unit (GRU)", content: "A 50-unit GRU layer captures the chronological sequence of the last 60 timeframes to understand long-term momentum." },
-                { title: "Regularization (Dropout)", content: "Implements Dropout(0.3) to randomly zero out neurons during training, preventing overfitting." }
-              ]
-            }
-          ],
-          
-          referencesList: [
-            { citationNumber: 1, text: "Long Short-Term Memory (LSTM) Networks in Quantitative Finance.", url: "https://arxiv.org/abs/1909.09586" },
-            { citationNumber: 2, text: "Axiomatic Attribution for Deep Networks (Integrated Gradients).", url: "https://arxiv.org/abs/1703.01365" },
-            { citationNumber: 3, text: "The impact of US Dollar Index (DXY) on Cryptocurrency Volatility.", url: "https://ssrn.com/abstract=3911560" }
-          ]
-,
-          competitorAnalysis: [
-            {
-              persona: "Algorithmic Investor",
-              keyNeeds: "Accurate predictive modeling, Macro-economic awareness, and Model Explainability.",
-              competitors: ["Standard RSI/MACD Trading Bots", "Basic LSTM Auto-Traders", "Proprietary Paid Signals"],
-              strengths: ["Easy deployment", "Fast execution times", "Simple APIs"],
-              weaknesses: ["Ignores Nasdaq/DXY global market correlations", "Massive capital loss during sudden liquidity crashes", "Zero transparency on why a trade was executed (Black-box)"]
-            }
-          ],
+        "overview": "One product brief. A coordinated development workflow. VeloMesh brings model routing, engineering skills, and tool discovery into a shared orchestration layer for AI coding environments.",
+        "challenge": "AI-assisted development spreads decisions across models, editors, skills, and external tools. Developers repeatedly assemble the same setup while unclear product requirements can send implementation in the wrong direction.",
+        "solution": "Separate product intent from execution setup: clarify the brief, select capabilities for the work, route tasks by phase, and connect implementation with review and browser verification.",
+        "problemStatement": "How might we let developers describe the product they want while making the models, tools, and engineering workflows needed to build it easier to coordinate?",
+        "problemOverview": [
+          {
+            "title": "A fragmented working environment",
+            "description": "Moving between coding assistants creates repeated configuration work. Skills, MCP tools, and host-specific settings are spread across separate environments."
+          },
+          {
+            "title": "Different tasks need different strengths",
+            "description": "Architecture, interface design, implementation, and review place different demands on a model. A single static selection does not express those differences."
+          },
+          {
+            "title": "Automation still needs a clear brief",
+            "description": "A tool can choose an engineering workflow, but it cannot infer a product owner’s audience, core interactions, visual direction, or domain rules reliably."
           }
-      },
+        ],
+        "detailedSolution": [
+          {
+            "title": "Clarify intent before execution",
+            "description": "A prompt check looks for audience, workflow, and design or stack signals. When the brief is incomplete, it recommends focused questions before implementation begins."
+          },
+          {
+            "title": "Route work by task phase",
+            "description": "The model router classifies work such as architecture, frontend, implementation, and review, then produces a model selection and fallback chain using available providers."
+          },
+          {
+            "title": "Compose the capability stack",
+            "description": "A Python CLI recommends skills across interface design, motion, APIs, data, security, and testing. Discovery and provisioning commands support adding capabilities to selected hosts."
+          },
+          {
+            "title": "Connect existing coding environments",
+            "description": "An MCP server exposes orchestration tools, while a local Node.js gateway supports OpenAI-compatible and Anthropic-style request endpoints. Host adapters connect the workflow to supported coding assistants."
+          },
+          {
+            "title": "Make orchestration visible",
+            "description": "The product site presents the execution stages, a model-routing visualization, and an interactive workbench so visitors can explore how a brief maps to a development workflow."
+          },
+          {
+            "title": "Keep verification in the workflow",
+            "description": "The repository includes tests for routing, gateway behavior, MCP tools, hooks, fault handling, and the website. Its recommended workflow pairs implementation with review and browser QA rather than treating generated code as the finish line."
+          },
+          {
+            "title": "Design decisions & boundaries",
+            "description": "The interface makes an abstract orchestration system easier to inspect through a concrete sequence: describe the product, clarify missing intent, select capabilities, and verify the result. The repository documents the intended workflow and provides its implementation; it does not establish universal build quality or guaranteed model availability. Live inference still depends on an available, authenticated upstream provider, and provider costs remain separate from the project’s MIT license."
+          }
+        ],
+        "historyAndContext": "VeloMesh is built for developers working across AI coding environments such as Codex, Claude Code, Cursor, and Antigravity. The product separates two responsibilities: the user supplies the vision; the orchestration layer helps select the capabilities and execution path. Its CLI, MCP server, gateway, and public product experience make that separation tangible.",
+        "referencesList": [
+          {
+            "citationNumber": 1,
+            "text": "VeloMesh — interactive product site and workbench",
+            "url": "https://ritvikchunamari.github.io/velomesh/"
+          },
+          {
+            "citationNumber": 2,
+            "text": "VeloMesh — source repository, installation, and supported workflows",
+            "url": "https://github.com/RitvikChunamari/velomesh"
+          },
+          {
+            "citationNumber": 3,
+            "text": "Capability selection and product-vision check — Python CLI",
+            "url": "https://github.com/RitvikChunamari/velomesh/blob/main/scripts/velomesh.py"
+          },
+          {
+            "citationNumber": 4,
+            "text": "Model gateway and provider fallback implementation",
+            "url": "https://github.com/RitvikChunamari/velomesh/blob/main/scripts/gateway.mjs"
+          },
+          {
+            "citationNumber": 5,
+            "text": "Repository test suites",
+            "url": "https://github.com/RitvikChunamari/velomesh/tree/main/tests"
+          }
+        ]
+      }
+    },
     {
       title: "Nexus AI",
       category: "Homepage UX Design",

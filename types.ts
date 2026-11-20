@@ -255,6 +255,7 @@ export interface Project {
   image?: string;
   logo?: string;
   link?: string;
+  website?: string;
   caseStudy?: CaseStudy;
 }
 

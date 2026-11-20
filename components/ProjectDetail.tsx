@@ -6,7 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MagneticWrapper from './MagneticWrapper';
 import FigmaViewerWindow from './FigmaViewerWindow';
 import MumbaiLogoGenerator from './MumbaiLogoGenerator';
-import CryptoSimulator from './CryptoSimulator';
+import ProjectLinks from './ProjectLinks';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -641,6 +641,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
             </div>
 
             <div className="w-14 h-[2px] bg-[#FF3B30] mt-3 mb-2 case-meta-reveal"></div>
+
+            {project.website && <ProjectLinks website={project.website} repository={project.link} />}
 
             {caseStudy?.isBrandIdentity && (
               <div className="inline-flex items-center gap-2.5 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-sm backdrop-blur-md case-meta-reveal">
@@ -2354,67 +2356,6 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
 
             {/* Interactive Logo Generator Studio */}
             <MumbaiLogoGenerator />
-          </div>
-        </section>
-      )}
-
-      {project.title === 'Kinetix Quant (Institutional AI)' && (
-        <section className="w-full py-16 md:py-24 border-t border-white/10 bg-[#060609] relative overflow-hidden">
-          <div className="container mx-auto px-4 sm:px-6 md:px-12 relative z-10">
-            {/* Live Interactive Quant Inference Terminal */}
-            <div className="mb-12">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] animate-pulse"></span>
-                <span className="font-mono text-[10px] text-[#00E5FF] uppercase tracking-[0.25em] font-semibold">
-                  INTERACTIVE LAB // REAL-TIME INFERENCE TERMINAL
-                </span>
-              </div>
-              <h3 className="text-2xl md:text-4xl font-bold font-sans text-white mb-2 tracking-[-0.03em] uppercase">
-                Interactive Model Simulator
-              </h3>
-              <p className="text-white/60 max-w-2xl mb-8 font-mono text-xs uppercase tracking-wider">
-                Query the live TensorFlow hybrid neural network or run backtesting simulations across major cryptocurrency pairs.
-              </p>
-              <CryptoSimulator />
-            </div>
-
-            <div className="flex flex-col items-center justify-center pt-8 border-t border-white/10">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] animate-pulse"></span>
-                <span className="font-mono text-[10px] text-[#00E5FF] uppercase tracking-[0.25em] font-semibold">
-                  CLOUD DEPLOYMENT // DEDICATED RUNTIME
-                </span>
-              </div>
-              <h4 className="text-xl md:text-2xl font-bold font-sans text-white mb-3 tracking-[-0.03em] uppercase text-center">
-                Dedicated Standalone Web Terminal
-              </h4>
-              <p className="text-white/60 text-center max-w-2xl mb-8 font-mono text-xs uppercase tracking-wider">
-                In addition to the embedded simulator above, the deep learning inference engine is deployed as a standalone full-viewport terminal on Render and GitHub Pages.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a
-                  href="https://ritvikchunamari.github.io/crypto-terminal.html"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative px-7 py-3.5 border border-[#00E5FF]/40 bg-[#00E5FF]/5 font-mono text-xs tracking-[0.2em] uppercase rounded-sm overflow-hidden cursor-pointer transition-all hover:border-[#00E5FF] hover:shadow-[0_0_25px_rgba(0,229,255,0.25)] text-center flex items-center justify-center gap-2"
-                >
-                  <span className="relative z-10 font-bold text-[#00E5FF] transition-colors duration-300 group-hover:text-black">LAUNCH STANDALONE TERMINAL</span>
-                  <span className="relative z-10 text-[#00E5FF] group-hover:text-black transition-colors">↗</span>
-                  <div className="absolute inset-0 h-full w-0 bg-[#00E5FF] transition-all duration-300 ease-out group-hover:w-full z-0"></div>
-                </a>
-
-                <a
-                  href={project.link || "https://github.com/RitvikChunamari/Crypto-AI-Predictor"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative px-7 py-3.5 border border-white/20 bg-white/5 font-mono text-xs tracking-[0.2em] uppercase rounded-sm overflow-hidden cursor-pointer transition-all hover:border-white hover:bg-white text-center flex items-center justify-center gap-2"
-                >
-                  <span className="relative z-10 font-bold text-white transition-colors duration-300 group-hover:text-black">VIEW SOURCE ON GITHUB</span>
-                  <span className="relative z-10 text-white group-hover:text-black transition-colors">↗</span>
-                  <div className="absolute inset-0 h-full w-0 bg-white transition-all duration-300 ease-out group-hover:w-full z-0"></div>
-                </a>
-              </div>
-            </div>
           </div>
         </section>
       )}

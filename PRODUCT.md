@@ -31,7 +31,7 @@ Evaluated in modern web browsers across high-resolution desktop viewports, lapto
 ## Capabilities and Constraints
 
 - **5 Authentic Projects:**
-  1. *Kinetix Quant (Institutional AI)* — Machine learning & algorithmic trading platform
+  1. *VeloMesh* — AI developer tooling, model routing, and capability orchestration
   2. *Nexus AI* — Generative AI UX/UI design & node canvas
   3. *USPS Organization Rebrand* — Comprehensive identity system & fleet livery
   4. *Pill Dispenser 3D* — Industrial mechatronics & automated medication dispenser
