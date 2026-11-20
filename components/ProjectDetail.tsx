@@ -7,6 +7,7 @@ import MagneticWrapper from './MagneticWrapper';
 import FigmaViewerWindow from './FigmaViewerWindow';
 import MumbaiLogoGenerator from './MumbaiLogoGenerator';
 import ProjectLinks from './ProjectLinks';
+import VeloMeshDeepDive from './VeloMeshDeepDive';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -825,8 +826,10 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
              </section>
            )}
 
+           {project.title === 'VeloMesh' && <VeloMeshDeepDive />}
+
            {/* 4. Solution Overview */}
-           {caseStudy.detailedSolution && (
+           {caseStudy.detailedSolution && project.title !== 'VeloMesh' && (
              <section className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 lg:gap-12 pb-12 md:pb-16 border-b border-white/10">
                 <div className="md:col-span-4 gsap-reveal">
                    <div className="md:sticky md:top-28">
@@ -854,7 +857,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project, onBack, onNext }
            )}
 
            {/* Brand History & Organizational Context (USPS) */}
-           {caseStudy.historyAndContext && (
+           {caseStudy.historyAndContext && project.title !== 'VeloMesh' && (
              <section className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 lg:gap-12 pb-12 md:pb-16 border-b border-white/10">
                 <div className="md:col-span-4 gsap-reveal">
                    <div className="md:sticky md:top-28">
